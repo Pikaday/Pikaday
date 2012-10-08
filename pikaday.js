@@ -1,5 +1,5 @@
 /*!
- * Pickaday
+ * Pikaday
  * Copyright © 2012 David Bushell | BSD & MIT license | http://dbushell.com/
  */
 
@@ -272,9 +272,9 @@
 
 
     /**
-     * Pickaday constructor
+     * Pikaday constructor
      */
-    window.Pickaday = function(options)
+    window.Pikaday = function(options)
     {
         var self = this,
             opts = self.config(options);
@@ -417,9 +417,9 @@
 
 
     /**
-     * public Pickaday API
+     * public Pikaday API
      */
-    window.Pickaday.prototype = {
+    window.Pikaday.prototype = {
 
 
         /**

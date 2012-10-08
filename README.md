@@ -1,13 +1,17 @@
-Pickaday
+Pikaday
 ========
 
 ### A refreshing JavaScript Datepicker
 
-[**Try Pickaday Demos**](http://dbushell.github.com/Pickaday/)
+* Lightweight (less than 5kb minified and gzipped)
+* No dependencies (but plays well with [Moment.js](http://momentjs.com/))
+* Modular CSS classes for easy styling
+
+[**Try Pikaday Demo →**](http://dbushell.github.com/Pikaday/)
 
 ## Usage
 
-**Pickaday** can be bound to an input field:
+**Pikaday** can be bound to an input field:
 
 ```html
 <input type="text" id="datepicker" value="2012-10-08">
@@ -16,23 +20,23 @@ Pickaday
 Add the JavaScript to the end of your document:
 
 ```html
-<script src="pickaday.js"></script>
+<script src="pikaday.js"></script>
 <script>
-    var picker = new Pickaday({ field: document.getElementById('datepicker') });
+    var picker = new Pikaday({ field: document.getElementById('datepicker') });
 </script>
 ```
 
 If you're using **jQuery** make sure to pass only the first element:
 
 ```javascript
-var picker = new Pickaday({ field: $('#datepicker')[0] });
+var picker = new Pikaday({ field: $('#datepicker')[0] });
 ```
 
-If the Pickaday instance is not bound to a field you can append the element anywhere:
+If the Pikaday instance is not bound to a field you can append the element anywhere:
 
 ```javascript
 var field = document.getElementById('datepicker');
-var picker = new Pickaday({
+var picker = new Pikaday({
     onSelect: function(date) {
         field.value = picker.toString()
     }
@@ -42,7 +46,7 @@ field.parentNode.insertBefore(picker.el, field.nextSibling);
 ### Configuration
 
 As the examples demonstrate above
-Pickaday has many useful options:
+Pikaday has many useful options:
 
 * `field` bind the datepicker to a form field
 * `bound` automatically show/hide the datepicker on `field` focus (default `true` if `field` is set)
@@ -66,17 +70,17 @@ You can control the date picker after creation:
 
 ```javascript
 <script>
-    var picker = new Pickaday({ field: document.getElementById('datepicker') });
+    var picker = new Pikaday({ field: document.getElementById('datepicker') });
 </script>
 ```
 
 `picker.toString('YYYY-MM-DD')`
 
-Returns the selected date in a string format. If [Moment.js](http://momentjs.com/) exists (recommended) then Pickaday can return any format Moment understands.
+Returns the selected date in a string format. If [Moment.js](http://momentjs.com/) exists (recommended) then Pikaday can return any format Moment understands.
 
 `picker.getMoment()`
 
-Returns a [Moment.js](http://momentjs.com/) object for the selected date (Moment must be loaded before Pickaday).
+Returns a [Moment.js](http://momentjs.com/) object for the selected date (Moment must be loaded before Pikaday).
 
 `picker.getDate(new Date()`
 
@@ -147,5 +151,7 @@ You must provide 12 months and 7 weekdays (with abbreviations). Always specify w
 * * *
 
 Author: David Bushell [http://dbushell.com](http://dbushell.com/) [@dbushell](http://twitter.com/dbushell/)
+
+Thanks to [@shoogledesigns](http://twitter.com/shoogledesigns/status/255209384261586944) for the name
 
 Copyright © 2012 David Bushell | BSD & MIT license
