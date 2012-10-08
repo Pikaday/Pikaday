@@ -3,17 +3,13 @@
  * Copyright © 2012 David Bushell | BSD & MIT license | http://dbushell.com/
  */
 
-var log = function(obj)
-{
-    if (typeof console === 'object' && typeof console.log === 'function') {
-        console.log(obj);
-    }
-};
-
 (function(window, document, undefined)
 {
     'use strict';
 
+    /**
+     * feature detection and helper functions
+     */
     var hasMoment = typeof window.moment === 'function',
 
     hasEventListeners = !!window.addEventListener,
@@ -71,7 +67,7 @@ var log = function(obj)
 
     isLeapYear = function(year)
     {
-        // Solution by Matti Virkkunen: http://stackoverflow.com/a/4881951
+        // solution by Matti Virkkunen: http://stackoverflow.com/a/4881951
         return year % 4 === 0 && year % 100 !== 0 || year % 400 === 0;
     },
 
@@ -111,36 +107,33 @@ var log = function(obj)
         return to;
     },
 
-    /**
-     * Defaults & Localisation
-     */
 
+    /**
+     * defaults and localisation
+     */
     defaults = {
 
-        // the default date to view
+        // bind the picker to a form field
+        field: null,
+
+        // automatically show/hide the picker on `field` focus (default `true` if `field` is set)
+        bound: undefined,
+
+        // the default output format for `.toString()` and `field` value
+        format: 'YYYY-MM-DD',
+
+        // the initial date to view when first opened
         defaultDate: null,
 
+        // make the `defaultDate` the initial selected value
         setDefaultDate: false,
-
-        // default format for this.toString() - requires moment
-        format: 'YYYY-MM-DD',
 
         // first day of week (0: Sunday, 1: Monday etc)
         firstDay: 0,
 
-        // input field to update with the default format
-        field: null,
-
-        // fixed position
-        bound: undefined,
-
-        // callback function
-        onSelect: null,
-        onOpen: null,
-        onClose: null,
-
-        // restrict date selection
+        // the minimum/earliest date that can be selected
         minDate: null,
+        // the maximum/latest date that can be selected
         maxDate: null,
 
         // number of years either side, or array of upper/lower range
@@ -164,13 +157,18 @@ var log = function(obj)
                 //monthsShort   : ['Jan_Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
                 weekdays      : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
                 weekdaysShort : ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
-        }
+        },
+
+        // callback function
+        onSelect: null,
+        onOpen: null,
+        onClose: null
     },
 
-    /**
-     * Template
-     */
 
+    /**
+     * templating functions to abstract HTML rendering
+     */
     renderDayName = function(opts, day, abbr)
     {
         day += opts.firstDay;
@@ -273,6 +271,9 @@ var log = function(obj)
     };
 
 
+    /**
+     * Pickaday constructor
+     */
     window.Pickaday = function(options)
     {
         var self = this,
@@ -414,8 +415,16 @@ var log = function(obj)
 
     };
 
-    window.Datepicker.prototype = {
 
+    /**
+     * public Pickaday API
+     */
+    window.Pickaday.prototype = {
+
+
+        /**
+         * configure functionality
+         */
         config: function(options)
         {
             if (!this._o) {
@@ -425,6 +434,8 @@ var log = function(obj)
             var opts = extend(this._o, options, true);
 
             opts.isRTL = !!opts.isRTL;
+
+            opts.field = (opts.field && opts.field.nodeName) ? opts.field : null;
 
             opts.bound = !!(opts.bound !== undefined ? opts.field && opts.bound : opts.field);
 
@@ -463,21 +474,33 @@ var log = function(obj)
             return opts;
         },
 
+        /**
+         * return a formatted string of the current selection (using Moment.js if available)
+         */
         toString: function(format)
         {
             return !isDate(this._d) ? '' : hasMoment ? window.moment(this._d).format(format || this._o.format) : this._d.toDateString();
         },
 
+        /**
+         * return a Moment.js object of the current selection (if available)
+         */
         getMoment: function()
         {
             return hasMoment ? window.moment(this._d) : null;
         },
 
+        /**
+         * return a Date object of the current selection
+         */
         getDate: function()
         {
             return isDate(this._d) ? new Date(this._d.getTime()) : null;
         },
 
+        /**
+         * set the current selection
+         */
         setDate: function(date)
         {
             if (!date) {
@@ -485,7 +508,7 @@ var log = function(obj)
                 return this.draw();
             }
             if (typeof date === 'string') {
-                date = new Date(date);
+                date = new Date(Date.parse(date));
             }
             if (!isDate(date)) {
                 return;
@@ -512,6 +535,9 @@ var log = function(obj)
             }
         },
 
+        /**
+         * change view to a specific date
+         */
         gotoDate: function(date)
         {
             if (!isDate(date)) {
@@ -527,18 +553,13 @@ var log = function(obj)
             this.gotoDate(new Date());
         },
 
+        /**
+         * change view to a specific month (zero-index, e.g. 0: January)
+         */
         gotoMonth: function(month)
         {
             if (!isNaN(month)) {
                 this._m = parseInt(month < 0 ? 0 : month > 11 ? 11 : month, 10);
-                this.draw();
-            }
-        },
-
-        gotoYear: function(year)
-        {
-            if (!isNaN(year)) {
-                this._y = parseInt(year, 10);
                 this.draw();
             }
         },
@@ -561,6 +582,20 @@ var log = function(obj)
             this.draw();
         },
 
+        /**
+         * change view to a specific full year (e.g. "2012")
+         */
+        gotoYear: function(year)
+        {
+            if (!isNaN(year)) {
+                this._y = parseInt(year, 10);
+                this.draw();
+            }
+        },
+
+        /**
+         * refresh the HTML
+         */
         draw: function(force)
         {
             if (!this._v && !force) {
@@ -602,6 +637,9 @@ var log = function(obj)
             }
         },
 
+        /**
+         * render HTML for a particular month
+         */
         render: function(year, month)
         {
             var opts   = this._o,
@@ -676,6 +714,9 @@ var log = function(obj)
             }
         },
 
+        /**
+         * GAME OVER
+         */
         destroy: function()
         {
             this.hide();
