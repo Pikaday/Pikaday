@@ -5,30 +5,34 @@
  * Copyright © 2012 David Bushell | BSD & MIT license | http://dbushell.com/
  */
 
-.kal-single {
+.pika-single {
     z-index: 9999;
     display: block;
     position: relative;
     width: 240px;
     padding: 8px;
+    color: #333;
     background: #fff;
-    border: 2px solid #ccc;
+    border: 1px solid #ccc;
+    border-bottom-color: #bbb;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-.kal-single.is-hidden {
+.pika-single.is-hidden {
     display: none;
 }
 
-.kal-single.is-bound {
+.pika-single.is-bound {
     position: absolute;
+    width: auto;
+    box-shadow: 0 5px 15px -5px rgba(0,0,0,.5);
 }
 
-.kal-title {
+.pika-title {
     text-align: center;
 }
 
-.kal-label {
+.pika-label {
     display: inline-block;
     position: relative;
     z-index: 9999;
@@ -40,7 +44,7 @@
     font-weight: bold;
     background-color: #fff;
 }
-.kal-title select {
+.pika-title select {
     cursor: pointer;
     position: absolute;
     z-index: 9998;
@@ -50,8 +54,8 @@
     opacity: 0;
 }
 
-.kal-prev,
-.kal-next {
+.pika-prev,
+.pika-next {
     cursor: pointer;
     position: relative;
     outline: none;
@@ -62,59 +66,61 @@
     background-color: transparent;
     background-position: center center;
     background-repeat: no-repeat;
+    background-size: 75% 75%;
     white-space: nowrap;
     text-indent: 100%;
     overflow: hidden;
     opacity: .5;
 }
 
-.kal-prev:hover,
-.kal-next:hover {
+.pika-prev:hover,
+.pika-next:hover {
     opacity: 1;
 }
 
-.kal-prev,
-.is-rtl .kal-next {
+.pika-prev,
+.is-rtl .pika-next {
     float: left;
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAeCAYAAAAsEj5rAAAAUklEQVR42u3VMQoAIBADQf8Pgj+OD9hG2CtONJB2ymQkKe0HbwAP0xucDiQWARITIDEBEnMgMQ8S8+AqBIl6kKgHiXqQqAeJepBo/z38J/U0uAHlaBkBl9I4GwAAAABJRU5ErkJggg==');
 }
 
-.kal-next,
-.is-rtl .kal-prev {
+.pika-next,
+.is-rtl .pika-prev {
     float: right;
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAeCAYAAAAsEj5rAAAAU0lEQVR42u3VOwoAMAgE0dwfAnNjU26bYkBCFGwfiL9VVWoO+BJ4Gf3gtsEKKoFBNTCoCAYVwaAiGNQGMUHMkjGbgjk2mIONuXo0nC8XnCf1JXgArVIZAQh5TKYAAAAASUVORK5CYII=');
 }
 
-.kal-prev.is-disabled,
-.kal-next.is-disabled {
+.pika-prev.is-disabled,
+.pika-next.is-disabled {
     cursor: default;
     opacity: .2;
 }
 
-.kal-select {
+.pika-select {
     display: inline-block;
 }
 
-.kal-table {
+.pika-table {
     border-collapse: collapse;
     border-spacing: 0;
     width: 100%;
 }
 
-.kal-table td {
+.pika-table td {
     padding: 0;
     width: 30px;
     height: 20px;
 }
 
-.kal-table th {
+.pika-table th {
+    color: #999;
     font-size: 12px;
     line-height: 25px;
-    font-weight: normal;
+    font-weight: bold;
     text-align: center;
 }
 
-.kal-button {
+.pika-button {
     cursor: pointer;
     display: block;
     outline: none;
@@ -129,25 +135,29 @@
     background: #f5f5f5;
 }
 
-.kal-button:hover {
-    color: #fff !important;
-    background: #ff8000 !important;
-}
-
-.is-today .kal-button {
+.is-today .pika-button {
     color: #33aaff;
     font-weight: bold;
 }
 
-.is-selected .kal-button {
+.is-selected .pika-button {
     color: #fff;
     font-weight: bold;
     background: #33aaff;
+    box-shadow: inset 0 1px 3px #178fe5;
+    border-radius: 3px;
 }
 
-.is-disabled .kal-button {
+.is-disabled .pika-button {
     pointer-events: none;
     cursor: default;
     color: #999;
     opacity: .3;
+}
+
+.pika-button:hover {
+    color: #fff !important;
+    background: #ff8000 !important;
+    box-shadow: none !important;
+    border-radius: 3px !important;
 }

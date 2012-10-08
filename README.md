@@ -69,12 +69,10 @@ Pikaday has many useful options:
 You can control the date picker after creation:
 
 ```javascript
-<script>
-    var picker = new Pikaday({ field: document.getElementById('datepicker') });
-</script>
+var picker = new Pikaday({ field: document.getElementById('datepicker') });
 ```
 
-### Get/set date
+### Get and set date
 
 `picker.toString('YYYY-MM-DD')`
 
@@ -115,7 +113,7 @@ Go to the next or previous month (this will change year if necessary).
 
 Change the year being viewed.
 
-### Show/hide
+### Show and hide datepicker
 
 `picker.isVisible()`
 

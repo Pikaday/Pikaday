@@ -193,7 +193,7 @@
         if (isSelected) {
             arr.push('is-selected');
         }
-        return '<td data-day="' + i + '" class="' + arr.join(' ') + '"><button class="kal-button" type="button">' + i + '</button>' + '</td>';
+        return '<td data-day="' + i + '" class="' + arr.join(' ') + '"><button class="pika-button" type="button">' + i + '</button>' + '</td>';
     },
 
     renderRow = function(days, isRTL)
@@ -224,7 +224,7 @@
             year  = instance._y,
             isMinYear = year === opts.minYear,
             isMaxYear = year === opts.maxYear,
-            html = '<div class="kal-title">',
+            html = '<div class="pika-title">',
             prev = true,
             next = true;
 
@@ -234,7 +234,7 @@
                 ((isMinYear && i < opts.minMonth) || (isMaxYear && i > opts.maxMonth) ? 'disabled' : '') + '>' +
                 opts.i18n.months[i] + '</option>');
         }
-        html += '<div class="kal-label">' + opts.i18n.months[month] + '<select class="kal-select kal-select-month">' + arr.join('') + '</select></div>';
+        html += '<div class="pika-label">' + opts.i18n.months[month] + '<select class="pika-select pika-select-month">' + arr.join('') + '</select></div>';
 
         if (isArray(opts.yearRange)) {
             i = opts.yearRange[0];
@@ -249,7 +249,7 @@
                 arr.push('<option value="' + i + '"' + (i === year ? ' selected': '') + '>' + (i) + '</option>');
             }
         }
-        html += '<div class="kal-label">' + year + '<select class="kal-select kal-select-year">' + arr.join('') + '</select></div>';
+        html += '<div class="pika-label">' + year + '<select class="pika-select pika-select-year">' + arr.join('') + '</select></div>';
 
         if (isMinYear && (month === 0 || opts.minMonth >= month)) {
             prev = false;
@@ -259,15 +259,15 @@
             next = false;
         }
 
-        html += '<button class="kal-prev' + (prev ? '' : ' is-disabled') + '" type="button">Previous Month</button>';
-        html += '<button class="kal-next' + (next ? '' : ' is-disabled') + '" type="button">Next Month</button>';
+        html += '<button class="pika-prev' + (prev ? '' : ' is-disabled') + '" type="button">Previous Month</button>';
+        html += '<button class="pika-next' + (next ? '' : ' is-disabled') + '" type="button">Next Month</button>';
 
         return html += '</div>';
     },
 
     renderTable = function(opts, data)
     {
-        return '<table class="kal-table">' + renderHead(opts) + renderBody(data) + '</table>';
+        return '<table class="pika-table">' + renderHead(opts) + renderBody(data) + '</table>';
     };
 
 
@@ -287,7 +287,7 @@
             var target = e.target;
 
             if (!hasClass(target, 'is-disabled')) {
-                if (hasClass(target, 'kal-button') && !hasClass(target, 'is-empty')) {
+                if (hasClass(target, 'pika-button') && !hasClass(target, 'is-empty')) {
                     self.setDate(new Date(self._y, self._m, parseInt(target.innerHTML, 10)));
                     if (opts.bound) {
                         setTimeout(function() {
@@ -296,14 +296,14 @@
                     }
                     return;
                 }
-                else if (hasClass(target, 'kal-prev')) {
+                else if (hasClass(target, 'pika-prev')) {
                     self.prevMonth();
                 }
-                else if (hasClass(target, 'kal-next')) {
+                else if (hasClass(target, 'pika-next')) {
                     self.nextMonth();
                 }
             }
-            if (!hasClass(target, 'kal-select')) {
+            if (!hasClass(target, 'pika-select')) {
                 if (e.preventDefault) {
                     e.preventDefault();
                 } else {
@@ -316,10 +316,10 @@
 
         self._onChange = function(e)
         {
-            if (hasClass(e.target, 'kal-select-month')) {
+            if (hasClass(e.target, 'pika-select-month')) {
                 self.gotoMonth(parseInt(e.target.value, 10));
             }
-            else if (hasClass(e.target, 'kal-select-year')) {
+            else if (hasClass(e.target, 'pika-select-year')) {
                 self.gotoYear(parseInt(e.target.value, 10));
             }
         };
@@ -359,7 +359,7 @@
         {
             var target = e.target;
             do {
-                if (hasClass(target, 'kal-single')) {
+                if (hasClass(target, 'pika-single')) {
                     return;
                 }
             }
@@ -371,7 +371,7 @@
         };
 
         self.el = document.createElement('div');
-        self.el.className = 'kal-single' + (opts.isRTL ? ' is-rtl' : '');
+        self.el.className = 'pika-single' + (opts.isRTL ? ' is-rtl' : '');
 
         addEvent(self.el, 'mousedown', self._onMouseDown, true);
         addEvent(self.el, 'change', self._onChange);
@@ -648,6 +648,7 @@
                 before = new Date(year, month, 1).getDay(),
                 data   = [],
                 row    = [];
+            now.setHours(0,0,0,0);
             if (opts.firstDay > 0) {
                 before -= opts.firstDay;
                 if (before < 0) {
@@ -667,6 +668,10 @@
                     isSelected = isDate(this._d) ? compareDates(day, this._d) : false,
                     isToday = compareDates(day, now),
                     isEmpty = i < before || i >= (days + before);
+
+                console.log(day);
+                console.log(now);
+                console.log('--');
 
                 row.push(renderDay(1 + (i - before), isSelected, isToday, isDisabled, isEmpty));
 
