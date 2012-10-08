@@ -9,7 +9,7 @@ Pikaday
 
 [**Try Pikaday Demo →**](http://dbushell.github.com/Pikaday/)
 
-[![Pikaday Screenshot](https://raw.github.com/dbushell/Pikaday/gh-pages/screenshot.png)](http://dbushell.github.com/Pikaday/]
+![Pikaday Screenshot](https://raw.github.com/dbushell/Pikaday/gh-pages/screenshot.png)
 
 ## Usage
 
