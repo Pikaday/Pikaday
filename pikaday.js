@@ -344,14 +344,12 @@
 
         self._onInputFocus = function(e)
         {
-            if (!self._v) {
-                self.gotoDate();
-                self.show();
-            }
+            self.show();
         };
+
         self._onInputClick = function(e)
         {
-            self._onInputFocus();
+            self.show();
         };
 
         self._onInputBlur = function(e)
@@ -388,7 +386,6 @@
 
         addEvent(self.el, 'mousedown', self._onMouseDown, true);
         addEvent(self.el, 'change', self._onChange);
-
 
         if (opts.field) {
             if (opts.bound) {

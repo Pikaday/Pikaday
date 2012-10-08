@@ -34,6 +34,7 @@
 
 .pika-label {
     display: inline-block;
+    *display: inline;
     position: relative;
     z-index: 9999;
     overflow: hidden;
@@ -98,6 +99,7 @@
 
 .pika-select {
     display: inline-block;
+    *display: inline;
 }
 
 .pika-table {
