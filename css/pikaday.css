@@ -28,6 +28,7 @@
 }
 
 .pika-title {
+    position: relative;
     text-align: center;
 }
 
@@ -72,6 +73,8 @@
     text-indent: 100%;
     overflow: hidden;
     opacity: .5;
+    *position: absolute;
+    *top: 0;
 }
 
 .pika-prev:hover,
@@ -83,12 +86,14 @@
 .is-rtl .pika-next {
     float: left;
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAeCAYAAAAsEj5rAAAAUklEQVR42u3VMQoAIBADQf8Pgj+OD9hG2CtONJB2ymQkKe0HbwAP0xucDiQWARITIDEBEnMgMQ8S8+AqBIl6kKgHiXqQqAeJepBo/z38J/U0uAHlaBkBl9I4GwAAAABJRU5ErkJggg==');
+    *left: 0;
 }
 
 .pika-next,
 .is-rtl .pika-prev {
     float: right;
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAeCAYAAAAsEj5rAAAAU0lEQVR42u3VOwoAMAgE0dwfAnNjU26bYkBCFGwfiL9VVWoO+BJ4Gf3gtsEKKoFBNTCoCAYVwaAiGNQGMUHMkjGbgjk2mIONuXo0nC8XnCf1JXgArVIZAQh5TKYAAAAASUVORK5CYII=');
+    *right: 0;
 }
 
 .pika-prev.is-disabled,
@@ -103,15 +108,15 @@
 }
 
 .pika-table {
+    width: 100%;
     border-collapse: collapse;
     border-spacing: 0;
     border: 0;
-    width: 100%;
 }
 
+.pika-table th,
 .pika-table td {
-    padding: 0;
-    width: 30px;
+    width: 14.285714285714286%;
     height: 20px;
 }
 

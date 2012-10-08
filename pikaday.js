@@ -267,7 +267,7 @@
 
     renderTable = function(opts, data)
     {
-        return '<table class="pika-table">' + renderHead(opts) + renderBody(data) + '</table>';
+        return '<table cellpadding="0" cellspacing="0" class="pika-table">' + renderHead(opts) + renderBody(data) + '</table>';
     };
 
 
@@ -365,18 +365,24 @@
         self._onClick = function(e)
         {
             e = e || window.event;
-            var target = e.target || e.srcElement;
+            var target = e.target || e.srcElement,
+                pEl = target;
             if (!target) {
                 return;
             }
+            if (!hasEventListeners && hasClass(target, 'pika-select')) {
+                if (!target.onchange) {
+                    target.setAttribute('onchange', 'return;');
+                    addEvent(target, 'change', self._onChange);
+                }
+            }
             do {
-                if (hasClass(target, 'pika-single')) {
+                if (hasClass(pEl, 'pika-single')) {
                     return;
                 }
             }
-            while ((target = target.parentNode));
-
-            if (self._v && e.target !== opts.field) {
+            while ((pEl = pEl.parentNode));
+            if (self._v && target !== opts.field) {
                 self.hide();
             }
         };
