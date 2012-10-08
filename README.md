@@ -7,13 +7,13 @@ Pickaday
 
 ## Usage
 
-Pickaday can be bound to an input field:
+**Pickaday** can be bound to an input field:
 
 ```html
 <input type="text" id="datepicker" value="2012-10-08">
 ```
 
-Add your JavaScript to the end of your document:
+Add the JavaScript to the end of your document:
 
 ```html
 <script src="pickaday.js"></script>
@@ -25,33 +25,34 @@ Add your JavaScript to the end of your document:
 If you're using **jQuery** make sure to pass only the first element:
 
 ```javascript
-    var picker = new Pickaday({ field: $('#datepicker')[0] });
+var picker = new Pickaday({ field: $('#datepicker')[0] });
 ```
 
 If the Pickaday instance is not bound to a field you can append the element anywhere:
 
 ```javascript
-    var field = document.getElementById('datepicker');
-    var picker = new Pickaday({
-        onSelect: function(date) {
-            field.value = picker.toString()
-        }
-    });
-    field.parentNode.insertBefore(picker.el, field.nextSibling);
+var field = document.getElementById('datepicker');
+var picker = new Pickaday({
+    onSelect: function(date) {
+        field.value = picker.toString()
+    }
+});
+field.parentNode.insertBefore(picker.el, field.nextSibling);
 ```
 ### Configuration
 
+As the examples demonstrate above
 Pickaday has many useful options:
 
-* `field` bind the picker to a form field
-* `bound` automatically show/hide the picker on `field` focus (default `true` if `field` is set)
+* `field` bind the datepicker to a form field
+* `bound` automatically show/hide the datepicker on `field` focus (default `true` if `field` is set)
 * `format` the default output format for `.toString()` and `field` value
 * `defaultDate` the initial date to view when first opened
 * `setDefaultDate` make the `defaultDate` the initial selected value
 * `firstDay` first day of the week (`0`: Sunday, `1`: Monday, etc)
 * `minDate` the minimum/earliest date that can be selected
 * `maxDate` the maximum/latest date that can be selected
-* `yearRange` number of years either side, or array of upper/lower range (e.g. `[1900,2012]`)
+* `yearRange` number of years either side (e.g. `10`) or array of upper/lower range (e.g. `[1900,2012]`)
 * `isRTL` reverse the calendar for right-to-left languages
 * `i18n` language defaults for month and weekday names (see internationalization below)
 * `onSelect` callback function for when a date is selected
@@ -95,7 +96,7 @@ Shortcut for `picker.gotoDate(new Date())`
 
 `picker.gotoMonth(2)`
 
-Change the current view by month (`0`: January, `1`: Feburary, etc).
+Change the current view by month (0: January, 1: Feburary, etc).
 
 `picker.nextMonth()`
 `picker.prevMonth()`
@@ -126,18 +127,21 @@ Hide the picker and remove all event listeners — no going back!
 
 The default `i18n` configuration format looks like this:
 
-    i18n: {
-        months        : ['January','February','March','April','May','June','July','August','September','October','November','December'],
-        weekdays      : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
-        weekdaysShort : ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
-    }
+```javascript
+i18n: {
+    months        : ['January','February','March','April','May','June','July','August','September','October','November','December'],
+    weekdays      : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
+    weekdaysShort : ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+}
+```
 
-Provide 12 months and 7 weekdays (with abbreviations). Always specific weekdays in this order with Sunday first then change the `firstDay` option to reorder if necessary (`0`: Sunday, `1`: Monday, etc). You can also set `isRTL` to `true` for languages read right-to-left.
+You must provide 12 months and 7 weekdays (with abbreviations). Always specify weekdays in this order with Sunday first. You can change the `firstDay` option to reorder if necessary (0: Sunday, 1: Monday, etc). You can also set `isRTL` to `true` for languages that are read right-to-left.
 
 ## Change Log
 
 ### 8th October 2012
 
+* Basic documentation written
 * GitHub repository is ready to go…
 
 * * *

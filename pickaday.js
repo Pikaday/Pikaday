@@ -701,7 +701,7 @@
 
         hide: function()
         {
-            if (this._v) {
+            if (this._v === undefined || this._v) {
                 if (this._o.bound) {
                     removeEvent(document, 'click', this._onClick);
                 }
