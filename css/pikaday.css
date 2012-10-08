@@ -56,6 +56,7 @@
 
 .pika-prev,
 .pika-next {
+    display: block;
     cursor: pointer;
     position: relative;
     outline: none;
@@ -104,6 +105,7 @@
 .pika-table {
     border-collapse: collapse;
     border-spacing: 0;
+    border: 0;
     width: 100%;
 }
 
