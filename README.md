@@ -9,31 +9,28 @@ Pickaday
 
 Pickaday can be bound to an input field:
 
-```javascript
+```html
 <input type="text" id="datepicker" value="2012-10-08">
 ```
 
 Add your JavaScript to the end of your document:
 
-```
+```html
 <script src="pickaday.js"></script>
 <script>
     var picker = new Pickaday({ field: document.getElementById('datepicker') });
 </script>
 ```
 
-If you're using jQuery make sure to pass only the first element:
+If you're using **jQuery** make sure to pass only the first element:
 
 ```javascript
-<script>
     var picker = new Pickaday({ field: $('#datepicker')[0] });
-</script>
 ```
 
 If the Pickaday instance is not bound to a field you can append the element anywhere:
 
 ```javascript
-<script>
     var field = document.getElementById('datepicker');
     var picker = new Pickaday({
         onSelect: function(date) {
@@ -41,7 +38,6 @@ If the Pickaday instance is not bound to a field you can append the element anyw
         }
     });
     field.parentNode.insertBefore(picker.el, field.nextSibling);
-</script>
 ```
 ### Configuration
 
