@@ -669,10 +669,6 @@
                     isToday = compareDates(day, now),
                     isEmpty = i < before || i >= (days + before);
 
-                console.log(day);
-                console.log(now);
-                console.log('--');
-
                 row.push(renderDay(1 + (i - before), isSelected, isToday, isDisabled, isEmpty));
 
                 if (++r === 7) {
