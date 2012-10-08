@@ -50,10 +50,10 @@ Pikaday has many useful options:
 
 * `field` bind the datepicker to a form field
 * `bound` automatically show/hide the datepicker on `field` focus (default `true` if `field` is set)
-* `format` the default output format for `.toString()` and `field` value
+* `format` the default output format for `.toString()` and `field` value (requires [Moment.js](http://momentjs.com/) for advanced formatting)
 * `defaultDate` the initial date to view when first opened
 * `setDefaultDate` make the `defaultDate` the initial selected value
-* `firstDay` first day of the week (`0`: Sunday, `1`: Monday, etc)
+* `firstDay` first day of the week (0: Sunday, 1: Monday, etc)
 * `minDate` the minimum/earliest date that can be selected
 * `maxDate` the maximum/latest date that can be selected
 * `yearRange` number of years either side (e.g. `10`) or array of upper/lower range (e.g. `[1900,2012]`)
@@ -64,7 +64,7 @@ Pikaday has many useful options:
 * `onClose` callback function for when the picker is hidden
 
 
-### Methods
+## Methods
 
 You can control the date picker after creation:
 
@@ -74,9 +74,11 @@ You can control the date picker after creation:
 </script>
 ```
 
+### Get/set date
+
 `picker.toString('YYYY-MM-DD')`
 
-Returns the selected date in a string format. If [Moment.js](http://momentjs.com/) exists (recommended) then Pikaday can return any format Moment understands.
+Returns the selected date in a string format. If [Moment.js](http://momentjs.com/) exists (recommended) then Pikaday can return any format that Moment understands, otherwise you're stuck with JavaScript's default.
 
 `picker.getMoment()`
 
@@ -89,6 +91,8 @@ Returns a basic JavaScript `Date` object of the selected day, or `null` if no se
 `picker.setDate('2012-01-01'))`
 
 Set the current selection. This will be restricted within the bounds of `minDate` and `maxDate` options if they're specified.
+
+### Change current view
 
 `picker.gotoDate(new Date(2012, 1))`
 
@@ -110,6 +114,8 @@ Go to the next or previous month (this will change year if necessary).
 `picker.gotoYear()`
 
 Change the year being viewed.
+
+### Show/hide
 
 `picker.isVisible()`
 
