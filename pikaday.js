@@ -284,7 +284,11 @@
             if (!self._v) {
                 return;
             }
-            var target = e.target;
+            e = e || window.event;
+            var target = e.target || e.srcElement;
+            if (!target) {
+                return;
+            }
 
             if (!hasClass(target, 'is-disabled')) {
                 if (hasClass(target, 'pika-button') && !hasClass(target, 'is-empty')) {
@@ -316,11 +320,16 @@
 
         self._onChange = function(e)
         {
-            if (hasClass(e.target, 'pika-select-month')) {
-                self.gotoMonth(parseInt(e.target.value, 10));
+            e = e || window.event;
+            var target = e.target || e.srcElement;
+            if (!target) {
+                return;
             }
-            else if (hasClass(e.target, 'pika-select-year')) {
-                self.gotoYear(parseInt(e.target.value, 10));
+            if (hasClass(target, 'pika-select-month')) {
+                self.gotoMonth(parseInt(target.value, 10));
+            }
+            else if (hasClass(target, 'pika-select-year')) {
+                self.gotoYear(parseInt(target.value, 10));
             }
         };
 
@@ -357,7 +366,11 @@
 
         self._onClick = function(e)
         {
-            var target = e.target;
+            e = e || window.event;
+            var target = e.target || e.srcElement;
+            if (!target) {
+                return;
+            }
             do {
                 if (hasClass(target, 'pika-single')) {
                     return;
