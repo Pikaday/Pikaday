@@ -14,6 +14,8 @@
 
     hasEventListeners = !!window.addEventListener,
 
+    sto = window.setTimeout,
+
     addEvent = function(el, e, callback, capture)
     {
         if (hasEventListeners) {
@@ -294,7 +296,7 @@
                 if (hasClass(target, 'pika-button') && !hasClass(target, 'is-empty')) {
                     self.setDate(new Date(self._y, self._m, parseInt(target.innerHTML, 10)));
                     if (opts.bound) {
-                        setTimeout(function() {
+                        sto(function() {
                             self.hide();
                         }, 100);
                     }
@@ -355,7 +357,7 @@
         self._onInputBlur = function(e)
         {
             if (!self._c) {
-                self._b = setTimeout(function() {
+                self._b = sto(function() {
                     self.hide();
                 }, 50);
             }
@@ -647,7 +649,7 @@
                     top  += pEl.offsetTop;
                 }
                 this.el.style.cssText = 'position:absolute;left:' + left + 'px;top:' + top + 'px;';
-                setTimeout(function() {
+                sto(function() {
                     opts.field.focus();
                 }, 1);
             }
