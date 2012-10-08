@@ -1,0 +1,153 @@
+@charset "UTF-8";
+
+/*!
+ * Pikaday
+ * Copyright © 2012 David Bushell | BSD & MIT license | http://dbushell.com/
+ */
+
+.kal-single {
+    z-index: 9999;
+    display: block;
+    position: relative;
+    width: 240px;
+    padding: 8px;
+    background: #fff;
+    border: 2px solid #ccc;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.kal-single.is-hidden {
+    display: none;
+}
+
+.kal-single.is-bound {
+    position: absolute;
+}
+
+.kal-title {
+    text-align: center;
+}
+
+.kal-label {
+    display: inline-block;
+    position: relative;
+    z-index: 9999;
+    overflow: hidden;
+    margin: 0;
+    padding: 5px 3px;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: bold;
+    background-color: #fff;
+}
+.kal-title select {
+    cursor: pointer;
+    position: absolute;
+    z-index: 9998;
+    margin: 0;
+    left: 0;
+    top: 5px;
+    opacity: 0;
+}
+
+.kal-prev,
+.kal-next {
+    cursor: pointer;
+    position: relative;
+    outline: none;
+    border: 0;
+    padding: 0;
+    width: 20px;
+    height: 30px;
+    background-color: transparent;
+    background-position: center center;
+    background-repeat: no-repeat;
+    white-space: nowrap;
+    text-indent: 100%;
+    overflow: hidden;
+    opacity: .5;
+}
+
+.kal-prev:hover,
+.kal-next:hover {
+    opacity: 1;
+}
+
+.kal-prev,
+.is-rtl .kal-next {
+    float: left;
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAeCAYAAAAsEj5rAAAAUklEQVR42u3VMQoAIBADQf8Pgj+OD9hG2CtONJB2ymQkKe0HbwAP0xucDiQWARITIDEBEnMgMQ8S8+AqBIl6kKgHiXqQqAeJepBo/z38J/U0uAHlaBkBl9I4GwAAAABJRU5ErkJggg==');
+}
+
+.kal-next,
+.is-rtl .kal-prev {
+    float: right;
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAeCAYAAAAsEj5rAAAAU0lEQVR42u3VOwoAMAgE0dwfAnNjU26bYkBCFGwfiL9VVWoO+BJ4Gf3gtsEKKoFBNTCoCAYVwaAiGNQGMUHMkjGbgjk2mIONuXo0nC8XnCf1JXgArVIZAQh5TKYAAAAASUVORK5CYII=');
+}
+
+.kal-prev.is-disabled,
+.kal-next.is-disabled {
+    cursor: default;
+    opacity: .2;
+}
+
+.kal-select {
+    display: inline-block;
+}
+
+.kal-table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+}
+
+.kal-table td {
+    padding: 0;
+    width: 30px;
+    height: 20px;
+}
+
+.kal-table th {
+    font-size: 12px;
+    line-height: 25px;
+    font-weight: normal;
+    text-align: center;
+}
+
+.kal-button {
+    cursor: pointer;
+    display: block;
+    outline: none;
+    border: 0;
+    margin: 0;
+    width: 100%;
+    padding: 5px;
+    color: #666;
+    font-size: 12px;
+    line-height: 15px;
+    text-align: right;
+    background: #f5f5f5;
+}
+
+.kal-button:hover {
+    color: #fff !important;
+    background: #ff8000 !important;
+}
+
+.is-today .kal-button {
+    color: #33aaff;
+    font-weight: bold;
+}
+
+.is-selected .kal-button {
+    color: #fff;
+    font-weight: bold;
+    background: #33aaff;
+}
+
+.is-disabled .kal-button {
+    pointer-events: none;
+    cursor: default;
+    color: #999;
+    opacity: .3;
+}

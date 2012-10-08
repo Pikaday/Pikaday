@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+    <title>Pikaday</title>
+    <meta name="author" content="David Bushell">
+    <link rel="stylesheet" href="css/pikaday.css">
+    <style>
+    body {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        margin: 0;
+        padding: 1em 2em;
+    }
+    label {
+        font-weight: bold;
+    }
+    input[type="text"] {
+        margin: 0.5em 0;
+        padding: 0.5em;
+    }
+    </style>
+</head>
+
+    <h1>Pikaday</h1>
+
+    <p>A refreshing JavaScript Datepicker — lightweight, no dependencies, modular CSS.</p>
+
+    <p><a href="https://github.com/dbushell/Pikaday">Pikaday source on GitHub</a></p>
+
+    <label for="datepicker">Date:</label>
+    <br>
+    <input type="text" id="datepicker">
+
+    <small>
+        <p>Copyright © 2012 <a href="http://dbushell.com/">David Bushell</a> | BSD &amp; MIT license</p>
+    </small>
+
+    <script src="pikaday.js"></script>
+    <script>
+
+    var picker = new Pikaday(
+    {
+        field: document.getElementById('datepicker'),
+        firstDay: 1,
+        minDate: new Date('2000-01-01'),
+        maxDate: new Date('2020-12-31'),
+        yearRange: [2000,2020]
+    });
+
+    </script>
+</body>
+</html>
