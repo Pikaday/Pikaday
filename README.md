@@ -82,7 +82,7 @@ Returns the selected date in a string format. If [Moment.js](http://momentjs.com
 
 Returns a [Moment.js](http://momentjs.com/) object for the selected date (Moment must be loaded before Pikaday).
 
-`picker.getDate(new Date()`
+`picker.getDate(new Date())`
 
 Returns a basic JavaScript `Date` object of the selected day, or `null` if no selection.
 
