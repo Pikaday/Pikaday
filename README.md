@@ -9,33 +9,40 @@ Pickaday
 
 Pickaday can be bound to an input field:
 
-    <input type="text" id="datepicker" value="2012-10-08">
+```javascript
+<input type="text" id="datepicker" value="2012-10-08">
+```
 
 Add your JavaScript to the end of your document:
 
-    <script src="pickaday.js"></script>
-    <script>
-        var picker = new Pickaday({ field: document.getElementById('datepicker') });
-    </script>
+```
+<script src="pickaday.js"></script>
+<script>
+    var picker = new Pickaday({ field: document.getElementById('datepicker') });
+</script>
+```
 
 If you're using jQuery make sure to pass only the first element:
 
-    <script>
-        var picker = new Pickaday({ field: $('#datepicker')[0] });
-    </script>
+```javascript
+<script>
+    var picker = new Pickaday({ field: $('#datepicker')[0] });
+</script>
+```
 
 If the Pickaday instance is not bound to a field you can append the element anywhere:
 
-    <script>
-        var field = document.getElementById('datepicker');
-        var picker = new Pickaday({
-            onSelect: function(date) {
-                field.value = picker.toString()
-            }
-        });
-        field.parentNode.insertBefore(picker.el, field.nextSibling);
-    </script>
-
+```javascript
+<script>
+    var field = document.getElementById('datepicker');
+    var picker = new Pickaday({
+        onSelect: function(date) {
+            field.value = picker.toString()
+        }
+    });
+    field.parentNode.insertBefore(picker.el, field.nextSibling);
+</script>
+```
 ### Configuration
 
 Pickaday has many useful options:
@@ -60,9 +67,11 @@ Pickaday has many useful options:
 
 You can control the date picker after creation:
 
-    <script>
-        var picker = new Pickaday({ field: document.getElementById('datepicker') });
-    </script>
+```javascript
+<script>
+    var picker = new Pickaday({ field: document.getElementById('datepicker') });
+</script>
+```
 
 `picker.toString('YYYY-MM-DD')`
 
