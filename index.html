@@ -7,16 +7,24 @@
     <meta name="author" content="David Bushell">
     <link rel="stylesheet" href="css/pikaday.css">
     <style>
-    body {
-        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-        margin: 0;
-        padding: 1em 2em;
-    }
+    html { margin: 0; padding: 0; }
+    body { font-size: 100%; margin: 0; padding: 1.75em; font-family: 'Helvetica Neue', Arial, sans-serif; }
+
+    h1 { font-size: 1.75em; margin: 0 0 0.6em 0; }
+    h2 { font-size: 1.25em; margin: 0 0 0.6em 0; }
+
+    a { color: #2996cc; }
+    a:hover { text-decoration: none; }
+
+    p { line-height: 1.5em; }
+    .small { color: #666; font-size: 0.875em; }
+    .large { font-size: 1.25em; }
+
     label {
         font-weight: bold;
     }
     input[type="text"] {
-        margin: 0.5em 0;
+        margin: 0.5em 0 3em 0;
         padding: 0.5em;
     }
     </style>
@@ -24,9 +32,9 @@
 
     <h1>Pikaday</h1>
 
-    <p>A refreshing JavaScript Datepicker — lightweight, no dependencies, modular CSS.</p>
+    <p class="large">A refreshing JavaScript Datepicker — lightweight, no dependencies, modular CSS.</p>
 
-    <p><a href="https://github.com/dbushell/Pikaday">Pikaday source on GitHub</a></p>
+    <p><a href="https://github.com/dbushell/Pikaday"><strong>Pikaday source on GitHub</strong></a></p>
 
     <label for="datepicker">Date:</label>
     <br>
@@ -34,11 +42,10 @@
 
     <h2>What is this?</h2>
 
-    <p>This is a development preview! Feel free to use it however you like but please report any bugs or feature requests to <a href="http://twitter.com/dbushell/">@dbushell</a>, thanks!</p>
+    <p>This is a development preview! Feel free to use it however you like but please report any bugs or feature requests to <a href="http://twitter.com/dbushell/">@dbushell</a> (on the GitHub issue tracker), thanks!</p>
 
-    <small>
-        <p>Copyright © 2012 <a href="http://dbushell.com/">David Bushell</a> | BSD &amp; MIT license</p>
-    </small>
+    <p class="small">Copyright © 2012 <a href="http://dbushell.com/">David Bushell</a> | BSD &amp; MIT license | Made for <a href="http://www.browserlondon.com/">Browser</a></p>
+
 
     <script src="pikaday.js"></script>
     <script>

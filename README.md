@@ -9,6 +9,10 @@ Pikaday
 
 [**Try Pikaday Demo →**](http://dbushell.github.com/Pikaday/)
 
+![Pikaday Screenshot](https://raw.github.com/dbushell/Pikaday/gh-pages/screenshot.png)
+
+**Production ready?** Not quite! It works very well but there's a bit of polishing to do. Please submit bugs and feature requests to the [GitHub issue tracker](https://github.com/dbushell/Pikaday/issues).
+
 ## Usage
 
 **Pikaday** can be bound to an input field:
