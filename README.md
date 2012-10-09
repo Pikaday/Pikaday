@@ -18,7 +18,7 @@ Pikaday
 **Pikaday** can be bound to an input field:
 
 ```html
-<input type="text" id="datepicker" value="2012-10-08">
+<input type="text" id="datepicker">
 ```
 
 Add the JavaScript to the end of your document:
@@ -42,11 +42,30 @@ If the Pikaday instance is not bound to a field you can append the element anywh
 var field = document.getElementById('datepicker');
 var picker = new Pikaday({
     onSelect: function(date) {
-        field.value = picker.toString()
+        field.value = picker.toString();
     }
 });
 field.parentNode.insertBefore(picker.el, field.nextSibling);
 ```
+
+For advanced formatting load [Moment.js](http://momentjs.com/) prior to Pikaday:
+
+```html
+<input type="text" id="datepicker" value="9 Oct 2012">
+
+<script src="moment.js"></script>
+<script src="pikaday.js"></script>
+<script>
+    var picker = new Pikaday({
+        field: document.getElementById('datepicker')
+        format: 'D MMM YYYY',
+        onSelect: function() {
+            console.log(this.getMoment().format('Do MMMM YYYY'));
+        }
+    });
+</script>
+``` 
+
 ### Configuration
 
 As the examples demonstrate above
