@@ -404,7 +404,11 @@
             addEvent(opts.field, 'change', self._onInputChange);
             
             if (!opts.defaultDate) {
-                opts.defaultDate = new Date(Date.parse(opts.field.value));
+                if (hasMoment) {
+                    opts.defaultDate = window.moment(opts.field.value, opts.format).toDate();
+                } else {
+                    opts.defaultDate = new Date(Date.parse(opts.field.value));
+                }
                 opts.setDefaultDate = true;
             }
         }
