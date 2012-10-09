@@ -53,7 +53,6 @@
 
     removeClass = function(el, cn)
     {
-        var test = ' ' + el.className + ' ';
         el.className = trim((' ' + el.className + ' ').replace(' ' + cn + ' ', ' '));
     },
 
