@@ -404,7 +404,7 @@
             addEvent(opts.field, 'change', self._onInputChange);
             
             if (!opts.defaultDate) {
-                if (hasMoment) {
+                if (hasMoment && opts.field.value) {
                     opts.defaultDate = window.moment(opts.field.value, opts.format).toDate();
                 } else {
                     opts.defaultDate = new Date(Date.parse(opts.field.value));
