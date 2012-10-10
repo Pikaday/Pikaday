@@ -96,7 +96,7 @@ The normal version of Pikaday does not require jQuery, however there is a jQuery
 <script>
 
 // activate datepickers for all elements with a class of `datepicker`
-$('.datepicker').pikaday();
+$('.datepicker').pikaday({ firstDay: 1 });
 
 // chain a few methods for the first datepicker, jQuery style!
 $('.datepicker').eq(0).pikaday('show').pikaday('gotoYear', 2042);
