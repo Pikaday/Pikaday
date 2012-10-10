@@ -91,8 +91,6 @@ Pikaday has many useful options:
 The normal version of Pikaday does not require jQuery, however there is a jQuery plugin version if that floats your boat (see `plugins/pikaday.jquery.js` in the repository). This version requires jQuery, naturally, and can be used like other plugins:
 
 ```html
-<input type="text" id="datepicker">
-
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 <script src="pikaday.jquery.min.js"></script>
 <script>
