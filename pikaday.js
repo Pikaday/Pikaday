@@ -209,12 +209,11 @@
 
     renderHead = function(opts)
     {
-        var i, html = '<thead>', arr = [];
+        var i, arr = [];
         for (i = 0; i < 7; i++) {
             arr.push('<th scope="col"><abbr title="' + renderDayName(opts, i) + '">' + renderDayName(opts, i, true) + '</abbr></th>');
         }
-        html += (opts.isRTL ? arr.reverse() : arr).join('');
-        return html += '</thead>';
+        return '<thead>' + (opts.isRTL ? arr.reverse() : arr).join('') + '</thead>';
     },
 
     renderTitle = function(instance)
