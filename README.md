@@ -86,6 +86,25 @@ Pikaday has many useful options:
 * `onOpen` callback function for when the picker becomes visible 
 * `onClose` callback function for when the picker is hidden
 
+## jQuery Plugin
+
+The normal version of Pikaday does not require jQuery, however there is a jQuery plugin version if that floats your boat (see `plugins/pikaday.jquery.js` in the repository). This version requires jQuery, naturally, and can be used like other plugins:
+
+```html
+<input type="text" id="datepicker">
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="pikaday.jquery.min.js"></script>
+<script>
+
+// activate datepickers for all elements with a class of `datepicker`
+$('.datepicker').pikaday();
+
+// chain a few methods for the first datepicker, jQuery style!
+$('.datepicker').eq(0).pikaday('show').pikaday('gotoYear', 2042);
+
+</script>
+``` 
 
 ## Methods
 
