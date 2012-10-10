@@ -209,12 +209,11 @@
 
     renderHead = function(opts)
     {
-        var i, html = '<thead>', arr = [];
+        var i, arr = [];
         for (i = 0; i < 7; i++) {
             arr.push('<th scope="col"><abbr title="' + renderDayName(opts, i) + '">' + renderDayName(opts, i, true) + '</abbr></th>');
         }
-        html += (opts.isRTL ? arr.reverse() : arr).join('');
-        return html += '</thead>';
+        return '<thead>' + (opts.isRTL ? arr.reverse() : arr).join('') + '</thead>';
     },
 
     renderTitle = function(instance)
@@ -327,10 +326,10 @@
                 return;
             }
             if (hasClass(target, 'pika-select-month')) {
-                self.gotoMonth(parseInt(target.value, 10));
+                self.gotoMonth(target.value);
             }
             else if (hasClass(target, 'pika-select-year')) {
-                self.gotoYear(parseInt(target.value, 10));
+                self.gotoYear(target.value);
             }
         };
 
@@ -579,8 +578,8 @@
          */
         gotoMonth: function(month)
         {
-            if (!isNaN(month)) {
-                this._m = parseInt(month < 0 ? 0 : month > 11 ? 11 : month, 10);
+            if (!isNaN( (month = parseInt(month, 10)) )) {
+                this._m = month < 0 ? 0 : month > 11 ? 11 : month;
                 this.draw();
             }
         },
