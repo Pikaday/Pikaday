@@ -187,6 +187,10 @@ You must provide 12 months and 7 weekdays (with abbreviations). Always specify w
 
 ## Change Log
 
+### 10th October 2012
+
+* jQuery plugin version
+
 ### 8th October 2012
 
 * Basic documentation written
