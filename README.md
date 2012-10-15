@@ -77,8 +77,8 @@ Pikaday has many useful options:
 * `defaultDate` the initial date to view when first opened
 * `setDefaultDate` make the `defaultDate` the initial selected value
 * `firstDay` first day of the week (0: Sunday, 1: Monday, etc)
-* `minDate` the minimum/earliest date that can be selected
-* `maxDate` the maximum/latest date that can be selected
+* `minDate` the minimum/earliest date that can be selected (this should be a native Date object - e.g. `new Date()` or `moment().toDate()`)
+* `maxDate` the maximum/latest date that can be selected (this should be a native Date object - e.g. `new Date()` or `moment().toDate()`)
 * `yearRange` number of years either side (e.g. `10`) or array of upper/lower range (e.g. `[1900,2012]`)
 * `isRTL` reverse the calendar for right-to-left languages
 * `i18n` language defaults for month and weekday names (see internationalization below)
@@ -86,6 +86,23 @@ Pikaday has many useful options:
 * `onOpen` callback function for when the picker becomes visible 
 * `onClose` callback function for when the picker is hidden
 
+## jQuery Plugin
+
+The normal version of Pikaday does not require jQuery, however there is a jQuery plugin version if that floats your boat (see `plugins/pikaday.jquery.js` in the repository). This version requires jQuery, naturally, and can be used like other plugins:
+
+```html
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="pikaday.jquery.min.js"></script>
+<script>
+
+// activate datepickers for all elements with a class of `datepicker`
+$('.datepicker').pikaday({ firstDay: 1 });
+
+// chain a few methods for the first datepicker, jQuery style!
+$('.datepicker').eq(0).pikaday('show').pikaday('gotoYear', 2042);
+
+</script>
+``` 
 
 ## Methods
 
@@ -105,7 +122,7 @@ Returns the selected date in a string format. If [Moment.js](http://momentjs.com
 
 Returns a [Moment.js](http://momentjs.com/) object for the selected date (Moment must be loaded before Pikaday).
 
-`picker.getDate(new Date())`
+`picker.getDate()`
 
 Returns a basic JavaScript `Date` object of the selected day, or `null` if no selection.
 
@@ -169,6 +186,10 @@ i18n: {
 You must provide 12 months and 7 weekdays (with abbreviations). Always specify weekdays in this order with Sunday first. You can change the `firstDay` option to reorder if necessary (0: Sunday, 1: Monday, etc). You can also set `isRTL` to `true` for languages that are read right-to-left.
 
 ## Change Log
+
+### 10th October 2012
+
+* jQuery plugin version
 
 ### 8th October 2012
 

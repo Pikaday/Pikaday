@@ -1,4 +1,41 @@
 /*!
+ * Pikaday jQuery plugin
+ * Copyright © 2012 David Bushell | BSD & MIT license | http://dbushell.com/
+ */
+
+(function($)
+{
+
+    $.fn.pikaday = function(param)
+    {
+        var args = arguments;
+
+        if (!args || !args.length) {
+            return this;
+        }
+
+        return this.each(function()
+        {
+            var self   = $(this),
+                plugin = self.data('pikaday');
+
+            if (!(plugin instanceof window.Pikaday)) {
+                if (typeof args[0] === 'object') {
+                    var options = $.extend({}, args[0]);
+                    options.field = self[0];
+                    self.data('pikaday', new Pikaday(options));
+                }
+            } else {
+                if (typeof args[0] === 'string' && typeof plugin[args[0]] === 'function') {
+                    plugin[args[0]].apply(plugin, Array.prototype.slice.call(args,1));
+                }
+            }
+        });
+    };
+
+})(window.jQuery);
+
+/*!
  * Pikaday
  * Copyright © 2012 David Bushell | BSD & MIT license | http://dbushell.com/
  */
