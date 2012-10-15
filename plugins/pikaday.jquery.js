@@ -759,14 +759,15 @@
 
         hide: function()
         {
-            if (this._v === undefined || this._v) {
+            var v = this._v;
+            if (v !== false) {
                 if (this._o.bound) {
                     removeEvent(document, 'click', this._onClick);
                 }
                 this.el.style.cssText = '';
                 addClass(this.el, 'is-hidden');
                 this._v = false;
-                if (typeof this._o.onClose === 'function') {
+                if (v !== undefined && typeof this._o.onClose === 'function') {
                     this._o.onClose.call(this);
                 }
             }
