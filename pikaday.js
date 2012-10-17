@@ -335,8 +335,13 @@
 
         self._onInputChange = function(e)
         {
-            var date = new Date(Date.parse(opts.field.value));
-            self.setDate(isDate(date) ? date : null);
+            if (hasMoment) {
+                self.setDate(window.moment(opts.field.value, opts.format).toDate());
+            }
+            else {
+                var date = new Date(Date.parse(opts.field.value));
+                self.setDate(isDate(date) ? date : null);
+            }
             if (!self._v) {
                 self.show();
             }
