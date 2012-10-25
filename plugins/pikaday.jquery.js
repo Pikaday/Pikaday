@@ -6,12 +6,12 @@
 (function($)
 {
 
-    $.fn.pikaday = function(param)
+    $.fn.pikaday = function()
     {
         var args = arguments;
 
         if (!args || !args.length) {
-            return this;
+            args = [{ }];
         }
 
         return this.each(function()
