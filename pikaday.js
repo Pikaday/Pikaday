@@ -405,7 +405,7 @@
                 opts.field.parentNode.insertBefore(self.el, opts.field.nextSibling);
             }
             addEvent(opts.field, 'change', self._onInputChange);
-            
+
             if (!opts.defaultDate) {
                 if (hasMoment && opts.field.value) {
                     opts.defaultDate = window.moment(opts.field.value, opts.format).toDate();
@@ -658,9 +658,11 @@
                     top  += pEl.offsetTop;
                 }
                 this.el.style.cssText = 'position:absolute;left:' + left + 'px;top:' + top + 'px;';
-                sto(function() {
-                    opts.field.focus();
-                }, 1);
+                if(opts.field.type !== 'hidden') {
+                    sto(function() {
+                        opts.field.focus();
+                    }, 1);
+                }
             }
         },
 
