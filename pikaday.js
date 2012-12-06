@@ -399,7 +399,7 @@
         addEvent(self.el, 'change', self._onChange);
 
         if (opts.field) {
-            if (opts.bound) {
+            if (!opts.bound) {
                 document.body.appendChild(self.el);
             } else {
                 opts.field.parentNode.insertBefore(self.el, opts.field.nextSibling);
@@ -648,14 +648,8 @@
             this.el.innerHTML = renderTitle(this) + this.render(this._y, this._m);
 
             if (opts.bound) {
-                var pEl  = opts.field,
-                    left = pEl.offsetLeft,
-                    top  = pEl.offsetTop + pEl.offsetHeight;
-                while((pEl = pEl.offsetParent)) {
-                    left += pEl.offsetLeft;
-                    top  += pEl.offsetTop;
-                }
-                this.el.style.cssText = 'position:absolute;left:' + left + 'px;top:' + top + 'px;';
+    			var pEl  = opts.field, left = pEl.offsetLeft;
+				this.el.style.cssText = 'position:absolute;left:' + left + 'px;';
                 sto(function() {
                     opts.field.focus();
                 }, 1);
