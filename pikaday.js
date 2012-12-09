@@ -163,7 +163,8 @@
         // callback function
         onSelect: null,
         onOpen: null,
-        onClose: null
+        onClose: null,
+	onInvalid:null
     },
 
 
@@ -336,11 +337,19 @@
         self._onInputChange = function(e)
         {
             if (hasMoment) {
-                self.setDate(window.moment(opts.field.value, opts.format).toDate());
+		if(typeof self._o.onInvalid === 'function' && window.moment(opts.field.value, opts.format).isValid() === false ){
+			self._o.onInvalid.call(self);
+		}
+		else {
+			self.setDate(window.moment(opts.field.value, opts.format).toDate());
+            	}
             }
             else {
                 var date = new Date(Date.parse(opts.field.value));
                 self.setDate(isDate(date) ? date : null);
+		if(typeof self._o.onInvalid === 'function' && isDate(date)===false){
+			self._o.onInvalid.call(self);
+		}
             }
             if (!self._v) {
                 self.show();
