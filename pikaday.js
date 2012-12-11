@@ -157,8 +157,15 @@
                 months        : ['January','February','March','April','May','June','July','August','September','October','November','December'],
                 //monthsShort   : ['Jan_Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
                 weekdays      : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
-                weekdaysShort : ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+                weekdaysShort : ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
+                timeTitles    : ['Hours', 'Minutes', 'Seconds']
         },
+
+        // time picker
+        showTimePicker: true,
+        incrementStep: 1,
+        defaultTime: 'current', // use 'value' to extract from input value or false to use no default value
+        showMeridian: true,
 
         // callback function
         onSelect: null,
