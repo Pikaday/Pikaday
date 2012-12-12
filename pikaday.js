@@ -158,13 +158,13 @@
                 //monthsShort   : ['Jan_Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
                 weekdays      : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
                 weekdaysShort : ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
-                timeTitles    : ['Hours', 'Minutes', 'Seconds']
+                timeTitles    : ['Hours', 'Minutes']
         },
 
         // time picker
         showTimePicker: true,
-        incrementStep: 1,
-        defaultTime: 'current', // use 'value' to extract from input value or false to use no default value
+        minuteStep: 1,
+        defaultTime: false, // set a `Date` object to change
         showMeridian: true,
 
         // callback function
@@ -272,24 +272,65 @@
         return html += '</div>';
     },
 
-    renderTimeInput = function(opts, data)
+    renderTimeHourOpts = function(meridian, defTime)
     {
-      var html = '', max = 0,
-        inputs = ['hour', 'minute', 'second'];
+      var html = '', start = 0, end = 23;
 
-      for(var i = 0; i < inputs.length; i++)
-      {
-        if (i == 0) {
-          max = 23;
-        } else {
-          max = 59;
+      if (meridian) {
+        start = 1;
+        end = 11;
+      }
+
+      for (var i = start; i <= end; i++) {
+        var label = (i > 9) ? i : '0' + i;
+        var selected = (defTime.getHours() === i) ? true : false;
+
+        if (meridian) {
+          // Add meridian initials
+          label = (meridian === true) ? label + 'am' : label;
+          label = (meridian === 'pm') ? label + 'pm' : label;
+
+          // Find selected
+          selected = (meridian === true && defTime.getHours() === i ) ? true : false;
+          selected = (meridian === 'pm' && defTime.getHours() === i + 12 ) ? true : false;
         }
-        html += '<td data-' + inputs[i] +'="0"><input type="number" class="pika-' + inputs[i] + '" min="0" max="' + max + '" step="' + opts.incrementStep + '" value="0"></td>';
+
+        html += '<option value="' + i + (selected ? '" selected' : '"') + '>' + label + '</option>';
       }
 
-      if (opts.showMeridian) {
-        html += '<td data-meridian="true"><button class="pika-meridian" type="button">PM</button></td>';
+      if (meridian === true) {
+        return html += renderTimeHourOpts('pm', defTime);
+      } else {
+        return html;
       }
+    },
+
+    renderTimeMinuteOpts = function(step, defTime)
+    {
+      var html = '';
+
+      for (var i = 0; i <= 59; i += step) {
+        var label = (i > 9) ? i : '0' + i;
+        var selected = (defTime.getMinutes() === i) ? true : false;
+
+        html += '<option value="' + i + (selected ? '" selected' : '"') + '>' + label + '</option>';
+      }
+
+      return html;
+    },
+
+    renderTimeInput = function(opts)
+    {
+      var html = '';
+      html += '<td data-hour="0" class="pika-time-hour"><select class="pika-select">' +
+        renderTimeHourOpts(opts.showMeridian, opts.defaultTime) +
+        '</select></td>';
+
+      html += '<td class="pika-time-sep"><span>:</span></td>';
+
+      html += '<td data-minute="0" class="pika-time-minute"><select class="pika-select">' +
+        renderTimeMinuteOpts(opts.minuteStep, opts.defaultTime) +
+        '</select></td>';
 
       return html;
     },
@@ -299,21 +340,16 @@
       var html = '',
         titles = opts.i18n.timeTitles;
 
-      for(var i = 0; i < titles.length; i++)
-      {
-        html += '<th scope="col">' + titles[i] + '</th>';
-      }
-
-      if (opts.showMeridian) {
-        html += '<th scope="col">&nbsp;</th>';
-      }
+      html += '<th scope="col pika-time-hour">' + titles[0] + '</th>';
+      html += '<th scope="col pika-time-sep">&nbsp;</th>';
+      html += '<th scope="col pika-time-minute">' + titles[1] + '</th>';
 
       return html;
     },
 
     renderTimeTable = function(opts)
     {
-      return '<table cellpadding="0" cellspacing="0" class="pika-table"><thead><tr>' +
+      return '<table cellpadding="0" cellspacing="0" class="pika-table pika-time"><thead><tr>' +
         renderTimeTitles(opts) +
         '</tr></thead><tbody><tr>' +
         renderTimeInput(opts) +
@@ -468,6 +504,12 @@
                     opts.defaultDate = new Date(Date.parse(opts.field.value));
                 }
                 opts.setDefaultDate = true;
+
+                if (!opts.defaultTime && !Date.parse(opts.field.value) > 0) {
+                  opts.defaultTime = new Date();
+                } else {
+                  opts.defaultTime = opts.defaultDate;
+                }
             }
         }
 
