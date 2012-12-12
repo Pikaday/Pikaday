@@ -170,14 +170,14 @@
 }
 
 .pika-time {
-  width: 50%;
-  margin: 0 auto;
+    width: 50%;
+    margin: 0 auto;
 }
 
 .pika-time tbody {
-  text-align: center;
+    text-align: center;
 }
 
 .pika-time-sep {
-  width: 10px;
+    width: 10px;
 }

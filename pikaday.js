@@ -274,86 +274,88 @@
 
     renderTimeHourOpts = function(meridian, defTime)
     {
-      var html = '', start = 0, end = 23;
-
-      if (meridian) {
-        start = 1;
-        end = 11;
-      }
-
-      for (var i = start; i <= end; i++) {
-        var label = (i > 9) ? i : '0' + i;
-        var selected = (defTime.getHours() === i) ? true : false;
+        var html = '', start = 0, end = 23;
 
         if (meridian) {
-          // Add meridian initials
-          label = (meridian === true) ? label + 'am' : label;
-          label = (meridian === 'pm') ? label + 'pm' : label;
-
-          // Find selected
-          selected = (meridian === true && defTime.getHours() === i ) ? true : false;
-          selected = (meridian === 'pm' && defTime.getHours() === i + 12 ) ? true : false;
+            start = 1;
+            end = 11;
         }
 
-        html += '<option value="' + i + (selected ? '" selected' : '"') + '>' + label + '</option>';
-      }
+        for (var i = start; i <= end; i++) {
+            var label = (i > 9) ? i : '0' + i;
+            var selected = (defTime.getHours() === i) ? true : false;
+            var value = i;
 
-      if (meridian === true) {
-        return html += renderTimeHourOpts('pm', defTime);
-      } else {
-        return html;
-      }
+            if (meridian) {
+                // Add meridian initials
+                label = (meridian === true) ? label + 'am' : label;
+                label = (meridian === 'pm') ? label + 'pm' : label;
+
+                // Find selected
+                selected = (meridian === true && defTime.getHours() === i ) ? true : false;
+                selected = (meridian === 'pm' && defTime.getHours() === i + 12 ) ? true : false;
+                value = i + 12;
+            }
+
+            html += '<option value="' + value + (selected ? '" selected' : '"') + '>' + label + '</option>';
+        }
+
+        if (meridian === true) {
+            return html += renderTimeHourOpts('pm', defTime);
+        } else {
+            return html;
+        }
     },
 
     renderTimeMinuteOpts = function(step, defTime)
     {
-      var html = '';
+        var html = '';
 
-      for (var i = 0; i <= 59; i += step) {
-        var label = (i > 9) ? i : '0' + i;
-        var selected = (defTime.getMinutes() === i) ? true : false;
+        for (var i = 0; i <= 59; i += step) {
+            var label = (i > 9) ? i : '0' + i;
+            var selected = (defTime.getMinutes() === i) ? true : false;
 
-        html += '<option value="' + i + (selected ? '" selected' : '"') + '>' + label + '</option>';
-      }
+            html += '<option value="' + i + (selected ? '" selected' : '"') + '>' + label + '</option>';
+        }
 
-      return html;
+        return html;
     },
 
     renderTimeInput = function(opts)
     {
-      var html = '';
-      html += '<td data-hour="0" class="pika-time-hour"><select class="pika-select">' +
-        renderTimeHourOpts(opts.showMeridian, opts.defaultTime) +
-        '</select></td>';
+        var html = '';
+        html += '<td data-hour="0" ><select class="pika-select pika-time-hour">' +
+            renderTimeHourOpts(opts.showMeridian, opts.defaultTime) +
+            '</select></td>';
 
-      html += '<td class="pika-time-sep"><span>:</span></td>';
+        html += '<td class="pika-time-sep"><span>:</span></td>';
 
-      html += '<td data-minute="0" class="pika-time-minute"><select class="pika-select">' +
-        renderTimeMinuteOpts(opts.minuteStep, opts.defaultTime) +
-        '</select></td>';
+        html += '<td data-minute="0"><select class="pika-select pika-time-minute">' +
+            renderTimeMinuteOpts(opts.minuteStep, opts.defaultTime) +
+            '</select></td>';
 
-      return html;
+        return html;
     },
 
     renderTimeTitles = function(opts)
     {
-      var html = '',
+        var html = '',
         titles = opts.i18n.timeTitles;
 
-      html += '<th scope="col pika-time-hour">' + titles[0] + '</th>';
-      html += '<th scope="col pika-time-sep">&nbsp;</th>';
-      html += '<th scope="col pika-time-minute">' + titles[1] + '</th>';
+        html += '<th scope="col pika-time-hour">' + titles[0] + '</th>';
+        html += '<th scope="col pika-time-sep">&nbsp;</th>';
+        html += '<th scope="col pika-time-minute">' + titles[1] + '</th>';
 
-      return html;
+        return html;
     },
 
     renderTimeTable = function(opts)
     {
-      return '<table cellpadding="0" cellspacing="0" class="pika-table pika-time"><thead><tr>' +
-        renderTimeTitles(opts) +
-        '</tr></thead><tbody><tr>' +
-        renderTimeInput(opts) +
-        '</tr></tbody></table>';
+        return '<table cellpadding="0" cellspacing="0" class="pika-table pika-time"><thead><tr>' +
+            renderTimeTitles(opts) +
+            '</tr></thead><tbody><tr>' +
+            renderTimeInput(opts) +
+            '</tr></tbody></table>';
     },
 
     renderTable = function(opts, data)
@@ -505,10 +507,10 @@
                 }
                 opts.setDefaultDate = true;
 
-                if (!opts.defaultTime && !Date.parse(opts.field.value) > 0) {
-                  opts.defaultTime = new Date();
+                if (!opts.defaultTime && !isDate(Date.parse(opts.field.value))) {
+                    opts.defaultTime = new Date();
                 } else {
-                  opts.defaultTime = opts.defaultDate;
+                    opts.defaultTime = opts.defaultDate;
                 }
             }
         }
@@ -801,9 +803,9 @@
             }
 
             if (opts.showTimePicker) {
-              return renderTable(opts, data) + renderTimeTable(opts, data);
+                return renderTable(opts, data) + renderTimeTable(opts);
             } else {
-              return renderTable(opts, data);
+                return renderTable(opts, data);
             }
         },
 
