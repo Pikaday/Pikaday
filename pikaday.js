@@ -686,8 +686,17 @@
                 date = max;
             }
 
-            this._d = new Date(date.getTime());
-            this._d.setHours(0,0,0,0);
+            if (!isDate(this._d)) {
+                this._d = new Date(date.getTime());
+            } else {
+                this._d.setDate(date.getDate());
+                this._d.setMonth(date.getMonth());
+                this._d.setYear(date.getYear());
+            }
+
+            if (!this._o.showTimePicker) {
+                this._d.setHours(0,0,0,0);
+            }
             this.gotoDate(this._d);
 
             if (this._o.field) {
@@ -811,7 +820,11 @@
                 before = new Date(year, month, 1).getDay(),
                 data   = [],
                 row    = [];
-            now.setHours(0,0,0,0);
+
+            if (!this._o.showTimePicker) {
+                this._d.setHours(0,0,0,0);
+            }
+
             if (opts.firstDay > 0) {
                 before -= opts.firstDay;
                 if (before < 0) {
