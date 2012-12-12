@@ -322,15 +322,17 @@
 
     renderTimeInput = function(opts)
     {
-        var html = '';
+        var html = '', currentTime = new Date(Date.parse(opts.field.value));
+        currentTime = isDate(currentTime) ? currentTime : opts.defaultTime;
+
         html += '<td data-hour="0" ><select class="pika-select pika-time-hour">' +
-            renderTimeHourOpts(opts.showMeridian, opts.defaultTime) +
+            renderTimeHourOpts(opts.showMeridian, currentTime) +
             '</select></td>';
 
         html += '<td class="pika-time-sep"><span>:</span></td>';
 
         html += '<td data-minute="0"><select class="pika-select pika-time-minute">' +
-            renderTimeMinuteOpts(opts.minuteStep, opts.defaultTime) +
+            renderTimeMinuteOpts(opts.minuteStep, currentTime) +
             '</select></td>';
 
         return html;
