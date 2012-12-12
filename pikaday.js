@@ -691,7 +691,7 @@
             } else {
                 this._d.setDate(date.getDate());
                 this._d.setMonth(date.getMonth());
-                this._d.setYear(date.getYear());
+                this._d.setFullYear(date.getFullYear());
             }
 
             if (!this._o.showTimePicker) {
