@@ -424,6 +424,12 @@
             else if (hasClass(target, 'pika-select-year')) {
                 self.gotoYear(target.value);
             }
+            else if (hasClass(target, 'pika-time-hour')) {
+                self.setTime(target.value, null);
+            }
+            else if (hasClass(target, 'pika-time-minute')) {
+                self.setTime(null, target.value);
+            }
         };
 
         self._onInputChange = function(e)
@@ -629,6 +635,30 @@
         getDate: function()
         {
             return isDate(this._d) ? new Date(this._d.getTime()) : null;
+        },
+
+        /**
+         * set the current time selection
+         */
+        setTime: function(hours, minutes)
+        {
+            hours = parseInt(hours);
+            minutes = parseInt(minutes);
+
+            if (!isNaN(hours) && isDate(this._d)) {
+                this._d.setHours(hours);
+            }
+
+            if (!isNaN(minutes) && isDate(this._d)) {
+                this._d.setMinutes(minutes);
+            }
+
+            if (this._o.field) {
+                this._o.field.value = this.toString();
+            }
+            if (typeof this._o.onSelect === 'function') {
+                this._o.onSelect.call(this, this.getDate());
+            }
         },
 
         /**
