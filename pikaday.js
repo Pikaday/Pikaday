@@ -79,8 +79,7 @@
 
     compareDates = function(a,b)
     {
-        // weak date comparison (use date.setHours(0,0,0,0) to ensure correct result)
-        return a.getTime() === b.getTime();
+        return a.toDateString() === b.toDateString()
     },
 
     extend = function(to, from, overwrite)
