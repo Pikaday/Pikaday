@@ -603,7 +603,16 @@
          */
         toString: function(format)
         {
-            return !isDate(this._d) ? '' : hasMoment ? window.moment(this._d).format(format || this._o.format) : this._d.toDateString();
+            var value = '';
+
+            if (isDate(this._d)) {
+                if (hasMoment) {
+                    value = window.moment(this._d).format(format || this._o.format);
+                } else {
+                    value = this._o.showTimePicker ? this._d.toString() : this._d.toDateString();
+                }
+            }
+            return value;
         },
 
         /**
