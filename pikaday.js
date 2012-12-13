@@ -287,8 +287,8 @@
 
             if (meridian) {
                 // Add meridian initials
-                label = (meridian === true) ? label + 'am' : label;
-                label = (meridian === 'pm') ? label + 'pm' : label;
+                label = (meridian === true) ? label + ' AM' : label;
+                label = (meridian === 'pm') ? label + ' PM' : label;
 
                 // Find selected
                 selected = (meridian === true && defTime.getHours() === i ) ? true : false;
