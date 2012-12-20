@@ -123,7 +123,10 @@
         // the default output format for `.toString()` and `field` value
         format: 'YYYY-MM-DD',
 
-        // the initial date to view when first opened
+        // valid alternate formats to expect when parsing initial value
+        altFormats: [],
+
+	// the initial date to view when first opened
         defaultDate: null,
 
         // make the `defaultDate` the initial selected value
@@ -337,11 +340,11 @@
         self._onInputChange = function(e)
         {
             if (hasMoment) {
-		if(typeof self._o.onInvalid === 'function' && window.moment(opts.field.value, opts.format).isValid() === false ){
+		if(typeof self._o.onInvalid === 'function' && window.moment(opts.field.value, opts.altFormats).isValid() === false ){
 			self._o.onInvalid.call(self);
 		}
 		else {
-			self.setDate(window.moment(opts.field.value, opts.format).toDate());
+			self.setDate(window.moment(opts.field.value, opts.altFormats).toDate());
             	}
             }
             else {
@@ -417,7 +420,7 @@
             
             if (!opts.defaultDate) {
                 if (hasMoment && opts.field.value) {
-                    opts.defaultDate = window.moment(opts.field.value, opts.format).toDate();
+                    opts.defaultDate = window.moment(opts.field.value, opts.altFormats).toDate();
                 } else {
                     opts.defaultDate = new Date(Date.parse(opts.field.value));
                 }
@@ -504,6 +507,7 @@
                     opts.yearRange = 100;
                 }
             }
+            opts.altFormats.push(opts.format);
 
             return opts;
         },
