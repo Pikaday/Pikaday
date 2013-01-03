@@ -338,12 +338,11 @@
             var date;
             if (hasMoment) {
                 date = window.moment(opts.field.value, opts.format);
-                self.setDate(date ? date.toDate() : null);
             }
             else {
                 date = new Date(Date.parse(opts.field.value));
-                self.setDate(isDate(date) ? date : null);
             }
+            self.setDate(date ? date.toDate() : null);
             if (!self._v) {
                 self.show();
             }
