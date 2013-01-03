@@ -657,8 +657,8 @@
 
         setPosition: function()
         {
-            var opts = this._o,
-                pEl  = opts.field,
+            var field = this._o.field,
+                pEl  = field,
                 left = pEl.offsetLeft,
                 top  = pEl.offsetTop + pEl.offsetHeight,
                 width = this.el.offsetWidth,
@@ -668,10 +668,10 @@
                 top  += pEl.offsetTop;
             }
             if (left + width > window.innerWidth) {
-                left = opts.field.offsetLeft + opts.field.offsetWidth - width;
+                left = field.offsetLeft + field.offsetWidth - width;
             }
             if (top + height > window.innerHeight) {
-                top = opts.field.offsetTop - height;
+                top = field.offsetTop - height;
             }
             this.el.style.cssText = 'position:absolute;left:' + left + 'px;top:' + top + 'px;';
         },
