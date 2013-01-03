@@ -650,10 +650,18 @@
             if (opts.bound) {
                 var pEl  = opts.field,
                     left = pEl.offsetLeft,
-                    top  = pEl.offsetTop + pEl.offsetHeight;
+                    top  = pEl.offsetTop + pEl.offsetHeight,
+                    width = this.el.offsetWidth,
+                    height = this.el.offsetHeight;
                 while((pEl = pEl.offsetParent)) {
                     left += pEl.offsetLeft;
                     top  += pEl.offsetTop;
+                }
+                if (left + width > window.innerWidth) {
+                    left = opts.field.offsetLeft + opts.field.offsetWidth - width;
+                }
+                if (top + height > window.innerHeight) {
+                    top = opts.field.offsetTop - height;
                 }
                 this.el.style.cssText = 'position:absolute;left:' + left + 'px;top:' + top + 'px;';
                 sto(function() {
