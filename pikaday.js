@@ -108,6 +108,16 @@
         return to;
     },
 
+		findParentByClass = function (className, el) {
+				while (el) {
+						if(el.className.split(" ").indexOf(className) !== -1) {
+								return el;
+						}
+						el = el.parentNode;
+				}
+				return el;
+		},
+
 
     /**
      * defaults and localisation
@@ -216,12 +226,12 @@
         return '<thead>' + (opts.isRTL ? arr.reverse() : arr).join('') + '</thead>';
     },
 
-    renderTitle = function(instance)
+    renderTitle = function(instance, year, month)
     {
         var i, j, arr,
             opts = instance._o,
-            month = instance._m,
-            year  = instance._y,
+						month = month !== undefined ? month : instance._m,
+						year  = year !== undefined ? year : instance._y,
             isMinYear = year === opts.minYear,
             isMaxYear = year === opts.maxYear,
             html = '<div class="pika-title">',
@@ -292,7 +302,10 @@
 
             if (!hasClass(target, 'is-disabled')) {
                 if (hasClass(target, 'pika-button') && !hasClass(target, 'is-empty')) {
-                    self.setDate(new Date(self._y, self._m, parseInt(target.innerHTML, 10)));
+										var parent = findParentByClass("pika-month", target),
+												month = parent.getAttribute("month-number"),
+												year = parent.getAttribute("year");
+										self.setDate(new Date(year, month, parseInt(target.innerHTML, 10)));
                     if (opts.bound) {
                         sto(function() {
                             self.hide();
@@ -393,7 +406,7 @@
         };
 
         self.el = document.createElement('div');
-        self.el.className = 'pika-single' + (opts.isRTL ? ' is-rtl' : '');
+        self.el.className = 'pika' + (opts.isRTL ? ' is-rtl' : '');
 
         addEvent(self.el, 'mousedown', self._onMouseDown, true);
         addEvent(self.el, 'change', self._onChange);
@@ -645,7 +658,19 @@
                 }
             }
 
-            this.el.innerHTML = renderTitle(this) + this.render(this._y, this._m);
+						var layout = "";
+						for (var i = 0; i < opts.numberOfMonths; i++) {
+								var month = this._m + i,
+										year = this._y;
+								if (month > 11) {
+										month -= 12;
+										year++;
+								}
+								layout += "<div month-number='" + month + "' year='" + year + "' calendar-position='" + i + "' class='pika-month'>" +
+										renderTitle(this, year, month) +
+										this.render(year, month) + "</div>";
+						}
+						this.el.innerHTML = layout;
 
             if (opts.bound) {
                 var pEl  = opts.field,
