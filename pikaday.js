@@ -173,7 +173,8 @@
         // callback function
         onSelect: null,
         onOpen: null,
-        onClose: null
+        onClose: null,
+				onChangeMonthYear: null
     },
 
 
@@ -315,9 +316,15 @@
                 }
                 else if (hasClass(target, 'pika-prev')) {
                     self.prevMonth();
+										if (typeof opts.onChangeMonthYear === 'function') {
+											opts.onChangeMonthYear.call(self);
+										}
                 }
                 else if (hasClass(target, 'pika-next')) {
                     self.nextMonth();
+										if (typeof opts.onChangeMonthYear === 'function') {
+											opts.onChangeMonthYear.call(self);
+										}
                 }
             }
             if (!hasClass(target, 'pika-select')) {
