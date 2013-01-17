@@ -5,6 +5,21 @@
  * Copyright © 2012 David Bushell | BSD & MIT license | http://dbushell.com/
  */
 
+.pika {
+		z-index: 9999;
+		color: #333;
+		background: white;
+		border: 1px solid #CCC;
+		border-bottom-color: #BBB;
+		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.pika .pika-month {
+		width: 240px;
+		float: left;
+		padding: 8px;
+}
+
 .pika-single {
     z-index: 9999;
     display: block;
@@ -18,11 +33,11 @@
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-.pika-single.is-hidden {
+.pika-single.is-hidden, .pika.is-hidden {
     display: none;
 }
 
-.pika-single.is-bound {
+.pika-single.is-bound, .pika.is-bound {
     position: absolute;
     box-shadow: 0 5px 15px -5px rgba(0,0,0,.5);
 }
@@ -167,4 +182,12 @@
     background: #ff8000 !important;
     box-shadow: none !important;
     border-radius: 3px !important;
+}
+
+.pika .pika-month:not(:first-child) .pika-prev {
+		display: none;
+}
+
+.pika .pika-month:not(:last-child) .pika-next {
+		display: none;
 }
