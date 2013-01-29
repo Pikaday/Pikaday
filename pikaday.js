@@ -34,6 +34,22 @@
         }
     },
 
+    fireEvent = function(el, eventName, data)
+    {
+        var ev;
+
+        if (document.createEvent) {
+            ev = document.createEvent('HTMLEvents');
+            ev.initEvent(eventName, true, false);
+            ev = extend(ev, data);
+            el.dispatchEvent(ev);
+        } else if (document.createEventObject) {
+            ev = document.createEventObject();
+            ev = extend(ev, data);
+            el.fireEvent('on' + eventName, ev);
+        }
+    },
+
     trim = function(str)
     {
         return str.trim ? str.trim() : str.replace(/^\s+|\s+$/g,'');
@@ -335,6 +351,9 @@
 
         self._onInputChange = function(e)
         {
+            if (e.firedBy === self) {
+                return;
+            }
             if (hasMoment) {
                 self.setDate(window.moment(opts.field.value, opts.format).toDate());
             }
@@ -554,6 +573,7 @@
 
             if (this._o.field) {
                 this._o.field.value = this.toString();
+                fireEvent(this._o.field, "change", { firedBy: this });
             }
             if (typeof this._o.onSelect === 'function') {
                 this._o.onSelect.call(this, this.getDate());
