@@ -16,6 +16,8 @@
 
     sto = window.setTimeout,
 
+    previousPikaday = window.Pikaday,
+
     addEvent = function(el, e, callback, capture)
     {
         if (hasEventListeners) {
@@ -783,5 +785,16 @@
         }
 
     };
+
+    if (typeof define === "function" && define.amd) {
+
+        var amdPikaday = window.Pikaday;
+        define([], function () { return amdPikaday; } );
+        if (previousPikaday) {
+            window.Pikaday = previousPikaday;
+        } else {
+            delete window.Pikaday;
+        }
+    }
 
 })(window, window.document);
