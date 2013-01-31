@@ -123,7 +123,10 @@
         // the default output format for `.toString()` and `field` value
         format: 'YYYY-MM-DD',
 
-        // the initial date to view when first opened
+        // valid alternate formats to expect when parsing initial value
+        altFormats: [],
+
+	// the initial date to view when first opened
         defaultDate: null,
 
         // make the `defaultDate` the initial selected value
@@ -163,7 +166,8 @@
         // callback function
         onSelect: null,
         onOpen: null,
-        onClose: null
+        onClose: null,
+	onInvalid:null
     },
 
 
@@ -336,11 +340,19 @@
         self._onInputChange = function(e)
         {
             if (hasMoment) {
-                self.setDate(window.moment(opts.field.value, opts.format).toDate());
+		if(typeof self._o.onInvalid === 'function' && window.moment(opts.field.value, opts.altFormats).isValid() === false ){
+			self._o.onInvalid.call(self);
+		}
+		else {
+			self.setDate(window.moment(opts.field.value, opts.altFormats).toDate());
+            	}
             }
             else {
                 var date = new Date(Date.parse(opts.field.value));
                 self.setDate(isDate(date) ? date : null);
+		if(typeof self._o.onInvalid === 'function' && isDate(date)===false){
+			self._o.onInvalid.call(self);
+		}
             }
             if (!self._v) {
                 self.show();
@@ -399,7 +411,7 @@
         addEvent(self.el, 'change', self._onChange);
 
         if (opts.field) {
-            if (opts.bound) {
+            if (!opts.bound) {
                 document.body.appendChild(self.el);
             } else {
                 opts.field.parentNode.insertBefore(self.el, opts.field.nextSibling);
@@ -408,7 +420,7 @@
             
             if (!opts.defaultDate) {
                 if (hasMoment && opts.field.value) {
-                    opts.defaultDate = window.moment(opts.field.value, opts.format).toDate();
+                    opts.defaultDate = window.moment(opts.field.value, opts.altFormats).toDate();
                 } else {
                     opts.defaultDate = new Date(Date.parse(opts.field.value));
                 }
@@ -420,7 +432,7 @@
 
         if (isDate(defDate)) {
             if (opts.setDefaultDate) {
-                self.setDate(defDate);
+                self.setDate(defDate, true);
             } else {
                 self.gotoDate(defDate);
             }
@@ -495,6 +507,7 @@
                     opts.yearRange = 100;
                 }
             }
+            opts.altFormats.push(opts.format);
 
             return opts;
         },
@@ -526,7 +539,7 @@
         /**
          * set the current selection
          */
-        setDate: function(date)
+        setDate: function(date, preventOnSelect)
         {
             if (!date) {
                 this._d = null;
@@ -555,7 +568,7 @@
             if (this._o.field) {
                 this._o.field.value = this.toString();
             }
-            if (typeof this._o.onSelect === 'function') {
+            if (!preventOnSelect && typeof this._o.onSelect === 'function') {
                 this._o.onSelect.call(this, this.getDate());
             }
         },
@@ -648,14 +661,8 @@
             this.el.innerHTML = renderTitle(this) + this.render(this._y, this._m);
 
             if (opts.bound) {
-                var pEl  = opts.field,
-                    left = pEl.offsetLeft,
-                    top  = pEl.offsetTop + pEl.offsetHeight;
-                while((pEl = pEl.offsetParent)) {
-                    left += pEl.offsetLeft;
-                    top  += pEl.offsetTop;
-                }
-                this.el.style.cssText = 'position:absolute;left:' + left + 'px;top:' + top + 'px;';
+    			var pEl  = opts.field, left = pEl.offsetLeft;
+				this.el.style.cssText = 'position:absolute;left:' + left + 'px;';
                 sto(function() {
                     opts.field.focus();
                 }, 1);
