@@ -662,16 +662,34 @@
                 left = elmnt.offsetLeft,
                 top = elmnt.offsetTop,
                 bottom = elmnt.offsetTop + elmnt.offsetHeight,
-                pickerHeight = $(".pika-single").height();
+                pickerHeight = this.el.offsetHeight;
 
             while ((elmnt = elmnt.offsetParent)) {
                 left += elmnt.offsetLeft;
                 top += elmnt.offsetTop;
             }
 
-            var spaceBelow = $(window).scrollTop() + $(window).height() - bottom,
-                spaceAbove = top - $(window).scrollTop();
+            var scroll_top;
+            if(typeof pageYOffset != 'undefined') {
+                scroll_top = pageYOffset;
+            }
+            else {
+                var B= document.body; //IE 'quirks'
+                var D= document.documentElement; //IE with doctype
+                D= (D.clientHeight)? D: B;
+                scroll_top = D.scrollTop;
+            }
 
+            var window_height;
+            if(typeof window.innerHeight != 'undefined') {
+                window_height = window.innerHeight;
+            }
+            else {
+                window_height = document.documentElement.clientHeight;
+            }
+
+            var spaceBelow = scroll_top + window_height - bottom,
+                spaceAbove = top - scroll_top;
 
             if (spaceBelow < pickerHeight && spaceAbove > pickerHeight) {
                 top = top - opts.field.offsetHeight - pickerHeight;
@@ -786,16 +804,3 @@
     };
 
 })(window, window.document);
-
-$(window).scroll(function() {
-    picker.position();
-});
-
-var picker = new Pikaday({
-    field: $("input[data-input-type=date]")[0]
-});
-
-
-picker.position();
-
-
