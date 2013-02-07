@@ -648,18 +648,39 @@
             this.el.innerHTML = renderTitle(this) + this.render(this._y, this._m);
 
             if (opts.bound) {
-                var pEl  = opts.field,
-                    left = pEl.offsetLeft,
-                    top  = pEl.offsetTop + pEl.offsetHeight;
-                while((pEl = pEl.offsetParent)) {
-                    left += pEl.offsetLeft;
-                    top  += pEl.offsetTop;
-                }
-                this.el.style.cssText = 'position:absolute;left:' + left + 'px;top:' + top + 'px;';
+                var pos = this.position(); 
+                this.el.style.cssText = 'position:absolute;left:' + pos.left + 'px;top:' + pos.top + 'px;';
                 sto(function() {
                     opts.field.focus();
                 }, 1);
             }
+        },
+
+        position: function() {
+            var opts = this._o,
+                elmnt = opts.field,
+                left = elmnt.offsetLeft,
+                top = elmnt.offsetTop,
+                bottom = elmnt.offsetTop + elmnt.offsetHeight,
+                pickerHeight = $(".pika-single").height();
+
+            while ((elmnt = elmnt.offsetParent)) {
+                left += elmnt.offsetLeft;
+                top += elmnt.offsetTop;
+            }
+
+            var spaceBelow = $(window).scrollTop() + $(window).height() - bottom,
+                spaceAbove = top - $(window).scrollTop();
+
+
+            if (spaceBelow < pickerHeight && spaceAbove > pickerHeight) {
+                top = top - opts.field.offsetHeight - pickerHeight;
+            }
+            else {
+                top = top + opts.field.offsetHeight;
+            }
+
+            return {'left': left, 'top': top };
         },
 
         /**
@@ -765,3 +786,16 @@
     };
 
 })(window, window.document);
+
+$(window).scroll(function() {
+    picker.position();
+});
+
+var picker = new Pikaday({
+    field: $("input[data-input-type=date]")[0]
+});
+
+
+picker.position();
+
+
