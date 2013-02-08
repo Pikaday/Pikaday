@@ -142,7 +142,7 @@ Shortcut for `picker.gotoDate(new Date())`
 
 `picker.gotoMonth(2)`
 
-Change the current view by month (0: January, 1: Feburary, etc).
+Change the current view by month (0: January, 1: Februrary, etc).
 
 `picker.nextMonth()`
 `picker.prevMonth()`
