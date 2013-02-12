@@ -153,7 +153,8 @@
 
         // internationalization
         i18n: {
-
+                previousButton: 'Previous Month',
+                nextButton: 'Next Month',
                 months        : ['January','February','March','April','May','June','July','August','September','October','November','December'],
                 //monthsShort   : ['Jan_Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
                 weekdays      : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
@@ -259,8 +260,8 @@
             next = false;
         }
 
-        html += '<button class="pika-prev' + (prev ? '' : ' is-disabled') + '" type="button">Previous Month</button>';
-        html += '<button class="pika-next' + (next ? '' : ' is-disabled') + '" type="button">Next Month</button>';
+        html += '<button class="pika-prev' + (prev ? '' : ' is-disabled') + '" type="button">' + opts.i18n.previousButton + '</button>';
+        html += '<button class="pika-next' + (next ? '' : ' is-disabled') + '" type="button">' + opts.i18n.nextButton + '</button>';
 
         return html += '</div>';
     },
@@ -405,7 +406,7 @@
                 opts.field.parentNode.insertBefore(self.el, opts.field.nextSibling);
             }
             addEvent(opts.field, 'change', self._onInputChange);
-            
+
             if (!opts.defaultDate) {
                 if (hasMoment && opts.field.value) {
                     opts.defaultDate = window.moment(opts.field.value, opts.format).toDate();
