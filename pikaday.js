@@ -648,18 +648,57 @@
             this.el.innerHTML = renderTitle(this) + this.render(this._y, this._m);
 
             if (opts.bound) {
-                var pEl  = opts.field,
-                    left = pEl.offsetLeft,
-                    top  = pEl.offsetTop + pEl.offsetHeight;
-                while((pEl = pEl.offsetParent)) {
-                    left += pEl.offsetLeft;
-                    top  += pEl.offsetTop;
-                }
-                this.el.style.cssText = 'position:absolute;left:' + left + 'px;top:' + top + 'px;';
+                var pos = this.position(); 
+                this.el.style.cssText = 'position:absolute;left:' + pos.left + 'px;top:' + pos.top + 'px;';
                 sto(function() {
                     opts.field.focus();
                 }, 1);
             }
+        },
+
+        position: function() {
+            var opts = this._o,
+                elmnt = opts.field,
+                left = elmnt.offsetLeft,
+                top = elmnt.offsetTop,
+                bottom = elmnt.offsetTop + elmnt.offsetHeight,
+                pickerHeight = this.el.offsetHeight;
+
+            while ((elmnt = elmnt.offsetParent)) {
+                left += elmnt.offsetLeft;
+                top += elmnt.offsetTop;
+            }
+
+            var scroll_top;
+            if(typeof pageYOffset != 'undefined') {
+                scroll_top = pageYOffset;
+            }
+            else {
+                var B= document.body; //IE 'quirks'
+                var D= document.documentElement; //IE with doctype
+                D= (D.clientHeight)? D: B;
+                scroll_top = D.scrollTop;
+            }
+
+            var window_height;
+            if(typeof window.innerHeight != 'undefined') {
+                window_height = window.innerHeight;
+            }
+            else {
+                window_height = document.documentElement.clientHeight;
+            }
+
+            var spaceBelow = scroll_top + window_height - bottom,
+                spaceAbove = top - scroll_top;
+
+            if (spaceBelow < pickerHeight && spaceAbove > pickerHeight) {
+                top = top - opts.field.offsetHeight - pickerHeight;
+            }
+            else {
+                top = top + opts.field.offsetHeight;
+            }
+
+            return {'left': left, 'top': top };
         },
 
         /**
