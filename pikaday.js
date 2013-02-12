@@ -335,8 +335,6 @@
 
         self._onInputChange = function(e)
         {
-            if (self.isChangeTriggered !== true)
-            {
             var date;
             if (hasMoment) {
                 date = window.moment(opts.field.value, opts.format);
@@ -347,7 +345,6 @@
             self.setDate(date ? date.toDate() : null);
             if (!self._v) {
                 self.show();
-                }
             }
         };
 
@@ -395,26 +392,6 @@
                 self.hide();
             }
         };
-
-        /**
-         * Triggers the change event on the source element
-         */
-        self._triggerChange = function () {
-
-            self.isChangeTriggered = true;
-
-            if ('fireEvent' in this._o.field)
-                self._o.field.fireEvent('onchange');
-            else
-            {
-                var evt = document.createEvent('HTMLEvents');
-                evt.initEvent('change', true, true);
-                self._o.field.dispatchEvent(evt);
-            }
-
-            self.isChangeTriggered = false;
-        };
-
 
         self.el = document.createElement('div');
         self.el.className = 'pika-single' + (opts.isRTL ? ' is-rtl' : '');
@@ -577,10 +554,7 @@
             this.gotoDate(this._d);
 
             if (this._o.field) {
-                var value = this.toString();
-                this._o.field.value = value;
-                this._o.field.setAttribute('value', value);
-                this._triggerChange();
+                this._o.field.value = this.toString();
             }
             if (typeof this._o.onSelect === 'function') {
                 this._o.onSelect.call(this, this.getDate());
