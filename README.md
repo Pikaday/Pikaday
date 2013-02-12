@@ -64,7 +64,7 @@ For advanced formatting load [Moment.js](http://momentjs.com/) prior to Pikaday:
         }
     });
 </script>
-``` 
+```
 
 ### Configuration
 
@@ -83,7 +83,7 @@ Pikaday has many useful options:
 * `isRTL` reverse the calendar for right-to-left languages
 * `i18n` language defaults for month and weekday names (see internationalization below)
 * `onSelect` callback function for when a date is selected
-* `onOpen` callback function for when the picker becomes visible 
+* `onOpen` callback function for when the picker becomes visible
 * `onClose` callback function for when the picker is hidden
 
 ## jQuery Plugin
@@ -102,7 +102,7 @@ $('.datepicker').pikaday({ firstDay: 1 });
 $('.datepicker').eq(0).pikaday('show').pikaday('gotoYear', 2042);
 
 </script>
-``` 
+```
 
 ## Methods
 
@@ -177,6 +177,8 @@ The default `i18n` configuration format looks like this:
 
 ```javascript
 i18n: {
+    previousMonth : 'Previous Month',
+    nextMonth     : 'Next Month',
     months        : ['January','February','March','April','May','June','July','August','September','October','November','December'],
     weekdays      : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
     weekdaysShort : ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
