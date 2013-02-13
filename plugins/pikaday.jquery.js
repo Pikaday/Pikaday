@@ -71,6 +71,22 @@
         }
     },
 
+    fireEvent = function(el, eventName, data)
+    {
+        var ev;
+
+        if (document.createEvent) {
+            ev = document.createEvent('HTMLEvents');
+            ev.initEvent(eventName, true, false);
+            ev = extend(ev, data);
+            el.dispatchEvent(ev);
+        } else if (document.createEventObject) {
+            ev = document.createEventObject();
+            ev = extend(ev, data);
+            el.fireEvent('on' + eventName, ev);
+        }
+    },
+
     trim = function(str)
     {
         return str.trim ? str.trim() : str.replace(/^\s+|\s+$/g,'');
@@ -190,7 +206,8 @@
 
         // internationalization
         i18n: {
-
+                previousMonth : 'Previous Month',
+                nextMonth     : 'Next Month',
                 months        : ['January','February','March','April','May','June','July','August','September','October','November','December'],
                 //monthsShort   : ['Jan_Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
                 weekdays      : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
@@ -296,8 +313,8 @@
             next = false;
         }
 
-        html += '<button class="pika-prev' + (prev ? '' : ' is-disabled') + '" type="button">Previous Month</button>';
-        html += '<button class="pika-next' + (next ? '' : ' is-disabled') + '" type="button">Next Month</button>';
+        html += '<button class="pika-prev' + (prev ? '' : ' is-disabled') + '" type="button">' + opts.i18n.previousMonth + '</button>';
+        html += '<button class="pika-next' + (next ? '' : ' is-disabled') + '" type="button">' + opts.i18n.nextMonth + '</button>';
 
         return html += '</div>';
     },
@@ -372,13 +389,19 @@
 
         self._onInputChange = function(e)
         {
+            var date;
+
+            if (e.firedBy === self) {
+                return;
+            }
             if (hasMoment) {
-                self.setDate(window.moment(opts.field.value, opts.format).toDate());
+                date = window.moment(opts.field.value, opts.format);
+                date = date ? date.toDate() : null;
             }
             else {
-                var date = new Date(Date.parse(opts.field.value));
-                self.setDate(isDate(date) ? date : null);
+                date = new Date(Date.parse(opts.field.value));
             }
+            self.setDate(isDate(date) ? date : null);
             if (!self._v) {
                 self.show();
             }
@@ -442,7 +465,7 @@
                 opts.field.parentNode.insertBefore(self.el, opts.field.nextSibling);
             }
             addEvent(opts.field, 'change', self._onInputChange);
-            
+
             if (!opts.defaultDate) {
                 if (hasMoment && opts.field.value) {
                     opts.defaultDate = window.moment(opts.field.value, opts.format).toDate();
@@ -457,7 +480,7 @@
 
         if (isDate(defDate)) {
             if (opts.setDefaultDate) {
-                self.setDate(defDate);
+                self.setDate(defDate, true);
             } else {
                 self.gotoDate(defDate);
             }
@@ -563,7 +586,7 @@
         /**
          * set the current selection
          */
-        setDate: function(date)
+        setDate: function(date, preventOnSelect)
         {
             if (!date) {
                 this._d = null;
@@ -591,8 +614,9 @@
 
             if (this._o.field) {
                 this._o.field.value = this.toString();
+                fireEvent(this._o.field, "change", { firedBy: this });
             }
-            if (typeof this._o.onSelect === 'function') {
+            if (!preventOnSelect && typeof this._o.onSelect === 'function') {
                 this._o.onSelect.call(this, this.getDate());
             }
         },

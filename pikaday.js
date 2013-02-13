@@ -171,7 +171,8 @@
 
         // internationalization
         i18n: {
-
+                previousMonth : 'Previous Month',
+                nextMonth     : 'Next Month',
                 months        : ['January','February','March','April','May','June','July','August','September','October','November','December'],
                 //monthsShort   : ['Jan_Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
                 weekdays      : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
@@ -278,8 +279,8 @@
             next = false;
         }
 
-        html += '<button class="pika-prev' + (prev ? '' : ' is-disabled') + '" type="button">Previous Month</button>';
-        html += '<button class="pika-next' + (next ? '' : ' is-disabled') + '" type="button">Next Month</button>';
+        html += '<button class="pika-prev' + (prev ? '' : ' is-disabled') + '" type="button">' + opts.i18n.previousMonth + '</button>';
+        html += '<button class="pika-next' + (next ? '' : ' is-disabled') + '" type="button">' + opts.i18n.nextMonth + '</button>';
 
         return html += '</div>';
     },
@@ -354,16 +355,19 @@
 
         self._onInputChange = function(e)
         {
+            var date;
+
             if (e.firedBy === self) {
                 return;
             }
             if (hasMoment) {
-                self.setDate(window.moment(opts.field.value, opts.format).toDate());
+                date = window.moment(opts.field.value, opts.format);
+                date = date ? date.toDate() : null;
             }
             else {
-                var date = new Date(Date.parse(opts.field.value));
-                self.setDate(isDate(date) ? date : null);
+                date = new Date(Date.parse(opts.field.value));
             }
+            self.setDate(isDate(date) ? date : null);
             if (!self._v) {
                 self.show();
             }
@@ -427,7 +431,7 @@
                 opts.field.parentNode.insertBefore(self.el, opts.field.nextSibling);
             }
             addEvent(opts.field, 'change', self._onInputChange);
-            
+
             if (!opts.defaultDate) {
                 if (hasMoment && opts.field.value) {
                     opts.defaultDate = window.moment(opts.field.value, opts.format).toDate();
