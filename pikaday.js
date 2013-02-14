@@ -180,7 +180,8 @@
         // callback function
         onSelect: null,
         onOpen: null,
-        onClose: null
+        onClose: null,
+        onDraw: null
     },
 
 
@@ -683,6 +684,13 @@
                 sto(function() {
                     opts.field.focus();
                 }, 1);
+            }
+
+            if (typeof this._o.onDraw === 'function') {
+                var self = this;
+                sto(function() {
+                    self._o.onDraw.call(self);
+                }, 0);
             }
         },
 
