@@ -119,10 +119,6 @@ var picker = new Pikaday({ field: document.getElementById('datepicker') });
 
 Returns the selected date in a string format. If [Moment.js](http://momentjs.com/) exists (recommended) then Pikaday can return any format that Moment understands, otherwise you're stuck with JavaScript's default.
 
-`picker.getMoment()`
-
-Returns a [Moment.js](http://momentjs.com/) object for the selected date (Moment must be loaded before Pikaday).
-
 `picker.getDate()`
 
 Returns a basic JavaScript `Date` object of the selected day, or `null` if no selection.
@@ -130,6 +126,14 @@ Returns a basic JavaScript `Date` object of the selected day, or `null` if no se
 `picker.setDate('2012-01-01'))`
 
 Set the current selection. This will be restricted within the bounds of `minDate` and `maxDate` options if they're specified.
+
+`picker.getMoment()`
+
+Returns a [Moment.js](http://momentjs.com/) object for the selected date (Moment must be loaded before Pikaday).
+
+`picker.setMoment(moment('14th Feburary 2013', 'DDo MMMM YYYY'))`
+
+Set the current selection with a [Moment.js](http://momentjs.com/) object (passed on to `setDate`).
 
 ### Change current view
 

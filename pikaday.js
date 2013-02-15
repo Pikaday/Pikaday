@@ -540,6 +540,16 @@
         },
 
         /**
+         * set the current selection from a Moment.js object (if available)
+         */
+        setMoment: function(date)
+        {
+            if (hasMoment && window.moment.isMoment(date)) {
+                this.setDate(date.toDate());
+            }
+        },
+
+        /**
          * return a Date object of the current selection
          */
         getDate: function()

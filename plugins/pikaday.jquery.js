@@ -217,7 +217,8 @@
         // callback function
         onSelect: null,
         onOpen: null,
-        onClose: null
+        onClose: null,
+        onDraw: null
     },
 
 
@@ -576,6 +577,16 @@
         },
 
         /**
+         * set the current selection from a Moment.js object (if available)
+         */
+        setMoment: function(date)
+        {
+            if (hasMoment && window.moment.isMoment(date)) {
+                this.setDate(date.toDate());
+            }
+        },
+
+        /**
          * return a Date object of the current selection
          */
         getDate: function()
@@ -720,6 +731,13 @@
                 sto(function() {
                     opts.field.focus();
                 }, 1);
+            }
+
+            if (typeof this._o.onDraw === 'function') {
+                var self = this;
+                sto(function() {
+                    self._o.onDraw.call(self);
+                }, 0);
             }
         },
 
