@@ -168,3 +168,16 @@
     box-shadow: none !important;
     border-radius: 3px !important;
 }
+
+.pika-time {
+    width: 50%;
+    margin: 0 auto;
+}
+
+.pika-time tbody {
+    text-align: center;
+}
+
+.pika-time-sep {
+    width: 10px;
+}

@@ -95,8 +95,7 @@
 
     compareDates = function(a,b)
     {
-        // weak date comparison (use date.setHours(0,0,0,0) to ensure correct result)
-        return a.getTime() === b.getTime();
+        return a.toDateString() === b.toDateString()
     },
 
     extend = function(to, from, overwrite)
@@ -174,8 +173,15 @@
                 months        : ['January','February','March','April','May','June','July','August','September','October','November','December'],
                 //monthsShort   : ['Jan_Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
                 weekdays      : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
-                weekdaysShort : ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+                weekdaysShort : ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
+                timeTitles    : ['Hours', 'Minutes']
         },
+
+        // time picker
+        showTimePicker: false,
+        minuteStep: 1,
+        defaultTime: false, // set a `Date` object to change
+        showMeridian: true,
 
         // callback function
         onSelect: null,
@@ -283,6 +289,94 @@
         return html += '</div>';
     },
 
+    renderTimeHourOpts = function(meridian, defTime)
+    {
+        var html = '', start = 0, end = 23;
+
+        if (meridian) {
+            start = 1;
+            end = 11;
+        }
+
+        for (var i = start; i <= end; i++) {
+            var label = (i > 9) ? i : '0' + i;
+            var selected = (defTime.getHours() === i) ? true : false;
+            var value = i;
+
+            if (meridian) {
+                // Add meridian initials
+                label = (meridian === true) ? label + ' AM' : label;
+                label = (meridian === 'pm') ? label + ' PM' : label;
+
+                // Find selected
+                selected = (meridian === true && defTime.getHours() === i ) ? true : false;
+                selected = (meridian === 'pm' && defTime.getHours() === i + 12 ) ? true : false;
+                value = i + 12;
+            }
+
+            html += '<option value="' + value + (selected ? '" selected' : '"') + '>' + label + '</option>';
+        }
+
+        if (meridian === true) {
+            return html += renderTimeHourOpts('pm', defTime);
+        } else {
+            return html;
+        }
+    },
+
+    renderTimeMinuteOpts = function(step, defTime)
+    {
+        var html = '';
+
+        for (var i = 0; i <= 59; i += step) {
+            var label = (i > 9) ? i : '0' + i;
+            var selected = (defTime.getMinutes() === i) ? true : false;
+
+            html += '<option value="' + i + (selected ? '" selected' : '"') + '>' + label + '</option>';
+        }
+
+        return html;
+    },
+
+    renderTimeInput = function(opts)
+    {
+        var html = '', currentTime = new Date(Date.parse(opts.field.value));
+        currentTime = isDate(currentTime) ? currentTime : opts.defaultTime;
+
+        html += '<td data-hour="0" ><select class="pika-select pika-time-hour">' +
+            renderTimeHourOpts(opts.showMeridian, currentTime) +
+            '</select></td>';
+
+        html += '<td class="pika-time-sep"><span>:</span></td>';
+
+        html += '<td data-minute="0"><select class="pika-select pika-time-minute">' +
+            renderTimeMinuteOpts(opts.minuteStep, currentTime) +
+            '</select></td>';
+
+        return html;
+    },
+
+    renderTimeTitles = function(opts)
+    {
+        var html = '',
+        titles = opts.i18n.timeTitles;
+
+        html += '<th scope="col pika-time-hour">' + titles[0] + '</th>';
+        html += '<th scope="col pika-time-sep">&nbsp;</th>';
+        html += '<th scope="col pika-time-minute">' + titles[1] + '</th>';
+
+        return html;
+    },
+
+    renderTimeTable = function(opts)
+    {
+        return '<table cellpadding="0" cellspacing="0" class="pika-table pika-time"><thead><tr>' +
+            renderTimeTitles(opts) +
+            '</tr></thead><tbody><tr>' +
+            renderTimeInput(opts) +
+            '</tr></tbody></table>';
+    },
+
     renderTable = function(opts, data)
     {
         return '<table cellpadding="0" cellspacing="0" class="pika-table">' + renderHead(opts) + renderBody(data) + '</table>';
@@ -348,6 +442,12 @@
             }
             else if (hasClass(target, 'pika-select-year')) {
                 self.gotoYear(target.value);
+            }
+            else if (hasClass(target, 'pika-time-hour')) {
+                self.setTime(target.value, null);
+            }
+            else if (hasClass(target, 'pika-time-minute')) {
+                self.setTime(null, target.value);
             }
         };
 
@@ -437,6 +537,12 @@
                     opts.defaultDate = new Date(Date.parse(opts.field.value));
                 }
                 opts.setDefaultDate = true;
+
+                if (!opts.defaultTime && !isDate(opts.defaultDate)) {
+                    opts.defaultTime = new Date();
+                } else {
+                    opts.defaultTime = opts.defaultDate;
+                }
             }
         }
 
@@ -528,7 +634,16 @@
          */
         toString: function(format)
         {
-            return !isDate(this._d) ? '' : hasMoment ? window.moment(this._d).format(format || this._o.format) : this._d.toDateString();
+            var value = '';
+
+            if (isDate(this._d)) {
+                if (hasMoment) {
+                    value = window.moment(this._d).format(format || this._o.format);
+                } else {
+                    value = this._o.showTimePicker ? this._d.toString() : this._d.toDateString();
+                }
+            }
+            return value;
         },
 
         /**
@@ -545,6 +660,30 @@
         getDate: function()
         {
             return isDate(this._d) ? new Date(this._d.getTime()) : null;
+        },
+
+        /**
+         * set the current time selection
+         */
+        setTime: function(hours, minutes)
+        {
+            hours = parseInt(hours);
+            minutes = parseInt(minutes);
+
+            if (!isNaN(hours) && isDate(this._d)) {
+                this._d.setHours(hours);
+            }
+
+            if (!isNaN(minutes) && isDate(this._d)) {
+                this._d.setMinutes(minutes);
+            }
+
+            if (this._o.field) {
+                this._o.field.value = this.toString();
+            }
+            if (typeof this._o.onSelect === 'function') {
+                this._o.onSelect.call(this, this.getDate());
+            }
         },
 
         /**
@@ -572,8 +711,17 @@
                 date = max;
             }
 
-            this._d = new Date(date.getTime());
-            this._d.setHours(0,0,0,0);
+            if (!isDate(this._d)) {
+                this._d = new Date(date.getTime());
+            } else {
+                this._d.setDate(date.getDate());
+                this._d.setMonth(date.getMonth());
+                this._d.setFullYear(date.getFullYear());
+            }
+
+            if (!this._o.showTimePicker) {
+                this._d.setHours(0,0,0,0);
+            }
             this.gotoDate(this._d);
 
             if (this._o.field) {
@@ -705,7 +853,11 @@
                 before = new Date(year, month, 1).getDay(),
                 data   = [],
                 row    = [];
-            now.setHours(0,0,0,0);
+
+            if (!this._o.showTimePicker && isDate(this._d)) {
+                this._d.setHours(0,0,0,0);
+            }
+
             if (opts.firstDay > 0) {
                 before -= opts.firstDay;
                 if (before < 0) {
@@ -734,7 +886,12 @@
                     r = 0;
                 }
             }
-            return renderTable(opts, data);
+
+            if (opts.showTimePicker) {
+                return renderTable(opts, data) + renderTimeTable(opts);
+            } else {
+                return renderTable(opts, data);
+            }
         },
 
         isVisible: function()
