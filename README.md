@@ -87,6 +87,13 @@ Pikaday has many useful options:
 * `onClose` callback function for when the picker is hidden
 * `onDraw` callback function for when the picker draws a new month
 
+If you want to set Pikaday's defaults globaly (e.g. to set `i18n` options):
+
+```javascript
+Pikaday.setup({ firstDay: 1 });
+var picker = new Pikaday({ field: $('#datepicker')[0] });
+```
+
 ## jQuery Plugin
 
 The normal version of Pikaday does not require jQuery, however there is a jQuery plugin version if that floats your boat (see `plugins/pikaday.jquery.js` in the repository). This version requires jQuery, naturally, and can be used like other plugins:

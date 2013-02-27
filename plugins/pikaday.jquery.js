@@ -503,6 +503,14 @@
 
 
     /**
+     * public Pikaday class methods
+     */
+    window.Pikaday.setup = function(options) {
+        defaults = extend(defaults, options, true);
+    };
+
+
+    /**
      * public Pikaday API
      */
     window.Pikaday.prototype = {
