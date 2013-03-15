@@ -192,6 +192,16 @@ i18n: {
 
 You must provide 12 months and 7 weekdays (with abbreviations). Always specify weekdays in this order with Sunday first. You can change the `firstDay` option to reorder if necessary (0: Sunday, 1: Monday, etc). You can also set `isRTL` to `true` for languages that are read right-to-left.
 
+
+## Browser Compatibility
+
+* IE 7+
+* Chrome 8+
+* Firefox 3.5+
+* Safari 3+
+* Opera 10.6+
+
+
 ## Change Log
 
 ### 15th March 2013 (1.0.0)
@@ -210,11 +220,10 @@ You must provide 12 months and 7 weekdays (with abbreviations). Always specify w
 
 * * *
 
-Authors:
+## Authors
 
-David Bushell [http://dbushell.com](http://dbushell.com/) [@dbushell](https://twitter.com/dbushell)
-
-Ramiro Rikkert [GitHub](https://github.com/rikkert) [@RamRik](https://twitter.com/ramrik)
+* David Bushell [http://dbushell.com](http://dbushell.com/) [@dbushell](https://twitter.com/dbushell)
+* Ramiro Rikkert [GitHub](https://github.com/rikkert) [@RamRik](https://twitter.com/ramrik)
 
 Thanks to [@shoogledesigns](http://twitter.com/shoogledesigns/status/255209384261586944) for the name
 
