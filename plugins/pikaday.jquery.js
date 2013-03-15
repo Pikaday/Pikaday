@@ -130,9 +130,14 @@
         return [31, isLeapYear(year) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][month];
     },
 
+    setToStartOfDay = function(date)
+    {
+        if (isDate(date)) date.setHours(0,0,0,0);
+    },
+
     compareDates = function(a,b)
     {
-        // weak date comparison (use date.setHours(0,0,0,0) to ensure correct result)
+        // weak date comparison (use setToStartOfDay(date) to ensure correct result)
         return a.getTime() === b.getTime();
     },
 
@@ -538,11 +543,13 @@
                 opts.maxDate = opts.minDate = false;
             }
             if (opts.minDate) {
-                opts.minYear = opts.minDate.getFullYear();
+                setToStartOfDay(opts.minDate);
+                opts.minYear  = opts.minDate.getFullYear();
                 opts.minMonth = opts.minDate.getMonth();
             }
             if (opts.maxDate) {
-                opts.maxYear = opts.maxDate.getFullYear();
+                setToStartOfDay(opts.maxDate);
+                opts.maxYear  = opts.maxDate.getFullYear();
                 opts.maxMonth = opts.maxDate.getMonth();
             }
 
@@ -620,7 +627,7 @@
             }
 
             this._d = new Date(date.getTime());
-            this._d.setHours(0,0,0,0);
+            setToStartOfDay(this._d);
             this.gotoDate(this._d);
 
             if (this._o.field) {
@@ -752,7 +759,7 @@
                 before = new Date(year, month, 1).getDay(),
                 data   = [],
                 row    = [];
-            now.setHours(0,0,0,0);
+            setToStartOfDay(now);
             if (opts.firstDay > 0) {
                 before -= opts.firstDay;
                 if (before < 0) {
