@@ -194,6 +194,11 @@ You must provide 12 months and 7 weekdays (with abbreviations). Always specify w
 
 ## Change Log
 
+### 15th March 2013 (1.0.0)
+
+* Fix issue #41 (minDate does not include the specified date)
+* Add Bower package definition
+
 ### 10th October 2012
 
 * jQuery plugin version
@@ -205,8 +210,12 @@ You must provide 12 months and 7 weekdays (with abbreviations). Always specify w
 
 * * *
 
-Author: David Bushell [http://dbushell.com](http://dbushell.com/) [@dbushell](http://twitter.com/dbushell/)
+Authors:
+
+David Bushell [http://dbushell.com](http://dbushell.com/) [@dbushell](https://twitter.com/dbushell)
+
+Ramiro Rikkert [GitHub](https://github.com/rikkert) [@RamRik](https://twitter.com/ramrik)
 
 Thanks to [@shoogledesigns](http://twitter.com/shoogledesigns/status/255209384261586944) for the name
 
-Copyright © 2012 David Bushell | BSD & MIT license
+Copyright © 2013 David Bushell | BSD & MIT license
