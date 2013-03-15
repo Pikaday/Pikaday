@@ -1,0 +1,14 @@
+{
+  "name": "Pikaday",
+  "version": "1.0.0",
+  "main": [
+    "./pikaday.js",
+    "./css/pikaday.css"
+  ],
+  "dependencies": {},
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components"
+  ]
+}
