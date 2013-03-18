@@ -662,15 +662,17 @@
                 left = pEl.offsetLeft,
                 top  = pEl.offsetTop + pEl.offsetHeight,
                 width = this.el.offsetWidth,
-                height = this.el.offsetHeight;
+                height = this.el.offsetHeight,
+                windowWidth = window.innerWidth || document.documentElement.clientWidth,
+                windowHeight = window.innerHeight || document.documentElement.clientHeight;
             while((pEl = pEl.offsetParent)) {
                 left += pEl.offsetLeft;
                 top  += pEl.offsetTop;
             }
-            if (left + width > window.innerWidth) {
+            if (left + width > windowWidth) {
                 left = field.offsetLeft + field.offsetWidth - width;
             }
-            if (top + height > window.innerHeight) {
+            if (top + height > windowHeight) {
                 top = field.offsetTop - height;
             }
             this.el.style.cssText = 'position:absolute;left:' + left + 'px;top:' + top + 'px;';
