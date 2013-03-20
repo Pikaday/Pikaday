@@ -36,6 +36,8 @@ If you're using **jQuery** make sure to pass only the first element:
 var picker = new Pikaday({ field: $('#datepicker')[0] });
 ```
 
+If you're using **Ruby on Rails**, make sure to check out the [Pikaday gem](https://rubygems.org/gems/pikaday-gem).
+
 If the Pikaday instance is not bound to a field you can append the element anywhere:
 
 ```javascript
