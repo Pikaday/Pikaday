@@ -216,22 +216,6 @@ You can use the work [@stas][stas] did at [stas/Pikaday][stas Pika]
 * Opera 10.6+
 
 
-## Change Log
-
-### 15th March 2013 (1.0.0)
-
-* Fix issue #41 (minDate does not include the specified date)
-* Add Bower package definition
-
-### 10th October 2012
-
-* jQuery plugin version
-
-### 8th October 2012
-
-* Basic documentation written
-* GitHub repository is ready to go…
-
 * * *
 
 ## Authors
