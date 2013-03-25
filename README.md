@@ -197,6 +197,16 @@ i18n: {
 You must provide 12 months and 7 weekdays (with abbreviations). Always specify weekdays in this order with Sunday first. You can change the `firstDay` option to reorder if necessary (0: Sunday, 1: Monday, etc). You can also set `isRTL` to `true` for languages that are read right-to-left.
 
 
+## Extensions
+
+### Timepicker
+
+Pikaday is a pure datepicker. It will not support picking a time of day. However, there have been efforts to add time support to Pikaday.  
+See #1 and #18. These reside in their own fork.
+
+You can use the work @stas did at stas/Pikaday
+
+
 ## Browser Compatibility
 
 * IE 7+
