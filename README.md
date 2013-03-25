@@ -72,6 +72,7 @@ As the examples demonstrate above
 Pikaday has many useful options:
 
 * `field` bind the datepicker to a form field
+* `trigger` use a different element to trigger opening the datepicker (default to `field`)
 * `bound` automatically show/hide the datepicker on `field` focus (default `true` if `field` is set)
 * `format` the default output format for `.toString()` and `field` value (requires [Moment.js](http://momentjs.com/) for advanced formatting)
 * `defaultDate` the initial date to view when first opened

@@ -27,6 +27,9 @@
         margin: 0.5em 0 3em 0;
         padding: 0.5em;
     }
+    button {
+        margin-bottom: 3em;
+    }
     </style>
 </head>
 
@@ -39,6 +42,8 @@
     <label for="datepicker">Date:</label>
     <br>
     <input type="text" id="datepicker">
+    <br>
+    <input type="hidden" id="datepicker2"><button id="datepicker-button">Choose Date</button>
 
     <h2>What is this?</h2>
 
@@ -54,6 +59,16 @@
     {
         field: document.getElementById('datepicker'),
         firstDay: 1,
+        minDate: new Date('2000-01-01'),
+        maxDate: new Date('2020-12-31'),
+        yearRange: [2000,2020]
+    });
+
+    new Pikaday(
+    {
+        field: document.getElementById('datepicker2'),
+        trigger: document.getElementById('datepicker-button'),
+        firstDay: 2,
         minDate: new Date('2000-01-01'),
         maxDate: new Date('2020-12-31'),
         yearRange: [2000,2020]
