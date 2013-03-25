@@ -4,14 +4,14 @@ Pikaday
 ### A refreshing JavaScript Datepicker
 
 * Lightweight (less than 5kb minified and gzipped)
-* No dependencies (but plays well with [Moment.js](http://momentjs.com/))
+* No dependencies (but plays well with [Moment.js][moment]
 * Modular CSS classes for easy styling
 
-[**Try Pikaday Demo →**](http://dbushell.github.com/Pikaday/)
+[**Try Pikaday Demo →**][Pikaday]
 
-![Pikaday Screenshot](https://raw.github.com/dbushell/Pikaday/gh-pages/screenshot.png)
+![Pikaday Screenshot][screenshot]
 
-**Production ready?** Since version 1.0.0 Pikaday is stable and used in production. If you do however find bugs or have feature requests please submit them to the [GitHub issue tracker](https://github.com/dbushell/Pikaday/issues).
+**Production ready?** Since version 1.0.0 Pikaday is stable and used in production. If you do however find bugs or have feature requests please submit them to the [GitHub issue tracker][issues].
 
 ## Usage
 
@@ -232,3 +232,8 @@ You must provide 12 months and 7 weekdays (with abbreviations). Always specify w
 Thanks to [@shoogledesigns](http://twitter.com/shoogledesigns/status/255209384261586944) for the name
 
 Copyright © 2013 David Bushell | BSD & MIT license
+
+  [Pikaday]:     http://dbushell.github.com/Pikaday/                        "Pikaday"
+  [moment]:      http://momentjs.com/                                       "moment.js"
+  [screenshot]:  https://raw.github.com/dbushell/Pikaday/gh-pages/screenshot.png  "Screenshot"
+  [issues]:  
