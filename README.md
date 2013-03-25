@@ -11,7 +11,7 @@ Pikaday
 
 ![Pikaday Screenshot](https://raw.github.com/dbushell/Pikaday/gh-pages/screenshot.png)
 
-**Production ready?** Not quite! It works very well but there's a bit of polishing to do. Please submit bugs and feature requests to the [GitHub issue tracker](https://github.com/dbushell/Pikaday/issues).
+**Production ready?** Since version 1.0.0 Pikaday is stable and used in production. If you do however find bugs or have feature requests please submit them to the [GitHub issue tracker](https://github.com/dbushell/Pikaday/issues).
 
 ## Usage
 
