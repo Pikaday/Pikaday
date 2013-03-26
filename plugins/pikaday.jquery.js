@@ -5,6 +5,7 @@
 
 (function($)
 {
+    'use strict';
 
     $.fn.pikaday = function()
     {
@@ -23,7 +24,7 @@
                 if (typeof args[0] === 'object') {
                     var options = $.extend({}, args[0]);
                     options.field = self[0];
-                    self.data('pikaday', new Pikaday(options));
+                    self.data('pikaday', new window.Pikaday(options));
                 }
             } else {
                 if (typeof args[0] === 'string' && typeof plugin[args[0]] === 'function') {
@@ -211,12 +212,11 @@
 
         // internationalization
         i18n: {
-                previousMonth : 'Previous Month',
-                nextMonth     : 'Next Month',
-                months        : ['January','February','March','April','May','June','July','August','September','October','November','December'],
-                //monthsShort   : ['Jan_Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
-                weekdays      : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
-                weekdaysShort : ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+            previousMonth : 'Previous Month',
+            nextMonth     : 'Next Month',
+            months        : ['January','February','March','April','May','June','July','August','September','October','November','December'],
+            weekdays      : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
+            weekdaysShort : ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
         },
 
         // callback function
@@ -371,7 +371,8 @@
                 if (e.preventDefault) {
                     e.preventDefault();
                 } else {
-                    return e.returnValue = false;
+                    e.returnValue = false;
+                    return false;
                 }
             } else {
                 self._c = true;
@@ -413,17 +414,17 @@
             }
         };
 
-        self._onInputFocus = function(e)
+        self._onInputFocus = function()
         {
             self.show();
         };
 
-        self._onInputClick = function(e)
+        self._onInputClick = function()
         {
             self.show();
         };
 
-        self._onInputBlur = function(e)
+        self._onInputBlur = function()
         {
             if (!self._c) {
                 self._b = sto(function() {
@@ -632,7 +633,7 @@
 
             if (this._o.field) {
                 this._o.field.value = this.toString();
-                fireEvent(this._o.field, "change", { firedBy: this });
+                fireEvent(this._o.field, 'change', { firedBy: this });
             }
             if (!preventOnSelect && typeof this._o.onSelect === 'function') {
                 this._o.onSelect.call(this, this.getDate());
