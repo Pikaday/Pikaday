@@ -89,11 +89,13 @@ Pikaday has many useful options:
 
 ## jQuery Plugin
 
-The normal version of Pikaday does not require jQuery, however there is a jQuery plugin version if that floats your boat (see `plugins/pikaday.jquery.js` in the repository). This version requires jQuery, naturally, and can be used like other plugins:
+The normal version of Pikaday does not require jQuery, however there is a jQuery plugin if that floats your boat (see `plugins/pikaday.jquery.js` in the repository). This version requires jQuery, naturally, and can be used like other plugins:  
+See the [jQuery example][] for a full version.
 
 ```html
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-<script src="pikaday.jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="pikaday.js"></script>
+<script src="plugins/pikaday.jquery.js"></script>
 <script>
 
 // activate datepickers for all elements with a class of `datepicker`
@@ -103,6 +105,25 @@ $('.datepicker').pikaday({ firstDay: 1 });
 $('.datepicker').eq(0).pikaday('show').pikaday('gotoYear', 2042);
 
 </script>
+```
+
+## AMD support
+
+If you use a modular script loader than Pikaday is not bound to the global object and will fit nicely in your build process. You can require Pikaday just like any other module.  
+See the [AMD example][] for a full version.
+
+```javascript
+require(['pikaday'], function(Pikaday) {
+    var picker = new Pikaday({ field: document.getElementById('datepicker') });
+});
+```
+The same applies for the jQuery plugin mentioned above.  
+See the [jQuery AMD example][] for a full version.
+
+```javascript
+require(['jquery', 'pikaday.jquery'], function($) {
+    $('#datepicker').pikaday();
+});
 ```
 
 ## Ruby on Rails
@@ -242,3 +263,6 @@ Copyright © 2013 David Bushell | BSD & MIT license
   [issue18]:     https://github.com/dbushell/Pikaday/issues/18                    "Issue 18"
   [stas]:        https://github.com/stas                                          "@stas"
   [stas Pika]:   https://github.com/stas/Pikaday                                  "Pikaday"
+  [jQuery example]: http://dbushell.github.com/Pikaday/examples/jquery.html       "Pikaday w/ jQuery"
+  [AMD example]: http://dbushell.github.com/Pikaday/examples/amd.html             "Pikaday w/ AMD"
+  [jQuery AMD example]: http://dbushell.github.com/Pikaday/examples/jquery-amd.html "Pikaday w/ jQuery + AMD"

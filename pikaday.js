@@ -1,18 +1,38 @@
 /*!
  * Pikaday
- * Copyright © 2012 David Bushell | BSD & MIT license | http://dbushell.com/
+ *
+ * Copyright © 2013 David Bushell | BSD & MIT license | https://github.com/dbushell/Pikaday
  */
 
-(function(window, document, undefined)
+(function (root, define, factory)
+{
+    'use strict';
+
+    if (typeof define === 'function' && define.amd) {
+        // AMD. Register as an anonymous module.
+        define(function (req)
+        {
+            // Load moment.js as an optional dependency
+            var id = 'moment';
+            var moment = req.defined && req.defined(id) ? req(id) : undefined;
+            return factory(moment || root.moment);
+        });
+    } else {
+        // Browser global
+        root.Pikaday = factory(root.moment);
+    }
+}(window, window.define, function (moment)
 {
     'use strict';
 
     /**
      * feature detection and helper functions
      */
-    var hasMoment = typeof window.moment === 'function',
+    var hasMoment = typeof moment === 'function',
 
     hasEventListeners = !!window.addEventListener,
+
+    document = window.document,
 
     sto = window.setTimeout,
 
@@ -290,13 +310,13 @@
     renderTable = function(opts, data)
     {
         return '<table cellpadding="0" cellspacing="0" class="pika-table">' + renderHead(opts) + renderBody(data) + '</table>';
-    };
+    },
 
 
     /**
      * Pikaday constructor
      */
-    window.Pikaday = function(options)
+    Pikaday = function(options)
     {
         var self = this,
             opts = self.config(options);
@@ -364,7 +384,7 @@
                 return;
             }
             if (hasMoment) {
-                date = window.moment(opts.field.value, opts.format);
+                date = moment(opts.field.value, opts.format);
                 date = date ? date.toDate() : null;
             }
             else {
@@ -437,7 +457,7 @@
 
             if (!opts.defaultDate) {
                 if (hasMoment && opts.field.value) {
-                    opts.defaultDate = window.moment(opts.field.value, opts.format).toDate();
+                    opts.defaultDate = moment(opts.field.value, opts.format).toDate();
                 } else {
                     opts.defaultDate = new Date(Date.parse(opts.field.value));
                 }
@@ -473,7 +493,7 @@
     /**
      * public Pikaday API
      */
-    window.Pikaday.prototype = {
+    Pikaday.prototype = {
 
 
         /**
@@ -535,7 +555,7 @@
          */
         toString: function(format)
         {
-            return !isDate(this._d) ? '' : hasMoment ? window.moment(this._d).format(format || this._o.format) : this._d.toDateString();
+            return !isDate(this._d) ? '' : hasMoment ? moment(this._d).format(format || this._o.format) : this._d.toDateString();
         },
 
         /**
@@ -543,7 +563,7 @@
          */
         getMoment: function()
         {
-            return hasMoment ? window.moment(this._d) : null;
+            return hasMoment ? moment(this._d) : null;
         },
 
         /**
@@ -551,7 +571,7 @@
          */
         setMoment: function(date)
         {
-            if (hasMoment && window.moment.isMoment(date)) {
+            if (hasMoment && moment.isMoment(date)) {
                 this.setDate(date.toDate());
             }
         },
@@ -813,4 +833,6 @@
 
     };
 
-})(window, window.document);
+    return Pikaday;
+
+}));
