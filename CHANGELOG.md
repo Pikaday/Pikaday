@@ -4,6 +4,7 @@
 
 - Add Ruby on Rails [gem](https://rubygems.org/gems/pikaday-gem)
 - Fix #52 check if date is valid when moment.js is available
+- Fix #54 add CSS support for IE8
 
 ## 1.0.0 - 2013-03-15
 

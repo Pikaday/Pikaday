@@ -52,6 +52,7 @@
     margin: 0;
     left: 0;
     top: 5px;
+    filter: alpha(opacity=0);
     opacity: 0;
 }
 
