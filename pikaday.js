@@ -385,7 +385,7 @@
             }
             if (hasMoment) {
                 date = moment(opts.field.value, opts.format);
-                date = date ? date.toDate() : null;
+                date = (date && date.isValid()) ? date.toDate() : null;
             }
             else {
                 date = new Date(Date.parse(opts.field.value));

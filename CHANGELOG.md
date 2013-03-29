@@ -3,6 +3,7 @@
 ## 1.1.0 - TBA
 
 - Add Ruby on Rails [gem](https://rubygems.org/gems/pikaday-gem)
+- Fix #52 check if date is valid when moment.js is available
 
 ## 1.0.0 - 2013-03-15
 
