@@ -555,7 +555,8 @@
          */
         toString: function(format)
         {
-            return !isDate(this._d) ? '' : hasMoment ? moment(this._d).format(format || this._o.format) : this._d.toDateString();
+            format = format || this._o.format
+            return !isDate(this._d) ? '' : hasMoment ? moment(this._d).format(format) : format ? this._d.toString(format) : this._d.toDateString();
         },
 
         /**
