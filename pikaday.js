@@ -389,8 +389,12 @@
             }
             else {
                 date = new Date(Date.parse(opts.field.value));
+                date = isDate(date) ? date : null;
             }
-            self.setDate(isDate(date) ? date : null);
+            if (date === null && typeof self._o.onInputNoDate === 'function') {
+                self._o.onInputNoDate.call(self, opts.field.value);
+            }
+            self.setDate(date);
             if (!self._v) {
                 self.show();
             }
