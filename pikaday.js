@@ -720,6 +720,9 @@
             }
 
             this.el.innerHTML = renderTitle(this) + this.render(this._y, this._m);
+            if (opts.showTime) {
+                this.el.innerHTML += this.renderTime();
+            }
 
             if (opts.bound) {
                 var pEl  = opts.field,
@@ -784,6 +787,24 @@
                 }
             }
             return renderTable(opts, data);
+        },
+
+        renderTimePicker: function(num_options) {
+            var to_return = '<td><select>';
+            for (var i=0; i<num_options; i++) {
+                to_return += '<option value="'+i+'">'+i+'</option>'
+            }
+            to_return += '</select></td>';
+            return to_return;
+        },
+
+        renderTime: function()
+        {
+            return '<table cellpadding="0" cellspacing="0" class="pika-time"><tbody><tr>' +
+                this.renderTimePicker(24) +
+                '<td>:</td>' +
+                this.renderTimePicker(60) +
+                '</tr></tbody></table>';
         },
 
         isVisible: function()

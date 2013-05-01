@@ -169,3 +169,7 @@
     box-shadow: none !important;
     border-radius: 3px !important;
 }
+
+.pika-time {
+    margin: 5px auto 0;
+}
