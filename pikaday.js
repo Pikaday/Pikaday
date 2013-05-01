@@ -162,7 +162,8 @@
         bound: undefined,
 
         // the default output format for `.toString()` and `field` value
-        format: 'YYYY-MM-DD',
+        // set in `config` based on if showTime is set
+        format: null,
 
         // the initial date to view when first opened
         defaultDate: null,
@@ -193,7 +194,7 @@
         numberOfMonths: 1,
 
         // time
-        showTime: true,
+        showTime: false,
 
         // internationalization
         i18n: {
@@ -547,6 +548,14 @@
                 opts.yearRange = Math.abs(parseInt(opts.yearRange, 10)) || defaults.yearRange;
                 if (opts.yearRange > 100) {
                     opts.yearRange = 100;
+                }
+            }
+
+            // If no format is given, set based on showTime
+            if (opts.format === null) {
+                opts.format = 'YYYY-MM-DD';
+                if (opts.showTime) {
+                    opts.format += ' HH:mm:ss';
                 }
             }
 
