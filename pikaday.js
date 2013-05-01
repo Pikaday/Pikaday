@@ -192,6 +192,9 @@
         // how many months are visible (not implemented yet)
         numberOfMonths: 1,
 
+        // time
+        showTime: true,
+
         // internationalization
         i18n: {
             previousMonth : 'Previous Month',
@@ -555,7 +558,7 @@
          */
         toString: function(format)
         {
-            return !isDate(this._d) ? '' : hasMoment ? moment(this._d).format(format || this._o.format) : this._d.toDateString();
+            return !isDate(this._d) ? '' : hasMoment ? moment(this._d).format(format || this._o.format) : this._o.showTime ? this._d.toString() : this._d.toDateString();
         },
 
         /**
