@@ -333,7 +333,14 @@
                 if (use24hour) {
                     return i;
                 } else {
-                    return (i%12+1) + (i<12 ? ' AM' : ' PM');
+                    var to_return = (i%12) + (i<12 ? ' AM' : ' PM');
+                    if (to_return == '0 AM') {
+                        return 'Midnight'
+                    } else if (to_return == '0 PM') {
+                        return 'Noon'
+                    } else {
+                        return to_return;
+                    }
                 }
             }) +
             '<td>:</td>' +
