@@ -378,6 +378,15 @@
             else if (hasClass(target, 'pika-select-year')) {
                 self.gotoYear(target.value);
             }
+            else if (hasClass(target, 'pika-select-hour')) {
+                console.log("hour selected!", target.value);
+            }
+            else if (hasClass(target, 'pika-select-minute')) {
+                console.log("minute selected!", target.value);
+            }
+            else if (hasClass(target, 'pika-select-second')) {
+                console.log("second selected!", target.value);
+            }
         };
 
         self._onInputChange = function(e)
@@ -789,8 +798,8 @@
             return renderTable(opts, data);
         },
 
-        renderTimePicker: function(num_options) {
-            var to_return = '<td><select>';
+        renderTimePicker: function(num_options, select_class) {
+            var to_return = '<td><select class="pika-select '+select_class+'">';
             for (var i=0; i<num_options; i++) {
                 to_return += '<option value="'+i+'">'+i+'</option>'
             }
@@ -801,11 +810,11 @@
         renderTime: function()
         {
             return '<table cellpadding="0" cellspacing="0" class="pika-time"><tbody><tr>' +
-                this.renderTimePicker(24) +
+                this.renderTimePicker(24, 'pika-select-hour') +
                 '<td>:</td>' +
-                this.renderTimePicker(60) +
+                this.renderTimePicker(60, 'pika-select-minute') +
                 '<td>:</td>' +
-                this.renderTimePicker(60) +
+                this.renderTimePicker(60, 'pika-select-second') +
                 '</tr></tbody></table>';
         },
 
