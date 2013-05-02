@@ -120,7 +120,7 @@
 
     compareDates = function(a,b)
     {
-        // weak date comparison (use setToStartOfDay(date) to ensure correct result)
+        // weak date comparison (use setToStartOfDay(date) to ensure correct result, don't forget about showTime)
         return a.getTime() === b.getTime();
     },
 
@@ -539,12 +539,12 @@
                 opts.maxDate = opts.minDate = false;
             }
             if (opts.minDate) {
-                setToStartOfDay(opts.minDate);
+                if (!opts.showTime) setToStartOfDay(opts.minDate);
                 opts.minYear  = opts.minDate.getFullYear();
                 opts.minMonth = opts.minDate.getMonth();
             }
             if (opts.maxDate) {
-                setToStartOfDay(opts.maxDate);
+                if (!opts.showTime) setToStartOfDay(opts.maxDate);
                 opts.maxYear  = opts.maxDate.getFullYear();
                 opts.maxMonth = opts.maxDate.getMonth();
             }
@@ -631,7 +631,7 @@
             }
 
             this._d = new Date(date.getTime());
-            setToStartOfDay(this._d);
+            if (!this._o.showTime) setToStartOfDay(this._d);
             this.gotoDate(this._d);
 
             if (this._o.field) {
@@ -766,7 +766,7 @@
                 before = new Date(year, month, 1).getDay(),
                 data   = [],
                 row    = [];
-            setToStartOfDay(now);
+            if (!opts.showTime) setToStartOfDay(now);
             if (opts.firstDay > 0) {
                 before -= opts.firstDay;
                 if (before < 0) {
