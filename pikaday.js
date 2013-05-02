@@ -804,6 +804,8 @@
                 this.renderTimePicker(24) +
                 '<td>:</td>' +
                 this.renderTimePicker(60) +
+                '<td>:</td>' +
+                this.renderTimePicker(60) +
                 '</tr></tbody></table>';
         },
 
