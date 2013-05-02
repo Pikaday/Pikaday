@@ -338,7 +338,7 @@
 
             if (!hasClass(target, 'is-disabled')) {
                 if (hasClass(target, 'pika-button') && !hasClass(target, 'is-empty')) {
-                    self.setDate(new Date(self._y, self._m, parseInt(target.innerHTML, 10)));
+                    self.setDate(new Date(self._y, self._m, parseInt(target.innerHTML, 10), self._hh, self._mm, self._ss));
                     if (opts.bound) {
                         sto(function() {
                             self.hide();
@@ -379,13 +379,16 @@
                 self.gotoYear(target.value);
             }
             else if (hasClass(target, 'pika-select-hour')) {
-                console.log("hour selected!", target.value);
+                self._hh = target.value;
+                self.setTime(self._hh, self._mm, self._ss);
             }
             else if (hasClass(target, 'pika-select-minute')) {
-                console.log("minute selected!", target.value);
+                self._mm = target.value;
+                self.setTime(self._hh, self._mm, self._ss);
             }
             else if (hasClass(target, 'pika-select-second')) {
-                console.log("second selected!", target.value);
+                self._ss = target.value;
+                self.setTime(self._hh, self._mm, self._ss);
             }
         };
 
@@ -606,6 +609,16 @@
         },
 
         /**
+         * set the current time selection
+         */
+        setTime: function(hours, minutes, seconds) {
+            if (this._d) {
+                this._d.setHours(this._hh, this._mm, this._ss);
+                this.setDate(this._d);
+            }
+        },
+
+        /**
          * set the current selection
          */
         setDate: function(date, preventOnSelect)
@@ -653,6 +666,9 @@
             }
             this._y = date.getFullYear();
             this._m = date.getMonth();
+            this._hh = date.getHours();
+            this._mm = date.getMinutes();
+            this._ss = date.getSeconds();
             this.draw();
         },
 
@@ -730,7 +746,7 @@
 
             this.el.innerHTML = renderTitle(this) + this.render(this._y, this._m);
             if (opts.showTime) {
-                this.el.innerHTML += this.renderTime();
+                this.el.innerHTML += this.renderTime(this._hh, this._mm, this._ss);
             }
 
             if (opts.bound) {
@@ -798,23 +814,23 @@
             return renderTable(opts, data);
         },
 
-        renderTimePicker: function(num_options, select_class) {
+        renderTimePicker: function(num_options, selected_val, select_class) {
             var to_return = '<td><select class="pika-select '+select_class+'">';
             for (var i=0; i<num_options; i++) {
-                to_return += '<option value="'+i+'">'+i+'</option>'
+                to_return += '<option value="'+i+'" '+(i==selected_val ? 'selected' : '')+'>'+i+'</option>'
             }
             to_return += '</select></td>';
             return to_return;
         },
 
-        renderTime: function()
+        renderTime: function(hh, mm, ss)
         {
             return '<table cellpadding="0" cellspacing="0" class="pika-time"><tbody><tr>' +
-                this.renderTimePicker(24, 'pika-select-hour') +
+                this.renderTimePicker(24, hh, 'pika-select-hour') +
                 '<td>:</td>' +
-                this.renderTimePicker(60, 'pika-select-minute') +
+                this.renderTimePicker(60, mm, 'pika-select-minute') +
                 '<td>:</td>' +
-                this.renderTimePicker(60, 'pika-select-second') +
+                this.renderTimePicker(60, ss, 'pika-select-second') +
                 '</tr></tbody></table>';
         },
 
