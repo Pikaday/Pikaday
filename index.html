@@ -15,9 +15,13 @@
 
     <p><a href="https://github.com/dbushell/Pikaday"><strong>Pikaday source on GitHub</strong></a></p>
 
-    <label for="datepicker">Date:</label>
+    <p><label for="datepicker">Date:</label>
     <br>
-    <input type="text" id="datepicker">
+    <input type="text" id="datepicker"></p>
+
+    <p><label for="datetimepicker">Date &amp; Time:</label>
+    <br>
+    <input style="width: 300px;" type="text" id="datetimepicker"></p>
 
     <h2>What is this?</h2>
 
@@ -36,6 +40,17 @@
         minDate: new Date('2000-01-01'),
         maxDate: new Date('2020-12-31'),
         yearRange: [2000,2020]
+    });
+
+    var timepicker = new Pikaday(
+    {
+        field: document.getElementById('datetimepicker'),
+        firstDay: 1,
+        minDate: new Date('2000-01-01'),
+        maxDate: new Date('2020-12-31'),
+        yearRange: [2000,2020],
+
+        showTime: true
     });
 
     </script>
