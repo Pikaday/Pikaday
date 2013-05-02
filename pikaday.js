@@ -195,6 +195,7 @@
 
         // time
         showTime: false,
+        showSeconds: false,
         use24hour: false,
 
         // internationalization
@@ -326,9 +327,9 @@
         return to_return;
     },
 
-    renderTime = function(hh, mm, ss, use24hour)
+    renderTime = function(hh, mm, ss, use24hour, showSeconds)
     {
-        return '<table cellpadding="0" cellspacing="0" class="pika-time"><tbody><tr>' +
+        var to_return = '<table cellpadding="0" cellspacing="0" class="pika-time"><tbody><tr>' +
             renderTimePicker(24, hh, 'pika-select-hour', function(i) {
                 if (use24hour) {
                     return i;
@@ -344,10 +345,13 @@
                 }
             }) +
             '<td>:</td>' +
-            renderTimePicker(60, mm, 'pika-select-minute', function(i) { if (i < 10) return "0" + i; return i }) +
-            '<td>:</td>' +
-            renderTimePicker(60, ss, 'pika-select-second', function(i) { if (i < 10) return "0" + i; return i }) +
-            '</tr></tbody></table>';
+            renderTimePicker(60, mm, 'pika-select-minute', function(i) { if (i < 10) return "0" + i; return i });
+
+        if (showSeconds) {
+            to_return += '<td>:</td>' +
+                renderTimePicker(60, ss, 'pika-select-second', function(i) { if (i < 10) return "0" + i; return i });
+        }
+        return to_return + '</tr></tbody></table>';
     },
 
 
@@ -679,7 +683,13 @@
             }
 
             this._d = new Date(date.getTime());
-            if (!this._o.showTime) setToStartOfDay(this._d);
+
+            if (this._o.showTime && !this._o.showSeconds) {
+                this._d.setSeconds(0);
+            } else if (!this._o.showTime) {
+                setToStartOfDay(this._d);
+            }
+
             this.gotoDate(this._d);
 
             if (this._o.field) {
@@ -781,7 +791,7 @@
 
             this.el.innerHTML = renderTitle(this) + this.render(this._y, this._m);
             if (opts.showTime) {
-                this.el.innerHTML += renderTime(this._hh, this._mm, this._ss, this._o.use24hour);
+                this.el.innerHTML += renderTime(this._hh, this._mm, this._ss, this._o.use24hour, this._o.showSeconds);
             }
 
             if (opts.bound) {
