@@ -316,6 +316,27 @@
         return '<table cellpadding="0" cellspacing="0" class="pika-table">' + renderHead(opts) + renderBody(data) + '</table>';
     },
 
+    renderTimePicker = function(num_options, selected_val, select_class) {
+        var to_return = '<td><select class="pika-select '+select_class+'">';
+        for (var i=0; i<num_options; i++) {
+            to_return += '<option value="'+i+'" '+(i==selected_val ? 'selected' : '')+'>'+i+'</option>'
+        }
+        to_return += '</select></td>';
+        return to_return;
+    },
+
+    renderTime = function(hh, mm, ss)
+    {
+        return '<table cellpadding="0" cellspacing="0" class="pika-time"><tbody><tr>' +
+            renderTimePicker(24, hh, 'pika-select-hour') +
+            '<td>:</td>' +
+            renderTimePicker(60, mm, 'pika-select-minute') +
+            '<td>:</td>' +
+            renderTimePicker(60, ss, 'pika-select-second') +
+            '</tr></tbody></table>';
+    },
+
+
 
     /**
      * Pikaday constructor
@@ -746,7 +767,7 @@
 
             this.el.innerHTML = renderTitle(this) + this.render(this._y, this._m);
             if (opts.showTime) {
-                this.el.innerHTML += this.renderTime(this._hh, this._mm, this._ss);
+                this.el.innerHTML += renderTime(this._hh, this._mm, this._ss);
             }
 
             if (opts.bound) {
@@ -812,26 +833,6 @@
                 }
             }
             return renderTable(opts, data);
-        },
-
-        renderTimePicker: function(num_options, selected_val, select_class) {
-            var to_return = '<td><select class="pika-select '+select_class+'">';
-            for (var i=0; i<num_options; i++) {
-                to_return += '<option value="'+i+'" '+(i==selected_val ? 'selected' : '')+'>'+i+'</option>'
-            }
-            to_return += '</select></td>';
-            return to_return;
-        },
-
-        renderTime: function(hh, mm, ss)
-        {
-            return '<table cellpadding="0" cellspacing="0" class="pika-time"><tbody><tr>' +
-                this.renderTimePicker(24, hh, 'pika-select-hour') +
-                '<td>:</td>' +
-                this.renderTimePicker(60, mm, 'pika-select-minute') +
-                '<td>:</td>' +
-                this.renderTimePicker(60, ss, 'pika-select-second') +
-                '</tr></tbody></table>';
         },
 
         isVisible: function()
