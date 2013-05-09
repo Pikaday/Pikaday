@@ -336,9 +336,7 @@
                 if (hasClass(target, 'pika-button') && !hasClass(target, 'is-empty')) {
                     self.setDate(new Date(self._y, self._m, parseInt(target.innerHTML, 10)));
                     if (opts.bound) {
-                        sto(function() {
-                            self.hide();
-                        }, 100);
+                        opts.field.focus();
                     }
                     return;
                 }
@@ -368,11 +366,13 @@
             if (!target) {
                 return;
             }
+            var value = target.options[target.selectedIndex].value;
             if (hasClass(target, 'pika-select-month')) {
-                self.gotoMonth(target.value);
-            }
-            else if (hasClass(target, 'pika-select-year')) {
-                self.gotoYear(target.value);
+                self.gotoMonth(value);
+                self.setDate(moment(self.getDate()).month(value).toDate());
+            } else if (hasClass(target, 'pika-select-year')) {
+                self.gotoYear(value);
+                self.setDate(moment(self.getDate()).year(value).toDate());
             }
         };
 
@@ -409,9 +409,7 @@
         self._onInputBlur = function()
         {
             if (!self._c) {
-                self._b = sto(function() {
-                    self.hide();
-                }, 50);
+                self.hide();
             }
             self._c = false;
         };
