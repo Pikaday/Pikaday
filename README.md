@@ -186,6 +186,14 @@ Go to the next or previous month (this will change year if necessary).
 
 Change the year being viewed.
 
+`picker.setMinDate()`
+
+Update the minimum/earliest date that can be selected.
+
+`picker.setMaxDate()`
+
+Update the maximum/latest date that can be selected.
+
 ### Show and hide datepicker
 
 `picker.isVisible()`
