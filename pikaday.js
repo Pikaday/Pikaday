@@ -56,15 +56,15 @@
 
     fireEvent = function(el, eventName, data)
     {
-        var ev;
-
-        if (document.createEvent) {
-            ev = document.createEvent('HTMLEvents');
+        var ev,
+            doc = el.ownerDocument;
+        if (doc.createEvent) {
+            ev = doc.createEvent('HTMLEvents');
             ev.initEvent(eventName, true, false);
             ev = extend(ev, data);
             el.dispatchEvent(ev);
-        } else if (document.createEventObject) {
-            ev = document.createEventObject();
+        } else if (doc.createEventObject) {
+            ev = doc.createEventObject();
             ev = extend(ev, data);
             el.fireEvent('on' + eventName, ev);
         }
@@ -169,6 +169,9 @@
 
         // make the `defaultDate` the initial selected value
         setDefaultDate: false,
+		
+		// html document to attach the datepiker. document by default (needed when we create a datepicker inside an iframe without specifying a field)
+		attachTo: document,
 
         // first day of week (0: Sunday, 1: Monday etc)
         firstDay: 0,
@@ -319,7 +322,8 @@
     Pikaday = function(options)
     {
         var self = this,
-            opts = self.config(options);
+            opts = self.config(options),
+            doc = opts.field ? opts.field.ownerDocument : opts.attachTo;
 
         self._onMouseDown = function(e)
         {
@@ -418,7 +422,7 @@
 
         self._onClick = function(e)
         {
-            e = e || window.event;
+			e = e || window.event;
             var target = e.target || e.srcElement,
                 pEl = target;
             if (!target) {
@@ -441,7 +445,7 @@
             }
         };
 
-        self.el = document.createElement('div');
+        self.el = doc.createElement('div');
         self.el.className = 'pika-single' + (opts.isRTL ? ' is-rtl' : '');
 
         addEvent(self.el, 'mousedown', self._onMouseDown, true);
@@ -449,7 +453,7 @@
 
         if (opts.field) {
             if (opts.bound) {
-                document.body.appendChild(self.el);
+                doc.body.appendChild(self.el);
             } else {
                 opts.field.parentNode.insertBefore(self.el, opts.field.nextSibling);
             }
@@ -726,13 +730,22 @@
             this.el.innerHTML = renderTitle(this) + this.render(this._y, this._m);
 
             if (opts.bound) {
-                var pEl  = opts.field,
-                    left = pEl.offsetLeft,
-                    top  = pEl.offsetTop + pEl.offsetHeight;
-                while((pEl = pEl.offsetParent)) {
-                    left += pEl.offsetLeft;
-                    top  += pEl.offsetTop;
-                }
+                
+				// safer and faster way to get the right offsets
+                if (typeof opts.field.getBoundingClientRect === 'function'){
+                    var clientRect = opts.field.getBoundingClientRect();
+                    var left = clientRect.left;
+                    var top = clientRect.bottom;
+				} else {
+				    var pEl  = opts.field,
+                        left = pEl.offsetLeft,
+                        top  = pEl.offsetTop + pEl.offsetHeight;
+                    while((pEl = pEl.offsetParent)) {
+                        left += pEl.offsetLeft;
+                        top  += pEl.offsetTop;
+                    }
+				}
+				
                 this.el.style.cssText = 'position:absolute;left:' + left + 'px;top:' + top + 'px;';
                 sto(function() {
                     opts.field.focus();
