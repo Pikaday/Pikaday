@@ -690,14 +690,7 @@
             this.el.innerHTML = renderTitle(this) + this.render(this._y, this._m);
 
             if (opts.bound) {
-                var pEl  = opts.field,
-                    left = pEl.offsetLeft,
-                    top  = pEl.offsetTop + pEl.offsetHeight;
-                while((pEl = pEl.offsetParent)) {
-                    left += pEl.offsetLeft;
-                    top  += pEl.offsetTop;
-                }
-                this.el.style.cssText = 'position:absolute;left:' + left + 'px;top:' + top + 'px;';
+                this.setPosition();
                 sto(function() {
                     opts.field.focus();
                 }, 1);
@@ -709,6 +702,29 @@
                     self._o.onDraw.call(self);
                 }, 0);
             }
+        },
+
+        setPosition: function()
+        {
+            var field = this._o.field,
+                pEl  = field,
+                left = pEl.offsetLeft,
+                top  = pEl.offsetTop + pEl.offsetHeight,
+                width = this.el.offsetWidth,
+                height = this.el.offsetHeight,
+                windowWidth = window.innerWidth || document.documentElement.clientWidth,
+                windowHeight = window.innerHeight || document.documentElement.clientHeight;
+            while((pEl = pEl.offsetParent)) {
+                left += pEl.offsetLeft;
+                top  += pEl.offsetTop;
+            }
+            if (left + width > windowWidth) {
+                left = field.offsetLeft + field.offsetWidth - width;
+            }
+            if (top + height > windowHeight) {
+                top = field.offsetTop - height;
+            }
+            this.el.style.cssText = 'position:absolute;left:' + left + 'px;top:' + top + 'px;';
         },
 
         /**
