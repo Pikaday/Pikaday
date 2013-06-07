@@ -690,7 +690,7 @@
             this.el.innerHTML = renderTitle(this) + this.render(this._y, this._m);
 
             if (opts.bound) {
-                this.setPosition();
+                this.adjustPosition();
                 sto(function() {
                     opts.field.focus();
                 }, 1);
@@ -704,7 +704,7 @@
             }
         },
 
-        setPosition: function()
+        adjustPosition: function()
         {
             var field = this._o.field,
                 pEl  = field,
@@ -712,16 +712,17 @@
                 top  = pEl.offsetTop + pEl.offsetHeight,
                 width = this.el.offsetWidth,
                 height = this.el.offsetHeight,
-                windowWidth = window.innerWidth || document.documentElement.clientWidth,
-                windowHeight = window.innerHeight || document.documentElement.clientHeight;
+                viewportWidth = window.innerWidth || document.documentElement.clientWidth,
+                viewportHeight = window.innerHeight || document.documentElement.clientHeight,
+                scrollTop = window.pageYOffset || document.body.scrollTop || document.documentElement.scrollTop;
             while((pEl = pEl.offsetParent)) {
                 left += pEl.offsetLeft;
                 top  += pEl.offsetTop;
             }
-            if (left + width > windowWidth) {
+            if (left + width > viewportWidth) {
                 left = field.offsetLeft + field.offsetWidth - width;
             }
-            if (top + height > windowHeight) {
+            if (top + height > viewportHeight + scrollTop) {
                 top = field.offsetTop - height;
             }
             this.el.style.cssText = 'position:absolute;left:' + left + 'px;top:' + top + 'px;';
