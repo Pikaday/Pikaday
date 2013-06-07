@@ -172,6 +172,10 @@ Returns `true` or `false`.
 
 Make the picker visible.
 
+`picker.adjustPosition()`
+
+Recalculate and change the position of the picker.
+
 `picker.hide()`
 
 Hide the picker making it invisible.
