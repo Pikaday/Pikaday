@@ -1,18 +1,38 @@
 /*!
  * Pikaday
- * Copyright © 2012 David Bushell | BSD & MIT license | http://dbushell.com/
+ *
+ * Copyright © 2013 David Bushell | BSD & MIT license | https://github.com/dbushell/Pikaday
  */
 
-(function(window, document, undefined)
+(function (root, define, factory)
+{
+    'use strict';
+
+    if (typeof define === 'function' && define.amd) {
+        // AMD. Register as an anonymous module.
+        define(function (req)
+        {
+            // Load moment.js as an optional dependency
+            var id = 'moment';
+            var moment = req.defined && req.defined(id) ? req(id) : undefined;
+            return factory(moment || root.moment);
+        });
+    } else {
+        // Browser global
+        root.Pikaday = factory(root.moment);
+    }
+}(window, window.define, function (moment)
 {
     'use strict';
 
     /**
      * feature detection and helper functions
      */
-    var hasMoment = typeof window.moment === 'function',
+    var hasMoment = typeof moment === 'function',
 
     hasEventListeners = !!window.addEventListener,
+
+    document = window.document,
 
     sto = window.setTimeout,
 
@@ -174,12 +194,11 @@
 
         // internationalization
         i18n: {
-                previousMonth : 'Previous Month',
-                nextMonth     : 'Next Month',
-                months        : ['January','February','March','April','May','June','July','August','September','October','November','December'],
-                //monthsShort   : ['Jan_Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
-                weekdays      : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
-                weekdaysShort : ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+            previousMonth : 'Previous Month',
+            nextMonth     : 'Next Month',
+            months        : ['January','February','March','April','May','June','July','August','September','October','November','December'],
+            weekdays      : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
+            weekdaysShort : ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
         },
 
         // callback function
@@ -291,13 +310,13 @@
     renderTable = function(opts, data)
     {
         return '<table cellpadding="0" cellspacing="0" class="pika-table">' + renderHead(opts) + renderBody(data) + '</table>';
-    };
+    },
 
 
     /**
      * Pikaday constructor
      */
-    window.Pikaday = function(options)
+    Pikaday = function(options)
     {
         var self = this,
             opts = self.config(options);
@@ -334,7 +353,8 @@
                 if (e.preventDefault) {
                     e.preventDefault();
                 } else {
-                    return e.returnValue = false;
+                    e.returnValue = false;
+                    return false;
                 }
             } else {
                 self._c = true;
@@ -364,8 +384,8 @@
                 return;
             }
             if (hasMoment) {
-                date = window.moment(opts.field.value, opts.format);
-                date = date ? date.toDate() : null;
+                date = moment(opts.field.value, opts.format);
+                date = (date && date.isValid()) ? date.toDate() : null;
             }
             else {
                 date = new Date(Date.parse(opts.field.value));
@@ -376,17 +396,17 @@
             }
         };
 
-        self._onInputFocus = function(e)
+        self._onInputFocus = function()
         {
             self.show();
         };
 
-        self._onInputClick = function(e)
+        self._onInputClick = function()
         {
             self.show();
         };
 
-        self._onInputBlur = function(e)
+        self._onInputBlur = function()
         {
             if (!self._c) {
                 self._b = sto(function() {
@@ -437,7 +457,7 @@
 
             if (!opts.defaultDate) {
                 if (hasMoment && opts.field.value) {
-                    opts.defaultDate = window.moment(opts.field.value, opts.format).toDate();
+                    opts.defaultDate = moment(opts.field.value, opts.format).toDate();
                 } else {
                     opts.defaultDate = new Date(Date.parse(opts.field.value));
                 }
@@ -473,7 +493,7 @@
     /**
      * public Pikaday API
      */
-    window.Pikaday.prototype = {
+    Pikaday.prototype = {
 
 
         /**
@@ -535,7 +555,7 @@
          */
         toString: function(format)
         {
-            return !isDate(this._d) ? '' : hasMoment ? window.moment(this._d).format(format || this._o.format) : this._d.toDateString();
+            return !isDate(this._d) ? '' : hasMoment ? moment(this._d).format(format || this._o.format) : this._d.toDateString();
         },
 
         /**
@@ -543,7 +563,7 @@
          */
         getMoment: function()
         {
-            return hasMoment ? window.moment(this._d) : null;
+            return hasMoment ? moment(this._d) : null;
         },
 
         /**
@@ -551,7 +571,7 @@
          */
         setMoment: function(date)
         {
-            if (hasMoment && window.moment.isMoment(date)) {
+            if (hasMoment && moment.isMoment(date)) {
                 this.setDate(date.toDate());
             }
         },
@@ -595,7 +615,7 @@
 
             if (this._o.field) {
                 this._o.field.value = this.toString();
-                fireEvent(this._o.field, "change", { firedBy: this });
+                fireEvent(this._o.field, 'change', { firedBy: this });
             }
             if (!preventOnSelect && typeof this._o.onSelect === 'function') {
                 this._o.onSelect.call(this, this.getDate());
@@ -658,6 +678,22 @@
                 this._y = parseInt(year, 10);
                 this.draw();
             }
+        },
+
+        /**
+         * change the minDate
+         */
+        setMinDate: function(value)
+        {
+            this._o.minDate = value;
+        },
+
+        /**
+         * change the maxDate
+         */
+        setMaxDate: function(value)
+        {
+            this._o.maxDate = value;
         },
 
         /**
@@ -830,4 +866,6 @@
 
     };
 
-})(window, window.document);
+    return Pikaday;
+
+}));

@@ -4,14 +4,16 @@ Pikaday
 ### A refreshing JavaScript Datepicker
 
 * Lightweight (less than 5kb minified and gzipped)
-* No dependencies (but plays well with [Moment.js](http://momentjs.com/))
+* No dependencies (but plays well with [Moment.js][moment]
 * Modular CSS classes for easy styling
 
-[**Try Pikaday Demo →**](http://dbushell.github.com/Pikaday/)
+[**Try Pikaday Demo →**][Pikaday]
 
-![Pikaday Screenshot](https://raw.github.com/dbushell/Pikaday/gh-pages/screenshot.png)
+![Pikaday Screenshot][screenshot]
 
-**Production ready?** Not quite! It works very well but there's a bit of polishing to do. Please submit bugs and feature requests to the [GitHub issue tracker](https://github.com/dbushell/Pikaday/issues).
+**Production ready?** Since version 1.0.0 Pikaday is stable and used in production. If you do however find bugs or have feature requests please submit them to the [GitHub issue tracker][issues].  
+Also see the [changelog](CHANGELOG.md)
+
 
 ## Usage
 
@@ -48,7 +50,8 @@ var picker = new Pikaday({
 field.parentNode.insertBefore(picker.el, field.nextSibling);
 ```
 
-For advanced formatting load [Moment.js](http://momentjs.com/) prior to Pikaday:
+For advanced formatting load [Moment.js][moment] prior to Pikaday:  
+See the [moment.js example][] for a full version.
 
 ```html
 <input type="text" id="datepicker" value="9 Oct 2012">
@@ -73,7 +76,7 @@ Pikaday has many useful options:
 
 * `field` bind the datepicker to a form field
 * `bound` automatically show/hide the datepicker on `field` focus (default `true` if `field` is set)
-* `format` the default output format for `.toString()` and `field` value (requires [Moment.js](http://momentjs.com/) for advanced formatting)
+* `format` the default output format for `.toString()` and `field` value (requires [Moment.js][moment] for advanced formatting)
 * `defaultDate` the initial date to view when first opened
 * `setDefaultDate` make the `defaultDate` the initial selected value
 * `firstDay` first day of the week (0: Sunday, 1: Monday, etc)
@@ -89,11 +92,13 @@ Pikaday has many useful options:
 
 ## jQuery Plugin
 
-The normal version of Pikaday does not require jQuery, however there is a jQuery plugin version if that floats your boat (see `plugins/pikaday.jquery.js` in the repository). This version requires jQuery, naturally, and can be used like other plugins:
+The normal version of Pikaday does not require jQuery, however there is a jQuery plugin if that floats your boat (see `plugins/pikaday.jquery.js` in the repository). This version requires jQuery, naturally, and can be used like other plugins:  
+See the [jQuery example][] for a full version.
 
 ```html
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-<script src="pikaday.jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="pikaday.js"></script>
+<script src="plugins/pikaday.jquery.js"></script>
 <script>
 
 // activate datepickers for all elements with a class of `datepicker`
@@ -105,9 +110,28 @@ $('.datepicker').eq(0).pikaday('show').pikaday('gotoYear', 2042);
 </script>
 ```
 
+## AMD support
+
+If you use a modular script loader than Pikaday is not bound to the global object and will fit nicely in your build process. You can require Pikaday just like any other module.  
+See the [AMD example][] for a full version.
+
+```javascript
+require(['pikaday'], function(Pikaday) {
+    var picker = new Pikaday({ field: document.getElementById('datepicker') });
+});
+```
+The same applies for the jQuery plugin mentioned above.  
+See the [jQuery AMD example][] for a full version.
+
+```javascript
+require(['jquery', 'pikaday.jquery'], function($) {
+    $('#datepicker').pikaday();
+});
+```
+
 ## Ruby on Rails
 
-If you're using **Ruby on Rails**, make sure to check out the [Pikaday gem](https://rubygems.org/gems/pikaday-gem).
+If you're using **Ruby on Rails**, make sure to check out the [Pikaday gem][gem].
 
 ## Methods
 
@@ -121,7 +145,7 @@ var picker = new Pikaday({ field: document.getElementById('datepicker') });
 
 `picker.toString('YYYY-MM-DD')`
 
-Returns the selected date in a string format. If [Moment.js](http://momentjs.com/) exists (recommended) then Pikaday can return any format that Moment understands, otherwise you're stuck with JavaScript's default.
+Returns the selected date in a string format. If [Moment.js][moment] exists (recommended) then Pikaday can return any format that Moment understands, otherwise you're stuck with JavaScript's default.
 
 `picker.getDate()`
 
@@ -133,17 +157,17 @@ Set the current selection. This will be restricted within the bounds of `minDate
 
 `picker.getMoment()`
 
-Returns a [Moment.js](http://momentjs.com/) object for the selected date (Moment must be loaded before Pikaday).
+Returns a [Moment.js][moment] object for the selected date (Moment must be loaded before Pikaday).
 
 `picker.setMoment(moment('14th Feburary 2013', 'DDo MMMM YYYY'))`
 
-Set the current selection with a [Moment.js](http://momentjs.com/) object (passed on to `setDate`).
+Set the current selection with a [Moment.js][moment] object (passed on to `setDate`).
 
 ### Change current view
 
 `picker.gotoDate(new Date(2012, 1))`
 
-Change the current view to see a specific date. This example will jump to February 2012 ([month is a zero-based index](https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Date)).
+Change the current view to see a specific date. This example will jump to February 2012 ([month is a zero-based index][mdn_date]).
 
 `picker.gotoToday()`
 
@@ -161,6 +185,14 @@ Go to the next or previous month (this will change year if necessary).
 `picker.gotoYear()`
 
 Change the year being viewed.
+
+`picker.setMinDate()`
+
+Update the minimum/earliest date that can be selected.
+
+`picker.setMaxDate()`
+
+Update the maximum/latest date that can be selected.
 
 ### Show and hide datepicker
 
@@ -201,6 +233,17 @@ i18n: {
 You must provide 12 months and 7 weekdays (with abbreviations). Always specify weekdays in this order with Sunday first. You can change the `firstDay` option to reorder if necessary (0: Sunday, 1: Monday, etc). You can also set `isRTL` to `true` for languages that are read right-to-left.
 
 
+## Extensions
+
+### Timepicker
+
+Pikaday is a pure datepicker. It will not support picking a time of day. However, there have been efforts to add time support to Pikaday.  
+See [#1][issue1] and [#18][issue18]. These reside in their own fork.
+
+You can use the work [@stas][stas] did at [stas/Pikaday][stas Pika]  
+or the work [@owenmead][owenmead] did more recently at [owenmead/Pikaday][owen Pika] which is based on version 1.1.0.
+
+
 ## Browser Compatibility
 
 * IE 7+
@@ -210,29 +253,35 @@ You must provide 12 months and 7 weekdays (with abbreviations). Always specify w
 * Opera 10.6+
 
 
-## Change Log
-
-### 15th March 2013 (1.0.0)
-
-* Fix issue #41 (minDate does not include the specified date)
-* Add Bower package definition
-
-### 10th October 2012
-
-* jQuery plugin version
-
-### 8th October 2012
-
-* Basic documentation written
-* GitHub repository is ready to go…
-
 * * *
 
 ## Authors
 
-* David Bushell [http://dbushell.com](http://dbushell.com/) [@dbushell](https://twitter.com/dbushell)
-* Ramiro Rikkert [GitHub](https://github.com/rikkert) [@RamRik](https://twitter.com/ramrik)
+* David Bushell [http://dbushell.com][Bushell] [@dbushell][Bushell Twitter]
+* Ramiro Rikkert [GitHub][Rikkert] [@RamRik][Rikkert Twitter]
 
-Thanks to [@shoogledesigns](http://twitter.com/shoogledesigns/status/255209384261586944) for the name
+Thanks to [@shoogledesigns][shoogledesigns] for the name.
 
 Copyright © 2013 David Bushell | BSD & MIT license
+
+  [Pikaday]:     http://dbushell.github.com/Pikaday/                              "Pikaday"
+  [moment]:      http://momentjs.com/                                             "moment.js"
+  [screenshot]:  https://raw.github.com/dbushell/Pikaday/gh-pages/screenshot.png  "Screenshot"
+  [issues]:      https://github.com/dbushell/Pikaday/issues                       "Issue tracker"
+  [gem]:         https://rubygems.org/gems/pikaday-gem                            "RoR gem"
+  [mdn_date]:    https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Date  "Date"
+  [Bushell]:     http://dbushell.com/                                             "dbushell.com"
+  [Bushell Twitter]: https://twitter.com/dbushell                                 "@dbushell"
+  [Rikkert]:     https://github.com/rikkert                                       "Rikkert GitHub"
+  [Rikkert Twitter]: https://twitter.com/ramrik                                   "@ramrik"
+  [shoogledesigns]:  https://twitter.com/shoogledesigns/status/255209384261586944 "@shoogledesigns"
+  [issue1]:      https://github.com/dbushell/Pikaday/issues/1                     "Issue 1"
+  [issue18]:     https://github.com/dbushell/Pikaday/issues/18                    "Issue 18"
+  [stas]:        https://github.com/stas                                          "@stas"
+  [stas Pika]:   https://github.com/stas/Pikaday                                  "Pikaday"
+  [owenmead]:     https://github.com/owenmead                                     "@owenmead"
+  [owen Pika]:   https://github.com/owenmead/Pikaday                              "Pikaday"
+  [moment.js example]: http://dbushell.github.com/Pikaday/examples/moment.html    "Pikaday w/ moment.js"
+  [jQuery example]: http://dbushell.github.com/Pikaday/examples/jquery.html       "Pikaday w/ jQuery"
+  [AMD example]: http://dbushell.github.com/Pikaday/examples/amd.html             "Pikaday w/ AMD"
+  [jQuery AMD example]: http://dbushell.github.com/Pikaday/examples/jquery-amd.html "Pikaday w/ jQuery + AMD"
