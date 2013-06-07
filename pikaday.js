@@ -742,19 +742,28 @@
 
         adjustPosition: function()
         {
-            var field = this._o.field,
-                pEl  = field,
-                left = pEl.offsetLeft,
-                top  = pEl.offsetTop + pEl.offsetHeight,
-                width = this.el.offsetWidth,
-                height = this.el.offsetHeight,
-                viewportWidth = window.innerWidth || document.documentElement.clientWidth,
-                viewportHeight = window.innerHeight || document.documentElement.clientHeight,
-                scrollTop = window.pageYOffset || document.body.scrollTop || document.documentElement.scrollTop;
-            while((pEl = pEl.offsetParent)) {
-                left += pEl.offsetLeft;
-                top  += pEl.offsetTop;
+            var field = this._o.field, pEl = field,
+            width = this.el.offsetWidth, height = this.el.offsetHeight,
+            viewportWidth = window.innerWidth || document.documentElement.clientWidth,
+            viewportHeight = window.innerHeight || document.documentElement.clientHeight,
+            scrollTop = window.pageYOffset || document.body.scrollTop || document.documentElement.scrollTop,
+            left, top, clientRect;
+            
+            if (typeof field.getBoundingClientRect === 'function') {
+                clientRect = field.getBoundingClientRect();
+                left = clientRect.left + window.pageXOffset;
+                top = clientRect.bottom + window.pageYOffset;
+            } else {
+                left = pEl.offsetLeft;
+                top  = pEl.offsetTop + pEl.offsetHeight;
+                while((pEl = pEl.offsetParent)) {
+                    left += pEl.offsetLeft;
+                    top  += pEl.offsetTop;
+                }
             }
+            left -= document.documentElement.clientLeft;
+            top  -= document.documentElement.clientTop;
+            
             if (left + width > viewportWidth) {
                 left = field.offsetLeft + field.offsetWidth - width;
             }
