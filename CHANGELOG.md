@@ -4,6 +4,7 @@
 
 - Fix #8 Automatically adjust datepicker position
 - Merge #45 Adjusting position
+- Merge #11 Allow using a different element to open and bind the datepicker to
 
 ## 1.1.0 - 2013-03-29
 
