@@ -2,6 +2,9 @@
 
 ## 1.2.0 - TBA
 
+- Fix #8 Automatically adjust datepicker position
+- Merge #45 Adjusting position
+
 ## 1.1.0 - 2013-03-29
 
 - Add Ruby on Rails [gem](https://rubygems.org/gems/pikaday-gem)
