@@ -761,8 +761,6 @@
                     top  += pEl.offsetTop;
                 }
             }
-            left -= document.documentElement.clientLeft;
-            top  -= document.documentElement.clientTop;
             
             if (left + width > viewportWidth) {
                 left = field.offsetLeft + field.offsetWidth - width;
