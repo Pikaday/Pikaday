@@ -75,6 +75,7 @@ As the examples demonstrate above
 Pikaday has many useful options:
 
 * `field` bind the datepicker to a form field
+* `trigger` use a different element to trigger opening the datepicker, see [trigger example][] (default to `field`)
 * `bound` automatically show/hide the datepicker on `field` focus (default `true` if `field` is set)
 * `format` the default output format for `.toString()` and `field` value (requires [Moment.js][moment] for advanced formatting)
 * `defaultDate` the initial date to view when first opened
@@ -204,6 +205,10 @@ Returns `true` or `false`.
 
 Make the picker visible.
 
+`picker.adjustPosition()`
+
+Recalculate and change the position of the picker.
+
 `picker.hide()`
 
 Hide the picker making it invisible.
@@ -281,3 +286,4 @@ Copyright © 2013 David Bushell | BSD & MIT license
   [jQuery example]: http://dbushell.github.com/Pikaday/examples/jquery.html       "Pikaday w/ jQuery"
   [AMD example]: http://dbushell.github.com/Pikaday/examples/amd.html             "Pikaday w/ AMD"
   [jQuery AMD example]: http://dbushell.github.com/Pikaday/examples/jquery-amd.html "Pikaday w/ jQuery + AMD"
+  [trigger example]: http://dbushell.github.com/Pikaday/examples/trigger.html     "Pikaday using custom trigger"
