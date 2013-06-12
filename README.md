@@ -153,7 +153,7 @@ Returns a basic JavaScript `Date` object of the selected day, or `null` if no se
 
 `picker.setDate('2012-01-01', preventOnSelect)`
 
-Set the current selection. This will be restricted within the bounds of `minDate` and `maxDate` options if they're specified.  The second option is a boolean that disables triggering of the onSelect callback, allowing the date to be set silently.
+Set the current selection. This will be restricted within the bounds of `minDate` and `maxDate` options if they're specified.  The second parameter is an optional boolean that disables triggering of the onSelect callback if true, allowing the date to be set silently.
 
 `picker.getMoment()`
 
