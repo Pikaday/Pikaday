@@ -767,10 +767,10 @@
             }
 
             if (left + width > viewportWidth) {
-                left = field.offsetLeft + field.offsetWidth - width;
+                left = left - width + field.offsetWidth;
             }
             if (top + height > viewportHeight + scrollTop) {
-                top = field.offsetTop - height;
+                top = top - height - field.offsetHeight;
             }
             this.el.style.cssText = 'position:absolute;left:' + left + 'px;top:' + top + 'px;';
         },
