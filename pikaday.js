@@ -817,7 +817,6 @@
             }
 
             if (opts.bound) {
-                this.adjustPosition();
                 if(opts.field.type !== 'hidden') {
                     sto(function() {
                         opts.trigger.focus();
@@ -915,12 +914,13 @@
         show: function()
         {
             if (!this._v) {
-                if (this._o.bound) {
-                    addEvent(document, 'click', this._onClick);
-                }
                 removeClass(this.el, 'is-hidden');
                 this._v = true;
                 this.draw();
+                if (this._o.bound) {
+                    addEvent(document, 'click', this._onClick);
+                    this.adjustPosition();
+                }
                 if (typeof this._o.onOpen === 'function') {
                     this._o.onOpen.call(this);
                 }
