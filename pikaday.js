@@ -205,7 +205,10 @@
         onSelect: null,
         onOpen: null,
         onClose: null,
-        onDraw: null
+        onDraw: null,
+
+        // validators
+        validFunctors: []
     },
 
 
@@ -236,6 +239,7 @@
         if (isSelected) {
             arr.push('is-selected');
         }
+
         return '<td data-day="' + i + '" class="' + arr.join(' ') + '"><button class="pika-button" type="button">' + i + '</button>' + '</td>';
     },
 
@@ -806,6 +810,11 @@
                     isSelected = isDate(this._d) ? compareDates(day, this._d) : false,
                     isToday = compareDates(day, now),
                     isEmpty = i < before || i >= (days + before);
+
+                for (var j = 0; j < opts.validFunctors.length; j++) {
+                    isDisabled = isDisabled || opts.validFunctors[j](day);
+                    j++;
+                }
 
                 row.push(renderDay(1 + (i - before), isSelected, isToday, isDisabled, isEmpty));
 
