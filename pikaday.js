@@ -102,6 +102,19 @@
         return (/Date/).test(Object.prototype.toString.call(obj)) && !isNaN(obj.getTime());
     },
 
+    isWeekend = function(value, opt)
+    {
+        if(opt){
+            return false;
+        }
+        var n = value.getDay();
+        if ((n === 0) || (n === 6)) {
+            return true;
+        } else {
+            return false;
+        }
+    },
+
     isLeapYear = function(year)
     {
         // solution by Matti Virkkunen: http://stackoverflow.com/a/4881951
@@ -200,6 +213,9 @@
             weekdays      : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
             weekdaysShort : ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
         },
+
+        // show weekends
+        weekends: true,
 
         // callback function
         onSelect: null,
@@ -515,6 +531,8 @@
 
             opts.trigger = (opts.trigger && opts.trigger.nodeName) ? opts.trigger : opts.field;
 
+            opts.weekends = !!opts.weekends;
+
             var nom = parseInt(opts.numberOfMonths, 10) || 1;
             opts.numberOfMonths = nom > 4 ? 4 : nom;
 
@@ -802,7 +820,7 @@
             for (var i = 0, r = 0; i < cells; i++)
             {
                 var day = new Date(year, month, 1 + (i - before)),
-                    isDisabled = (opts.minDate && day < opts.minDate) || (opts.maxDate && day > opts.maxDate),
+                    isDisabled = (opts.minDate && day < opts.minDate) || (opts.maxDate && day > opts.maxDate) || isWeekend(day, opts.weekends),
                     isSelected = isDate(this._d) ? compareDates(day, this._d) : false,
                     isToday = compareDates(day, now),
                     isEmpty = i < before || i >= (days + before);
