@@ -549,6 +549,8 @@
                 }
             }
 
+            opts.isFixed = !!opts.isFixed;
+
             return opts;
         },
 
@@ -772,7 +774,9 @@
             if (top + height > viewportHeight + scrollTop) {
                 top = top - height - field.offsetHeight;
             }
-            this.el.style.cssText = 'position:absolute;left:' + left + 'px;top:' + top + 'px;';
+
+            var position = opts.isFixed ? 'fixed' : 'absolute';
+            this.el.style.cssText = 'position:' + position + ';left:' + left + 'px;top:' + top + 'px;';
         },
 
         /**
