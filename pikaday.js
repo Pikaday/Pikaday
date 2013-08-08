@@ -801,7 +801,7 @@
             cells += 7 - after;
             for (var i = 0, r = 0; i < cells; i++)
             {
-                var day = new Date(year, month, 1 + (i - before)),
+                var day = new Date(year, month, 1 + (i - before), 2),
                     isDisabled = (opts.minDate && day < opts.minDate) || (opts.maxDate && day > opts.maxDate),
                     isSelected = isDate(this._d) ? compareDates(day, this._d) : false,
                     isToday = compareDates(day, now),
