@@ -189,6 +189,9 @@
 
         isRTL: false,
 
+        // Additional text to append to the year in the calendar title
+        yearSuffix: '',
+
         // how many months are visible (not implemented yet)
         numberOfMonths: 1,
 
@@ -291,7 +294,7 @@
                 arr.push('<option value="' + i + '"' + (i === year ? ' selected': '') + '>' + (i) + '</option>');
             }
         }
-        html += '<div class="pika-label">' + year + '<select class="pika-select pika-select-year">' + arr.join('') + '</select></div>';
+        html += '<div class="pika-label">' + year + opts.yearSuffix + '<select class="pika-select pika-select-year">' + arr.join('') + '</select></div>';
 
         if (isMinYear && (month === 0 || opts.minMonth >= month)) {
             prev = false;
