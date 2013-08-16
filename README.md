@@ -86,6 +86,8 @@ Pikaday has many useful options:
 * `yearRange` number of years either side (e.g. `10`) or array of upper/lower range (e.g. `[1900,2012]`)
 * `isRTL` reverse the calendar for right-to-left languages
 * `i18n` language defaults for month and weekday names (see internationalization below)
+* `yearSuffix` additional text to append to the year in the title
+* `showMonthAfterYear` render the month after year in the title (default `false`)
 * `onSelect` callback function for when a date is selected
 * `onOpen` callback function for when the picker becomes visible
 * `onClose` callback function for when the picker is hidden
