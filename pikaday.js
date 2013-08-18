@@ -3,12 +3,10 @@
  *
  * Copyright © 2013 David Bushell | BSD & MIT license | https://github.com/dbushell/Pikaday
  */
-
-(function (root, define, factory)
-{
-    'use strict';
-
-    if (typeof define === 'function' && define.amd) {
+(function (root, factory) {
+    if (typeof exports === 'object') {
+        module.exports = factory(require('moment'));
+    } else if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
         define(function (req)
         {
@@ -18,11 +16,9 @@
             return factory(moment || root.moment);
         });
     } else {
-        // Browser global
         root.Pikaday = factory(root.moment);
     }
-}(window, window.define, function (moment)
-{
+}(this, function (moment) {
     'use strict';
 
     /**
