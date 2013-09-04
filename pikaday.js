@@ -4,7 +4,7 @@
  * Copyright © 2013 David Bushell | BSD & MIT license | https://github.com/dbushell/Pikaday
  */
 
-(function (root, define, factory)
+(function (root, factory)
 {
     'use strict';
 
@@ -21,7 +21,7 @@
         // Browser global
         root.Pikaday = factory(root.moment);
     }
-}(window, window.define, function (moment)
+}(this, function (moment)
 {
     'use strict';
 
