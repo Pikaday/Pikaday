@@ -4,7 +4,7 @@
  * Copyright © 2013 David Bushell | BSD & MIT license | https://github.com/dbushell/Pikaday
  */
 
-(function (root, define, factory)
+(function (root, factory)
 {
     'use strict';
 
@@ -15,7 +15,7 @@
         // Browser globals
         factory(root.jQuery, root.Pikaday);
     }
-}(window, window.define, function ($, Pikaday)
+}(this, function ($, Pikaday)
 {
     'use strict';
 
