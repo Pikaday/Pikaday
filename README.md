@@ -132,6 +132,19 @@ require(['jquery', 'pikaday.jquery'], function($) {
 });
 ```
 
+## CommonJS module support
+
+If you use a CommonJS compatible environment you can use the require function to import Pikaday.
+
+
+```javascript
+var pikaday = require('pikaday');
+```
+
+When you bundle all your required modules with [Browserify][browserify] and you don't use [Moment.js][moment] specify the ignore opption:
+
+`browserify main.js -o bundle.js -i moment`
+
 ## Ruby on Rails
 
 If you're using **Ruby on Rails**, make sure to check out the [Pikaday gem][gem].
@@ -269,6 +282,7 @@ Copyright © 2013 David Bushell | BSD & MIT license
 
   [Pikaday]:     http://dbushell.github.com/Pikaday/                              "Pikaday"
   [moment]:      http://momentjs.com/                                             "moment.js"
+  [browserify]:  http://browserify.org/                                           "browserify"
   [screenshot]:  https://raw.github.com/dbushell/Pikaday/gh-pages/screenshot.png  "Screenshot"
   [issues]:      https://github.com/dbushell/Pikaday/issues                       "Issue tracker"
   [gem]:         https://rubygems.org/gems/pikaday-gem                            "RoR gem"
