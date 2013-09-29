@@ -8,17 +8,22 @@
 {
     'use strict';
 
-    if (typeof define === 'function' && define.amd) {
+    var moment;
+    if (typeof exports === 'object') {
+        // CommonJS module
+        // Load moment.js as an optional dependency
+        try { moment = require('moment'); } catch (e) {}
+        module.exports = factory(moment);
+    } else if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
         define(function (req)
         {
             // Load moment.js as an optional dependency
             var id = 'moment';
-            var moment = req.defined && req.defined(id) ? req(id) : undefined;
-            return factory(moment || root.moment);
+            moment = req.defined && req.defined(id) ? req(id) : undefined;
+            return factory(moment);
         });
     } else {
-        // Browser global
         root.Pikaday = factory(root.moment);
     }
 }(this, function (moment)
