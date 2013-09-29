@@ -40,6 +40,8 @@
     document = window.document,
 
     sto = window.setTimeout,
+    
+    slice = Array.prototype.slice,
 
     addEvent = function(el, e, callback, capture)
     {
@@ -869,7 +871,8 @@
             }
         },
         
-        trigger: function(event) {
+        trigger: function(event)
+        {
             // No-op if this event isn't defined.
             if (!this._events || !this._events.hasOwnProperty(event)) return;
             
@@ -881,7 +884,8 @@
                 callbacks[i].apply(callbacks[i]._context, slice.call(arguments, 1));
         },
         
-        triggerMethod: function(event) {
+        triggerMethod: function(event)
+        {
             // First, trigger the event
             this.trigger.apply(this, arguments);
         
@@ -896,7 +900,8 @@
                 this._o[eventFunction].apply(this, slice.call(arguments, 1));
         },
     
-        off: function(event, callback, context) {
+        off: function(event, callback, context)
+        {
             if (!this._events) return; // Nothing to remove, so leave
         
             // Iterator variables used a couple of times on down.
@@ -937,7 +942,8 @@
             }
         },
     
-        on: function(event, callback, context) {
+        on: function(event, callback, context)
+        {
             // Support object hashes
             if (typeof event == 'object') {
                 for (var key in event)
@@ -980,7 +986,8 @@
             this._events[event].push(callback);
         },
 
-        once: function(event, callback, context) {
+        once: function(event, callback, context)
+        {
             // Support object hashes
             if (typeof event == 'object') {
                 for (var key in event)
@@ -1015,7 +1022,8 @@
             this.on(event, wrappedCallback, context);
         },
     
-        listenTo: function(subject, event, callback) {
+        listenTo: function(subject, event, callback)
+        {
             var candidate;
                 if (!this._subjects) this._subjects = [];
             
@@ -1037,7 +1045,8 @@
             subject.on(event, callback, this);
         },
     
-        listenToOnce: function(subject, event, callback) {
+        listenToOnce: function(subject, event, callback)
+        {
             var candidate;
             if (!this._subjects) this._subjects = [];
 
@@ -1059,7 +1068,8 @@
             subject.once(event, callback, this);
         },
     
-        stopListening: function(subject, event, callback) {
+        stopListening: function(subject, event, callback)
+        {
             var candidate;
         
             for (var i = this._subjects.length; i--; ) {
