@@ -637,8 +637,8 @@
                 this._o.field.value = this.toString();
                 fireEvent(this._o.field, 'change', { firedBy: this });
             }
-            if (!preventOnSelect && typeof this._o.onSelect === 'function') {
-                this._o.onSelect.call(this, this.getDate());
+            if (!preventOnSelect) {
+                this.triggerMethod('select', this.getDate());
             }
         },
 
@@ -754,12 +754,10 @@
                 }
             }
 
-            if (typeof this._o.onDraw === 'function') {
-                var self = this;
-                sto(function() {
-                    self._o.onDraw.call(self);
-                }, 0);
-            }
+            var self = this;
+            sto(function() {
+                self.triggerMethod('draw');
+            }, 0);
         },
 
         adjustPosition: function()
@@ -850,9 +848,8 @@
                 removeClass(this.el, 'is-hidden');
                 this._v = true;
                 this.draw();
-                if (typeof this._o.onOpen === 'function') {
-                    this._o.onOpen.call(this);
-                }
+                
+                this.triggerMethod('open');
             }
         },
 
@@ -866,8 +863,8 @@
                 this.el.style.cssText = '';
                 addClass(this.el, 'is-hidden');
                 this._v = false;
-                if (v !== undefined && typeof this._o.onClose === 'function') {
-                    this._o.onClose.call(this);
+                if (v !== undefined) {
+                    this.triggerMethod('close');
                 }
             }
         },
