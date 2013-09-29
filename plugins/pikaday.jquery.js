@@ -8,7 +8,10 @@
 {
     'use strict';
 
-    if (typeof define === 'function' && define.amd) {
+    if (typeof exports === 'object') {
+        // CommonJS module
+        factory(require('jquery'), require('../pikaday'));
+    } else if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
         define(['jquery', 'pikaday'], factory);
     } else {
