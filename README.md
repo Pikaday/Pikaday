@@ -75,6 +75,7 @@ As the examples demonstrate above
 Pikaday has many useful options:
 
 * `field` bind the datepicker to a form field
+* `trigger` use a different element to trigger opening the datepicker, see [trigger example][] (default to `field`)
 * `bound` automatically show/hide the datepicker on `field` focus (default `true` if `field` is set)
 * `format` the default output format for `.toString()` and `field` value (requires [Moment.js][moment] for advanced formatting)
 * `defaultDate` the initial date to view when first opened
@@ -85,6 +86,8 @@ Pikaday has many useful options:
 * `yearRange` number of years either side (e.g. `10`) or array of upper/lower range (e.g. `[1900,2012]`)
 * `isRTL` reverse the calendar for right-to-left languages
 * `i18n` language defaults for month and weekday names (see internationalization below)
+* `yearSuffix` additional text to append to the year in the title
+* `showMonthAfterYear` render the month after year in the title (default `false`)
 * `onSelect` callback function for when a date is selected
 * `onOpen` callback function for when the picker becomes visible
 * `onClose` callback function for when the picker is hidden
@@ -128,6 +131,19 @@ require(['jquery', 'pikaday.jquery'], function($) {
     $('#datepicker').pikaday();
 });
 ```
+
+## CommonJS module support
+
+If you use a CommonJS compatible environment you can use the require function to import Pikaday.
+
+
+```javascript
+var pikaday = require('pikaday');
+```
+
+When you bundle all your required modules with [Browserify][browserify] and you don't use [Moment.js][moment] specify the ignore opption:
+
+`browserify main.js -o bundle.js -i moment`
 
 ## Ruby on Rails
 
@@ -186,6 +202,14 @@ Go to the next or previous month (this will change year if necessary).
 
 Change the year being viewed.
 
+`picker.setMinDate()`
+
+Update the minimum/earliest date that can be selected.
+
+`picker.setMaxDate()`
+
+Update the maximum/latest date that can be selected.
+
 ### Show and hide datepicker
 
 `picker.isVisible()`
@@ -195,6 +219,10 @@ Returns `true` or `false`.
 `picker.show()`
 
 Make the picker visible.
+
+`picker.adjustPosition()`
+
+Recalculate and change the position of the picker.
 
 `picker.hide()`
 
@@ -228,7 +256,8 @@ You must provide 12 months and 7 weekdays (with abbreviations). Always specify w
 Pikaday is a pure datepicker. It will not support picking a time of day. However, there have been efforts to add time support to Pikaday.  
 See [#1][issue1] and [#18][issue18]. These reside in their own fork.
 
-You can use the work [@stas][stas] did at [stas/Pikaday][stas Pika]
+You can use the work [@stas][stas] did at [stas/Pikaday][stas Pika]  
+or the work [@owenmead][owenmead] did more recently at [owenmead/Pikaday][owen Pika] which is based on version 1.1.0.
 
 
 ## Browser Compatibility
@@ -253,6 +282,7 @@ Copyright © 2013 David Bushell | BSD & MIT license
 
   [Pikaday]:     http://dbushell.github.com/Pikaday/                              "Pikaday"
   [moment]:      http://momentjs.com/                                             "moment.js"
+  [browserify]:  http://browserify.org/                                           "browserify"
   [screenshot]:  https://raw.github.com/dbushell/Pikaday/gh-pages/screenshot.png  "Screenshot"
   [issues]:      https://github.com/dbushell/Pikaday/issues                       "Issue tracker"
   [gem]:         https://rubygems.org/gems/pikaday-gem                            "RoR gem"
@@ -266,7 +296,10 @@ Copyright © 2013 David Bushell | BSD & MIT license
   [issue18]:     https://github.com/dbushell/Pikaday/issues/18                    "Issue 18"
   [stas]:        https://github.com/stas                                          "@stas"
   [stas Pika]:   https://github.com/stas/Pikaday                                  "Pikaday"
+  [owenmead]:     https://github.com/owenmead                                     "@owenmead"
+  [owen Pika]:   https://github.com/owenmead/Pikaday                              "Pikaday"
   [moment.js example]: http://dbushell.github.com/Pikaday/examples/moment.html    "Pikaday w/ moment.js"
   [jQuery example]: http://dbushell.github.com/Pikaday/examples/jquery.html       "Pikaday w/ jQuery"
   [AMD example]: http://dbushell.github.com/Pikaday/examples/amd.html             "Pikaday w/ AMD"
   [jQuery AMD example]: http://dbushell.github.com/Pikaday/examples/jquery-amd.html "Pikaday w/ jQuery + AMD"
+  [trigger example]: http://dbushell.github.com/Pikaday/examples/trigger.html     "Pikaday using custom trigger"

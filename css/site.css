@@ -20,3 +20,7 @@ input[type="text"] {
     margin: 0.5em 0 3em 0;
     padding: 0.5em;
 }
+
+button {
+    margin-bottom: 3em;
+}

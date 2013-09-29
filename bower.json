@@ -1,6 +1,6 @@
 {
-  "name": "Pikaday",
-  "version": "1.1.0",
+  "name": "pikaday",
+  "version": "1.2.0",
   "main": [
     "./pikaday.js",
     "./css/pikaday.css"
