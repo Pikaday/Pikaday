@@ -642,8 +642,8 @@
             if (!preventOnSelect) {
                 this.trigger('select', this.getDate());
                 
-                if (typeof this.onSelect == 'function') {
-                    this.onSelect(this.getDate());
+                if (typeof this._o.onSelect == 'function') {
+                    this._o.onSelect.call(this, this.getDate());
                 }
             }
         },
@@ -764,8 +764,8 @@
             sto(function() {
                 self.trigger('draw');
                 
-                if (typeof self.onDraw == 'function') {
-                    self.onDraw();
+                if (typeof self._o.onDraw == 'function') {
+                    self._o.onDraw.call(self);
                 }
             }, 0);
         },
@@ -861,8 +861,8 @@
                 
                 this.trigger('open');
                 
-                if (typeof this.onOpen == 'function') {
-                    this.onOpen();
+                if (typeof this._o.onOpen == 'function') {
+                    this._o.onOpen.call(this);
                 }
             }
         },
@@ -880,8 +880,8 @@
                 if (v !== undefined) {
                     this.trigger('close');
                     
-                    if (typeof this.onClose == 'function') {
-                        this.onClose();
+                    if (typeof this._o.onClose == 'function') {
+                        this._o.onClose.call(this);
                     }
                 }
             }
