@@ -640,7 +640,11 @@
                 fireEvent(this._o.field, 'change', { firedBy: this });
             }
             if (!preventOnSelect) {
-                this.triggerMethod('select', this.getDate());
+                this.trigger('select', this.getDate());
+                
+                if (typeof this.onSelect == 'function') {
+                    this.onSelect(this.getDate());
+                }
             }
         },
 
@@ -758,7 +762,11 @@
 
             var self = this;
             sto(function() {
-                self.triggerMethod('draw');
+                self.trigger('draw');
+                
+                if (typeof self.onDraw == 'function') {
+                    self.onDraw();
+                }
             }, 0);
         },
 
@@ -851,7 +859,11 @@
                 this._v = true;
                 this.draw();
                 
-                this.triggerMethod('open');
+                this.trigger('open');
+                
+                if (typeof this.onOpen == 'function') {
+                    this.onOpen();
+                }
             }
         },
 
@@ -866,7 +878,11 @@
                 addClass(this.el, 'is-hidden');
                 this._v = false;
                 if (v !== undefined) {
-                    this.triggerMethod('close');
+                    this.trigger('close');
+                    
+                    if (typeof this.onClose == 'function') {
+                        this.onClose();
+                    }
                 }
             }
         },
@@ -882,22 +898,6 @@
             // Loop through and call each one. Must go backwards to preserve indices when `once` removes callbacks.
             for (var i = callbacks.length; i--; )
                 callbacks[i].apply(callbacks[i]._context, slice.call(arguments, 1));
-        },
-        
-        triggerMethod: function(event)
-        {
-            // First, trigger the event
-            this.trigger.apply(this, arguments);
-        
-            // Split apart the name and rejoin it with words capped
-            var eventParts = event.split(':'),
-            eventFunction = 'on';
-            for (var i = 0, len = eventParts.length; i < len; ++i)
-                eventFunction += eventParts[i].substr(0, 1).toUpperCase() + eventParts[i].substr(1);
-                
-            // If there's a function that matches the onFooBar pattern, execute it.
-            if (typeof this._o[eventFunction] == 'function')
-                this._o[eventFunction].apply(this, slice.call(arguments, 1));
         },
     
         off: function(event, callback, context)
