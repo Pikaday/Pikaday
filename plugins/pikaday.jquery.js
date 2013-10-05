@@ -4,18 +4,21 @@
  * Copyright © 2013 David Bushell | BSD & MIT license | https://github.com/dbushell/Pikaday
  */
 
-(function (root, define, factory)
+(function (root, factory)
 {
     'use strict';
 
-    if (typeof define === 'function' && define.amd) {
+    if (typeof exports === 'object') {
+        // CommonJS module
+        factory(require('jquery'), require('../pikaday'));
+    } else if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
         define(['jquery', 'pikaday'], factory);
     } else {
         // Browser globals
         factory(root.jQuery, root.Pikaday);
     }
-}(window, window.define, function ($, Pikaday)
+}(this, function ($, Pikaday)
 {
     'use strict';
 

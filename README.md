@@ -86,6 +86,8 @@ Pikaday has many useful options:
 * `yearRange` number of years either side (e.g. `10`) or array of upper/lower range (e.g. `[1900,2012]`)
 * `isRTL` reverse the calendar for right-to-left languages
 * `i18n` language defaults for month and weekday names (see internationalization below)
+* `yearSuffix` additional text to append to the year in the title
+* `showMonthAfterYear` render the month after year in the title (default `false`)
 * `onSelect` callback function for when a date is selected
 * `onOpen` callback function for when the picker becomes visible
 * `onClose` callback function for when the picker is hidden
@@ -129,6 +131,19 @@ require(['jquery', 'pikaday.jquery'], function($) {
     $('#datepicker').pikaday();
 });
 ```
+
+## CommonJS module support
+
+If you use a CommonJS compatible environment you can use the require function to import Pikaday.
+
+
+```javascript
+var pikaday = require('pikaday');
+```
+
+When you bundle all your required modules with [Browserify][browserify] and you don't use [Moment.js][moment] specify the ignore opption:
+
+`browserify main.js -o bundle.js -i moment`
 
 ## Ruby on Rails
 
@@ -267,6 +282,7 @@ Copyright © 2013 David Bushell | BSD & MIT license
 
   [Pikaday]:     http://dbushell.github.com/Pikaday/                              "Pikaday"
   [moment]:      http://momentjs.com/                                             "moment.js"
+  [browserify]:  http://browserify.org/                                           "browserify"
   [screenshot]:  https://raw.github.com/dbushell/Pikaday/gh-pages/screenshot.png  "Screenshot"
   [issues]:      https://github.com/dbushell/Pikaday/issues                       "Issue tracker"
   [gem]:         https://rubygems.org/gems/pikaday-gem                            "RoR gem"
