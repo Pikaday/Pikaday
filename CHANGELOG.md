@@ -6,6 +6,9 @@
 - Merge #45 Adjusting position
 - Merge #11 Allow using a different element to open and bind the datepicker to
 - Use new Bower package filename: bower.json
+- Merge #90 Configuration options for the title, useful for Asian languages.
+- Merge #96 Use proper UMD-wrapper
+- Merge #92 Export as CommonJS module
 
 ## 1.1.0 - 2013-03-29
 
