@@ -77,7 +77,7 @@ Pikaday has many useful options:
 * `field` bind the datepicker to a form field
 * `trigger` use a different element to trigger opening the datepicker, see [trigger example][] (default to `field`)
 * `bound` automatically show/hide the datepicker on `field` focus (default `true` if `field` is set)
-* `format` the default output format for `.toString()` and `field` value (requires [Moment.js][moment] for advanced formatting)
+* `format` the default output format for `.toString()` and `field` value (requires [Moment.js][moment] for custom formatting)
 * `defaultDate` the initial date to view when first opened
 * `setDefaultDate` make the `defaultDate` the initial selected value
 * `firstDay` first day of the week (0: Sunday, 1: Monday, etc)
@@ -141,7 +141,7 @@ If you use a CommonJS compatible environment you can use the require function to
 var pikaday = require('pikaday');
 ```
 
-When you bundle all your required modules with [Browserify][browserify] and you don't use [Moment.js][moment] specify the ignore opption:
+When you bundle all your required modules with [Browserify][browserify] and you don't use [Moment.js][moment] specify the ignore option:
 
 `browserify main.js -o bundle.js -i moment`
 
@@ -167,7 +167,7 @@ Returns the selected date in a string format. If [Moment.js][moment] exists (rec
 
 Returns a basic JavaScript `Date` object of the selected day, or `null` if no selection.
 
-`picker.setDate('2012-01-01'))`
+`picker.setDate('2012-01-01')`
 
 Set the current selection. This will be restricted within the bounds of `minDate` and `maxDate` options if they're specified.
 
@@ -175,7 +175,7 @@ Set the current selection. This will be restricted within the bounds of `minDate
 
 Returns a [Moment.js][moment] object for the selected date (Moment must be loaded before Pikaday).
 
-`picker.setMoment(moment('14th Feburary 2013', 'DDo MMMM YYYY'))`
+`picker.setMoment(moment('14th February 2013', 'DDo MMMM YYYY'))`
 
 Set the current selection with a [Moment.js][moment] object (passed on to `setDate`).
 
