@@ -118,6 +118,7 @@
 .pika-table th,
 .pika-table td {
     width: 14.285714285714286%;
+    padding: 0;
 }
 
 .pika-table th {
