@@ -166,6 +166,10 @@
         // automatically show/hide the picker on `field` focus (default `true` if `field` is set)
         bound: undefined,
 
+        // position of the datepicker, relative to the field (default to bottom & left)
+        // ('bottom' & 'left' keywords are not used, 'top' & 'right' are modifier on the bottom/left position)
+        position: 'bottom left',
+
         // the default output format for `.toString()` and `field` value
         format: 'YYYY-MM-DD',
 
@@ -785,13 +789,29 @@
                 }
             }
 
-            if (left + width > viewportWidth) {
+            // default position is bottom & left
+            if ( left + width > viewportWidth ||
+                (
+                    this._o.position.indexOf('right') > -1 &&
+                    left - width + field.offsetWidth > 0
+                )
+            ) {
                 left = left - width + field.offsetWidth;
             }
-            if (top + height > viewportHeight + scrollTop) {
+            if ( top + height > viewportHeight + scrollTop ||
+                (
+                    this._o.position.indexOf('top') > -1 &&
+                    top - height - field.offsetHeight > 0
+                )
+            ) {
                 top = top - height - field.offsetHeight;
             }
             this.el.style.cssText = 'position:absolute;left:' + left + 'px;top:' + top + 'px;';
+            this.el.style.cssText = [
+                'position: absolute',
+                'left: ' + left + 'px',
+                'top: ' + top + 'px'
+            ].join(';');
         },
 
         /**
