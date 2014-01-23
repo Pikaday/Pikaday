@@ -129,6 +129,15 @@
         return a.getTime() === b.getTime();
     },
 
+    dateInArray = function(date, dateArray) {
+        var inArray = false,
+            i;
+        for(var i = 0; i < dateArray.length && inArray === false; i++) {
+            inArray = compareDates(date, dateArray[i]);
+        }
+        return inArray;
+    },
+
     extend = function(to, from, overwrite)
     {
         var prop, hasProp;
@@ -182,6 +191,9 @@
         minDate: null,
         // the maximum/latest date that can be selected
         maxDate: null,
+
+        // which dates should be disabled
+        disabledDates: [],
 
         // number of years either side, or array of upper/lower range
         yearRange: 10,
@@ -556,6 +568,16 @@
                 opts.maxYear  = opts.maxDate.getFullYear();
                 opts.maxMonth = opts.maxDate.getMonth();
             }
+            if (opts.disabledDates) {
+                if (!isArray(opts.disabledDates)) {
+                    opts.disabledDates = [];
+                }
+                for (var i = 0; i < opts.disabledDates.length; i++) {
+                    if (!isDate(opts.disabledDates[i])) {
+                        opts.disabledDates.splice(i, 1);
+                    }
+                }
+            }
 
             if (isArray(opts.yearRange)) {
                 var fallback = new Date().getFullYear() - 10;
@@ -619,6 +641,9 @@
             }
             if (!isDate(date)) {
                 return;
+            }
+            if (dateInArray(date, this._o.disabledDates)) {
+                return false;
             }
 
             var min = this._o.minDate,
@@ -715,6 +740,14 @@
         setMaxDate: function(value)
         {
             this._o.maxDate = value;
+        },
+
+        /**
+         * change the maxDate
+         */
+        setDisabledDates: function(value)
+        {
+            this._o.disabledDates = value;
         },
 
         /**
@@ -821,7 +854,7 @@
             for (var i = 0, r = 0; i < cells; i++)
             {
                 var day = new Date(year, month, 1 + (i - before)),
-                    isDisabled = (opts.minDate && day < opts.minDate) || (opts.maxDate && day > opts.maxDate),
+                    isDisabled = (opts.minDate && day < opts.minDate) || (opts.maxDate && day > opts.maxDate) || dateInArray(day, opts.disabledDates),
                     isSelected = isDate(this._d) ? compareDates(day, this._d) : false,
                     isToday = compareDates(day, now),
                     isEmpty = i < before || i >= (days + before);

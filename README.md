@@ -83,6 +83,7 @@ Pikaday has many useful options:
 * `firstDay` first day of the week (0: Sunday, 1: Monday, etc)
 * `minDate` the minimum/earliest date that can be selected (this should be a native Date object - e.g. `new Date()` or `moment().toDate()`)
 * `maxDate` the maximum/latest date that can be selected (this should be a native Date object - e.g. `new Date()` or `moment().toDate()`)
+* `disabledDates` any dates that should not be selectable (this should be an array of native Date objects - e.g. `[new Date(2014, 0, 4), new Date(2014, 0, 5)]`)
 * `yearRange` number of years either side (e.g. `10`) or array of upper/lower range (e.g. `[1900,2012]`)
 * `isRTL` reverse the calendar for right-to-left languages
 * `i18n` language defaults for month and weekday names (see internationalization below)
@@ -169,7 +170,7 @@ Returns a basic JavaScript `Date` object of the selected day, or `null` if no se
 
 `picker.setDate('2012-01-01'))`
 
-Set the current selection. This will be restricted within the bounds of `minDate` and `maxDate` options if they're specified.
+Set the current selection. This will be restricted within the bounds of `minDate` and `maxDate` options if they're specified, and will return false and perform no action if the date is present in `disabledDates`.
 
 `picker.getMoment()`
 
@@ -209,6 +210,10 @@ Update the minimum/earliest date that can be selected.
 `picker.setMaxDate()`
 
 Update the maximum/latest date that can be selected.
+
+`picker.setDisabledDates()`
+
+Update unselectable dates
 
 ### Show and hide datepicker
 
