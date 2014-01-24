@@ -790,7 +790,7 @@
             }
 
             // default position is bottom & left
-            if ( left + width > viewportWidth ||
+            if (left + width > viewportWidth ||
                 (
                     this._o.position.indexOf('right') > -1 &&
                     left - width + field.offsetWidth > 0
@@ -798,7 +798,7 @@
             ) {
                 left = left - width + field.offsetWidth;
             }
-            if ( top + height > viewportHeight + scrollTop ||
+            if (top + height > viewportHeight + scrollTop ||
                 (
                     this._o.position.indexOf('top') > -1 &&
                     top - height - field.offsetHeight > 0
@@ -806,7 +806,6 @@
             ) {
                 top = top - height - field.offsetHeight;
             }
-            this.el.style.cssText = 'position:absolute;left:' + left + 'px;top:' + top + 'px;';
             this.el.style.cssText = [
                 'position: absolute',
                 'left: ' + left + 'px',
