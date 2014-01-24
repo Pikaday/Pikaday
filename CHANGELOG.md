@@ -9,6 +9,8 @@
 - Merge #90 Configuration options for the title, useful for Asian languages.
 - Merge #96 Use proper UMD-wrapper
 - Merge #92 Export as CommonJS module
+- Merge #119 Use a px text-indent on .pika-prev/next to prevent Firefox bug
+- Merge #60 Add customizable position option
 
 ## 1.1.0 - 2013-03-29
 
