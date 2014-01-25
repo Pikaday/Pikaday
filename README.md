@@ -54,7 +54,7 @@ For advanced formatting load [Moment.js][moment] prior to Pikaday:
 See the [moment.js example][] for a full version.
 
 ```html
-<input type="text" id="datepicker" value="9 Oct 2012">
+<input type="text" id="datepicker" value="9 Oct 2014">
 
 <script src="moment.js"></script>
 <script src="pikaday.js"></script>
@@ -84,7 +84,7 @@ Pikaday has many useful options:
 * `firstDay` first day of the week (0: Sunday, 1: Monday, etc)
 * `minDate` the minimum/earliest date that can be selected (this should be a native Date object - e.g. `new Date()` or `moment().toDate()`)
 * `maxDate` the maximum/latest date that can be selected (this should be a native Date object - e.g. `new Date()` or `moment().toDate()`)
-* `yearRange` number of years either side (e.g. `10`) or array of upper/lower range (e.g. `[1900,2012]`)
+* `yearRange` number of years either side (e.g. `10`) or array of upper/lower range (e.g. `[1900,2015]`)
 * `isRTL` reverse the calendar for right-to-left languages
 * `i18n` language defaults for month and weekday names (see internationalization below)
 * `yearSuffix` additional text to append to the year in the title
@@ -168,23 +168,23 @@ Returns the selected date in a string format. If [Moment.js][moment] exists (rec
 
 Returns a basic JavaScript `Date` object of the selected day, or `null` if no selection.
 
-`picker.setDate('2012-01-01'))`
+`picker.setDate('2015-01-01')`
 
-Set the current selection. This will be restricted within the bounds of `minDate` and `maxDate` options if they're specified.
+Set the current selection. This will be restricted within the bounds of `minDate` and `maxDate` options if they're specified. You can optionally pass a boolean as the second parameter to prevent triggering of the onSelect callback (true), allowing the date to be set silently.
 
 `picker.getMoment()`
 
 Returns a [Moment.js][moment] object for the selected date (Moment must be loaded before Pikaday).
 
-`picker.setMoment(moment('14th Feburary 2013', 'DDo MMMM YYYY'))`
+`picker.setMoment(moment('14th Feburary 2014', 'DDo MMMM YYYY'))`
 
-Set the current selection with a [Moment.js][moment] object (passed on to `setDate`).
+Set the current selection with a [Moment.js][moment] object (see `setDate` for details).
 
 ### Change current view
 
-`picker.gotoDate(new Date(2012, 1))`
+`picker.gotoDate(new Date(2014, 1))`
 
-Change the current view to see a specific date. This example will jump to February 2012 ([month is a zero-based index][mdn_date]).
+Change the current view to see a specific date. This example will jump to February 2014 ([month is a zero-based index][mdn_date]).
 
 `picker.gotoToday()`
 
@@ -279,7 +279,7 @@ or the work [@owenmead][owenmead] did more recently at [owenmead/Pikaday][owen P
 
 Thanks to [@shoogledesigns][shoogledesigns] for the name.
 
-Copyright © 2013 David Bushell | BSD & MIT license
+Copyright © 2014 David Bushell | BSD & MIT license
 
   [Pikaday]:     http://dbushell.github.com/Pikaday/                              "Pikaday"
   [moment]:      http://momentjs.com/                                             "moment.js"

@@ -1,7 +1,7 @@
 /*!
  * Pikaday
  *
- * Copyright © 2013 David Bushell | BSD & MIT license | https://github.com/dbushell/Pikaday
+ * Copyright © 2014 David Bushell | BSD & MIT license | https://github.com/dbushell/Pikaday
  */
 
 (function (root, factory)
@@ -594,10 +594,10 @@
         /**
          * set the current selection from a Moment.js object (if available)
          */
-        setMoment: function(date)
+        setMoment: function(date, preventOnSelect)
         {
             if (hasMoment && moment.isMoment(date)) {
-                this.setDate(date.toDate());
+                this.setDate(date.toDate(), preventOnSelect);
             }
         },
 
