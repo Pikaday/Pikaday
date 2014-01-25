@@ -168,17 +168,17 @@ Returns the selected date in a string format. If [Moment.js][moment] exists (rec
 
 Returns a basic JavaScript `Date` object of the selected day, or `null` if no selection.
 
-`picker.setDate('2012-01-01', preventOnSelect)`
+`picker.setDate('2012-01-01')`
 
-Set the current selection. This will be restricted within the bounds of `minDate` and `maxDate` options if they're specified.  The second parameter is an optional boolean that disables triggering of the onSelect callback if true, allowing the date to be set silently.
+Set the current selection. This will be restricted within the bounds of `minDate` and `maxDate` options if they're specified. You can optionally pass a boolean as the second parameter to prevent triggering of the onSelect callback (true), allowing the date to be set silently.
 
 `picker.getMoment()`
 
 Returns a [Moment.js][moment] object for the selected date (Moment must be loaded before Pikaday).
 
-`picker.setMoment(moment('14th Feburary 2013', 'DDo MMMM YYYY'), preventOnSelect)`
+`picker.setMoment(moment('14th Feburary 2013', 'DDo MMMM YYYY'))`
 
-Set the current selection with a [Moment.js][moment] object (passed on to `setDate`).
+Set the current selection with a [Moment.js][moment] object (see `setDate` for details).
 
 ### Change current view
 
