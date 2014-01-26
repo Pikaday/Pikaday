@@ -40,6 +40,8 @@
     document = window.document,
 
     sto = window.setTimeout,
+    
+    slice = Array.prototype.slice,
 
     addEvent = function(el, e, callback, capture)
     {
@@ -334,7 +336,6 @@
     {
         return '<table cellpadding="0" cellspacing="0" class="pika-table">' + renderHead(opts) + renderBody(data) + '</table>';
     },
-
 
     /**
      * Pikaday constructor
@@ -642,8 +643,12 @@
                 this._o.field.value = this.toString();
                 fireEvent(this._o.field, 'change', { firedBy: this });
             }
-            if (!preventOnSelect && typeof this._o.onSelect === 'function') {
-                this._o.onSelect.call(this, this.getDate());
+            if (!preventOnSelect) {
+                this.trigger('select', this.getDate());
+                
+                if (typeof this._o.onSelect == 'function') {
+                    this._o.onSelect.call(this, this.getDate());
+                }
             }
         },
 
@@ -759,12 +764,14 @@
                 }
             }
 
-            if (typeof this._o.onDraw === 'function') {
-                var self = this;
-                sto(function() {
+            var self = this;
+            sto(function() {
+                self.trigger('draw');
+                
+                if (typeof self._o.onDraw == 'function') {
                     self._o.onDraw.call(self);
-                }, 0);
-            }
+                }
+            }, 0);
         },
 
         adjustPosition: function()
@@ -870,7 +877,10 @@
                 removeClass(this.el, 'is-hidden');
                 this._v = true;
                 this.draw();
-                if (typeof this._o.onOpen === 'function') {
+                
+                this.trigger('open');
+                
+                if (typeof this._o.onOpen == 'function') {
                     this._o.onOpen.call(this);
                 }
             }
@@ -886,8 +896,207 @@
                 this.el.style.cssText = '';
                 addClass(this.el, 'is-hidden');
                 this._v = false;
-                if (v !== undefined && typeof this._o.onClose === 'function') {
-                    this._o.onClose.call(this);
+                if (v !== undefined) {
+                    this.trigger('close');
+                    
+                    if (typeof this._o.onClose == 'function') {
+                        this._o.onClose.call(this);
+                    }
+                }
+            }
+        },
+        
+        trigger: function(event)
+        {
+            // No-op if this event isn't defined.
+            if (!this._events || !this._events.hasOwnProperty(event)) return;
+            
+            // Shorter and local reference to the event callback list
+            var callbacks = this._events[event];
+            
+            // Loop through and call each one. Must go backwards to preserve indices when `once` removes callbacks.
+            for (var i = callbacks.length; i--; )
+                callbacks[i].apply(callbacks[i]._context, slice.call(arguments, 1));
+        },
+    
+        off: function(event, callback, context)
+        {
+            if (!this._events) return; // Nothing to remove, so leave
+        
+            // Iterator variables used a couple of times on down.
+            var i, len, candidate;
+        
+            // Support space separated events
+            var events = event.split(' ');
+            if (events.length > 1) {
+                for (i = 0, len = events.length; i < len; i++)
+                    this.off(events[i], callback, context);
+                
+                return;
+            }
+        
+            // Filter out events not bound to this object
+            if (!this._events.hasOwnProperty(event)) return;
+        
+            // If not filtering by callback, clear the entire list for this event and be done
+            if (!callback) {
+                this._events[event] = [];
+                return;
+            }
+        
+            // We're filtering by callbacks if we're still here, so loop through and
+            // check for the given callback
+            // Backwards to preserve indices
+            for (i = this._events[event].length; i--; ) {
+                // Get a reference to the callback to be removed for identity comparisons.
+                // Prefer the cached callback reference in the case of `once` events.
+                candidate = this._events[event][i]._callback || this._events[event][i];
+            
+                if (candidate === callback)
+                    // If context isn't given, strip it out.
+                    // If context is given, check against the cached context
+                    // reference for a match before stripping.
+                    if (!context || this._events[event][i]._context === context)
+                        this._events[event].splice(i, 1);
+            }
+        },
+    
+        on: function(event, callback, context)
+        {
+            // Support object hashes
+            if (typeof event == 'object') {
+                for (var key in event)
+                    if (event.hasOwnProperty(key))
+                        this.on(key, event[key]);
+                return;
+            }
+        
+            // Iterator variables used in a couple of spots later
+            var i, len, candidate;
+        
+            // Default context is `this`
+            context = context || this;
+
+            // Support space separated events
+            var events = event.split(' ');
+            if (events.length > 1) {
+                for (i = 0, len = events.length; i < len; i++)
+                    this.on(events[i], callback, context);
+                
+                return;
+            }
+        
+            // Create the space for this event, if it doesn't exist already.
+            if (!this._events) this._events = {};
+            if (!this._events.hasOwnProperty(event)) this._events[event] = [];
+        
+            // No dupes
+            for (i = this._events[event].length; i--; ) {
+                candidate = this._events[event][i]._callback || this._events[event][i];
+                
+                if (candidate === callback._callback || candidate === callback) return;
+            }
+        
+            // Save a reference to the context for both context-aware unbinding and
+            // to set the context (`this`) when triggering the event.
+            callback._context = context;
+        
+            // Add the event to the event list
+            this._events[event].push(callback);
+        },
+
+        once: function(event, callback, context)
+        {
+            // Support object hashes
+            if (typeof event == 'object') {
+                for (var key in event)
+                    if (event.hasOwnProperty(key))
+                        this.once(key, event[key]);
+                        
+                    return;
+            }
+            
+            context = context || this;
+            
+            // Support space separated events
+            var events = event.split(' ');
+            if (events.length > 1) {
+                for (var i = 0, len = events.length; i < len; i++)
+                    this.once(events[i], callback, context);
+                    
+                return;
+            }
+        
+            // Set up the logic that will unbind this event after it has run.
+            var that = this; // So function binding doesn't break this.
+            var wrappedCallback = function() {
+                callback.apply(this, slice.call(arguments));
+                that.off(event, callback);
+            };
+        
+            // Save an accessible reference to the original callback for unbinding later
+            wrappedCallback._callback = callback;
+        
+            // Attach the wrapped event.
+            this.on(event, wrappedCallback, context);
+        },
+    
+        listenTo: function(subject, event, callback)
+        {
+            var candidate;
+                if (!this._subjects) this._subjects = [];
+            
+            // No dupes
+            for (var i = 0, len = this._subjects.length; i < len; ++i) {
+                candidate = this._subjects[i];
+            
+                if (candidate.subject === subject
+                    && candidate.event === event
+                    && candidate.callback === callback) return;
+            }
+        
+            this._subjects.push({
+                callback: callback,
+                event: event,
+                subject: subject
+            });
+        
+            subject.on(event, callback, this);
+        },
+    
+        listenToOnce: function(subject, event, callback)
+        {
+            var candidate;
+            if (!this._subjects) this._subjects = [];
+
+            // No dupes
+            for (var i = 0, len = this._subjects.length; i < len; ++i) {
+                candidate = this._subjects[i];
+            
+                if (candidate.subject === subject
+                    && candidate.event === event
+                    && candidate.callback === callback) return;
+            }
+        
+            this._subjects.push({
+                callback: callback,
+                event: event,
+                subject: subject
+            });
+        
+            subject.once(event, callback, this);
+        },
+    
+        stopListening: function(subject, event, callback)
+        {
+            var candidate;
+        
+            for (var i = this._subjects.length; i--; ) {
+                candidate = this._subjects[i];
+                
+                if ((!subject || candidate.subject === subject) && (!event || candidate.event === event) && (!callback || candidate.callback === callback)) {
+                    candidate.subject.off(candidate.event, candidate.callback, this);
+                    this._subjects.splice(i, 1);
                 }
             }
         },
