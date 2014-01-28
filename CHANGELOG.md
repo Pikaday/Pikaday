@@ -11,6 +11,7 @@
 - Merge #92 Export as CommonJS module
 - Merge #119 Use a px text-indent on .pika-prev/next to prevent Firefox bug
 - Merge #60 Add customizable position option
+- Add Component package definition
 
 ## 1.1.0 - 2013-03-29
 
