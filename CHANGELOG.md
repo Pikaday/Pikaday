@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.2.0 - TBA
+## 1.2.0 - 2014-01-28
 
 - Fix #8 Automatically adjust datepicker position
 - Merge #45 Adjusting position
