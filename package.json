@@ -1,5 +1,5 @@
 {
-  "name": "Pikaday",
+  "name": "pikaday",
   "version": "1.2.0",
   "description": "A refreshing JavaScript Datepicker — lightweight, no dependencies, modular CSS",
   "keywords": [
@@ -9,12 +9,19 @@
   ],
   "homepage": "http://dbushell.github.io/Pikaday/",
   "bugs": "https://github.com/dbushell/Pikaday/issues",
-  "licenses" : [{
+  "licenses": [{
     "type": "BSD",
     "url": "http://opensource.org/licenses/BSD-3-Clause"
   }, {
     "type": "MIT",
     "url": "http://opensource.org/licenses/MIT"
   }],
-  "main": "pikaday.js"
+  "main": "pikaday.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dbushell/Pikaday.git"
+  },
+  "optionalDependencies": {
+    "moment": "2.x"
+  }
 }

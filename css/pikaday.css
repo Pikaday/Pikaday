@@ -2,7 +2,7 @@
 
 /*!
  * Pikaday
- * Copyright © 2012 David Bushell | BSD & MIT license | http://dbushell.com/
+ * Copyright © 2014 David Bushell | BSD & MIT license | http://dbushell.com/
  */
 
 .pika-single {
@@ -66,13 +66,14 @@
     padding: 0;
     width: 20px;
     height: 30px;
+    /* hide text using text-indent trick, using width value (it's enough) */
+    text-indent: 20px;
+    white-space: nowrap;
+    overflow: hidden;
     background-color: transparent;
     background-position: center center;
     background-repeat: no-repeat;
     background-size: 75% 75%;
-    white-space: nowrap;
-    text-indent: 100%;
-    overflow: hidden;
     opacity: .5;
     *position: absolute;
     *top: 0;
@@ -118,6 +119,7 @@
 .pika-table th,
 .pika-table td {
     width: 14.285714285714286%;
+    padding: 0;
 }
 
 .pika-table th {
