@@ -50,6 +50,22 @@ var picker = new Pikaday({
 field.parentNode.insertBefore(picker.el, field.nextSibling);
 ```
 
+You can custom your date format by passing a callback:
+
+```html
+<input type="text" id="datepicker" value="9 Oct 2014">
+
+<script src="pikaday.js"></script>
+<script>
+    var picker = new Pikaday({
+        field: document.getElementById('datepicker'),
+        format: function() {
+          return this.toISOString();
+        }
+    });
+</script>
+```
+
 For advanced formatting load [Moment.js][moment] prior to Pikaday:  
 See the [moment.js example][] for a full version.
 
