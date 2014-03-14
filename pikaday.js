@@ -102,6 +102,11 @@
         return (/Array/).test(Object.prototype.toString.call(obj));
     },
 
+    isFunction = function(obj)
+    {
+        return !!(obj && obj.constructor && obj.call && obj.apply);
+    },
+
     isDate = function(obj)
     {
         return (/Date/).test(Object.prototype.toString.call(obj)) && !isNaN(obj.getTime());
