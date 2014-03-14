@@ -195,7 +195,8 @@
         // automatically fit in the viewport even if it means repositioning from the position option
         reposition: true,
 
-        // the default output format for `.toString()` and `field` value
+        // the default output formatter for `.toString()` and `field` value
+        // it's will bind to current Date object if it's a function
         format: 'YYYY-MM-DD',
 
         // the initial date to view when first opened
@@ -486,7 +487,10 @@
             if (e.firedBy === self) {
                 return;
             }
-            if (hasMoment) {
+            if (isFunction(opts.format)) {
+                date = opts.format.call(opts.field.value)
+            }
+            else if (hasMoment) {
                 date = moment(opts.field.value, opts.format, opts.formatStrict);
                 date = (date && date.isValid()) ? date.toDate() : null;
             }
@@ -675,7 +679,8 @@
          */
         toString: function(format)
         {
-            return !isDate(this._d) ? '' : hasMoment ? moment(this._d).format(format || this._o.format) : this._d.toDateString();
+            var formatter = format || this._o.format;
+            return !isDate(this._d) ? '' : isFunction(formatter) ? format.call(this._d) : hasMoment ? moment(this._d).format(formatter) : this._d.toDateString();
         },
 
         /**
