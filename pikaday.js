@@ -33,11 +33,9 @@
     /**
      * feature detection and helper functions
      */
-    var hasMoment = typeof moment === 'function',
+    var document = window.document,
 
     hasEventListeners = !!window.addEventListener,
-
-    document = window.document,
 
     sto = window.setTimeout,
 
@@ -176,6 +174,8 @@
         }
         return calendar;
     },
+
+    hasMoment = isFunction(moment),
 
     /**
      * defaults and localisation
