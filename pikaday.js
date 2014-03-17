@@ -196,8 +196,11 @@
         reposition: true,
 
         // the default output formatter for `.toString()` and `field` value
-        // it's will bind to current Date object if it's a function
+        // if format is a function, it will invoke with context Date object as it's first argument
         format: 'YYYY-MM-DD',
+
+        // custom input date string format parser
+        parser: null,
 
         // the initial date to view when first opened
         defaultDate: null,
@@ -487,8 +490,8 @@
             if (e.firedBy === self) {
                 return;
             }
-            if (isFunction(opts.format)) {
-                date = opts.format.call(opts.field.value)
+            if (isFunction(opts.parser)) {
+                date = opts.parser(opts.field.value, opts.format, this)
             }
             else if (hasMoment) {
                 date = moment(opts.field.value, opts.format, opts.formatStrict);
@@ -679,8 +682,23 @@
          */
         toString: function(format)
         {
-            var formatter = format || this._o.format;
-            return !isDate(this._d) ? '' : isFunction(formatter) ? format.call(this._d) : hasMoment ? moment(this._d).format(formatter) : this._d.toDateString();
+            if (!isDate(this._d)) {
+                return '';
+            }
+
+            var date = this._d,
+                formatter = format || this._o.format,
+                result;
+            if (isFunction(formatter)) {
+                result = formatter(date, this);
+            }
+            else if (hasMoment) {
+                result = moment(date).format(formatter);
+            } else {
+                result = date.toDateString();
+            }
+
+            return result;
         },
 
         /**
