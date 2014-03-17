@@ -66,6 +66,25 @@ You can custom your date format by passing a callback:
 </script>
 ```
 
+You can also custom your input date string parser:
+
+```html
+<input type="text" id="datepicker" value="01/02/2006">
+
+<script src="pikaday.js"></script>
+<script>
+    var picker = new Pikaday({
+        field: document.getElementById('datepicker'),
+        parser: function(value, format, ctx) {
+          var parts = input.split('-');
+          // new Date(year, month [, day [, hours[, minutes[, seconds[, ms]]]]])
+          // Note: months are 0-based
+          return new Date(parts[2], parts[1]-1, parts[0]);
+        }
+    });
+</script>
+```
+
 For advanced formatting load [Moment.js][moment] prior to Pikaday:  
 See the [moment.js example][] for a full version.
 
