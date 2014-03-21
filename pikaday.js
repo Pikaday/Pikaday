@@ -170,6 +170,9 @@
         // ('bottom' & 'left' keywords are not used, 'top' & 'right' are modifier on the bottom/left position)
         position: 'bottom left',
 
+        // move the datepicker if the viewport is too small to fully display it at the desired position
+        shouldReflow: true,
+
         // the default output format for `.toString()` and `field` value
         format: 'YYYY-MM-DD',
 
@@ -773,7 +776,7 @@
             viewportWidth = window.innerWidth || document.documentElement.clientWidth,
             viewportHeight = window.innerHeight || document.documentElement.clientHeight,
             scrollTop = window.pageYOffset || document.body.scrollTop || document.documentElement.scrollTop,
-            left, top, clientRect;
+            left, top, clientRect, reflowAdjustments;
 
             if (typeof field.getBoundingClientRect === 'function') {
                 clientRect = field.getBoundingClientRect();
@@ -788,28 +791,51 @@
                 }
             }
 
-            // default position is bottom & left
-            if (left + width > viewportWidth ||
-                (
-                    this._o.position.indexOf('right') > -1 &&
-                    left - width + field.offsetWidth > 0
-                )
-            ) {
-                left = left - width + field.offsetWidth;
+            if (this._o.shouldReflow) {
+              reflowAdjustments = this.reflow({ left: left, top: top,
+                width: width, height: height, viewportHeight: viewportHeight,
+                viewportWidth: viewportWidth, scrollTop: scrollTop });
+              left = reflowAdjustments.left;
+              top  = reflowAdjustments.top;
             }
-            if (top + height > viewportHeight + scrollTop ||
-                (
-                    this._o.position.indexOf('top') > -1 &&
-                    top - height - field.offsetHeight > 0
-                )
-            ) {
-                top = top - height - field.offsetHeight;
-            }
+
             this.el.style.cssText = [
                 'position: absolute',
                 'left: ' + left + 'px',
                 'top: ' + top + 'px'
             ].join(';');
+        },
+
+        /**
+         * move the datepicker if it doesn't fit in the viewport at its
+         * current position.
+         */
+        reflow: function(options)
+        {
+          var left = options.left, top = options.top,
+              width = options.width, height = options.height,
+              field = this._o.trigger, viewportHeight = options.viewportHeight,
+              viewportWidth = options.viewportWidth, scrollTop = options.scrollTop;
+
+          // default position is bottom & left
+          if (left + width > viewportWidth ||
+              (
+                  this._o.position.indexOf('right') > -1 &&
+                  left - width + field.offsetWidth > 0
+              )
+          ) {
+              left = left - width + field.offsetWidth;
+          }
+          if (top + height > viewportHeight + scrollTop ||
+              (
+                  this._o.position.indexOf('top') > -1 &&
+                  top - height - field.offsetHeight > 0
+              )
+          ) {
+              top = top - height - field.offsetHeight;
+          }
+
+          return { left: left, top: top };
         },
 
         /**
