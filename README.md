@@ -89,7 +89,9 @@ Pikaday has many useful options:
 * `i18n` language defaults for month and weekday names (see internationalization below)
 * `yearSuffix` additional text to append to the year in the title
 * `showMonthAfterYear` render the month after year in the title (default `false`)
+* `clearInvalidInput` clear the input field (if `field` is set) on invalid input (default `false`)
 * `onSelect` callback function for when a date is selected
+* `onClear` callback function for when date is set to null or invalid date
 * `onOpen` callback function for when the picker becomes visible
 * `onClose` callback function for when the picker is hidden
 * `onDraw` callback function for when the picker draws a new month
@@ -170,7 +172,7 @@ Returns a basic JavaScript `Date` object of the selected day, or `null` if no se
 
 `picker.setDate('2015-01-01')`
 
-Set the current selection. This will be restricted within the bounds of `minDate` and `maxDate` options if they're specified. You can optionally pass a boolean as the second parameter to prevent triggering of the onSelect callback (true), allowing the date to be set silently.
+Set the current selection. This will be restricted within the bounds of `minDate` and `maxDate` options if they're specified. If the given date is null or invalid, the current selection is cleared and input field is cleared if `clearInvalidInput` option is `true`. You can optionally pass a boolean as the second parameter to prevent triggering of the onSelect and onClear callbacks (true), allowing the date to be set silently.
 
 `picker.getMoment()`
 
@@ -179,6 +181,10 @@ Returns a [Moment.js][moment] object for the selected date (Moment must be loade
 `picker.setMoment(moment('14th February 2014', 'DDo MMMM YYYY'))`
 
 Set the current selection with a [Moment.js][moment] object (see `setDate` for details).
+
+`picker.clearDate()`
+
+Clears the current selection. If the first parameter is `true` then the input field (if `field` is set) is also cleared. You can optionally pass a boolean as the second parameter to prevent triggering of the onClear callback (true), allowing the date to be cleared silently.
 
 ### Change current view
 

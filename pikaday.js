@@ -196,16 +196,20 @@
         minMonth: undefined,
         maxMonth: undefined,
 
+        // reverse the calendar for right-to-left languages
         isRTL: false,
 
-        // Additional text to append to the year in the calendar title
+        // additional text to append to the year in the calendar title
         yearSuffix: '',
 
-        // Render the month after year in the calendar title
+        // render the month after year in the calendar title
         showMonthAfterYear: false,
 
         // how many months are visible (not implemented yet)
         numberOfMonths: 1,
+
+        // clear the input field (if `field` is set) on invalid input
+        clearInvalidInput: false,
 
         // internationalization
         i18n: {
@@ -216,8 +220,9 @@
             weekdaysShort : ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
         },
 
-        // callback function
+        // callback functions
         onSelect: null,
+        onClear: null,
         onOpen: null,
         onClose: null,
         onDraw: null
@@ -614,15 +619,12 @@
          */
         setDate: function(date, preventOnSelect)
         {
-            if (!date) {
-                this._d = null;
-                return this.draw();
-            }
             if (typeof date === 'string') {
                 date = new Date(Date.parse(date));
             }
+
             if (!isDate(date)) {
-                return;
+                return this.clearDate(this._o.clearInvalidInput, preventOnSelect);
             }
 
             var min = this._o.minDate,
@@ -644,6 +646,24 @@
             }
             if (!preventOnSelect && typeof this._o.onSelect === 'function') {
                 this._o.onSelect.call(this, this.getDate());
+            }
+        },
+
+        /**
+         * clear the current selection
+         */
+        clearDate: function(clearField, preventOnClear)
+        {
+            this._d = null;
+            this.draw();
+
+            if (clearField && this._o.field) {
+                this._o.field.value = '';
+                fireEvent(this._o.field, 'change', { firedBy: this });
+            }
+
+            if (!preventOnClear && typeof this._o.onClear === 'function') {
+                this._o.onClear.call(this);
             }
         },
 
