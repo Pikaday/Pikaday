@@ -244,7 +244,7 @@ Hide the picker making it invisible.
 
 Hide the picker and remove all event listeners — no going back!
 
-### Internationalization
+## Internationalization
 
 The default `i18n` configuration format looks like this:
 
@@ -260,9 +260,13 @@ i18n: {
 
 You must provide 12 months and 7 weekdays (with abbreviations). Always specify weekdays in this order with Sunday first. You can change the `firstDay` option to reorder if necessary (0: Sunday, 1: Monday, etc). You can also set `isRTL` to `true` for languages that are read right-to-left.
 
-### Custom date parser and formatter functions
+## Custom Date Parsing and Formatting
 
-Although [Moment.js][moment] is recommended, alternate Javascript Date libraries such as [Sugar][] can be used by overriding `picker.parseDate()` and `picker.toString()` with custom date parser and formatter functions. See the [Sugar example][] for a full example.
+Although [Moment.js][moment] is recommended, alternate Javascript Date libraries such as [Sugar][] can be used by overriding `parseDate` and `toString` on `Pikaday.prototype` with custom date parser and formatter functions. See the [Sugar example][] for a full example.
+
+## MVC Framework Integration
+
+Pikaday can be easily integrated with most Javascript MVC Frameworks such as [Ember][] and [Knockout][]. See the [Ember example][] and [Knockout example][] for example integrations.
 
 ## Extensions
 
@@ -295,29 +299,33 @@ Thanks to [@shoogledesigns][shoogledesigns] for the name.
 
 Copyright © 2014 David Bushell | BSD & MIT license
 
-  [Pikaday]:     http://dbushell.github.com/Pikaday/                              "Pikaday"
-  [moment]:      http://momentjs.com/                                             "moment.js"
-  [browserify]:  http://browserify.org/                                           "browserify"
-  [screenshot]:  https://raw.github.com/dbushell/Pikaday/gh-pages/screenshot.png  "Screenshot"
-  [issues]:      https://github.com/dbushell/Pikaday/issues                       "Issue tracker"
-  [gem]:         https://rubygems.org/gems/pikaday-gem                            "RoR gem"
-  [mdn_date]:    https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Date  "Date"
-  [Bushell]:     http://dbushell.com/                                             "dbushell.com"
-  [Bushell Twitter]: https://twitter.com/dbushell                                 "@dbushell"
-  [Rikkert]:     https://github.com/rikkert                                       "Rikkert GitHub"
-  [Rikkert Twitter]: https://twitter.com/ramrik                                   "@ramrik"
-  [shoogledesigns]:  https://twitter.com/shoogledesigns/status/255209384261586944 "@shoogledesigns"
-  [issue1]:      https://github.com/dbushell/Pikaday/issues/1                     "Issue 1"
-  [issue18]:     https://github.com/dbushell/Pikaday/issues/18                    "Issue 18"
-  [stas]:        https://github.com/stas                                          "@stas"
-  [stas Pika]:   https://github.com/stas/Pikaday                                  "Pikaday"
-  [owenmead]:     https://github.com/owenmead                                     "@owenmead"
-  [owen Pika]:   https://github.com/owenmead/Pikaday                              "Pikaday"
-  [moment.js example]: http://dbushell.github.com/Pikaday/examples/moment.html    "Pikaday w/ moment.js"
-  [jQuery example]: http://dbushell.github.com/Pikaday/examples/jquery.html       "Pikaday w/ jQuery"
-  [AMD example]: http://dbushell.github.com/Pikaday/examples/amd.html             "Pikaday w/ AMD"
-  [jQuery AMD example]: http://dbushell.github.com/Pikaday/examples/jquery-amd.html "Pikaday w/ jQuery + AMD"
-  [trigger example]: http://dbushell.github.com/Pikaday/examples/trigger.html     "Pikaday using custom trigger"
-  [positions example]: http://dbushell.github.com/Pikaday/examples/positions.html "Pikaday using different position options"
-  [Sugar]:       http://sugarjs.com                                               "Sugar"
-  [Sugar example]: http://dbushell.github.com/Pikaday/examples/sugar.html         "Pikaday w/ Sugar"
+  [Pikaday]:            http://dbushell.github.com/Pikaday/                             "Pikaday"
+  [moment]:             http://momentjs.com/                                            "moment.js"
+  [browserify]:         http://browserify.org/                                          "browserify"
+  [screenshot]:         https://raw.github.com/dbushell/Pikaday/gh-pages/screenshot.png "Screenshot"
+  [issues]:             https://github.com/dbushell/Pikaday/issues                      "Issue tracker"
+  [gem]:                https://rubygems.org/gems/pikaday-gem                           "RoR gem"
+  [mdn_date]:           https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Date  "Date"
+  [Bushell]:            http://dbushell.com/                                            "dbushell.com"
+  [Bushell Twitter]:    https://twitter.com/dbushell                                    "@dbushell"
+  [Rikkert]:            https://github.com/rikkert                                      "Rikkert GitHub"
+  [Rikkert Twitter]:    https://twitter.com/ramrik                                      "@ramrik"
+  [shoogledesigns]:     https://twitter.com/shoogledesigns/status/255209384261586944    "@shoogledesigns"
+  [Sugar]:              http://sugarjs.com                                              "Sugar"
+  [Ember]:              http://emberjs.com                                              "Ember"
+  [Knockout]:           http://dbushell.github.com/Pikaday/examples/knockout.html       "Knockout"
+  [issue1]:             https://github.com/dbushell/Pikaday/issues/1                    "Issue 1"
+  [issue18]:            https://github.com/dbushell/Pikaday/issues/18                   "Issue 18"
+  [stas]:               https://github.com/stas                                         "@stas"
+  [stas Pika]:          https://github.com/stas/Pikaday                                 "Pikaday"
+  [owenmead]:           https://github.com/owenmead                                     "@owenmead"
+  [owen Pika]:          https://github.com/owenmead/Pikaday                             "Pikaday"
+  [moment.js example]:  http://dbushell.github.com/Pikaday/examples/moment.html         "Pikaday w/ moment.js"
+  [AMD example]:        http://dbushell.github.com/Pikaday/examples/amd.html            "Pikaday w/ AMD"
+  [jQuery example]:     http://dbushell.github.com/Pikaday/examples/jquery.html         "Pikaday w/ jQuery"
+  [jQuery AMD example]: http://dbushell.github.com/Pikaday/examples/jquery-amd.html     "Pikaday w/ jQuery + AMD"
+  [trigger example]:    http://dbushell.github.com/Pikaday/examples/trigger.html        "Pikaday using custom trigger"
+  [positions example]:  http://dbushell.github.com/Pikaday/examples/positions.html      "Pikaday using different position options"
+  [Sugar example]:      http://dbushell.github.com/Pikaday/examples/sugar.html          "Pikaday w/ Sugar"
+  [Ember example]:      http://dbushell.github.com/Pikaday/examples/ember.html          "Pikaday w/ Ember"
+  [Knockout example]:   http://dbushell.github.com/Pikaday/examples/knockout.html       "Pikaday w/ Knockout"
