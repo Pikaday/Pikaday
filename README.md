@@ -79,6 +79,7 @@ Pikaday has many useful options:
 * `bound` automatically show/hide the datepicker on `field` focus (default `true` if `field` is set)
 * `position` preferred position of the datepicker relative to the form field, e.g.: `top right`, `bottom right` **Note:** automatic adjustment may occur to avoid datepicker from being displayed outside the viewport, see [positions example][] (default to 'bottom left')
 * `format` the default output format for `.toString()` and `field` value (requires [Moment.js][moment] for custom formatting)
+* `inputFormats` optional array of allowed input formats for `field` value and `.setDate()` with string (requires [Moment.js][moment] for custom parsing). **Note:** The default output `format` will be added to `inputFormats` if not already included. See the [moment.js example][] for example usage.
 * `defaultDate` the initial date to view when first opened
 * `setDefaultDate` make the `defaultDate` the initial selected value
 * `firstDay` first day of the week (0: Sunday, 1: Monday, etc)
@@ -172,7 +173,7 @@ Returns a basic JavaScript `Date` object of the selected day, or `null` if no se
 
 `picker.setDate('2015-01-01')`
 
-Set the current selection. This will be restricted within the bounds of `minDate` and `maxDate` options if they're specified. If the given date is null or invalid, the current selection is cleared and input field is cleared if `clearInvalidInput` option is `true`. You can optionally pass a boolean as the second parameter to prevent triggering of the onSelect and onClear callbacks (true), allowing the date to be set silently.
+Set the current selection from a date string or Javascript `Date` object. This will be restricted within the bounds of `minDate` and `maxDate` options if they're specified. If the given date is null or invalid, the current selection is cleared (the input field is also cleared if `clearInvalidInput` option is `true`). You can optionally pass a boolean as the second parameter to prevent triggering of the onSelect and onClear callbacks (true), allowing the date to be set silently.
 
 `picker.getMoment()`
 
@@ -185,6 +186,10 @@ Set the current selection with a [Moment.js][moment] object (see `setDate` for d
 `picker.clearDate()`
 
 Clears the current selection. If the first parameter is `true` then the input field (if `field` is set) is also cleared. You can optionally pass a boolean as the second parameter to prevent triggering of the onClear callback (true), allowing the date to be cleared silently.
+
+`picker.parseDate('2015-01-01', ['MM-DD-YY', 'MM-DD-YYYY', 'YYYY-MM-DD'])`
+
+Returns a Javascript `Date` object parsed from the given string. If [Moment.js][moment] exists (recommended) then `.parseDate()` can use Moment to match against one or more formats defined by the second parameter (defaults to the `inputFormats` option).
 
 ### Change current view
 
@@ -255,6 +260,9 @@ i18n: {
 
 You must provide 12 months and 7 weekdays (with abbreviations). Always specify weekdays in this order with Sunday first. You can change the `firstDay` option to reorder if necessary (0: Sunday, 1: Monday, etc). You can also set `isRTL` to `true` for languages that are read right-to-left.
 
+### Custom date parser and formatter functions
+
+Although [Moment.js][moment] is recommended, alternate Javascript Date libraries such as [Sugar][] can be used by overriding `picker.parseDate()` and `picker.toString()` with custom date parser and formatter functions. See the [Sugar example][] for a full example.
 
 ## Extensions
 
@@ -311,3 +319,5 @@ Copyright © 2014 David Bushell | BSD & MIT license
   [jQuery AMD example]: http://dbushell.github.com/Pikaday/examples/jquery-amd.html "Pikaday w/ jQuery + AMD"
   [trigger example]: http://dbushell.github.com/Pikaday/examples/trigger.html     "Pikaday using custom trigger"
   [positions example]: http://dbushell.github.com/Pikaday/examples/positions.html "Pikaday using different position options"
+  [Sugar]:       http://sugarjs.com                                               "Sugar"
+  [Sugar example]: http://dbushell.github.com/Pikaday/examples/sugar.html         "Pikaday w/ Sugar"

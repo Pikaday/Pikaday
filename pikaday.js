@@ -102,6 +102,11 @@
         return (/Array/).test(Object.prototype.toString.call(obj));
     },
 
+    makeArray = function(obj)
+    {
+        return obj === undefined ? [] : isArray(obj) ? obj : [obj];
+    },
+
     isDate = function(obj)
     {
         return (/Date/).test(Object.prototype.toString.call(obj)) && !isNaN(obj.getTime());
@@ -170,8 +175,12 @@
         // ('bottom' & 'left' keywords are not used, 'top' & 'right' are modifier on the bottom/left position)
         position: 'bottom left',
 
-        // the default output format for `.toString()` and `field` value
+        // the default output format for `.toString()` and `field` value (Moment.js required)
         format: 'YYYY-MM-DD',
+
+        // optional array of allowed input formats for `field` value and `.setDate()` with string (Moment.js required)
+        // the default output `format` will be added to `inputFormats` if not already included
+        inputFormats: [],
 
         // the initial date to view when first opened
         defaultDate: null,
@@ -411,14 +420,7 @@
             if (e.firedBy === self) {
                 return;
             }
-            if (hasMoment) {
-                date = moment(opts.field.value, opts.format);
-                date = (date && date.isValid()) ? date.toDate() : null;
-            }
-            else {
-                date = new Date(Date.parse(opts.field.value));
-            }
-            self.setDate(isDate(date) ? date : null);
+            self.setDate(opts.field.value);
             if (!self._v) {
                 self.show();
             }
@@ -483,12 +485,8 @@
             }
             addEvent(opts.field, 'change', self._onInputChange);
 
-            if (!opts.defaultDate) {
-                if (hasMoment && opts.field.value) {
-                    opts.defaultDate = moment(opts.field.value, opts.format).toDate();
-                } else {
-                    opts.defaultDate = new Date(Date.parse(opts.field.value));
-                }
+            if (!opts.defaultDate && opts.field.value) {
+                opts.defaultDate = self.parseDate(opts.field.value);
                 opts.setDefaultDate = true;
             }
         }
@@ -543,6 +541,8 @@
 
             opts.trigger = (opts.trigger && opts.trigger.nodeName) ? opts.trigger : opts.field;
 
+            opts.inputFormats = !opts.inputFormats ? opts.format : makeArray(opts.inputFormats).concat(opts.format);
+
             var nom = parseInt(opts.numberOfMonths, 10) || 1;
             opts.numberOfMonths = nom > 4 ? 4 : nom;
 
@@ -585,7 +585,33 @@
          */
         toString: function(format)
         {
-            return !isDate(this._d) ? '' : hasMoment ? moment(this._d).format(format || this._o.format) : this._d.toDateString();
+            if (!isDate(this._d)) {
+                return '';
+            }
+
+            if (hasMoment) {
+                return moment(this._d).format(format || this._o.format);
+            }
+
+            return this._d.toDateString();
+        },
+
+        /**
+         * return a Date parsed from the given string (using Moment.js if available)
+         */
+        parseDate: function(str, format)
+        {
+            var date;
+
+            if (hasMoment) {
+                date = moment(str, format || this._o.inputFormats);
+                date = date.isValid() ? date.toDate() : null;
+            } else {
+                date = new Date(Date.parse(str));
+                date = isDate(date) ? date : null;
+            }
+
+            return date;
         },
 
         /**
@@ -620,7 +646,7 @@
         setDate: function(date, preventOnSelect)
         {
             if (typeof date === 'string') {
-                date = new Date(Date.parse(date));
+                date = this.parseDate(date);
             }
 
             if (!isDate(date)) {

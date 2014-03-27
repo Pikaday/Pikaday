@@ -32,11 +32,14 @@
     <script src="../pikaday.js"></script>
     <script>
 
-    // You can get and set dates with moment objects
+    // You can get and set dates with moment objects.
+    // Multiple input formats can be used with Moment.js via the 'inputFormats' option.
     var picker = new Pikaday(
     {
         field: document.getElementById('datepicker'),
         firstDay: 1,
+        format: 'MMM DD YYYY',
+        inputFormats: ['YY', 'YYYY', 'MM DD', 'MM DD YY', 'MM DD YYYY', 'YYYY MM DD'],
         minDate: new Date('2000-01-01'),
         maxDate: new Date('2020-12-31'),
         yearRange: [2000,2020],
@@ -45,9 +48,9 @@
             document.getElementById('selected').appendChild(date);
         }
     });
-    
+
     picker.setMoment(moment().dayOfYear(366));
-    
+
     </script>
 </body>
 </html>
