@@ -102,6 +102,11 @@
         return (/Array/).test(Object.prototype.toString.call(obj));
     },
 
+    makeArray = function(obj)
+    {
+        return obj === undefined ? [] : isArray(obj) ? obj : [obj];
+    },
+
     isDate = function(obj)
     {
         return (/Date/).test(Object.prototype.toString.call(obj)) && !isNaN(obj.getTime());
@@ -170,8 +175,12 @@
         // ('bottom' & 'left' keywords are not used, 'top' & 'right' are modifier on the bottom/left position)
         position: 'bottom left',
 
-        // the default output format for `.toString()` and `field` value
+        // the default output format for `.toString()` and `field` value (Moment.js required)
         format: 'YYYY-MM-DD',
+
+        // optional array of allowed input formats for `field` value and `.setDate()` with string (Moment.js required)
+        // the default output `format` will be added to `inputFormats` if not already included
+        inputFormats: [],
 
         // the initial date to view when first opened
         defaultDate: null,
@@ -196,16 +205,20 @@
         minMonth: undefined,
         maxMonth: undefined,
 
+        // reverse the calendar for right-to-left languages
         isRTL: false,
 
-        // Additional text to append to the year in the calendar title
+        // additional text to append to the year in the calendar title
         yearSuffix: '',
 
-        // Render the month after year in the calendar title
+        // render the month after year in the calendar title
         showMonthAfterYear: false,
 
         // how many months are visible (not implemented yet)
         numberOfMonths: 1,
+
+        // clear the input field (if `field` is set) on invalid input
+        clearInvalidInput: false,
 
         // internationalization
         i18n: {
@@ -216,8 +229,9 @@
             weekdaysShort : ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
         },
 
-        // callback function
+        // callback functions
         onSelect: null,
+        onClear: null,
         onOpen: null,
         onClose: null,
         onDraw: null
@@ -406,14 +420,7 @@
             if (e.firedBy === self) {
                 return;
             }
-            if (hasMoment) {
-                date = moment(opts.field.value, opts.format);
-                date = (date && date.isValid()) ? date.toDate() : null;
-            }
-            else {
-                date = new Date(Date.parse(opts.field.value));
-            }
-            self.setDate(isDate(date) ? date : null);
+            self.setDate(opts.field.value);
             if (!self._v) {
                 self.show();
             }
@@ -478,12 +485,8 @@
             }
             addEvent(opts.field, 'change', self._onInputChange);
 
-            if (!opts.defaultDate) {
-                if (hasMoment && opts.field.value) {
-                    opts.defaultDate = moment(opts.field.value, opts.format).toDate();
-                } else {
-                    opts.defaultDate = new Date(Date.parse(opts.field.value));
-                }
+            if (!opts.defaultDate && opts.field.value) {
+                opts.defaultDate = self.parseDate(opts.field.value);
                 opts.setDefaultDate = true;
             }
         }
@@ -538,6 +541,8 @@
 
             opts.trigger = (opts.trigger && opts.trigger.nodeName) ? opts.trigger : opts.field;
 
+            opts.inputFormats = !opts.inputFormats ? opts.format : makeArray(opts.inputFormats).concat(opts.format);
+
             var nom = parseInt(opts.numberOfMonths, 10) || 1;
             opts.numberOfMonths = nom > 4 ? 4 : nom;
 
@@ -580,7 +585,33 @@
          */
         toString: function(format)
         {
-            return !isDate(this._d) ? '' : hasMoment ? moment(this._d).format(format || this._o.format) : this._d.toDateString();
+            if (!isDate(this._d)) {
+                return '';
+            }
+
+            if (hasMoment) {
+                return moment(this._d).format(format || this._o.format);
+            }
+
+            return this._d.toDateString();
+        },
+
+        /**
+         * return a Date parsed from the given string (using Moment.js if available)
+         */
+        parseDate: function(str, format)
+        {
+            var date;
+
+            if (hasMoment) {
+                date = moment(str, format || this._o.inputFormats);
+                date = date.isValid() ? date.toDate() : null;
+            } else {
+                date = Date.parse(str);
+                date = date != null && !isNaN(date) ? new Date(date) : null;
+            }
+
+            return date;
         },
 
         /**
@@ -614,15 +645,12 @@
          */
         setDate: function(date, preventOnSelect)
         {
-            if (!date) {
-                this._d = null;
-                return this.draw();
-            }
             if (typeof date === 'string') {
-                date = new Date(Date.parse(date));
+                date = this.parseDate(date);
             }
+
             if (!isDate(date)) {
-                return;
+                return this.clearDate(this._o.clearInvalidInput, preventOnSelect);
             }
 
             var min = this._o.minDate,
@@ -644,6 +672,24 @@
             }
             if (!preventOnSelect && typeof this._o.onSelect === 'function') {
                 this._o.onSelect.call(this, this.getDate());
+            }
+        },
+
+        /**
+         * clear the current selection
+         */
+        clearDate: function(clearField, preventOnClear)
+        {
+            this._d = null;
+            this.draw();
+
+            if (clearField && this._o.field) {
+                this._o.field.value = '';
+                fireEvent(this._o.field, 'change', { firedBy: this });
+            }
+
+            if (!preventOnClear && typeof this._o.onClear === 'function') {
+                this._o.onClear.call(this);
             }
         },
 
@@ -735,17 +781,17 @@
                 minMonth = opts.minMonth,
                 maxMonth = opts.maxMonth;
 
-            if (this._y <= minYear) {
+            if (this._y < minYear) {
                 this._y = minYear;
-                if (!isNaN(minMonth) && this._m < minMonth) {
-                    this._m = minMonth;
-                }
+                this._m = minMonth;
+            } else if (this._y == minYear && !isNaN(minMonth) && this._m < minMonth) {
+                this._m = minMonth;
             }
-            if (this._y >= maxYear) {
+            if (this._y > maxYear) {
                 this._y = maxYear;
-                if (!isNaN(maxMonth) && this._m > maxMonth) {
-                    this._m = maxMonth;
-                }
+                this._m = maxMonth;
+            } else if (this._y == maxYear && !isNaN(maxMonth) && this._m > maxMonth) {
+                this._m = maxMonth;
             }
 
             this.el.innerHTML = renderTitle(this) + this.render(this._y, this._m);
