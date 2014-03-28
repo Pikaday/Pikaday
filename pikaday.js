@@ -781,17 +781,17 @@
                 minMonth = opts.minMonth,
                 maxMonth = opts.maxMonth;
 
-            if (this._y <= minYear) {
+            if (this._y < minYear) {
                 this._y = minYear;
-                if (!isNaN(minMonth) && this._m < minMonth) {
-                    this._m = minMonth;
-                }
+                this._m = minMonth;
+            } else if (this._y == minYear && !isNaN(minMonth) && this._m < minMonth) {
+                this._m = minMonth;
             }
-            if (this._y >= maxYear) {
+            if (this._y > maxYear) {
                 this._y = maxYear;
-                if (!isNaN(maxMonth) && this._m > maxMonth) {
-                    this._m = maxMonth;
-                }
+                this._m = maxMonth;
+            } else if (this._y == maxYear && !isNaN(maxMonth) && this._m > maxMonth) {
+                this._m = maxMonth;
             }
 
             this.el.innerHTML = renderTitle(this) + this.render(this._y, this._m);
