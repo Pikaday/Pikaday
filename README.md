@@ -80,7 +80,7 @@ Pikaday has many useful options:
 * `position` preferred position of the datepicker relative to the form field, e.g.: `top right`, `bottom right` **Note:** automatic adjustment may occur to avoid datepicker from being displayed outside the viewport, see [positions example][] (default to 'bottom left')
 * `format` the default output format for `.toString()` and `field` value (requires [Moment.js][moment] for custom formatting)
 * `inputFormats` optional array of allowed input formats for `field` value and `.setDate()` with string (requires [Moment.js][moment] for custom parsing). **Note:** The default output `format` will be added to `inputFormats` if not already included. See the [moment.js example][] for example usage.
-* `defaultDate` the initial date to view when first opened
+* `defaultDate` the initial date to view when first opened (this should be a native Date object - e.g. `new Date()` or `moment().toDate()`)
 * `setDefaultDate` make the `defaultDate` the initial selected value
 * `firstDay` first day of the week (0: Sunday, 1: Monday, etc)
 * `minDate` the minimum/earliest date that can be selected (this should be a native Date object - e.g. `new Date()` or `moment().toDate()`)
