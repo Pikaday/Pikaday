@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
-    <title>Pikaday - Sugar example</title>
+    <title>Pikaday - Datejs example</title>
     <meta name="author" content="Brendan Brewster">
     <link rel="stylesheet" href="../css/pikaday.css">
     <link rel="stylesheet" href="../css/site.css">
@@ -11,17 +11,16 @@
 <body>
     <a href="https://github.com/dbushell/Pikaday"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
 
-    <h1>Pikaday + Sugar</h1>
+    <h1>Pikaday + Datejs</h1>
 
     <p class="large">A refreshing JavaScript Datepicker — lightweight, no dependencies, modular CSS.</p>
 
-    <p>Pikaday can be used with JavaScript date libraries other than <a href="http://momentjs.com">moment.js</a>. This example uses custom date parser and formatter functions with the <a href="http://sugarjs.com">Sugar</a> JS library to support natural language parsing (eg 'last wednesday', '2 weeks from monday, 'the end of next month', '1 year from now', '3 months ago') as well as many standard date formats. See Sugar's <a href="http://sugarjs.com/dates">Dates</a> reference page for more examples.</p>
+    <p>Pikaday can be used with JavaScript date libraries other than <a href="http://momentjs.com">moment.js</a>. This example uses the <a href="http://www.datejs.com">Datejs</a> JS library that replaces the native Date parser to support natural language parsing (eg 'tomorrow', '2 weeks ago', '3 months from now', 'next friday') as well as many standard date formats.</p>
 
     <label for="datepicker">Date:</label>
     <br>
     <input type="text" id="datepicker">
     <div><b>Selected:</b> <span id="selected"></span></div>
-    <div><b>Relative:</b> <span id="relative"></span></div>
     <br>
 
     <h2>What is this?</h2>
@@ -30,40 +29,34 @@
 
     <p class="small">Copyright © 2014 <a href="http://dbushell.com/">David Bushell</a> | BSD &amp; MIT license | Example by <a href="https://github.com/bjbrewster">Brendan Brewster</a></p>
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/sugar/1.4.1/sugar.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js"></script>
     <script src="../pikaday.js"></script>
     <script>
     // You can override Pikaday's toString() and parseDate() methods to provide
-    // custom date formatting and parsing with other JS libraries such as Sugar.
+    // custom date formatting and parsing with other JS libraries such as Datejs.
 
-    // This example overrides toString() and parseDate() for all Pikaday
-    // instances by updating the Pikaday.prototype.
-
-    Pikaday.prototype.parseDate = function(str) {
-        var date = Date.create(str);
-        return date.isValid() ? date : null;
-    }
+    // Because Datejs replaces the native Date parser, we only need to add a
+    // custom string formatter by overriding 'Pikaday.prototype.toString()' to
+    // format the selected Date using Datejs for all Pikaday instances.
 
     Pikaday.prototype.toString = function(format) {
         var date = this.getDate();
-        return date ? date.format(format || this._o.format) : '';
+        return date ? date.toString(format || this._o.format) : '';
     }
 
     var picker = new Pikaday(
     {
         field: document.getElementById('datepicker'),
         firstDay: 1,
-        format: '{Month} {dd} {yyyy}',
+        format: 'dd MMM yyyy',
         minDate: new Date('2000-01-01'),
         maxDate: new Date('2020-12-31'),
         yearRange: [2000,2020],
         onSelect: function(date) {
-            document.getElementById('selected').innerHTML = this.toString('{Weekday} {Month} {dd}, {yyyy}');
-            document.getElementById('relative').innerHTML = date.relative();
+            document.getElementById('selected').innerHTML = date.toString('D');
         },
         onClear: function() {
             document.getElementById('selected').innerHTML = '';
-            document.getElementById('relative').innerHTML = '';
         }
     });
 

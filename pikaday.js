@@ -607,8 +607,8 @@
                 date = moment(str, format || this._o.inputFormats);
                 date = date.isValid() ? date.toDate() : null;
             } else {
-                date = new Date(Date.parse(str));
-                date = isDate(date) ? date : null;
+                date = Date.parse(str);
+                date = date != null && !isNaN(date) ? new Date(date) : null;
             }
 
             return date;
