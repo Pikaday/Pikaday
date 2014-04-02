@@ -9,7 +9,6 @@
     z-index: 9999;
     display: block;
     position: relative;
-    width: 240px;
     padding: 8px;
     color: #333;
     background: #fff;
@@ -18,6 +17,18 @@
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+/*
+clear child float (pika-lendar), using the famous micro clearfix hack
+http://nicolasgallagher.com/micro-clearfix-hack/
+*/
+.pika-single:before,
+.pika-single:after {
+    content: " ";
+    display: table;
+}
+.pika-single:after { clear: both }
+.pika-single { *zoom: 1 }
+
 .pika-single.is-hidden {
     display: none;
 }
@@ -25,6 +36,11 @@
 .pika-single.is-bound {
     position: absolute;
     box-shadow: 0 5px 15px -5px rgba(0,0,0,.5);
+}
+
+.pika-lendar {
+    float: left;
+    width: 240px;
 }
 
 .pika-title {
