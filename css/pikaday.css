@@ -9,7 +9,6 @@
     z-index: 9999;
     display: block;
     position: relative;
-    padding: 8px;
     color: #333;
     background: #fff;
     border: 1px solid #ccc;
@@ -41,6 +40,7 @@ http://nicolasgallagher.com/micro-clearfix-hack/
 .pika-lendar {
     float: left;
     width: 240px;
+    margin: 8px;
 }
 
 .pika-title {
