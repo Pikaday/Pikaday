@@ -267,11 +267,11 @@
             arr.push('is-selected');
         }
         return '<td data-day="' + d + '" class="' + arr.join(' ') + '">' +
-                '<button class="pika-button pika-day" type="button" ' +
+                 '<button class="pika-button pika-day" type="button" ' +
                     'data-pika-year="' + y + '" data-pika-month="' + m + '" data-pika-day="' + d + '">' +
                         d +
-                '</button>' +
-                '</td>';
+                 '</button>' +
+               '</td>';
     },
 
     renderRow = function(days, isRTL)
@@ -674,12 +674,13 @@
          */
         gotoDate: function(date)
         {
+            var newCalendar = true;
+
             if (!isDate(date)) {
                 return;
             }
-            var newCalendar = !this.calendars;
 
-            if ( this.calendars) {
+            if (this.calendars) {
                 var firstVisibleDate = new Date(this.calendars[0].year, this.calendars[0].month, 1),
                     lastVisibleDate = new Date(this.calendars[this.calendars.length-1].year, this.calendars[this.calendars.length-1].month, 1),
                     visibleDate = date.getTime();
@@ -698,8 +699,8 @@
                     this.calendars[0].month += 1 - this._o.numberOfMonths;
                 }
             }
+
             this.adjustCalendars();
-            this.draw();
         },
 
         adjustCalendars: function() {
@@ -710,6 +711,7 @@
                     year: this.calendars[0].year
                 });
             }
+            this.draw();
         },
 
         gotoToday: function()
@@ -725,7 +727,6 @@
             if (!isNaN(month)) {
                 this.calendars[0].month = parseInt(month, 10);
                 this.adjustCalendars();
-                this.draw();
             }
         },
 
@@ -733,16 +734,12 @@
         {
             this.calendars[0].month++;
             this.adjustCalendars();
-            this.draw();
-
-            return this;
         },
 
         prevMonth: function()
         {
             this.calendars[0].month--;
             this.adjustCalendars();
-            this.draw();
         },
 
         /**
@@ -753,7 +750,6 @@
             if (!isNaN(year)) {
                 this.calendars[0].year = parseInt(year, 10);
                 this.adjustCalendars();
-                this.draw();
             }
         },
 
