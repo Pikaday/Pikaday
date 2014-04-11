@@ -184,6 +184,9 @@
         // the default output format for `.toString()` and `field` value
         format: 'YYYY-MM-DD',
 
+        // an array of acceptable input formats - delegates to http://momentjs.com/docs/#/parsing/string-formats/ for formatting
+        acceptedFormats: null,
+
         // the initial date to view when first opened
         defaultDate: null,
 
@@ -429,7 +432,7 @@
                 return;
             }
             if (hasMoment) {
-                date = moment(opts.field.value, opts.format);
+                date = moment(opts.field.value, (opts.acceptedFormats || opts.format));
                 date = (date && date.isValid()) ? date.toDate() : null;
             }
             else {
@@ -568,6 +571,9 @@
             }
             if (!isDate(opts.maxDate)) {
                 opts.maxDate = false;
+            }
+            if (!isArray(opts.acceptedFormats)) {
+                opts.acceptedFormats = null;
             }
             if ((opts.minDate && opts.maxDate) && opts.maxDate < opts.minDate) {
                 opts.maxDate = opts.minDate = false;

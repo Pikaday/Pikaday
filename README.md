@@ -79,6 +79,7 @@ Pikaday has many useful options:
 * `bound` automatically show/hide the datepicker on `field` focus (default `true` if `field` is set)
 * `position` preferred position of the datepicker relative to the form field, e.g.: `top right`, `bottom right` **Note:** automatic adjustment may occur to avoid datepicker from being displayed outside the viewport, see [positions example][] (default to 'bottom left')
 * `format` the default output format for `.toString()` and `field` value (requires [Moment.js][moment] for custom formatting)
+* `acceptedFormats` an array of format strings that are acceptable for input (uses [Moment.js multiple format][moment multiple formats] for custom formatting)
 * `defaultDate` the initial date to view when first opened
 * `setDefaultDate` make the `defaultDate` the initial selected value
 * `firstDay` first day of the week (0: Sunday, 1: Monday, etc)
@@ -285,6 +286,7 @@ Copyright © 2014 David Bushell | BSD & MIT license
 
   [Pikaday]:     http://dbushell.github.com/Pikaday/                              "Pikaday"
   [moment]:      http://momentjs.com/                                             "moment.js"
+  [moment multiple formats]: http://momentjs.com/docs/#/parsing/string-formats/   "moment.js - multiple formats"
   [browserify]:  http://browserify.org/                                           "browserify"
   [screenshot]:  https://raw.github.com/dbushell/Pikaday/gh-pages/screenshot.png  "Screenshot"
   [issues]:      https://github.com/dbushell/Pikaday/issues                       "Issue tracker"
