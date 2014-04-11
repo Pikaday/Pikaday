@@ -173,7 +173,7 @@ Returns a basic JavaScript `Date` object of the selected day, or `null` if no se
 
 `picker.setDate('2015-01-01')`
 
-Set the current selection from a date string or Javascript `Date` object. This will be restricted within the bounds of `minDate` and `maxDate` options if they're specified. If the given date is null or invalid, the current selection is cleared (the input field is also cleared if `clearInvalidInput` option is `true`). You can optionally pass a boolean as the second parameter to prevent triggering of the onSelect and onClear callbacks (true), allowing the date to be set silently.
+Set the current selection from a date string or JavaScript `Date` object. This will be restricted within the bounds of `minDate` and `maxDate` options if they're specified. If the given date is null or invalid, the current selection is cleared (the input field is also cleared if `clearInvalidInput` option is `true`). You can optionally pass a boolean as the second parameter to prevent triggering of the onSelect and onClear callbacks (true), allowing the date to be set silently.
 
 `picker.getMoment()`
 
@@ -189,7 +189,7 @@ Clears the current selection. If the first parameter is `true` then the input fi
 
 `picker.parseDate('2015-01-01', ['MM-DD-YY', 'MM-DD-YYYY', 'YYYY-MM-DD'])`
 
-Returns a Javascript `Date` object parsed from the given string. If [Moment.js][moment] exists (recommended) then `.parseDate()` can use Moment to match against one or more formats defined by the second parameter (defaults to the `inputFormats` option).
+Returns a JavaScript `Date` object parsed from the given string. If [Moment.js][moment] exists (recommended) then `.parseDate()` can use Moment to match against one or more formats defined by the second parameter (defaults to the `inputFormats` option).
 
 ### Change current view
 
@@ -262,11 +262,11 @@ You must provide 12 months and 7 weekdays (with abbreviations). Always specify w
 
 ## Custom Date Parsing and Formatting
 
-Although [Moment.js][moment] is recommended, alternate Javascript Date libraries such as [Sugar][] can be used by overriding `parseDate` and `toString` on `Pikaday.prototype` with custom date parser and formatter functions. See the [Sugar example][] for a full example.
+Although [Moment.js][moment] is recommended, other JavaScript Date libraries such as [Datejs][] and [Sugar][]'s Date extension can be used instead by overriding `parseDate` and `toString` on `Pikaday.prototype` with custom date parser and formatter functions. See the [Datejs example][] and [Sugar example][] as a guide.
 
 ## MVC Framework Integration
 
-Pikaday can be easily integrated with most Javascript MVC Frameworks such as [Ember][] and [Knockout][]. See the [Ember example][] and [Knockout example][] for example integrations.
+Pikaday can be easily integrated with most JavaScript MVC Frameworks such as [Ember][] and [Knockout][]. See the [Ember example][] and [Knockout example][] for example integrations.
 
 ## Extensions
 
@@ -306,14 +306,15 @@ Copyright © 2014 David Bushell | BSD & MIT license
   [issues]:             https://github.com/dbushell/Pikaday/issues                      "Issue tracker"
   [gem]:                https://rubygems.org/gems/pikaday-gem                           "RoR gem"
   [mdn_date]:           https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Date  "Date"
+  [Datejs]:             http://datejs.com                                               "Datejs"
+  [Sugar]:              http://sugarjs.com                                              "Sugar"
+  [Ember]:              http://emberjs.com                                              "Ember"
+  [Knockout]:           http://knockoutjs.com                                           "Knockout"
   [Bushell]:            http://dbushell.com/                                            "dbushell.com"
   [Bushell Twitter]:    https://twitter.com/dbushell                                    "@dbushell"
   [Rikkert]:            https://github.com/rikkert                                      "Rikkert GitHub"
   [Rikkert Twitter]:    https://twitter.com/ramrik                                      "@ramrik"
   [shoogledesigns]:     https://twitter.com/shoogledesigns/status/255209384261586944    "@shoogledesigns"
-  [Sugar]:              http://sugarjs.com                                              "Sugar"
-  [Ember]:              http://emberjs.com                                              "Ember"
-  [Knockout]:           http://dbushell.github.com/Pikaday/examples/knockout.html       "Knockout"
   [issue1]:             https://github.com/dbushell/Pikaday/issues/1                    "Issue 1"
   [issue18]:            https://github.com/dbushell/Pikaday/issues/18                   "Issue 18"
   [stas]:               https://github.com/stas                                         "@stas"
@@ -326,6 +327,7 @@ Copyright © 2014 David Bushell | BSD & MIT license
   [jQuery AMD example]: http://dbushell.github.com/Pikaday/examples/jquery-amd.html     "Pikaday w/ jQuery + AMD"
   [trigger example]:    http://dbushell.github.com/Pikaday/examples/trigger.html        "Pikaday using custom trigger"
   [positions example]:  http://dbushell.github.com/Pikaday/examples/positions.html      "Pikaday using different position options"
+  [Datejs example]:     http://dbushell.github.com/Pikaday/examples/datejs.html         "Pikaday w/ Datejs"
   [Sugar example]:      http://dbushell.github.com/Pikaday/examples/sugar.html          "Pikaday w/ Sugar"
   [Ember example]:      http://dbushell.github.com/Pikaday/examples/ember.html          "Pikaday w/ Ember"
   [Knockout example]:   http://dbushell.github.com/Pikaday/examples/knockout.html       "Pikaday w/ Knockout"
