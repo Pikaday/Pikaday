@@ -17,5 +17,15 @@
 	"strict": true,
 	"trailing": true,
 	"smarttabs": true,
-	"globals": { "define": false }
+	"expr": true,
+	"globals": { 
+		"define": false,
+		/* MOCHA */
+		"describe"   : false,
+		"it"         : false,
+		"before"     : false,
+		"beforeEach" : false,
+		"after"      : false,
+		"afterEach"  : false
+	}
 }
