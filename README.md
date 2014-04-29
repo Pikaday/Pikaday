@@ -271,6 +271,9 @@ or the work [@owenmead][owenmead] did more recently at [owenmead/Pikaday][owen P
 * Safari 3+
 * Opera 10.6+
 
+[![browser compatibility](https://ci.testling.com/rikkert/pikaday.png)
+](https://ci.testling.com/rikkert/pikaday)
+
 
 * * *
 
@@ -299,7 +302,7 @@ Copyright © 2014 David Bushell | BSD & MIT license
   [issue18]:     https://github.com/dbushell/Pikaday/issues/18                    "Issue 18"
   [stas]:        https://github.com/stas                                          "@stas"
   [stas Pika]:   https://github.com/stas/Pikaday                                  "Pikaday"
-  [owenmead]:     https://github.com/owenmead                                     "@owenmead"
+  [owenmead]:    https://github.com/owenmead                                     "@owenmead"
   [owen Pika]:   https://github.com/owenmead/Pikaday                              "Pikaday"
   [moment.js example]: http://dbushell.github.com/Pikaday/examples/moment.html    "Pikaday w/ moment.js"
   [jQuery example]: http://dbushell.github.com/Pikaday/examples/jquery.html       "Pikaday w/ jQuery"

@@ -37,7 +37,11 @@
     "browsers": [
       "ie/7..latest",
       "chrome/latest",
-      "firefox/latest"
+      "firefox/3.6", "firefox/latest",
+      "safari/5..latest",
+      "opera/latest",
+      "iphone", "ipad",
+      "android-browser"
     ]
   }
 }
