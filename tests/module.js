@@ -1,5 +1,5 @@
 var Pikaday = require('../'),
-    should = require('should');
+    expect = require('expect.js');
 
 describe('Pikaday', function ()
 {
@@ -7,16 +7,18 @@ describe('Pikaday', function ()
 
     it('should expose as a CommonJS module', function ()
     {
-        Pikaday.should.be.a.Function;
+        expect(Pikaday).to.be.a('function');
     });
 
     it('should NOT leak to the global object', function ()
     {
-        should.not.exist(window.Pikaday);
+        expect(window).to.not.have.property('Pikaday');
     });
 
     it('should be possible to create a new instance', function ()
     {
-        Pikaday.should.not.throw();
+        expect(function () {
+            new Pikaday();
+        }).to.not.throwException();
     });
 });

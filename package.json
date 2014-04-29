@@ -29,7 +29,7 @@
   },
   "devDependencies": {
     "mocha": "~1.18.2",
-    "should": "~3.3.1"
+    "expect.js": "^0.3.1"
   },
   "testling": {
     "harness": "mocha",

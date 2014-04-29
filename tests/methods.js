@@ -1,7 +1,7 @@
-var Pikaday = require('../');
-require('should');
+var Pikaday = require('../'),
+    expect = require('expect.js');
 
-describe('Pikaday public methods', function ()
+describe('Pikaday public method', function ()
 {
     'use strict';
 
@@ -10,15 +10,17 @@ describe('Pikaday public methods', function ()
         it('should return empty string when date not set', function ()
         {
             var pikaday = new Pikaday();
-            pikaday.toString().should.be.empty;
+            expect(pikaday.toString()).to.be.empty;
         });
-        
-        it('should return date string when date is set', function() {
+
+        it('should return date string, formatted by moment, when date is set', function() {
             var date = new Date('2014-04-25'),
-            pikaday = new Pikaday();
+            pikaday = new Pikaday({
+                format: 'DD-MM-YY'
+            });
 
             pikaday.setDate(date);
-                pikaday.toString().should.equal(date.toDateString());
-        })
+            expect(pikaday.toString()).to.eql('25-04-14');
+        });
     });
 });
