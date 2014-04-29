@@ -1,7 +1,7 @@
 /*!
  * Pikaday
  *
- * Copyright © 2014 David Bushell | BSD & MIT license | https://github.com/dbushell/Pikaday
+ * Copyright Â© 2014 David Bushell | BSD & MIT license | https://github.com/dbushell/Pikaday
  */
 
 (function (root, factory)
@@ -187,6 +187,9 @@
         // the initial date to view when first opened
         defaultDate: null,
 
+        // default time selection in time picker mode
+        defaultTimeString: '12:00 PM',
+
         // make the `defaultDate` the initial selected value
         setDefaultDate: false,
 
@@ -357,6 +360,21 @@
         return '<table cellpadding="0" cellspacing="0" class="pika-table">' + renderHead(opts) + renderBody(data) + '</table>';
     },
 
+    renderTimePicker = function(calendar)
+    {
+        var strAmpm, intHour, strTime, strSelected;
+        var htmlTable = '<br><table cellpadding="0" cellspacing="0"><tbody><tr><td><select class="pika-select pika-time">';
+        for (var i=1; i<24; i++) {
+            strAmpm = i<12 ? ' AM' : ' PM';
+            intHour = i>12 ? i-12 : i;
+            strTime = (intHour<10?'0'+intHour:intHour+'');
+            strSelected = strTime+':00'+strAmpm===calendar._strTime?' selected':'';
+            htmlTable += '<option value="'+strTime+':00'+strAmpm+'"'+strSelected+'>'+strTime+':00'+strAmpm+'</option>';
+            strSelected = strTime+':30'+strAmpm===calendar._strTime? ' selected':'';
+            htmlTable += '<option value="'+strTime+':30'+strAmpm+'"'+strSelected+'>'+strTime+':30'+strAmpm+'</option>';
+        }
+        return htmlTable + '</select></td></tr></tbody></table>';
+    },
 
     /**
      * Pikaday constructor
@@ -418,6 +436,9 @@
             }
             else if (hasClass(target, 'pika-select-year')) {
                 self.gotoYear(target.value);
+            }
+            else if (hasClass(target, 'pika-time')) {
+                self._strTime = target.value;;
             }
         };
 
@@ -532,6 +553,10 @@
             this.show();
         }
 
+        if (opts.showTime) {
+            self._strTime = opts.defaultTimeString;
+        }
+
     };
 
 
@@ -622,6 +647,15 @@
                 this.setDate(date.toDate(), preventOnSelect);
             }
         },
+
+        /**
+         * return time string in Timepicker mode
+         */
+        getTimeString: function()
+        {
+            return this._strTime;
+        },
+
 
         /**
          * return a Date object of the current selection
@@ -802,6 +836,10 @@
             }
 
             this.el.innerHTML = html;
+            //If TimePicker mode is on append time select box
+            if (opts.showTime) {
+                this.el.innerHTML += renderTimePicker(this);
+            }
 
             if (opts.bound) {
                 if(opts.field.type !== 'hidden') {
@@ -817,6 +855,7 @@
                     self._o.onDraw.call(self);
                 }, 0);
             }
+
         },
 
         adjustPosition: function()
