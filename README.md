@@ -260,7 +260,8 @@ Pikaday is a pure datepicker. It will not support picking a time of day. However
 See [#1][issue1] and [#18][issue18]. These reside in their own fork.
 
 You can use the work [@stas][stas] did at [stas/Pikaday][stas Pika]  
-or the work [@owenmead][owenmead] did more recently at [owenmead/Pikaday][owen Pika] which is based on version 1.1.0.
+or the work [@owenmead][owenmead] did more recently at [owenmead/Pikaday][owen Pika] which is based on version 1.1.0.  
+A more simple time selection approach done by [@xeeali][xeeali] at [xeeali/Pikaday][xeeali Pika] is based on version 1.2.0.
 
 
 ## Browser Compatibility
@@ -302,8 +303,10 @@ Copyright © 2014 David Bushell | BSD & MIT license
   [issue18]:     https://github.com/dbushell/Pikaday/issues/18                    "Issue 18"
   [stas]:        https://github.com/stas                                          "@stas"
   [stas Pika]:   https://github.com/stas/Pikaday                                  "Pikaday"
-  [owenmead]:    https://github.com/owenmead                                     "@owenmead"
+  [owenmead]:    https://github.com/owenmead                                      "@owenmead"
   [owen Pika]:   https://github.com/owenmead/Pikaday                              "Pikaday"
+  [xeeali]:      https://github.com/xeeali                                        "@xeeali"
+  [xeeali Pika]: https://github.com/xeeali/Pikaday                                "Pikaday"
   [moment.js example]: http://dbushell.github.com/Pikaday/examples/moment.html    "Pikaday w/ moment.js"
   [jQuery example]: http://dbushell.github.com/Pikaday/examples/jquery.html       "Pikaday w/ jQuery"
   [AMD example]: http://dbushell.github.com/Pikaday/examples/amd.html             "Pikaday w/ AMD"
