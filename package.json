@@ -39,9 +39,7 @@
       "chrome/latest",
       "firefox/3.6", "firefox/latest",
       "safari/latest",
-      "opera/latest",
-      "iphone", "ipad",
-      "android-browser"
+      "opera/latest"
     ]
   }
 }

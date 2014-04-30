@@ -14,7 +14,7 @@ describe('Pikaday public method', function ()
         });
 
         it('should return date string, formatted by moment, when date is set', function() {
-            var date = new Date('2014-04-25'),
+            var date = new Date(2014, 3, 25),
             pikaday = new Pikaday({
                 format: 'DD-MM-YY'
             });
