@@ -154,6 +154,17 @@
         return to;
     },
 
+    adjustCalendar = function(calendar) {
+        if (calendar.month < 0) {
+            calendar.year -= Math.ceil(Math.abs(calendar.month)/12);
+            calendar.month += 12;
+        }
+        if (calendar.month > 11) {
+            calendar.year += Math.floor(Math.abs(calendar.month)/12);
+            calendar.month -= 12;
+        }
+        return calendar;
+    },
 
     /**
      * defaults and localisation
@@ -204,8 +215,12 @@
         // Render the month after year in the calendar title
         showMonthAfterYear: false,
 
-        // how many months are visible (not implemented yet)
+        // how many months are visible
         numberOfMonths: 1,
+
+        // when numberOfMonths is used, this will help you to choose where the main calendar will be (default `left`, can be set to `right`)
+        // only used for the first display or when a selected date is not visible
+        mainCalendar: 'left',
 
         // internationalization
         i18n: {
@@ -236,7 +251,7 @@
         return abbr ? opts.i18n.weekdaysShort[day] : opts.i18n.weekdays[day];
     },
 
-    renderDay = function(i, isSelected, isToday, isDisabled, isEmpty)
+    renderDay = function(d, m, y, isSelected, isToday, isDisabled, isEmpty)
     {
         if (isEmpty) {
             return '<td class="is-empty"></td>';
@@ -251,7 +266,12 @@
         if (isSelected) {
             arr.push('is-selected');
         }
-        return '<td data-day="' + i + '" class="' + arr.join(' ') + '"><button class="pika-button" type="button">' + i + '</button>' + '</td>';
+        return '<td data-day="' + d + '" class="' + arr.join(' ') + '">' +
+                 '<button class="pika-button pika-day" type="button" ' +
+                    'data-pika-year="' + y + '" data-pika-month="' + m + '" data-pika-day="' + d + '">' +
+                        d +
+                 '</button>' +
+               '</td>';
     },
 
     renderRow = function(days, isRTL)
@@ -273,12 +293,10 @@
         return '<thead>' + (opts.isRTL ? arr.reverse() : arr).join('') + '</thead>';
     },
 
-    renderTitle = function(instance)
+    renderTitle = function(instance, c, year, month, refYear)
     {
         var i, j, arr,
             opts = instance._o,
-            month = instance._m,
-            year  = instance._y,
             isMinYear = year === opts.minYear,
             isMaxYear = year === opts.maxYear,
             html = '<div class="pika-title">',
@@ -288,7 +306,7 @@
             next = true;
 
         for (arr = [], i = 0; i < 12; i++) {
-            arr.push('<option value="' + i + '"' +
+            arr.push('<option value="' + (year === refYear ? i - c : 12 + i - c) + '"' +
                 (i === month ? ' selected': '') +
                 ((isMinYear && i < opts.minMonth) || (isMaxYear && i > opts.maxMonth) ? 'disabled' : '') + '>' +
                 opts.i18n.months[i] + '</option>');
@@ -324,8 +342,12 @@
             next = false;
         }
 
-        html += '<button class="pika-prev' + (prev ? '' : ' is-disabled') + '" type="button">' + opts.i18n.previousMonth + '</button>';
-        html += '<button class="pika-next' + (next ? '' : ' is-disabled') + '" type="button">' + opts.i18n.nextMonth + '</button>';
+        if (c === 0) {
+            html += '<button class="pika-prev' + (prev ? '' : ' is-disabled') + '" type="button">' + opts.i18n.previousMonth + '</button>';
+        }
+        if (c === (instance._o.numberOfMonths - 1) ) {
+            html += '<button class="pika-next' + (next ? '' : ' is-disabled') + '" type="button">' + opts.i18n.nextMonth + '</button>';
+        }
 
         return html += '</div>';
     },
@@ -357,7 +379,7 @@
 
             if (!hasClass(target, 'is-disabled')) {
                 if (hasClass(target, 'pika-button') && !hasClass(target, 'is-empty')) {
-                    self.setDate(new Date(self._y, self._m, parseInt(target.innerHTML, 10)));
+                    self.setDate(new Date(target.getAttribute('data-pika-year'), target.getAttribute('data-pika-month'), target.getAttribute('data-pika-day')));
                     if (opts.bound) {
                         sto(function() {
                             self.hide();
@@ -652,11 +674,43 @@
          */
         gotoDate: function(date)
         {
+            var newCalendar = true;
+
             if (!isDate(date)) {
                 return;
             }
-            this._y = date.getFullYear();
-            this._m = date.getMonth();
+
+            if (this.calendars) {
+                var firstVisibleDate = new Date(this.calendars[0].year, this.calendars[0].month, 1),
+                    lastVisibleDate = new Date(this.calendars[this.calendars.length-1].year, this.calendars[this.calendars.length-1].month, 1),
+                    visibleDate = date.getTime();
+                // get the end of the month
+                lastVisibleDate.setMonth(lastVisibleDate.getMonth()+1);
+                lastVisibleDate.setDate(lastVisibleDate.getDate()-1);
+                newCalendar = (visibleDate < firstVisibleDate.getTime() || lastVisibleDate.getTime() < visibleDate);
+            }
+
+            if (newCalendar) {
+                this.calendars = [{
+                    month: date.getMonth(),
+                    year: date.getFullYear()
+                }];
+                if (this._o.mainCalendar === 'right') {
+                    this.calendars[0].month += 1 - this._o.numberOfMonths;
+                }
+            }
+
+            this.adjustCalendars();
+        },
+
+        adjustCalendars: function() {
+            this.calendars[0] = adjustCalendar(this.calendars[0]);
+            for (var c = 1; c < this._o.numberOfMonths; c++) {
+                this.calendars[c] = adjustCalendar({
+                    month: this.calendars[0].month + c,
+                    year: this.calendars[0].year
+                });
+            }
             this.draw();
         },
 
@@ -670,28 +724,22 @@
          */
         gotoMonth: function(month)
         {
-            if (!isNaN( (month = parseInt(month, 10)) )) {
-                this._m = month < 0 ? 0 : month > 11 ? 11 : month;
-                this.draw();
+            if (!isNaN(month)) {
+                this.calendars[0].month = parseInt(month, 10);
+                this.adjustCalendars();
             }
         },
 
         nextMonth: function()
         {
-            if (++this._m > 11) {
-                this._m = 0;
-                this._y++;
-            }
-            this.draw();
+            this.calendars[0].month++;
+            this.adjustCalendars();
         },
 
         prevMonth: function()
         {
-            if (--this._m < 0) {
-                this._m = 11;
-                this._y--;
-            }
-            this.draw();
+            this.calendars[0].month--;
+            this.adjustCalendars();
         },
 
         /**
@@ -700,8 +748,8 @@
         gotoYear: function(year)
         {
             if (!isNaN(year)) {
-                this._y = parseInt(year, 10);
-                this.draw();
+                this.calendars[0].year = parseInt(year, 10);
+                this.adjustCalendars();
             }
         },
 
@@ -733,7 +781,8 @@
                 minYear = opts.minYear,
                 maxYear = opts.maxYear,
                 minMonth = opts.minMonth,
-                maxMonth = opts.maxMonth;
+                maxMonth = opts.maxMonth,
+                html = '';
 
             if (this._y <= minYear) {
                 this._y = minYear;
@@ -748,10 +797,13 @@
                 }
             }
 
-            this.el.innerHTML = renderTitle(this) + this.render(this._y, this._m);
+            for (var c = 0; c < opts.numberOfMonths; c++) {
+                html += '<div class="pika-lendar">' + renderTitle(this, c, this.calendars[c].year, this.calendars[c].month, this.calendars[0].year) + this.render(this.calendars[c].year, this.calendars[c].month) + '</div>';
+            }
+
+            this.el.innerHTML = html;
 
             if (opts.bound) {
-                this.adjustPosition();
                 if(opts.field.type !== 'hidden') {
                     sto(function() {
                         opts.trigger.focus();
@@ -845,7 +897,7 @@
                     isToday = compareDates(day, now),
                     isEmpty = i < before || i >= (days + before);
 
-                row.push(renderDay(1 + (i - before), isSelected, isToday, isDisabled, isEmpty));
+                row.push(renderDay(1 + (i - before), month, year, isSelected, isToday, isDisabled, isEmpty));
 
                 if (++r === 7) {
                     data.push(renderRow(row, opts.isRTL));
@@ -864,12 +916,13 @@
         show: function()
         {
             if (!this._v) {
-                if (this._o.bound) {
-                    addEvent(document, 'click', this._onClick);
-                }
                 removeClass(this.el, 'is-hidden');
                 this._v = true;
                 this.draw();
+                if (this._o.bound) {
+                    addEvent(document, 'click', this._onClick);
+                    this.adjustPosition();
+                }
                 if (typeof this._o.onOpen === 'function') {
                     this._o.onOpen.call(this);
                 }

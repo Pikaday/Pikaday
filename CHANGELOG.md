@@ -1,6 +1,12 @@
 # Changelog
 
-## 1.2.0 - TBA
+## 1.3.0 - TBA
+
+- Fix #79 moving through months can cause calendar to "bounce around"
+- Add configurable number of shown months
+- #51 Add unit tests with ci: [testling](https://ci.testling.com/rikkert/pikaday)
+
+## 1.2.0 - 2014-01-28
 
 - Fix #8 Automatically adjust datepicker position
 - Merge #45 Adjusting position
@@ -11,6 +17,7 @@
 - Merge #92 Export as CommonJS module
 - Merge #119 Use a px text-indent on .pika-prev/next to prevent Firefox bug
 - Merge #60 Add customizable position option
+- Add Component package definition
 
 ## 1.1.0 - 2013-03-29
 

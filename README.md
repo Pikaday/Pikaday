@@ -78,7 +78,7 @@ Pikaday has many useful options:
 * `trigger` use a different element to trigger opening the datepicker, see [trigger example][] (default to `field`)
 * `bound` automatically show/hide the datepicker on `field` focus (default `true` if `field` is set)
 * `position` preferred position of the datepicker relative to the form field, e.g.: `top right`, `bottom right` **Note:** automatic adjustment may occur to avoid datepicker from being displayed outside the viewport, see [positions example][] (default to 'bottom left')
-* `format` the default output format for `.toString()` and `field` value (requires [Moment.js][moment] for advanced formatting)
+* `format` the default output format for `.toString()` and `field` value (requires [Moment.js][moment] for custom formatting)
 * `defaultDate` the initial date to view when first opened
 * `setDefaultDate` make the `defaultDate` the initial selected value
 * `firstDay` first day of the week (0: Sunday, 1: Monday, etc)
@@ -89,6 +89,8 @@ Pikaday has many useful options:
 * `i18n` language defaults for month and weekday names (see internationalization below)
 * `yearSuffix` additional text to append to the year in the title
 * `showMonthAfterYear` render the month after year in the title (default `false`)
+* `numberOfMonths` number of visible calendars
+* `mainCalendar` when `numberOfMonths` is used, this will help you to choose where the main calendar will be (default `left`, can be set to `right`). Only used for the first display or when a selected date is not already visible
 * `onSelect` callback function for when a date is selected
 * `onOpen` callback function for when the picker becomes visible
 * `onClose` callback function for when the picker is hidden
@@ -142,7 +144,7 @@ If you use a CommonJS compatible environment you can use the require function to
 var pikaday = require('pikaday');
 ```
 
-When you bundle all your required modules with [Browserify][browserify] and you don't use [Moment.js][moment] specify the ignore opption:
+When you bundle all your required modules with [Browserify][browserify] and you don't use [Moment.js][moment] specify the ignore option:
 
 `browserify main.js -o bundle.js -i moment`
 
@@ -176,7 +178,7 @@ Set the current selection. This will be restricted within the bounds of `minDate
 
 Returns a [Moment.js][moment] object for the selected date (Moment must be loaded before Pikaday).
 
-`picker.setMoment(moment('14th Feburary 2014', 'DDo MMMM YYYY'))`
+`picker.setMoment(moment('14th February 2014', 'DDo MMMM YYYY'))`
 
 Set the current selection with a [Moment.js][moment] object (see `setDate` for details).
 
@@ -258,7 +260,8 @@ Pikaday is a pure datepicker. It will not support picking a time of day. However
 See [#1][issue1] and [#18][issue18]. These reside in their own fork.
 
 You can use the work [@stas][stas] did at [stas/Pikaday][stas Pika]  
-or the work [@owenmead][owenmead] did more recently at [owenmead/Pikaday][owen Pika] which is based on version 1.1.0.
+or the work [@owenmead][owenmead] did more recently at [owenmead/Pikaday][owen Pika] which is based on version 1.1.0.  
+A more simple time selection approach done by [@xeeali][xeeali] at [xeeali/Pikaday][xeeali Pika] is based on version 1.2.0.
 
 
 ## Browser Compatibility
@@ -268,6 +271,9 @@ or the work [@owenmead][owenmead] did more recently at [owenmead/Pikaday][owen P
 * Firefox 3.5+
 * Safari 3+
 * Opera 10.6+
+
+[![browser compatibility](https://ci.testling.com/rikkert/pikaday.png)
+](https://ci.testling.com/rikkert/pikaday)
 
 
 * * *
@@ -297,8 +303,10 @@ Copyright © 2014 David Bushell | BSD & MIT license
   [issue18]:     https://github.com/dbushell/Pikaday/issues/18                    "Issue 18"
   [stas]:        https://github.com/stas                                          "@stas"
   [stas Pika]:   https://github.com/stas/Pikaday                                  "Pikaday"
-  [owenmead]:     https://github.com/owenmead                                     "@owenmead"
+  [owenmead]:    https://github.com/owenmead                                      "@owenmead"
   [owen Pika]:   https://github.com/owenmead/Pikaday                              "Pikaday"
+  [xeeali]:      https://github.com/xeeali                                        "@xeeali"
+  [xeeali Pika]: https://github.com/xeeali/Pikaday                                "Pikaday"
   [moment.js example]: http://dbushell.github.com/Pikaday/examples/moment.html    "Pikaday w/ moment.js"
   [jQuery example]: http://dbushell.github.com/Pikaday/examples/jquery.html       "Pikaday w/ jQuery"
   [AMD example]: http://dbushell.github.com/Pikaday/examples/amd.html             "Pikaday w/ AMD"
