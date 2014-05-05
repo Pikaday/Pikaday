@@ -5,6 +5,7 @@
 - Fix #79 moving through months can cause calendar to "bounce around"
 - Add configurable number of shown months
 - #51 Add unit tests with ci: [testling](https://ci.testling.com/rikkert/pikaday)
+- Fix #94 blur input field after date selection
 
 ## 1.2.0 - 2014-01-28
 
