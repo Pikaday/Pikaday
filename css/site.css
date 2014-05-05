@@ -21,6 +21,6 @@ input[type="text"] {
     padding: 0.5em;
 }
 
-button {
+button#datepicker-button {
     margin-bottom: 3em;
 }
