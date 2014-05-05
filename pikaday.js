@@ -706,7 +706,8 @@
         },
 
         /**
-         * set the current time selection
+         * set time components
+         * Currently defaulting to setting date to today if not set
          */
         setTime: function(hours, minutes, seconds) {
             if (!this._d) {
