@@ -85,6 +85,7 @@ Pikaday has many useful options:
 * `minDate` the minimum/earliest date that can be selected (this should be a native Date object - e.g. `new Date()` or `moment().toDate()`)
 * `maxDate` the maximum/latest date that can be selected (this should be a native Date object - e.g. `new Date()` or `moment().toDate()`)
 * `yearRange` number of years either side (e.g. `10`) or array of upper/lower range (e.g. `[1900,2015]`)
+* `showWeekNumber` show the ISO week number at the head of the row
 * `isRTL` reverse the calendar for right-to-left languages
 * `i18n` language defaults for month and weekday names (see internationalization below)
 * `yearSuffix` additional text to append to the year in the title
