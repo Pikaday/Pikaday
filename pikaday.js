@@ -222,6 +222,9 @@
         // only used for the first display or when a selected date is not visible
         mainCalendar: 'left',
 
+        // Specify a DOM element to render the calendar in
+        container: undefined,
+
         // internationalization
         i18n: {
             previousMonth : 'Previous Month',
@@ -497,9 +500,19 @@
 
         if (opts.field) {
             if (opts.bound) {
-                document.body.appendChild(self.el);
+                if (opts.container) {
+                    opts.container.appendChild(self.el);
+                }
+                else {
+                    document.body.appendChild(self.el);
+                }
             } else {
-                opts.field.parentNode.insertBefore(self.el, opts.field.nextSibling);
+                if (opts.container) {
+                    opts.container.appendChild(self.el);
+                }
+                else {
+                    opts.field.parentNode.insertBefore(self.el, opts.field.nextSibling);
+                }
             }
             addEvent(opts.field, 'change', self._onInputChange);
 
@@ -823,6 +836,7 @@
 
         adjustPosition: function()
         {
+            if (this._o.container) return;
             var field = this._o.trigger, pEl = field,
             width = this.el.offsetWidth, height = this.el.offsetHeight,
             viewportWidth = window.innerWidth || document.documentElement.clientWidth,
