@@ -499,20 +499,12 @@
         addEvent(self.el, 'change', self._onChange);
 
         if (opts.field) {
-            if (opts.bound) {
-                if (opts.container) {
-                    opts.container.appendChild(self.el);
-                }
-                else {
-                    document.body.appendChild(self.el);
-                }
+            if (opts.container) {
+                opts.container.appendChild(self.el);
+            } else if (opts.bound) {
+                document.body.appendChild(self.el);
             } else {
-                if (opts.container) {
-                    opts.container.appendChild(self.el);
-                }
-                else {
-                    opts.field.parentNode.insertBefore(self.el, opts.field.nextSibling);
-                }
+                opts.field.parentNode.insertBefore(self.el, opts.field.nextSibling);
             }
             addEvent(opts.field, 'change', self._onInputChange);
 
