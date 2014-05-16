@@ -78,6 +78,7 @@ Pikaday has many useful options:
 * `trigger` use a different element to trigger opening the datepicker, see [trigger example][] (default to `field`)
 * `bound` automatically show/hide the datepicker on `field` focus (default `true` if `field` is set)
 * `position` preferred position of the datepicker relative to the form field, e.g.: `top right`, `bottom right` **Note:** automatic adjustment may occur to avoid datepicker from being displayed outside the viewport, see [positions example][] (default to 'bottom left')
+* `container` DOM node to render calendar into, see [container example][] (default: undefined) 
 * `format` the default output format for `.toString()` and `field` value (requires [Moment.js][moment] for custom formatting)
 * `defaultDate` the initial date to view when first opened
 * `setDefaultDate` make the `defaultDate` the initial selected value
@@ -313,3 +314,4 @@ Copyright © 2014 David Bushell | BSD & MIT license
   [jQuery AMD example]: http://dbushell.github.com/Pikaday/examples/jquery-amd.html "Pikaday w/ jQuery + AMD"
   [trigger example]: http://dbushell.github.com/Pikaday/examples/trigger.html     "Pikaday using custom trigger"
   [positions example]: http://dbushell.github.com/Pikaday/examples/positions.html "Pikaday using different position options"
+  [container example]: http://dbushell.github.com/Pikaday/examples/container.html "Pikaday using custom calendar container"
