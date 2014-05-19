@@ -201,6 +201,9 @@
         // number of years either side, or array of upper/lower range
         yearRange: 10,
 
+        // show week numbers at head of row
+        showWeekNumber: false,
+
         // used internally (don't config outside)
         minYear: 0,
         maxYear: 9999,
@@ -277,6 +280,13 @@
                '</td>';
     },
 
+    renderWeek = function (d, m, y) {
+        // Lifted from http://javascript.about.com/library/blweekyear.htm, lightly modified.
+        var onejan = new Date(y, 0, 1);
+        var weekNum = Math.ceil((((new Date(y, m, d) - onejan) / 86400000) + onejan.getDay()+1)/7);
+        return '<td>' + weekNum + '</td>';
+    },
+
     renderRow = function(days, isRTL)
     {
         return '<tr>' + (isRTL ? days.reverse() : days).join('') + '</tr>';
@@ -290,6 +300,9 @@
     renderHead = function(opts)
     {
         var i, arr = [];
+        if (opts.showWeekNumber) {
+            arr.push('<th>Week</th>');
+        }
         for (i = 0; i < 7; i++) {
             arr.push('<th scope="col"><abbr title="' + renderDayName(opts, i) + '">' + renderDayName(opts, i, true) + '</abbr></th>');
         }
@@ -908,6 +921,9 @@
                 row.push(renderDay(1 + (i - before), month, year, isSelected, isToday, isDisabled, isEmpty));
 
                 if (++r === 7) {
+                    if (opts.showWeekNumber) {
+                        row.unshift(renderWeek(i - before, month, year));
+                    }
                     data.push(renderRow(row, opts.isRTL));
                     row = [];
                     r = 0;
