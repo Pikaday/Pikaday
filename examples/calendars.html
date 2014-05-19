@@ -20,6 +20,8 @@
     2 months <input type="text" id="datepicker-2months">
     <br />
     3 months, main aligned to right <input type="text" id="datepicker-3months-right">
+    <br />
+    showing week numbers <input type="text" id="datepicker-week-numbers">
 
     <h2>What is this?</h2>
 
@@ -46,6 +48,16 @@
         numberOfMonths: 3,
         mainCalendar: 'right',
         field: document.getElementById('datepicker-3months-right'),
+        firstDay: 1,
+        minDate: new Date('2000-01-01'),
+        maxDate: new Date('2020-12-31'),
+        yearRange: [2000, 2020]
+    });
+
+    var pickerWeekNums = new Pikaday(
+    {
+        showWeekNumber: true,
+        field: document.getElementById('datepicker-week-numbers'),
         firstDay: 1,
         minDate: new Date('2000-01-01'),
         maxDate: new Date('2020-12-31'),
