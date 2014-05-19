@@ -161,6 +161,11 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     background: #f5f5f5;
 }
 
+.pika-week {
+    font-size: 11px;
+    color: #999;
+}
+
 .is-today .pika-button {
     color: #33aaff;
     font-weight: bold;
