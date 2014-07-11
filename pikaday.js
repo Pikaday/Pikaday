@@ -447,7 +447,10 @@
             if (e.firedBy === self) {
                 return;
             }
-            if (hasMoment) {
+            if (opts.parseOverride) {
+                date = opts.parseOverride(opts.field.value, opts.format);
+            }
+            else if (hasMoment) {
                 date = moment(opts.field.value, opts.format);
                 date = (date && date.isValid()) ? date.toDate() : null;
             }
