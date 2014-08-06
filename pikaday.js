@@ -658,6 +658,12 @@
         {
             if (!date) {
                 this._d = null;
+
+                if (this._o.field) {
+                    this._o.field.value = '';
+                    fireEvent(this._o.field, 'change', { firedBy: this });
+                }
+
                 return this.draw();
             }
             if (typeof date === 'string') {
