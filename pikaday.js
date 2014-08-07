@@ -170,6 +170,9 @@
         // ('bottom' & 'left' keywords are not used, 'top' & 'right' are modifier on the bottom/left position)
         position: 'bottom left',
 
+        // optionally add 'is-above' class when drawn above input element
+        isAbove: false,
+
         // the default output format for `.toString()` and `field` value
         format: 'YYYY-MM-DD',
 
@@ -769,7 +772,7 @@
 
         adjustPosition: function()
         {
-            var field = this._o.trigger, pEl = field,
+            var opts = this._o, field = opts.trigger, pEl = field,
             width = this.el.offsetWidth, height = this.el.offsetHeight, self = this,
             viewportWidth = window.innerWidth || document.documentElement.clientWidth,
             viewportHeight = window.innerHeight || document.documentElement.clientHeight,
@@ -788,7 +791,10 @@
                     top  += pEl.offsetTop;
                 }
             }
-            self.el.classList.remove("is-above");
+
+            if (opts.isAbove) {
+                self.el.classList.remove("is-above");
+            }
             // default position is bottom & left
             if (left + width > viewportWidth ||
                 (
@@ -805,7 +811,9 @@
                 )
             ) {
                 top = top - height - field.offsetHeight;
-                self.el.classList.add("is-above");
+                if (opts.isAbove) {
+                    self.el.classList.add("is-above");
+                }
             }
             this.el.style.cssText = [
                 'position: absolute',
