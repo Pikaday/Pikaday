@@ -206,6 +206,9 @@
         // number of years either side, or array of upper/lower range
         yearRange: 10,
 
+        // show week numbers at head of row
+        showWeekNumber: false,
+
         // used internally (don't config outside)
         minYear: 0,
         maxYear: 9999,
@@ -231,6 +234,9 @@
         // when numberOfMonths is used, this will help you to choose where the main calendar will be (default `left`, can be set to `right`)
         // only used for the first display or when a selected date is not visible
         mainCalendar: 'left',
+
+        // Specify a DOM element to render the calendar in
+        container: undefined,
 
         // internationalization
         i18n: {
@@ -284,6 +290,13 @@
                '</td>';
     },
 
+    renderWeek = function (d, m, y) {
+        // Lifted from http://javascript.about.com/library/blweekyear.htm, lightly modified.
+        var onejan = new Date(y, 0, 1),
+            weekNum = Math.ceil((((new Date(y, m, d) - onejan) / 86400000) + onejan.getDay()+1)/7);
+        return '<td class="pika-week">' + weekNum + '</td>';
+    },
+
     renderRow = function(days, isRTL)
     {
         return '<tr>' + (isRTL ? days.reverse() : days).join('') + '</tr>';
@@ -297,6 +310,9 @@
     renderHead = function(opts)
     {
         var i, arr = [];
+        if (opts.showWeekNumber) {
+            arr.push('<th></th>');
+        }
         for (i = 0; i < 7; i++) {
             arr.push('<th scope="col"><abbr title="' + renderDayName(opts, i) + '">' + renderDayName(opts, i, true) + '</abbr></th>');
         }
@@ -562,7 +578,9 @@
         addEvent(self.el, 'change', self._onChange);
 
         if (opts.field) {
-            if (opts.bound) {
+            if (opts.container) {
+                opts.container.appendChild(self.el);
+            } else if (opts.bound) {
                 document.body.appendChild(self.el);
             } else {
                 opts.field.parentNode.insertBefore(self.el, opts.field.nextSibling);
@@ -938,6 +956,7 @@
 
         adjustPosition: function()
         {
+            if (this._o.container) return;
             var field = this._o.trigger, pEl = field,
             width = this.el.offsetWidth, height = this.el.offsetHeight,
             viewportWidth = window.innerWidth || document.documentElement.clientWidth,
@@ -1017,6 +1036,9 @@
                 row.push(renderDay(1 + (i - before), month, year, isSelected, isToday, isDisabled, isEmpty));
 
                 if (++r === 7) {
+                    if (opts.showWeekNumber) {
+                        row.unshift(renderWeek(i - before, month, year));
+                    }
                     data.push(renderRow(row, opts.isRTL));
                     row = [];
                     r = 0;
