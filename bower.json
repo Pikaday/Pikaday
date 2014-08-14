@@ -1,11 +1,12 @@
 {
-  "name": "pikaday",
+  "name": "pikaday - time",
   "version": "1.2.0",
-  "description": "A refreshing JavaScript Datepicker — lightweight, no dependencies, modular CSS",
+  "description": "Time support added to pikaday",
   "keywords": [
     "datepicker",
     "calendar",
-    "date"
+    "date",
+    "time"
   ],
   "main": [
     "./pikaday.js",
@@ -21,9 +22,9 @@
     "BSD",
     "MIT"
   ],
-  "homepage": "http://dbushell.github.io/Pikaday/",
+  "homepage": "https://github.com/owenmead/Pikaday",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dbushell/Pikaday.git"
+    "url": "https://github.com/owenmead/Pikaday.git"
   }
 }
