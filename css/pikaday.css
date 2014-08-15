@@ -1,4 +1,4 @@
-@charset "UTF-8";
+﻿@charset "UTF-8";
 
 /*!
  * Pikaday
@@ -171,7 +171,8 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     font-weight: bold;
 }
 
-.is-selected .pika-button {
+.is-selected .pika-button,
+.has-event .pika-button {
     color: #fff;
     font-weight: bold;
     background: #33aaff;
@@ -184,6 +185,15 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     cursor: default;
     color: #999;
     opacity: .3;
+}
+
+.has-event .pika-button {
+    background: #005da9;
+    box-shadow: inset 0 1px 3px #CCCCCC;
+}
+
+.is-today.has-event .pika-button {
+    color: #00FF00 !important;
 }
 
 .pika-button:hover {

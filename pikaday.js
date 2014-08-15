@@ -244,7 +244,6 @@
         onDraw: null
     },
 
-
     /**
      * templating functions to abstract HTML rendering
      */
@@ -257,12 +256,12 @@
         return abbr ? opts.i18n.weekdaysShort[day] : opts.i18n.weekdays[day];
     },
 
-    renderDay = function(d, m, y, isSelected, isToday, isDisabled, isEmpty)
+    renderDay = function (d, m, y, isSelected, isToday, isDisabled, isEmpty, hasEvent, eventObject)
     {
         if (isEmpty) {
             return '<td class="is-empty"></td>';
         }
-        var arr = [];
+        var arr = [], style = '';
         if (isDisabled) {
             arr.push('is-disabled');
         }
@@ -272,8 +271,12 @@
         if (isSelected) {
             arr.push('is-selected');
         }
+        if (hasEvent) {
+            arr.push('has-event');
+            style = ' style="background: ' + eventObject.backgroundColor + '; color: ' + eventObject.color + '" ';
+        }
         return '<td data-day="' + d + '" class="' + arr.join(' ') + '">' +
-                 '<button class="pika-button pika-day" type="button" ' +
+                 '<button class="pika-button pika-day"' + style + 'type="button" ' +
                     'data-pika-year="' + y + '" data-pika-month="' + m + '" data-pika-day="' + d + '">' +
                         d +
                  '</button>' +
@@ -543,6 +546,32 @@
             self.gotoDate(new Date());
         }
 
+        opts.events.isDateIn = function (d) {
+            if (typeof opts.events[0] === 'object') {
+                for (var i = 0; i < opts.events.length; i++) {
+                    if (opts.events[i].date.toDateString() == d.toDateString())
+                        return true;
+                }
+            }
+            else {
+                return opts.events.indexOf(d.toDateString()) !== -1 ? true : false;
+            }
+            return false;
+        };
+
+        opts.events.indexOfDate = function (d) {
+            if (typeof opts.events[0] === 'object') {
+                for (var i = 0; i < opts.events.length; i++) {
+                    if (opts.events[i].date.toDateString() == d.toDateString())
+                        return i;
+                }
+            }
+            else {
+                return opts.events.indexOf(d.toDateString());
+            }
+            return -1;
+        };
+
         if (opts.bound) {
             this.hide();
             self.el.className += ' is-bound';
@@ -614,6 +643,8 @@
                 }
             }
 
+            opts.events = opts.events || [];
+
             return opts;
         },
 
@@ -623,6 +654,43 @@
         toString: function(format)
         {
             return !isDate(this._d) ? '' : hasMoment ? moment(this._d).format(format || this._o.format) : this._d.toDateString();
+        },
+
+        /**
+        * return the array of object events
+        */
+        getEvents: function()
+        {
+            return this._o.events;
+        },
+
+        /**
+        * add a date to the Events list
+        */
+        addEvents: function (o) {
+            if (typeof o === 'object' && o != null) {
+                if (!this._o.events.isDateIn(o.date))
+                    this._o.events.push({ date: o.date, color: o.color, backgroundColor: o.backgroundColor });
+                else {
+                    this._o.events[this._o.events.indexOfDate(o.date)].color = o.color;
+                    this._o.events[this._o.events.indexOfDate(o.date)].backgroundColor = o.backgroundColor;
+                }
+            }
+            else if (this._o.events.indexOf(o) == -1)
+                this._o.events.push(o);
+            this.draw(true);
+        },
+
+        /**
+        * remove a date from the Events list
+        */
+        removeEvents: function(d)
+        {
+            if (typeof d === 'object')
+                this._o.events.splice(this._o.events.indexOfDate(d), 1);
+            else
+                this._o.events.splice(this._o.events.indexOf(d), 1);
+            this.draw(true);
         },
 
         /**
@@ -916,9 +984,11 @@
                     isDisabled = (opts.minDate && day < opts.minDate) || (opts.maxDate && day > opts.maxDate),
                     isSelected = isDate(this._d) ? compareDates(day, this._d) : false,
                     isToday = compareDates(day, now),
-                    isEmpty = i < before || i >= (days + before);
+                    isEmpty = i < before || i >= (days + before),
+                    hasEvent = opts.events.isDateIn(day),
+                    eventObject = hasEvent ? opts.events[opts.events.indexOfDate(day)] : null;
 
-                row.push(renderDay(1 + (i - before), month, year, isSelected, isToday, isDisabled, isEmpty));
+                row.push(renderDay(1 + (i - before), month, year, isSelected, isToday, isDisabled, isEmpty, hasEvent, eventObject));
 
                 if (++r === 7) {
                     if (opts.showWeekNumber) {
