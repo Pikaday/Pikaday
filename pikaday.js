@@ -495,7 +495,7 @@
                 }
             }
             do {
-                if (hasClass(pEl, 'pika-single')) {
+                if (hasClass(pEl, 'pika-single') || pEl == opts.trigger) {
                     return;
                 }
             }
