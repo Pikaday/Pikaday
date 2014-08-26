@@ -523,7 +523,9 @@
 
             if (!opts.defaultDate) {
                 if (hasMoment && opts.field.value) {
-                    opts.defaultDate = moment(opts.field.value, opts.format).toDate();
+                    if (moment(opts.field.value, opts.format).isValid()) {
+                        opts.defaultDate = moment(opts.field.value, opts.format).toDate();                        
+                    }
                 } else {
                     opts.defaultDate = new Date(Date.parse(opts.field.value));
                 }
