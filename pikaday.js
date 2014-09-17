@@ -198,6 +198,9 @@
         // the maximum/latest date that can be selected
         maxDate: null,
 
+        // external function used to determine availability
+        isAvailable: null,
+
         // number of years either side, or array of upper/lower range
         yearRange: 10,
 
@@ -257,8 +260,9 @@
         return abbr ? opts.i18n.weekdaysShort[day] : opts.i18n.weekdays[day];
     },
 
-    renderDay = function(d, m, y, isSelected, isToday, isDisabled, isEmpty)
+    renderDay = function(d, m, y, isSelected, isToday, isDisabled, isEmpty, isAvailable)
     {
+        var attr = '';
         if (isEmpty) {
             return '<td class="is-empty"></td>';
         }
@@ -272,8 +276,12 @@
         if (isSelected) {
             arr.push('is-selected');
         }
+        if (!isAvailable) {
+            arr.push('not-available');
+            attr = 'disabled ';
+        }
         return '<td data-day="' + d + '" class="' + arr.join(' ') + '">' +
-                 '<button class="pika-button pika-day" type="button" ' +
+                 '<button class="pika-button pika-day" type="button" ' + attr
                     'data-pika-year="' + y + '" data-pika-month="' + m + '" data-pika-day="' + d + '">' +
                         d +
                  '</button>' +
@@ -916,9 +924,10 @@
                     isDisabled = (opts.minDate && day < opts.minDate) || (opts.maxDate && day > opts.maxDate),
                     isSelected = isDate(this._d) ? compareDates(day, this._d) : false,
                     isToday = compareDates(day, now),
-                    isEmpty = i < before || i >= (days + before);
+                    isEmpty = i < before || i >= (days + before),
+                    isAvailable = (typeof opts.isAvailable === 'function') ? opts.isAvailable(day) : true;
 
-                row.push(renderDay(1 + (i - before), month, year, isSelected, isToday, isDisabled, isEmpty));
+                row.push(renderDay(1 + (i - before), month, year, isSelected, isToday, isDisabled, isEmpty, isAvailable));
 
                 if (++r === 7) {
                     if (opts.showWeekNumber) {
