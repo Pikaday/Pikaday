@@ -1,6 +1,6 @@
 {
   "name": "pikaday",
-  "version": "1.2.0",
+  "version": "1.2.1gyg",
   "description": "A refreshing JavaScript Datepicker — lightweight, no dependencies, modular CSS",
   "keywords": [
     "datepicker",
@@ -8,7 +8,7 @@
     "date"
   ],
   "homepage": "http://dbushell.github.io/Pikaday/",
-  "bugs": "https://github.com/dbushell/Pikaday/issues",
+  "bugs": "https://github.com/getyourguide/Pikaday/issues",
   "licenses": [
     {
       "type": "BSD",
