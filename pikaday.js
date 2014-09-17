@@ -281,7 +281,7 @@
             attr = 'disabled ';
         }
         return '<td data-day="' + d + '" class="' + arr.join(' ') + '">' +
-                 '<button class="pika-button pika-day" type="button" ' + attr
+                 '<button class="pika-button pika-day" type="button" ' + attr +
                     'data-pika-year="' + y + '" data-pika-month="' + m + '" data-pika-day="' + d + '">' +
                         d +
                  '</button>' +
