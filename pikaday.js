@@ -244,7 +244,9 @@
             nextMonth     : 'Next Month',
             months        : ['January','February','March','April','May','June','July','August','September','October','November','December'],
             weekdays      : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
-            weekdaysShort : ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+            weekdaysShort : ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
+            midnight      : 'Midnight',
+            noon          : 'Noon'
         },
 
         // callback function
@@ -392,18 +394,18 @@
         return to_return;
     },
 
-    renderTime = function(hh, mm, ss, use24hour, showSeconds)
+    renderTime = function(hh, mm, ss, opts)
     {
         var to_return = '<table cellpadding="0" cellspacing="0" class="pika-time"><tbody><tr>' +
             renderTimePicker(24, hh, 'pika-select-hour', function(i) {
-                if (use24hour) {
+                if (opts.use24hour) {
                     return i;
                 } else {
                     var to_return = (i%12) + (i<12 ? ' AM' : ' PM');
                     if (to_return == '0 AM') {
-                        return 'Midnight'
+                        return opts.i18n.midnight;
                     } else if (to_return == '0 PM') {
-                        return 'Noon'
+                        return opts.i18n.noon;
                     } else {
                         return to_return;
                     }
@@ -412,7 +414,7 @@
             '<td>:</td>' +
             renderTimePicker(60, mm, 'pika-select-minute', function(i) { if (i < 10) return "0" + i; return i });
 
-        if (showSeconds) {
+        if (opts.showSeconds) {
             to_return += '<td>:</td>' +
                 renderTimePicker(60, ss, 'pika-select-second', function(i) { if (i < 10) return "0" + i; return i });
         }
@@ -931,8 +933,7 @@
                             this._d ? this._d.getHours() : 0,
                             this._d ? this._d.getMinutes() : 0,
                             this._d ? this._d.getSeconds() : 0,
-                            opts.use24hour,
-                            opts.showSeconds)
+                            opts)
                     + '</div>';
             }
 
