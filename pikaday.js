@@ -227,7 +227,7 @@
         numberOfMonths: 1,
 
         // time
-        showTime: false,
+        showTime: true,
         showSeconds: false,
         use24hour: false,
 
