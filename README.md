@@ -1,6 +1,13 @@
 Pikaday - With Time Picker
 ========
 
+### Key Config Changes
+```javascript
+showTime: true
+showSeconds: false
+use24hour: false
+```
+
 ### Time support added to [dbushell/Pikaday][david Pika]
 
 This fork allows the user to specify the time along with their date. Done so by adding a couple select inputs to manipulate the date Pikaday is generating.
