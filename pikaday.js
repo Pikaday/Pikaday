@@ -309,9 +309,9 @@
 
     // styling = {
     //     // ['booked', 'pending', 'next-locked']
-    //     toClasses: function (availability) {},
-    //     toAttr: function (availability) {}, // enable/disable
-    //     toStyle: function (availability) {}
+    //     toClasses: function (data, options) {},
+    //     toAttr: function (data, options) {}, // enable/disable
+    //     toStyle: function (data, options) {}
     // }
 
     renderDay = function(opts, dateObj, styleAttrs, data)
