@@ -87,27 +87,24 @@ The following example shows off most of the new features, changes and improvemen
 
         // return some kind of availability identifier that can later be mapped
         // via availabilityMap functions (see below)
-        isAvailableDay: function(date) {
+        calcDayData: function(date) {
             var xmas = Date.parse('2014-12-25');
             date.setHours(0,0,0,0);
             return date === xmas;
         },
         // return some kind of availability identifier that can later be mapped
         // dateObj: {date: date, weekNum: 1-52, month: 0-11, year: year}
-        isAvailableWeek: function(dateObj) {
+        calcWeekData: function(dateObj) {
           return true;
         },
 
-        // allows you to mark a day or week for availability status
-        // given availability returned from isAvailableDay or isAvailableWeek
-        availabilityMap:  {
-          // Note: availability argument can be anything
-
+        // allows custom styling given specific data
+        styling:  {
           // options: 
           //   currently {type: 'day'} or {type: 'week'}          
-          toClasses: function(availability, options) {},
-          toStyle: function(availability, options) {},
-          toAttr: function(availability, options) {}
+          toClasses: function(data, options) {},
+          toStyle: function(data, options) {},
+          toAttr: function(data, options) {}
         },
 
         // lookup key in i18n.weekdays to renderDayName
@@ -117,7 +114,8 @@ The following example shows off most of the new features, changes and improvemen
             monthName:    'long',
         },
 
-        navigateMonths: false,
+        navigateMonths: false, // turn off month navigation (not rendered)
+        debugOn: true, // turn on debugging!!
 
         // TODO: similar for month, use monthNameFormat
         i18n: {

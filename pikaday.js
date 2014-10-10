@@ -198,11 +198,12 @@
         // the maximum/latest date that can be selected
         maxDate: null,
 
-        // external function used to determine availability
-        isAvailableDay: null,
-        isAvailableWeek: null,
+        // calculate day data
+        calcDayData: null,
+        // calculate week data
+        calcWeekData: null,
 
-        availabilityMap: {},
+        styling: {},
 
         // number of years either side, or array of upper/lower range
         yearRange: 10,
@@ -247,7 +248,7 @@
         i18n: {
             previousMonth : 'Previous Month',
             nextMonth     : 'Next Month',
-            months        : 
+            months        :  {
                 'long'    : ['January','February','March','April','May','June','July','August','September','October','November','December'],
                 'short'   : ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
             },
@@ -267,9 +268,11 @@
     },
 
 
-    debug: function(msg) {
-        if (this.debugOn) {
-            console.log(msg)    
+    debug = function(opts) {
+        return function() {
+            if (opts.debugOn) {
+                console.log.apply(console, arguments);
+            }
         }        
     },
 
@@ -287,58 +290,66 @@
     },
 
     // by @kristianmandrup
-    // availability can be either true/false or an Object
-    // if an object, it supports advanced availability styling and configuration
-    // each availability is an object than can be mapped to a list of classes to add
+    // data can be anything, f.ex some availability data/indicator
 
-    // Example:
-    // {
+    // Example (availability):
+    // data = {
     //  prevDay: {status: ['booked']}
     //  today: {status: ['booked', 'payment pending']}
     //  nextDay: {status: 'locked'}       
     // }
 
-    // availabilityMap: {
+    // styleAttrs = {
+    //     selected: isSelected, 
+    //     today: isToday, 
+    //     disabled; isDisabled, 
+    //     empty; isEmpty    
+    // };
+
+    // styling = {
     //     // ['booked', 'pending', 'next-locked']
     //     toClasses: function (availability) {},
     //     toAttr: function (availability) {}, // enable/disable
     //     toStyle: function (availability) {}
     // }
 
-    renderDay = function(d, m, y, isSelected, isToday, isDisabled, isEmpty, availability)
+    renderDay = function(opts, dateObj, styleAttrs, data)
     {
+        styleAttrs = styleAttrs || {};
+        
         var attr = '';
         var appendStyle = '';
+        var d = dateObj.day,
+            m = dateObj.month,
+            y = dateObj.year;
 
-        if (isEmpty) {
+        var log = debug(opts);
+
+        if (styleAttrs.empty) {
             return '<td class="is-empty"></td>';
         }
         var arr = [];
-        if (isDisabled) {
+        if (styleAttrs.disabled) {
             arr.push('is-disabled');
         }
-        if (isToday) {
+        if (styleAttrs.today) {
             arr.push('is-today');
         }
-        if (isSelected) {
+        if (styleAttrs.selected) {
             arr.push('is-selected');
         }
-        if (!availability) {
-            arr.push('not-available');
-            attr = 'disabled ';
+
+        // TODO: refactor to avoid duplication across functions using this...
+        var styling = _mapData(opts, data, {type: 'day'});
+        log('styling (day)', d, data, styling);            
+
+        if (styling.classes && styling.classes.length > 0) {
+            arr.concat(styling.classes);
         }
+        attr = styling.attr || attr;
 
-        // by @kristianmandrup
-        var availMaps = _mapAvailability(availability, {type: 'day'});
-        debug('availability maps', availMaps);            
-
-        if (availMaps.classes) {
-            arr.push(availMaps.classes);
-        }
-        attr = availMaps.attr || attr;
-
-        if (availMaps.style) {
-            appendStyle = ' style="' + availMaps.style + '" ';    
+        if (styling.styles && styling.styles.length > 0) {
+            appendStyle = ' style="' + styling.styles.join(';') + '" ';    
         }
 
         return '<td data-day="' + d + '" class="' + arr.join(' ') + '" ' + appendStyle + '>' +
@@ -350,54 +361,78 @@
     },
 
     // by @kristianmandrup
-    _mapAvailability: function(availability, options) {
-        var map = availabilityMap;
+    _mapData = function(opts, data, mapOptions) {
+        var styling = opts.styling;
         if (typeof map != 'function') {
             return {};
         }
 
-        var availClasses = [];
-        if (typeof map.toClasses == 'function') {            
-            availClasses = map.toClasses(availability, options) || availClasses;
+        var normalizeList = function(thing) {
+            if (typeof thing == 'string') {
+                return [thing];
+            }
+            return thing;
+        };
+
+        var classes = [];
+        if (typeof styling.toClasses == 'function') {            
+            classes = normalizeList(styling.toClasses(data, mapOptions) || classes);
         }
 
-        var appendStyle;
-        if (typeof map.toStyle == 'function') {            
-            availStyle = map.toStyle(availability, options);
+        var styles = [];
+        if (typeof styling.toStyle == 'function') {            
+            styles = normalizeList(styling.toStyle(data, mapOptions) || styles);
         }            
 
-        var availAttr;
-        if (typeof map.toAttr == 'function') {            
-            availAttr = map.toAttr(availability, options);
+        var attr;
+        if (typeof styling.toAttr == 'function') {            
+            attr = styling.toAttr(data, mapOptions);
         }
-
-        return {classes: availClasses, style: availStyle, attr: availAttr};
+        var styleObj = {classes: classes, styles: styles, attr: attr};
+        return styleObj;
     },
 
     
     // Lifted from http://javascript.about.com/library/blweekyear.htm, lightly modified.
     // Enhanced by @kristianmandrup
-    renderWeek = function (weekNum, availability) {
-        var availMaps = _mapAvailability(availability, {type: 'week'});
+    renderWeek = function (opts, weekNum, data) {
+        var styling = _mapData(data, {type: 'week'});
         var arr = ['pika-week'];
         var appendStyle
 
-        debug('availability maps (week)', availMaps);            
+        var log = debug(opts);
+        log('styling (week)', weekNum, data, styling);            
 
-        if (availMaps.classes) {
-            arr.push(availMaps.classes);
+        if (styling.classes && styling.classes.length > 0) {
+            arr.concat(styling.classes);
         }
 
-        if (availMaps.style) {
-            appendStyle = ' style="' + availMaps.style + '" ';    
+        if (styling.styles && styling.styles.length > 0) {
+            appendStyle = ' style="' + styling.styles + '" ';    
         }
 
         return '<td class="' + arr.join(' ') + '" ' + appendStyle + '>' + weekNum + '</td>';
     },
 
-    renderRow = function(days, isRTL)
+    renderRow = function(opts, data, days)
     {
-        return '<tr>' + (isRTL ? days.reverse() : days).join('') + '</tr>';
+        var styling = _mapData(data, {type: 'week'});
+
+        var arr = [];
+        var appendStyle
+
+        var log = debug(opts);
+        log('styling (row)', data, styling);            
+
+        if (styling.classes) {
+            arr.concat(styling.classes);
+        }
+
+        if (styling.style) {
+            appendStyle = ' style="' + styling.styles + '" ';    
+        }
+
+        return '<tr class="' + arr.join(' ') + appendStyle + '">' + (opts.isRTL ? days.reverse() : days).join('') + '</tr>';
     },
 
     renderBody = function(rows)
@@ -644,7 +679,7 @@
             if (opts.container) {
                 opts.container.appendChild(self.el);
             } else {
-                console.error "Warning: Pikaday must have either 'container' or 'field' property set in order to be displayed.";
+                console.error("Warning: Pikaday must have either 'container' or 'field' property set in order to be displayed.");
             }           
         }
 
@@ -1045,21 +1080,32 @@
                     isSelected = isDate(this._d) ? compareDates(day, this._d) : false,
                     isToday = compareDates(day, now),
                     isEmpty = i < before || i >= (days + before),
-                    isAvailableDay = (typeof opts.isAvailableDay === 'function') ? opts.isAvailableDay(day) : true;
+                    dayData = (typeof opts.calcDayData === 'function') ? opts.calcDayData(day) : true;
 
-                row.push(renderDay(1 + (i - before), month, year, isSelected, isToday, isDisabled, isEmpty, isAvailableDay));
+                var d = i - before;
+                var dateObj = {date: day, day: 1+d, month: month, year: year};
+
+                var styleAttrs = {
+                    selected: isSelected, 
+                    today: isToday, 
+                    disabled: isDisabled, 
+                    empty: isEmpty    
+                };
+                
+                row.push(renderDay(opts, dateObj, styleAttrs, dayData));
 
                 if (++r === 7) {
                     if (opts.showWeekNumber) {
-                        var d = i - before;                        
-                        var onejan = new Date(y, 0, 1),
+                        
+                        var onejan = new Date(year, 0, 1),
                             weekNum = Math.ceil((((new Date(year, month, d) - onejan) / 86400000) + onejan.getDay()+1)/7);
-
-                        var dateObj = {date: day, weekNum: weekNum, month: month, year: year};
-                        var isAvailableWeek = (typeof opts.isAvailableWeek === 'function') ? opts.isAvailableWeek(dateObj) : true;
-                        row.unshift(renderWeek(weekNum, isAvailableWeek));
+                        dateObj.weekNum = weekNum;
+                        dateObj.day = dateObj.day -1;
+                        
+                        var weekData = (typeof opts.calcWeekData === 'function') ? opts.calcWeekData(dateObj) : true;
+                        row.unshift(renderWeek(opts, weekNum, weekData));
                     }
-                    data.push(renderRow(row, opts.isRTL));
+                    data.push(renderRow(opts, weekData, row));
                     row = [];
                     r = 0;
                 }

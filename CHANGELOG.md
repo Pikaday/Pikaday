@@ -2,12 +2,15 @@
 
 ## 1.4.0 @kmandrup
 
+
 - Fix that you can add Datepicker to container with bound: false and field: null
-- Make availability functionality much more flexible
-  - available day styling via option isAvailableDay function 
-  - available week styling option isAvailableWeek function
-  - styling controlled via availabilityMap .toClasses, .toStyle, .toAttr
-- Improve i18n support, with more formats (weekDay long to ultra short, month long/short)
+- Use external day/week data to affect styling of day cells, rows and week number cells
+  - functions
+    - caldDayData  
+    - calcWeekData
+  - styling controlled via styling Object with toClasses, toStyle and toAttr keys (see README)
+
+- Improved i18n support, with more formats (weekDay long to ultra short, month long/short)
   - i18n.months
   - i18n.weekdays
   - displayFormat
@@ -15,6 +18,7 @@
     - weekdayLong
     - monthName
 - Enable disabling of month navigation via navigateMonths boolean option
+- added debug option debugOn (for now only for debugging data that affects styling)
 
 ## 1.3.0 - TBA
 
