@@ -239,7 +239,10 @@
             weekdayLong:  'long',
             monthName:    'long',
         },
-            
+
+        // allow to disable prev/next month navigation buttons          
+        navigateMonths: true,
+
         // internationalization
         i18n: {
             previousMonth : 'Previous Month',
@@ -374,7 +377,11 @@
     
     // Lifted from http://javascript.about.com/library/blweekyear.htm, lightly modified.
     // Enhanced by @kristianmandrup
-    renderWeek = function (d, m, y, availability) {
+    renderWeek = function (dateObj, availability) {
+        var date = dateObj.date
+        var d = dateObj.day
+        var m = dateObj.month 
+        var y = dateObj.year
 
         var availMaps = _mapAvailability(availability, {type: 'week'});
         var arr = ['pika-week'];
@@ -463,19 +470,22 @@
             html += monthHtml + yearHtml;
         }
 
-        if (isMinYear && (month === 0 || opts.minMonth >= month)) {
-            prev = false;
-        }
+        if (opts.navigateMonths) {
+            if (isMinYear && (month === 0 || opts.minMonth >= month)) {
+                prev = false;
+            }
 
-        if (isMaxYear && (month === 11 || opts.maxMonth <= month)) {
-            next = false;
-        }
+            if (isMaxYear && (month === 11 || opts.maxMonth <= month)) {
+                next = false;
+            }
 
-        if (c === 0) {
-            html += '<button class="pika-prev' + (prev ? '' : ' is-disabled') + '" type="button">' + opts.i18n.previousMonth + '</button>';
-        }
-        if (c === (instance._o.numberOfMonths - 1) ) {
-            html += '<button class="pika-next' + (next ? '' : ' is-disabled') + '" type="button">' + opts.i18n.nextMonth + '</button>';
+            if (c === 0) {
+                html += '<button class="pika-prev' + (prev ? '' : ' is-disabled') + '" type="button">' + opts.i18n.previousMonth + '</button>';
+            }
+
+            if (c === (instance._o.numberOfMonths - 1) ) {
+                html += '<button class="pika-next' + (next ? '' : ' is-disabled') + '" type="button">' + opts.i18n.nextMonth + '</button>';
+            }            
         }
 
         return html += '</div>';
@@ -634,14 +644,27 @@
             }
             addEvent(opts.field, 'change', self._onInputChange);
 
-            if (!opts.defaultDate) {
+        } 
+        // allows picker to be added in container with field: null
+        else {
+            if (opts.container) {
+                opts.container.appendChild(self.el);
+            } else if (opts.bound) {
+                document.body.appendChild(self.el);
+            } else {
+                console.error "Warning: Pikaday must have either 'container' or 'field' property set in order to be displayed";
+            }           
+        }
+
+        if (!opts.defaultDate) {
+            if (opts.field) {
                 if (hasMoment && opts.field.value) {
                     opts.defaultDate = moment(opts.field.value, opts.format).toDate();
                 } else {
                     opts.defaultDate = new Date(Date.parse(opts.field.value));
-                }
-                opts.setDefaultDate = true;
+                }                
             }
+            opts.setDefaultDate = true;
         }
 
         var defDate = opts.defaultDate;
@@ -1036,9 +1059,10 @@
 
                 if (++r === 7) {
                     if (opts.showWeekNumber) {
-                        var week = i - before;
-                        var isAvailableWeek = (typeof opts.isAvailableWeek === 'function') ? opts.isAvailableWeek(week, month, year) : true;
-                        row.unshift(renderWeek(week, month, year, isAvailableWeek));
+                        var d = i - before;
+                        var dateObj = {date: day, day: d, month: month, year: year};
+                        var isAvailableWeek = (typeof opts.isAvailableWeek === 'function') ? opts.isAvailableWeek(dateObj) : true;
+                        row.unshift(renderWeek(dateObj, isAvailableWeek));
                     }
                     data.push(renderRow(row, opts.isRTL));
                     row = [];

@@ -69,7 +69,7 @@ See the [moment.js example][] for a full version.
 </script>
 ```
 
-### isAvailable (@kmandrup modification)
+### 1.4.0 Changes and additions
 ```html
 <input type="text" id="datepicker" value="17 Sep 2014">
 
@@ -79,19 +79,22 @@ See the [moment.js example][] for a full version.
         field: document.getElementById('datepicker'),
 
         // return some kind of availability identifier that can later be mapped
+        // via availabilityMap functions (see below)
         isAvailableDay: function(date) {
             var xmas = Date.parse('2014-12-25');
             date.setHours(0,0,0,0);
             return date === xmas;
         },
         // return some kind of availability identifier that can later be mapped
-        isAvailableWeek: function(week, month, year) {
-
+        // dateObj: {date: date, day: d, month: month, year: year}
+        isAvailableWeek: function(dateObj) {
+          return true;
         },
 
         // allows you to mark a day or week for availability status
+        // given availability returned from isAvailableDay or isAvailableWeek
         availabilityMap:  {
-          // availability can be anything
+          // Note: availability argument can be anything
 
           // options: 
           //   currently {type: 'day'} or {type: 'week'}          
@@ -106,6 +109,8 @@ See the [moment.js example][] for a full version.
             weekdayLong:  'long',
             monthName:    'long',
         },
+
+        navigateMonths: false,
 
         // TODO: similar for month, use monthNameFormat
         i18n: {

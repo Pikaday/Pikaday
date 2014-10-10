@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.4.0 @kmandrup
+
+- Fix that you can add Datepicker to container with bound: false and field: null
+- Make availability functionality much more flexible
+  - available day styling via option isAvailableDay function 
+  - available week styling option isAvailableWeek function
+  - styling controlled via availabilityMap .toClasses, .toStyle, .toAttr
+- Improve i18n support, with more formats (weekDay long to ultra short, month long/short)
+  - i18n.months
+  - i18n.weekdays
+  - displayFormat
+    - weekdayShort
+    - weekdayLong
+    - monthName
+- Enable disabling of month navigation via navigateMonths boolean option
+
 ## 1.3.0 - TBA
 
 - Fix #79 moving through months can cause calendar to "bounce around"
