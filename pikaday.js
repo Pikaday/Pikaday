@@ -377,12 +377,7 @@
     
     // Lifted from http://javascript.about.com/library/blweekyear.htm, lightly modified.
     // Enhanced by @kristianmandrup
-    renderWeek = function (dateObj, availability) {
-        var date = dateObj.date
-        var d = dateObj.day
-        var m = dateObj.month 
-        var y = dateObj.year
-
+    renderWeek = function (weekNum, availability) {
         var availMaps = _mapAvailability(availability, {type: 'week'});
         var arr = ['pika-week'];
         var appendStyle
@@ -397,8 +392,6 @@
             appendStyle = ' style="' + availMaps.style + '" ';    
         }
 
-        var onejan = new Date(y, 0, 1),
-            weekNum = Math.ceil((((new Date(y, m, d) - onejan) / 86400000) + onejan.getDay()+1)/7);
         return '<td class="' + arr.join(' ') + '" ' + appendStyle + '>' + weekNum + '</td>';
     },
 
@@ -647,12 +640,11 @@
         } 
         // allows picker to be added in container with field: null
         else {
+            opts.bound = false; // can't be bound if there is no field defined
             if (opts.container) {
                 opts.container.appendChild(self.el);
-            } else if (opts.bound) {
-                document.body.appendChild(self.el);
             } else {
-                console.error "Warning: Pikaday must have either 'container' or 'field' property set in order to be displayed";
+                console.error "Warning: Pikaday must have either 'container' or 'field' property set in order to be displayed.";
             }           
         }
 
@@ -1059,10 +1051,13 @@
 
                 if (++r === 7) {
                     if (opts.showWeekNumber) {
-                        var d = i - before;
-                        var dateObj = {date: day, day: d, month: month, year: year};
+                        var d = i - before;                        
+                        var onejan = new Date(y, 0, 1),
+                            weekNum = Math.ceil((((new Date(year, month, d) - onejan) / 86400000) + onejan.getDay()+1)/7);
+
+                        var dateObj = {date: day, weekNum: weekNum, month: month, year: year};
                         var isAvailableWeek = (typeof opts.isAvailableWeek === 'function') ? opts.isAvailableWeek(dateObj) : true;
-                        row.unshift(renderWeek(dateObj, isAvailableWeek));
+                        row.unshift(renderWeek(weekNum, isAvailableWeek));
                     }
                     data.push(renderRow(row, opts.isRTL));
                     row = [];

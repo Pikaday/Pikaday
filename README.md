@@ -70,13 +70,18 @@ See the [moment.js example][] for a full version.
 ```
 
 ### 1.4.0 Changes and additions
+
+The following example shows off most of the new features, changes and improvements.
+
 ```html
 <input type="text" id="datepicker" value="17 Sep 2014">
 
 <script src="pikaday.js"></script>
 <script>
     var picker = new Pikaday({
-        field: document.getElementById('datepicker'),
+        field: null, // no reason to set field when set to container and not bound to an input
+        container: document.getElementById('datepicker'),
+        bound: false,
 
         // return some kind of availability identifier that can later be mapped
         // via availabilityMap functions (see below)
@@ -86,7 +91,7 @@ See the [moment.js example][] for a full version.
             return date === xmas;
         },
         // return some kind of availability identifier that can later be mapped
-        // dateObj: {date: date, day: d, month: month, year: year}
+        // dateObj: {date: date, weekNum: 1-52, month: 0-11, year: year}
         isAvailableWeek: function(dateObj) {
           return true;
         },
