@@ -116,6 +116,17 @@ The following example shows off most of the new features, changes and improvemen
 
         navigateMonths: false, // turn off month navigation (not rendered)
         debugOn: true, // turn on debugging!!
+        
+        // override logging function for debug!
+        // you can now make logging conditional on the data ;)
+        
+        // internally called sth like this:
+        // opts.debug('styling (week)', {weekNum: weekNum, data: data, styling: styling});
+        log: function(label, obj) {
+            if (obj.weekNum) {                
+                console.log('weekNum', obj.weekNum, 'styling:', obj.styling);
+            }
+        },
 
         // TODO: similar for month, use monthNameFormat
         i18n: {

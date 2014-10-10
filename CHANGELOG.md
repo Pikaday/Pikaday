@@ -1,14 +1,18 @@
 # Changelog
 
-## 1.4.0 @kmandrup
+## 1.4.x @kmandrup
 
+- Fix: You can add Datepicker to container with bound: false and field: null
 
-- Fix that you can add Datepicker to container with bound: false and field: null
-- Use external day/week data to affect styling of day cells, rows and week number cells
+- Allow use of external day/week data to affect styling of day cells, week number cells and week rows
   - functions
-    - caldDayData  
+    - calcDayData  
     - calcWeekData
-  - styling controlled via styling Object with toClasses, toStyle and toAttr keys (see README)
+
+  - styling controlled via styling Object, (default: {}) that can have styling functions 
+    - toClasses
+    - toStyles
+    - toAttr
 
 - Improved i18n support, with more formats (weekDay long to ultra short, month long/short)
   - i18n.months
@@ -17,8 +21,11 @@
     - weekdayShort
     - weekdayLong
     - monthName
-- Enable disabling of month navigation via navigateMonths boolean option
-- added debug option debugOn (for now only for debugging data that affects styling)
+
+- Enable disabling of month navigation via navigateMonths boolean option (default: false)
+
+- added debug option debugOn (default: false)
+- enable customizable debug logging that can be made conditional depending on context, data and styling ;)
 
 ## 1.3.0 - TBA
 

@@ -241,6 +241,16 @@
             monthName:    'long',
         },
 
+        debugOn: false,
+        debug: function() {
+            if (this.debugOn) {
+                this.log.apply(this, arguments);
+            }
+        },
+        log: function() {
+            console.log.apply(console, arguments);
+        },
+
         // allow to disable prev/next month navigation buttons          
         navigateMonths: true,
 
@@ -265,15 +275,6 @@
         onOpen: null,
         onClose: null,
         onDraw: null
-    },
-
-
-    debug = function(opts) {
-        return function() {
-            if (opts.debugOn) {
-                console.log.apply(console, arguments);
-            }
-        }        
     },
 
     /**
@@ -322,9 +323,7 @@
         var d = dateObj.day,
             m = dateObj.month,
             y = dateObj.year;
-
-        var log = debug(opts);
-
+    
         if (styleAttrs.empty) {
             return '<td class="is-empty"></td>';
         }
@@ -341,7 +340,7 @@
 
         // TODO: refactor to avoid duplication across functions using this...
         var styling = _mapData(opts, data, {type: 'day'});
-        log('styling (day)', d, data, styling);            
+        opts.debug('styling (day)', {day: d, data: data, styling: styling});            
 
         if (styling.classes && styling.classes.length > 0) {
             arr.concat(styling.classes);
@@ -400,8 +399,7 @@
         var arr = ['pika-week'];
         var appendStyle
 
-        var log = debug(opts);
-        log('styling (week)', weekNum, data, styling);            
+        opts.debug('styling (week)', {weekNum: weekNum, data: data, styling: styling});
 
         if (styling.classes && styling.classes.length > 0) {
             arr.concat(styling.classes);
@@ -421,8 +419,7 @@
         var arr = [];
         var appendStyle
 
-        var log = debug(opts);
-        log('styling (row)', data, styling);            
+        opts.debug('styling (row)', {data: data, styling: styling});
 
         if (styling.classes) {
             arr.concat(styling.classes);
