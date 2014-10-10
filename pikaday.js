@@ -395,7 +395,7 @@
     // Lifted from http://javascript.about.com/library/blweekyear.htm, lightly modified.
     // Enhanced by @kristianmandrup
     renderWeek = function (opts, weekNum, data) {
-        var styling = _mapData(data, {type: 'week'});
+        var styling = _mapData(opts, data, {type: 'week'});
         var arr = ['pika-week'];
         var appendStyle
 
@@ -414,7 +414,7 @@
 
     renderRow = function(opts, data, days)
     {
-        var styling = _mapData(data, {type: 'week'});
+        var styling = _mapData(opts, data, {type: 'week'});
 
         var arr = [];
         var appendStyle
