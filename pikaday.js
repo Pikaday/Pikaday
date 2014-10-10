@@ -199,9 +199,10 @@
         maxDate: null,
 
         // external function used to determine availability
-        isAvailable: null,
+        isAvailableDay: null,
+        isAvailableWeek: null,
 
-        mapAvailabilityToClasses: null,
+        availabilityMap: {},
 
         // number of years either side, or array of upper/lower range
         yearRange: 10,
@@ -233,13 +234,26 @@
         // Specify a DOM element to render the calendar in
         container: undefined,
 
+        displayFormat: {
+            weekdayShort: 'short',
+            weekdayLong:  'long',
+            monthName:    'long',
+        },
+            
         // internationalization
         i18n: {
             previousMonth : 'Previous Month',
             nextMonth     : 'Next Month',
-            months        : ['January','February','March','April','May','June','July','August','September','October','November','December'],
-            weekdays      : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
-            weekdaysShort : ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+            months        : 
+                'long'    : ['January','February','March','April','May','June','July','August','September','October','November','December'],
+                'short'   : ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+            },
+            weekdays      : {
+                'long'    : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
+                'short'   : ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
+                'vshort'  : ['Su','Mo','Tu','We','Th','Fr','Sa'],
+                'ushort'  : ['S','M','T','W','T','F','S']
+            }
         },
 
         // callback function
@@ -259,15 +273,17 @@
     /**
      * templating functions to abstract HTML rendering
      */
-    renderDayName = function(opts, day, abbr)
+    renderDayName = function(opts, day, format)
     {
         day += opts.firstDay;
         while (day >= 7) {
             day -= 7;
         }
-        return abbr ? opts.i18n.weekdaysShort[day] : opts.i18n.weekdays[day];
+        format = format || 'long';
+        return opts.i18n.weekdays[format][day];
     },
 
+    // by @kristianmandrup
     // availability can be either true/false or an Object
     // if an object, it supports advanced availability styling and configuration
     // each availability is an object than can be mapped to a list of classes to add
@@ -309,29 +325,20 @@
             attr = 'disabled ';
         }
 
-        if (typeof this.availabilityMap == 'function') {
-            var availabilityClasses = [];
-            var map = this.availabilityMap;
+        // by @kristianmandrup
+        var availMaps = _mapAvailability(availability, {type: 'day'});
+        debug('availability maps', availMaps);            
 
-            if (typeof map.toClasses == 'function') {            
-                availabilityClasses = map.toClasses(availability);
-                this.debug('availability classes', availabilityClasses);
-                arr.push(availabilityClasses);
-            }
+        if (availMaps.classes) {
+            arr.push(availMaps.classes);
+        }
+        attr = availMaps.attr || attr;
 
-            if (typeof map.toAttr == 'function') {            
-                attr = map.toAttr(availability);
-                this.debug('availability attr', attr);                
-            }
-
-            if (typeof map.toStyle == 'function') {            
-                style = map.toStyle(availability);
-                this.debug('availability style', availabilityClasses);
-                appendStyle = ' style="' + style + '" ';
-            }            
+        if (availMaps.style) {
+            appendStyle = ' style="' + availMaps.style + '" ';    
         }
 
-        return '<td data-day="' + d + '" class="' + arr.join(' ') + '" ' + appendStyle +'>' +
+        return '<td data-day="' + d + '" class="' + arr.join(' ') + '" ' + appendStyle + '>' +
                  '<button class="pika-button pika-day" type="button" ' + attr + 
                     'data-pika-year="' + y + '" data-pika-month="' + m + '" data-pika-day="' + d + '">' +
                         d +
@@ -339,12 +346,53 @@
                '</td>';
     },
 
-    // TODO: Add week availability?
-    renderWeek = function (d, m, y) {
-        // Lifted from http://javascript.about.com/library/blweekyear.htm, lightly modified.
+    // by @kristianmandrup
+    _mapAvailability: function(availability, options) {
+        var map = availabilityMap;
+        if (typeof map != 'function') {
+            return {};
+        }
+
+        var availClasses = [];
+        if (typeof map.toClasses == 'function') {            
+            availClasses = map.toClasses(availability, options) || availClasses;
+        }
+
+        var appendStyle;
+        if (typeof map.toStyle == 'function') {            
+            availStyle = map.toStyle(availability, options);
+        }            
+
+        var availAttr;
+        if (typeof map.toAttr == 'function') {            
+            availAttr = map.toAttr(availability, options);
+        }
+
+        return {classes: availClasses, style: availStyle, attr: availAttr};
+    },
+
+    
+    // Lifted from http://javascript.about.com/library/blweekyear.htm, lightly modified.
+    // Enhanced by @kristianmandrup
+    renderWeek = function (d, m, y, availability) {
+
+        var availMaps = _mapAvailability(availability, {type: 'week'});
+        var arr = ['pika-week'];
+        var appendStyle
+
+        debug('availability maps (week)', availMaps);            
+
+        if (availMaps.classes) {
+            arr.push(availMaps.classes);
+        }
+
+        if (availMaps.style) {
+            appendStyle = ' style="' + availMaps.style + '" ';    
+        }
+
         var onejan = new Date(y, 0, 1),
             weekNum = Math.ceil((((new Date(y, m, d) - onejan) / 86400000) + onejan.getDay()+1)/7);
-        return '<td class="pika-week">' + weekNum + '</td>';
+        return '<td class="' + arr.join(' ') + '" ' + appendStyle + '>' + weekNum + '</td>';
     },
 
     renderRow = function(days, isRTL)
@@ -363,8 +411,9 @@
         if (opts.showWeekNumber) {
             arr.push('<th></th>');
         }
+        var displayFormat = opts.displayFormat;
         for (i = 0; i < 7; i++) {
-            arr.push('<th scope="col"><abbr title="' + renderDayName(opts, i) + '">' + renderDayName(opts, i, true) + '</abbr></th>');
+            arr.push('<th scope="col"><abbr title="' + renderDayName(opts, i, displayFormat.weekdayLong) + '">' + renderDayName(opts, i, displayFormat.weekdayShort) + '</abbr></th>');
         }
         return '<thead>' + (opts.isRTL ? arr.reverse() : arr).join('') + '</thead>';
     },
@@ -381,13 +430,17 @@
             prev = true,
             next = true;
 
+        var mnFormat = opts.displayFormat.monthName || 'long';
+        var monthsInFormat = opts.i18n.months[mnFormat]
+
         for (arr = [], i = 0; i < 12; i++) {
             arr.push('<option value="' + (year === refYear ? i - c : 12 + i - c) + '"' +
                 (i === month ? ' selected': '') +
                 ((isMinYear && i < opts.minMonth) || (isMaxYear && i > opts.maxMonth) ? 'disabled' : '') + '>' +
-                opts.i18n.months[i] + '</option>');
+                monthsInFormat[i] + '</option>');
         }
-        monthHtml = '<div class="pika-label">' + opts.i18n.months[month] + '<select class="pika-select pika-select-month">' + arr.join('') + '</select></div>';
+
+        monthHtml = '<div class="pika-label">' + monthsInFormat[month] + '<select class="pika-select pika-select-month">' + arr.join('') + '</select></div>';
 
         if (isArray(opts.yearRange)) {
             i = opts.yearRange[0];
@@ -977,13 +1030,15 @@
                     isSelected = isDate(this._d) ? compareDates(day, this._d) : false,
                     isToday = compareDates(day, now),
                     isEmpty = i < before || i >= (days + before),
-                    isAvailable = (typeof opts.isAvailable === 'function') ? opts.isAvailable(day) : true;
+                    isAvailableDay = (typeof opts.isAvailableDay === 'function') ? opts.isAvailableDay(day) : true;
 
-                row.push(renderDay(1 + (i - before), month, year, isSelected, isToday, isDisabled, isEmpty, isAvailable));
+                row.push(renderDay(1 + (i - before), month, year, isSelected, isToday, isDisabled, isEmpty, isAvailableDay));
 
                 if (++r === 7) {
                     if (opts.showWeekNumber) {
-                        row.unshift(renderWeek(i - before, month, year));
+                        var week = i - before;
+                        var isAvailableWeek = (typeof opts.isAvailableWeek === 'function') ? opts.isAvailableWeek(week, month, year) : true;
+                        row.unshift(renderWeek(week, month, year, isAvailableWeek));
                     }
                     data.push(renderRow(row, opts.isRTL));
                     row = [];

@@ -69,7 +69,7 @@ See the [moment.js example][] for a full version.
 </script>
 ```
 
-### isAvailable (GYG modification)
+### isAvailable (@kmandrup modification)
 ```html
 <input type="text" id="datepicker" value="17 Sep 2014">
 
@@ -77,10 +77,48 @@ See the [moment.js example][] for a full version.
 <script>
     var picker = new Pikaday({
         field: document.getElementById('datepicker'),
-        isAvailable: function(date) {
+
+        // return some kind of availability identifier that can later be mapped
+        isAvailableDay: function(date) {
             var xmas = Date.parse('2014-12-25');
             date.setHours(0,0,0,0);
             return date === xmas;
+        },
+        // return some kind of availability identifier that can later be mapped
+        isAvailableWeek: function(week, month, year) {
+
+        },
+
+        // allows you to mark a day or week for availability status
+        availabilityMap:  {
+          // availability can be anything
+
+          // options: 
+          //   currently {type: 'day'} or {type: 'week'}          
+          toClasses: function(availability, options) {},
+          toStyle: function(availability, options) {},
+          toAttr: function(availability, options) {}
+        },
+
+        // lookup key in i18n.weekdays to renderDayName
+        displayFormat: {
+            weekdayShort: 'short',
+            weekdayLong:  'long',
+            monthName:    'long',
+        },
+
+        // TODO: similar for month, use monthNameFormat
+        i18n: {
+            months        : 
+                'long'    : ['January','February','March','April','May','June','July','August','September','October','November','December'],
+                'short'   : ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+            },
+            weekdays      : {
+                'long'    : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
+                'short'   : ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
+                'vshort'  : ['Su','Mo','Tu','We','Th','Fr','Sa'],
+                'ushort'  : ['S','M','T','W','T','F','S']
+            }
         }
     });
 </script>
