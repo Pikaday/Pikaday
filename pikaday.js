@@ -250,6 +250,12 @@
     },
 
 
+    debug: function(msg) {
+        if (this.debugOn) {
+            console.log(msg)    
+        }        
+    },
+
     /**
      * templating functions to abstract HTML rendering
      */
@@ -265,18 +271,26 @@
     // availability can be either true/false or an Object
     // if an object, it supports advanced availability styling and configuration
     // each availability is an object than can be mapped to a list of classes to add
+
     // Example:
     // {
     //  prevDay: {status: ['booked']}
     //  today: {status: ['booked', 'payment pending']}
     //  nextDay: {status: 'locked'}       
     // }
-    // mapAvailabilityToClasses(availability) f.ex -> ['booked', 'pending', 'next-locked']
-    // mapAvailabilityToAttr(availability) f.ex enable/disable
+
+    // availabilityMap: {
+    //     // ['booked', 'pending', 'next-locked']
+    //     toClasses: function (availability) {},
+    //     toAttr: function (availability) {}, // enable/disable
+    //     toStyle: function (availability) {}
+    // }
 
     renderDay = function(d, m, y, isSelected, isToday, isDisabled, isEmpty, availability)
     {
         var attr = '';
+        var appendStyle = '';
+
         if (isEmpty) {
             return '<td class="is-empty"></td>';
         }
@@ -294,25 +308,38 @@
             arr.push('not-available');
             attr = 'disabled ';
         }
-        var availabilityClasses = [];
-        if (typeof this.mapAvailabilityToClasses == 'function') {            
-            availabilityClasses = this.mapAvailabilityToClasses(availability);
 
-            console.log('availabilityClasses', availabilityClasses);
-            arr.push(availabilityClasses);
-        }
-        if (typeof this.mapAvailabilityToClasses == 'function') {            
-            attr = this.mapAvailabilityToAttr(availability);
+        if (typeof this.availabilityMap == 'function') {
+            var availabilityClasses = [];
+            var map = this.availabilityMap;
+
+            if (typeof map.toClasses == 'function') {            
+                availabilityClasses = map.toClasses(availability);
+                this.debug('availability classes', availabilityClasses);
+                arr.push(availabilityClasses);
+            }
+
+            if (typeof map.toAttr == 'function') {            
+                attr = map.toAttr(availability);
+                this.debug('availability attr', attr);                
+            }
+
+            if (typeof map.toStyle == 'function') {            
+                style = map.toStyle(availability);
+                this.debug('availability style', availabilityClasses);
+                appendStyle = ' style="' + style + '" ';
+            }            
         }
 
-        return '<td data-day="' + d + '" class="' + arr.join(' ') + '">' +
-                 '<button class="pika-button pika-day" type="button" ' + attr +
+        return '<td data-day="' + d + '" class="' + arr.join(' ') + '" ' + appendStyle +'>' +
+                 '<button class="pika-button pika-day" type="button" ' + attr + 
                     'data-pika-year="' + y + '" data-pika-month="' + m + '" data-pika-day="' + d + '">' +
                         d +
                  '</button>' +
                '</td>';
     },
 
+    // TODO: Add week availability?
     renderWeek = function (d, m, y) {
         // Lifted from http://javascript.about.com/library/blweekyear.htm, lightly modified.
         var onejan = new Date(y, 0, 1),
