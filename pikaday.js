@@ -201,6 +201,8 @@
         // external function used to determine availability
         isAvailable: null,
 
+        mapAvailabilityToClasses: null,
+
         // number of years either side, or array of upper/lower range
         yearRange: 10,
 
@@ -260,7 +262,19 @@
         return abbr ? opts.i18n.weekdaysShort[day] : opts.i18n.weekdays[day];
     },
 
-    renderDay = function(d, m, y, isSelected, isToday, isDisabled, isEmpty, isAvailable)
+    // availability can be either true/false or an Object
+    // if an object, it supports advanced availability styling and configuration
+    // each availability is an object than can be mapped to a list of classes to add
+    // Example:
+    // {
+    //  prevDay: {status: ['booked']}
+    //  today: {status: ['booked', 'payment pending']}
+    //  nextDay: {status: 'locked'}       
+    // }
+    // mapAvailabilityToClasses(availability) f.ex -> ['booked', 'pending', 'next-locked']
+    // mapAvailabilityToAttr(availability) f.ex enable/disable
+
+    renderDay = function(d, m, y, isSelected, isToday, isDisabled, isEmpty, availability)
     {
         var attr = '';
         if (isEmpty) {
@@ -276,10 +290,21 @@
         if (isSelected) {
             arr.push('is-selected');
         }
-        if (!isAvailable) {
+        if (!availability) {
             arr.push('not-available');
             attr = 'disabled ';
         }
+        var availabilityClasses = [];
+        if (typeof this.mapAvailabilityToClasses == 'function') {            
+            availabilityClasses = this.mapAvailabilityToClasses(availability);
+
+            console.log('availabilityClasses', availabilityClasses);
+            arr.push(availabilityClasses);
+        }
+        if (typeof this.mapAvailabilityToClasses == 'function') {            
+            attr = this.mapAvailabilityToAttr(availability);
+        }
+
         return '<td data-day="' + d + '" class="' + arr.join(' ') + '">' +
                  '<button class="pika-button pika-day" type="button" ' + attr +
                     'data-pika-year="' + y + '" data-pika-month="' + m + '" data-pika-day="' + d + '">' +
