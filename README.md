@@ -1,5 +1,7 @@
-Pikaday (GetYourGuide fork)
+Pikaday 
 ========
+
+@kristianmandrup fork > advanced availability configuration and other extras!
 
 ### A refreshing JavaScript Datepicker
 
