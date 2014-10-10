@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.4.x @kmandrup
+## 1.4.0 @kmandrup
 
 - Fix: You can add Datepicker to container with bound: false and field: null
 
