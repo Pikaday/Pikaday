@@ -97,6 +97,16 @@
         el.className = trim((' ' + el.className + ' ').replace(' ' + cn + ' ', ' '));
     },
 
+    getStyle = function(el, prop)
+    {
+        if (window.getComputedStyle)
+            return window.getComputedStyle(el)[prop];
+        else if (e.currentStyle)
+            return e.currentStyle[prop];
+
+        return undefined;
+    },
+
     isArray = function(obj)
     {
         return (/Array/).test(Object.prototype.toString.call(obj));
@@ -847,12 +857,33 @@
 
         adjustPosition: function()
         {
-            if (this._o.container) return;
-            var field = this._o.trigger, pEl = field,
-            width = this.el.offsetWidth, height = this.el.offsetHeight,
+            if (this._o.container)
+                return;
+
+            var field = this._o.trigger;
+
+            // test if any of the field's ancestors are position: fixed;
+
+            var fixed = false;
+            var zIndex = 0;
+
+            for(var e = field; e !== document; e = e.parentNode) {
+                if(trim(getStyle(e, 'position')).toLowerCase() === 'fixed')
+                    fixed = true;
+
+                if(zIndex === 0) {
+                    var z = parseInt(getStyle(e, 'zIndex'), 10);
+
+                    if(!isNaN(z))
+                        zIndex = z;
+                }
+            }
+
+            var pEl = field, width = this.el.offsetWidth, height = this.el.offsetHeight,
             viewportWidth = window.innerWidth || document.documentElement.clientWidth,
             viewportHeight = window.innerHeight || document.documentElement.clientHeight,
-            scrollTop = window.pageYOffset || document.body.scrollTop || document.documentElement.scrollTop,
+            scrollTop = window.pageYOffset || document.body.scrollTop ||
+                document.documentElement.scrollTop,
             left, top, clientRect;
 
             if (typeof field.getBoundingClientRect === 'function') {
@@ -862,7 +893,7 @@
             } else {
                 left = pEl.offsetLeft;
                 top  = pEl.offsetTop + pEl.offsetHeight;
-                while((pEl = pEl.offsetParent)) {
+                while ((pEl = pEl.offsetParent)) {
                     left += pEl.offsetLeft;
                     top  += pEl.offsetTop;
                 }
@@ -885,11 +916,17 @@
             ) {
                 top = top - height - field.offsetHeight;
             }
-            this.el.style.cssText = [
-                'position: absolute',
+
+            var css = [
+                'position: ' + (fixed ? 'fixed' : 'absolute'),
                 'left: ' + left + 'px',
                 'top: ' + top + 'px'
-            ].join(';');
+            ];
+
+            if (zIndex > 0)
+                css.push('z-index: ' + (zIndex + 1));
+
+            this.el.style.cssText = css.join(';');
         },
 
         /**
