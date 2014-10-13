@@ -3,6 +3,7 @@
 ## 1.4.1 @kmandrup
 
 - Fixed some dynamic styling bugs (oops!)
+- Added more styling options!
 
 ## 1.4.0 @kmandrup
 

@@ -203,6 +203,12 @@
         // calculate week data
         calcWeekData: null,
 
+        styles: {
+            isDisabled: 'is-disabled',
+            isToday:    'is-today',
+            isSelected: 'is-selected'
+        },
+
         styling: {},
 
         // number of years either side, or array of upper/lower range
@@ -329,13 +335,13 @@
         }
         var arr = [];
         if (styleAttrs.disabled) {
-            arr.push('is-disabled');
+            arr.push(opts.styles.isDisabled);
         }
         if (styleAttrs.today) {
-            arr.push('is-today');
+            arr.push(opts.styles.isToday);
         }
         if (styleAttrs.selected) {
-            arr.push('is-selected');
+            arr.push(opts.styles.isSelected);
         }
 
         // TODO: refactor to avoid duplication across functions using this...

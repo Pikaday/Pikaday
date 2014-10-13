@@ -71,7 +71,7 @@ See the [moment.js example][] for a full version.
 </script>
 ```
 
-### 1.4.0 Changes and additions
+### 1.4.x Changes and additions
 
 The following example shows off most of the new features, changes and improvements.
 
@@ -96,6 +96,13 @@ The following example shows off most of the new features, changes and improvemen
         // dateObj: {date: date, weekNum: 1-52, month: 0-11, year: year}
         calcWeekData: function(dateObj) {
           return true;
+        },
+
+        // customized styling!!
+        styles: {
+          isDisabled: 'disabled',
+          isToday:    'today',
+          isSelected: 's'
         },
 
         // allows custom styling given specific data
