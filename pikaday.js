@@ -361,8 +361,11 @@
         if (styling.styles && styling.styles.length > 0) {
             appendStyle = ' style="' + styling.styles.join(';') + '" ';    
         }
+        var classes = arr.join(' ');
+        if (classes[0] === 'undefined')
+            classes = [];        
 
-        return '<td data-day="' + d + '" class="' + arr.join(' ') + '" ' + appendStyle + '>' +
+        return '<td data-day="' + d + '" class="' + classes + '" ' + appendStyle + '>' +
                  '<button class="pika-button pika-day" type="button" ' + attr + 
                     'data-pika-year="' + y + '" data-pika-month="' + m + '" data-pika-day="' + d + '">' +
                         d +
@@ -420,8 +423,11 @@
         if (styling.styles && styling.styles.length > 0) {
             appendStyle = ' style="' + styling.styles + '" ';    
         }
+        var classes = arr.join(' ');
+        if (classes[0] === 'undefined')
+            classes = [];        
 
-        return '<td class="' + arr.join(' ') + '" ' + appendStyle + '>' + weekNum + '</td>';
+        return '<td class="' + classes + '" ' + appendStyle + '>' + weekNum + '</td>';
     },
 
     renderRow = function(opts, data, days)
@@ -440,8 +446,11 @@
         if (styling.style) {
             appendStyle = ' style="' + styling.styles + '" ';    
         }
+        var classes = arr.join(' ');
+        if (classes[0] === 'undefined')
+            classes = [];
 
-        return '<tr class="' + arr.join(' ') + appendStyle + '">' + (opts.isRTL ? days.reverse() : days).join('') + '</tr>';
+        return '<tr class="' + classes + '"' + appendStyle + '">' + (opts.isRTL ? days.reverse() : days).join('') + '</tr>';
     },
 
     renderBody = function(opts, rows)
