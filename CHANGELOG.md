@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.4.1 @kmandrup
+## 1.4.2 @kmandrup
 
 - Fixed some dynamic styling bugs (oops!)
 - Added more styling options!
