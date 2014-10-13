@@ -409,7 +409,7 @@
     renderWeek = function (opts, weekNum, data) {
         var styling = _mapData(opts, data, {type: 'week'});
         var arr = ['pika-week'];
-        var appendStyle;
+        var appendStyle = '';
 
         opts.debug('styling (week)', {weekNum: weekNum, data: data, styling: styling});
 
@@ -444,9 +444,9 @@
         return '<tr class="' + arr.join(' ') + appendStyle + '">' + (opts.isRTL ? days.reverse() : days).join('') + '</tr>';
     },
 
-    renderBody = function(ots, rows)
+    renderBody = function(opts, rows)
     {
-        return '<tbody ' + opts.styles.body + '>' + rows.join('') + '</tbody>';
+        return '<tbody class="' + (opts.styles.body || '') + '">' + rows.join('') + '</tbody>';
     },
 
     renderHead = function(opts)
@@ -457,9 +457,9 @@
         }
         var displayFormat = opts.displayFormat;
         for (i = 0; i < 7; i++) {
-            arr.push('<th scope="col"><abbr title="' + renderDayName(opts, i, displayFormat.weekdayLong) + '">' + renderDayName(opts, i, displayFormat.weekdayShort) + '</abbr></th>');
+            arr.push('<th scope="col" class="' + (opts.styles.colHead || '') + '"><abbr title="' + renderDayName(opts, i, displayFormat.weekdayLong) + '">' + renderDayName(opts, i, displayFormat.weekdayShort) + '</abbr></th>');
         }
-        return '<thead class="' + opts.styles.head + '">' + (opts.isRTL ? arr.reverse() : arr).join('') + '</thead>';
+        return '<thead class="' + (opts.styles.head || '')+ '">' + (opts.isRTL ? arr.reverse() : arr).join('') + '</thead>';
     },
 
     renderTitle = function(opts, c, year, month, refYear)
@@ -467,7 +467,7 @@
         var i, j, arr,
             isMinYear = year === opts.minYear,
             isMaxYear = year === opts.maxYear,
-            html = '<div class="pika-title ' + opts.styles.title + '">',
+            html = '<div class="pika-title ' + (opts.styles.title || '') + '">',
             monthHtml,
             yearHtml,
             prev = true,
@@ -483,7 +483,7 @@
                 monthsInFormat[i] + '</option>');
         }
 
-        monthHtml = '<div class="pika-label ' + opts.styles.label + '">' + monthsInFormat[month] + '<select class="pika-select pika-select-month">' + arr.join('') + '</select></div>';
+        monthHtml = '<div class="pika-label ' + (opts.styles.label || '') + '">' + monthsInFormat[month] + '<select class="pika-select pika-select-month">' + arr.join('') + '</select></div>';
 
         if (isArray(opts.yearRange)) {
             i = opts.yearRange[0];
@@ -529,7 +529,7 @@
 
     renderTable = function(opts, data)
     {
-        return '<table cellpadding="0" cellspacing="0" class="pika-table + ' + opts.styles.container + '">' + renderHead(opts) + renderBody(opts, data) + '</table>';
+        return '<table cellpadding="0" cellspacing="0" class="pika-table ' + (opts.styles.container || '') + '">' + renderHead(opts) + renderBody(opts, data) + '</table>';
     },
 
 

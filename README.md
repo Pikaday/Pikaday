@@ -105,6 +105,7 @@ The following example shows off most of the new features, changes and improvemen
             isSelected: 'selected',
             container: '',
             head:  '',
+            colHead: '',
             body:  '',
             title: '',
             label: '',
