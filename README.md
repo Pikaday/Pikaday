@@ -103,11 +103,11 @@ The following example shows off most of the new features, changes and improvemen
             isDisabled: 'is-disabled',
             isToday:    'is-today',
             isSelected: 'is-selected',
-            tableClass: '',
-            headClass:  '',
-            bodyClass:  '',
-            titleClass: '',
-            labelClass: '',
+            container: '',
+            head:  '',
+            body:  '',
+            title: '',
+            label: '',
         },
 
         // allows custom styling given specific data
