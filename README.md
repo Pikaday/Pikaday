@@ -71,7 +71,7 @@ See the [moment.js example][] for a full version.
 </script>
 ```
 
-### 1.4.x Changes and additions
+### +1.4 Changes and additions
 
 The following example shows off most of the new features, changes and improvements.
 
