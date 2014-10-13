@@ -361,9 +361,10 @@
         if (styling.styles && styling.styles.length > 0) {
             appendStyle = ' style="' + styling.styles.join(';') + '" ';    
         }
+        
+        if (arr[0] === 'undefined')
+            arr = [];        
         var classes = arr.join(' ');
-        if (classes[0] === 'undefined')
-            classes = [];        
 
         return '<td data-day="' + d + '" class="' + classes + '" ' + appendStyle + '>' +
                  '<button class="pika-button pika-day" type="button" ' + attr + 
@@ -423,9 +424,9 @@
         if (styling.styles && styling.styles.length > 0) {
             appendStyle = ' style="' + styling.styles + '" ';    
         }
+        if (arr[0] === 'undefined')
+            arr = [];        
         var classes = arr.join(' ');
-        if (classes[0] === 'undefined')
-            classes = [];        
 
         return '<td class="' + classes + '" ' + appendStyle + '>' + weekNum + '</td>';
     },
@@ -435,7 +436,7 @@
         var styling = _mapData(opts, data, {type: 'week'});
 
         var arr = [];
-        var appendStyle;
+        var appendStyle = '';
 
         opts.debug('styling (row)', {data: data, styling: styling});
 
@@ -446,9 +447,9 @@
         if (styling.style) {
             appendStyle = ' style="' + styling.styles + '" ';    
         }
+        if (arr[0] === 'undefined')
+            arr = [];        
         var classes = arr.join(' ');
-        if (classes[0] === 'undefined')
-            classes = [];
 
         return '<tr class="' + classes + '"' + appendStyle + '">' + (opts.isRTL ? days.reverse() : days).join('') + '</tr>';
     },
