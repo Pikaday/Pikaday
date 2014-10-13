@@ -100,9 +100,9 @@ The following example shows off most of the new features, changes and improvemen
 
         // customized styling!!
         styles: {
-            isDisabled: 'is-disabled',
-            isToday:    'is-today',
-            isSelected: 'is-selected',
+            isDisabled: 'disabled',
+            isToday:    'today',
+            isSelected: 'selected',
             container: '',
             head:  '',
             body:  '',
