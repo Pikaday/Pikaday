@@ -444,7 +444,7 @@
         return '<tr class="' + arr.join(' ') + appendStyle + '">' + (opts.isRTL ? days.reverse() : days).join('') + '</tr>';
     },
 
-    renderBody = function(rows)
+    renderBody = function(ots, rows)
     {
         return '<tbody ' + opts.styles.body + '>' + rows.join('') + '</tbody>';
     },
@@ -462,10 +462,9 @@
         return '<thead class="' + opts.styles.head + '">' + (opts.isRTL ? arr.reverse() : arr).join('') + '</thead>';
     },
 
-    renderTitle = function(instance, c, year, month, refYear)
+    renderTitle = function(opts, c, year, month, refYear)
     {
         var i, j, arr,
-            opts = instance._o,
             isMinYear = year === opts.minYear,
             isMaxYear = year === opts.maxYear,
             html = '<div class="pika-title ' + opts.styles.title + '">',
@@ -520,7 +519,7 @@
                 html += '<button class="pika-prev' + (prev ? '' : ' is-disabled') + '" type="button">' + opts.i18n.previousMonth + '</button>';
             }
 
-            if (c === (instance._o.numberOfMonths - 1) ) {
+            if (c === (opts.numberOfMonths - 1) ) {
                 html += '<button class="pika-next' + (next ? '' : ' is-disabled') + '" type="button">' + opts.i18n.nextMonth + '</button>';
             }            
         }
@@ -530,7 +529,7 @@
 
     renderTable = function(opts, data)
     {
-        return '<table cellpadding="0" cellspacing="0" class="pika-table + ' + opts.styles.container + '">' + renderHead(opts) + renderBody(data) + '</table>';
+        return '<table cellpadding="0" cellspacing="0" class="pika-table + ' + opts.styles.container + '">' + renderHead(opts) + renderBody(opts, data) + '</table>';
     },
 
 
@@ -990,7 +989,7 @@
             }
 
             for (var c = 0; c < opts.numberOfMonths; c++) {
-                html += '<div class="pika-lendar">' + renderTitle(this, c, this.calendars[c].year, this.calendars[c].month, this.calendars[0].year) + this.render(this.calendars[c].year, this.calendars[c].month) + '</div>';
+                html += '<div class="pika-lendar">' + renderTitle(opts, c, this.calendars[c].year, this.calendars[c].month, this.calendars[0].year) + this.render(this.calendars[c].year, this.calendars[c].month) + '</div>';
             }
 
             this.el.innerHTML = html;
