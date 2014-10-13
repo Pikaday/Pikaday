@@ -158,6 +158,39 @@ The following example shows off most of the new features, changes and improvemen
 </script>
 ```
 
+### Customizing styles
+
+```css
+.pika-button {
+  color: blue;
+  background: #ccc;  
+}
+
+.pika-button {
+  color: blue;
+  background: #ccc;  
+}
+
+.is-selected .pika-button {
+  
+}
+
+.is-disabled .pika-button {
+  
+}
+
+.pika-button:hover {
+  background: silver;
+}
+
+.pika-label {
+  background: gray;
+}
+
+.pika-single {
+  
+}
+```
 
 ### Configuration
 
