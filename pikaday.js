@@ -451,7 +451,7 @@
             arr = [];        
         var classes = arr.join(' ');
 
-        return '<tr class="' + classes + '"' + appendStyle + '">' + (opts.isRTL ? days.reverse() : days).join('') + '</tr>';
+        return '<tr class="' + classes + '" ' + appendStyle + '>' + (opts.isRTL ? days.reverse() : days).join('') + '</tr>';
     },
 
     renderBody = function(opts, rows)
