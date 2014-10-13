@@ -206,7 +206,12 @@
         styles: {
             isDisabled: 'is-disabled',
             isToday:    'is-today',
-            isSelected: 'is-selected'
+            isSelected: 'is-selected',
+            tableClass: '',
+            headClass:  '',
+            bodyClass:  '',
+            titleClass: '',
+            labelClass: '',
         },
 
         styling: {},
@@ -441,7 +446,7 @@
 
     renderBody = function(rows)
     {
-        return '<tbody>' + rows.join('') + '</tbody>';
+        return '<tbody ' + opts.styles.bodyClass + '>' + rows.join('') + '</tbody>';
     },
 
     renderHead = function(opts)
@@ -454,7 +459,7 @@
         for (i = 0; i < 7; i++) {
             arr.push('<th scope="col"><abbr title="' + renderDayName(opts, i, displayFormat.weekdayLong) + '">' + renderDayName(opts, i, displayFormat.weekdayShort) + '</abbr></th>');
         }
-        return '<thead>' + (opts.isRTL ? arr.reverse() : arr).join('') + '</thead>';
+        return '<thead class="' + opts.styles.headClass + '">' + (opts.isRTL ? arr.reverse() : arr).join('') + '</thead>';
     },
 
     renderTitle = function(instance, c, year, month, refYear)
@@ -463,7 +468,7 @@
             opts = instance._o,
             isMinYear = year === opts.minYear,
             isMaxYear = year === opts.maxYear,
-            html = '<div class="pika-title">',
+            html = '<div class="pika-title ' + opts.styles.titleClass + '">',
             monthHtml,
             yearHtml,
             prev = true,
@@ -479,7 +484,7 @@
                 monthsInFormat[i] + '</option>');
         }
 
-        monthHtml = '<div class="pika-label">' + monthsInFormat[month] + '<select class="pika-select pika-select-month">' + arr.join('') + '</select></div>';
+        monthHtml = '<div class="pika-label ' + opts.styles.labelClass + '">' + monthsInFormat[month] + '<select class="pika-select pika-select-month">' + arr.join('') + '</select></div>';
 
         if (isArray(opts.yearRange)) {
             i = opts.yearRange[0];
@@ -525,7 +530,7 @@
 
     renderTable = function(opts, data)
     {
-        return '<table cellpadding="0" cellspacing="0" class="pika-table">' + renderHead(opts) + renderBody(data) + '</table>';
+        return '<table cellpadding="0" cellspacing="0" class="pika-table + ' + opts.styles.tableClass + '">' + renderHead(opts) + renderBody(data) + '</table>';
     },
 
 

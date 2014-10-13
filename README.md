@@ -100,9 +100,14 @@ The following example shows off most of the new features, changes and improvemen
 
         // customized styling!!
         styles: {
-          isDisabled: 'disabled',
-          isToday:    'today',
-          isSelected: 's'
+            isDisabled: 'is-disabled',
+            isToday:    'is-today',
+            isSelected: 'is-selected',
+            tableClass: '',
+            headClass:  '',
+            bodyClass:  '',
+            titleClass: '',
+            labelClass: '',
         },
 
         // allows custom styling given specific data
