@@ -343,7 +343,7 @@
         opts.debug('styling (day)', {day: d, data: data, styling: styling});            
 
         if (styling.classes && styling.classes.length > 0) {
-            arr.concat(styling.classes);
+            arr = arr.concat(styling.classes);
         }
         attr = styling.attr || attr;
 
@@ -362,7 +362,8 @@
     // by @kristianmandrup
     _mapData = function(opts, data, mapOptions) {
         var styling = opts.styling;
-        if (typeof map != 'function') {
+
+        if (typeof styling != 'object') {
             return {};
         }
 
@@ -374,7 +375,7 @@
         };
 
         var classes = [];
-        if (typeof styling.toClasses == 'function') {            
+        if (typeof styling.toClasses == 'function') {
             classes = normalizeList(styling.toClasses(data, mapOptions) || classes);
         }
 
@@ -397,12 +398,12 @@
     renderWeek = function (opts, weekNum, data) {
         var styling = _mapData(opts, data, {type: 'week'});
         var arr = ['pika-week'];
-        var appendStyle
+        var appendStyle;
 
         opts.debug('styling (week)', {weekNum: weekNum, data: data, styling: styling});
 
         if (styling.classes && styling.classes.length > 0) {
-            arr.concat(styling.classes);
+            arr = arr.concat(styling.classes);
         }
 
         if (styling.styles && styling.styles.length > 0) {
@@ -417,12 +418,12 @@
         var styling = _mapData(opts, data, {type: 'week'});
 
         var arr = [];
-        var appendStyle
+        var appendStyle;
 
         opts.debug('styling (row)', {data: data, styling: styling});
 
         if (styling.classes) {
-            arr.concat(styling.classes);
+            arr = arr.concat(styling.classes);
         }
 
         if (styling.style) {
