@@ -1,4 +1,4 @@
-Pikaday 
+Pikaday
 ========
 
 @kristianmandrup fork > advanced availability configuration and other extras!
@@ -113,8 +113,8 @@ The following example shows off most of the new features, changes and improvemen
 
         // allows custom styling given specific data
         styling:  {
-          // options: 
-          //   currently {type: 'day'} or {type: 'week'}          
+          // options:
+          //   currently {type: 'day'} or {type: 'week'}
           toClasses: function(data, options) {},
           toStyle: function(data, options) {},
           toAttr: function(data, options) {}
@@ -129,21 +129,21 @@ The following example shows off most of the new features, changes and improvemen
 
         navigateMonths: false, // turn off month navigation (not rendered)
         debugOn: true, // turn on debugging!!
-        
+
         // override logging function for debug!
         // you can now make logging conditional on the data ;)
-        
+
         // internally called sth like this:
         // opts.debug('styling (week)', {weekNum: weekNum, data: data, styling: styling});
         log: function(label, obj) {
-            if (obj.weekNum) {                
+            if (obj.weekNum) {
                 console.log('weekNum', obj.weekNum, 'styling:', obj.styling);
             }
         },
 
         // TODO: similar for month, use monthNameFormat
         i18n: {
-            months        : 
+            months        :
                 'long'    : ['January','February','March','April','May','June','July','August','September','October','November','December'],
                 'short'   : ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
             },
@@ -156,6 +156,77 @@ The following example shows off most of the new features, changes and improvemen
         }
     });
 </script>
+```
+
+### Data driven picker
+
+Here an example configuration from a real-world Ember app where we use the data driven features...
+
+```js
+  pickerConfig: function() {
+    var container = this.$('.month-picker')[0];  
+    return {
+      firstDay: 1,
+      bound: false,
+      defaultDate: this.get('startDateOfMonth'),
+      container: container,
+      calcDayData: function(day) {
+        if (typeof day === 'object') {
+          day = moment(day).date();
+        }
+        var self = this;
+        var mapToClass = function(dayDiff) {
+          return (self.daysMap[day + dayDiff] || '-')[0].toLowerCase();
+        };
+
+        var config = {
+          prev:  mapToClass(-1),
+          today: mapToClass(0)
+        };
+        return config;
+      },
+      calcWeekData: function(dateObj) {
+        return '';
+      },
+      daysMap: this.get('daysMap'),
+      styles: {
+        isDisabled: 'disabled',
+        isToday:    'today',
+        isSelected: 's',
+        container: 'month'
+      },
+
+      styling: {
+        toClasses: function(data, opts) {
+          if (!data) {
+            return [];
+          }
+          //...
+          return styles;
+        }
+      },
+      navigateMonths: true, // turn off month navigation (not rendered)
+      debugOn: true,
+      log: function(label, obj) {
+        if (obj.weekNum) {
+          console.log('weekNum', obj.weekNum, 'styling:', obj.styling);
+        }
+      }
+    };
+  },
+```  
+
+And here we observe changes to data for that month, set the daysMap of the
+picker instance, set the `defaultDate` in case we render for a new month and
+force a redraw via `draw(true)`.
+
+```js
+onDaysMapChange: function () {
+  var picker = this.get('picker');
+  picker._o.daysMap   = this.get('daysMap');
+  picker.defaultDate  = this.get('startDateOfMonth');
+  picker.draw(true);
+}.observes('bookingsForMonth.@each')
 ```
 
 ### Customizing styles
@@ -172,11 +243,11 @@ The following example shows off most of the new features, changes and improvemen
 }
 
 .is-selected .pika-button {
-  
+
 }
 
 .is-disabled .pika-button {
-  
+
 }
 
 .pika-button:hover {
@@ -188,7 +259,7 @@ The following example shows off most of the new features, changes and improvemen
 }
 
 .pika-single {
-  
+
 }
 ```
 
