@@ -229,6 +229,11 @@ onDaysMapChange: function () {
 }.observes('bookingsForMonth.@each')
 ```
 
+Another way would be to hijack `render(year, month, monthData)` which returns the html for the table
+and then swap-in this html for `$('pika-lendar table')`.
+
+`$('.pika-lendar table').replaceWith(picker.render(month, year, newMonthData));`
+
 ### Customizing styles
 
 ```css

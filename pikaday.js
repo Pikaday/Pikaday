@@ -262,7 +262,7 @@
             console.log.apply(console, arguments);
         },
 
-        // allow to disable prev/next month navigation buttons          
+        // allow to disable prev/next month navigation buttons
         navigateMonths: true,
 
         // internationalization
@@ -308,14 +308,14 @@
     // data = {
     //  prevDay: {status: ['booked']}
     //  today: {status: ['booked', 'payment pending']}
-    //  nextDay: {status: 'locked'}       
+    //  nextDay: {status: 'locked'}
     // }
 
     // styleAttrs = {
-    //     selected: isSelected, 
-    //     today: isToday, 
-    //     disabled; isDisabled, 
-    //     empty; isEmpty    
+    //     selected: isSelected,
+    //     today: isToday,
+    //     disabled; isDisabled,
+    //     empty; isEmpty
     // };
 
     // styling = {
@@ -328,13 +328,13 @@
     renderDay = function(opts, dateObj, styleAttrs, data)
     {
         styleAttrs = styleAttrs || {};
-        
+
         var attr = '';
         var appendStyle = '';
         var d = dateObj.day,
             m = dateObj.month,
             y = dateObj.year;
-    
+
         if (styleAttrs.empty) {
             return '<td class="is-empty"></td>';
         }
@@ -351,7 +351,7 @@
 
         // TODO: refactor to avoid duplication across functions using this...
         var styling = _mapData(opts, data, {type: 'day'});
-        opts.debug('styling (day)', {day: d, data: data, styling: styling});            
+        opts.debug('styling (day)', {day: d, data: data, styling: styling});
 
         if (styling.classes && styling.classes.length > 0) {
             arr = arr.concat(styling.classes);
@@ -359,15 +359,15 @@
         attr = styling.attr || attr;
 
         if (styling.styles && styling.styles.length > 0) {
-            appendStyle = ' style="' + styling.styles.join(';') + '" ';    
+            appendStyle = ' style="' + styling.styles.join(';') + '" ';
         }
-        
+
         if (arr[0] === 'undefined')
-            arr = [];        
+            arr = [];
         var classes = arr.join(' ');
 
         return '<td data-day="' + d + '" class="' + classes + '" ' + appendStyle + '>' +
-                 '<button class="pika-button pika-day" type="button" ' + attr + 
+                 '<button class="pika-button pika-day" type="button" ' + attr +
                     'data-pika-year="' + y + '" data-pika-month="' + m + '" data-pika-day="' + d + '">' +
                         d +
                  '</button>' +
@@ -395,19 +395,19 @@
         }
 
         var styles = [];
-        if (typeof styling.toStyle == 'function') {            
+        if (typeof styling.toStyle == 'function') {
             styles = normalizeList(styling.toStyle(data, mapOptions) || styles);
-        }            
+        }
 
         var attr;
-        if (typeof styling.toAttr == 'function') {            
+        if (typeof styling.toAttr == 'function') {
             attr = styling.toAttr(data, mapOptions);
         }
         var styleObj = {classes: classes, styles: styles, attr: attr};
         return styleObj;
     },
 
-    
+
     // Lifted from http://javascript.about.com/library/blweekyear.htm, lightly modified.
     // Enhanced by @kristianmandrup
     renderWeek = function (opts, weekNum, data) {
@@ -422,10 +422,10 @@
         }
 
         if (styling.styles && styling.styles.length > 0) {
-            appendStyle = ' style="' + styling.styles + '" ';    
+            appendStyle = ' style="' + styling.styles + '" ';
         }
         if (arr[0] === 'undefined')
-            arr = [];        
+            arr = [];
         var classes = arr.join(' ');
 
         return '<td class="' + classes + '" ' + appendStyle + '>' + weekNum + '</td>';
@@ -445,10 +445,10 @@
         }
 
         if (styling.style) {
-            appendStyle = ' style="' + styling.styles + '" ';    
+            appendStyle = ' style="' + styling.styles + '" ';
         }
         if (arr[0] === 'undefined')
-            arr = [];        
+            arr = [];
         var classes = arr.join(' ');
 
         return '<tr class="' + classes + '" ' + appendStyle + '>' + (opts.isRTL ? days.reverse() : days).join('') + '</tr>';
@@ -531,7 +531,7 @@
 
             if (c === (opts.numberOfMonths - 1) ) {
                 html += '<button class="pika-next' + (next ? '' : ' is-disabled') + '" type="button">' + opts.i18n.nextMonth + '</button>';
-            }            
+            }
         }
 
         return html += '</div>';
@@ -690,7 +690,7 @@
             }
             addEvent(opts.field, 'change', self._onInputChange);
 
-        } 
+        }
         // allows picker to be added in container with field: null
         else {
             opts.bound = false; // can't be bound if there is no field defined
@@ -698,7 +698,7 @@
                 opts.container.appendChild(self.el);
             } else {
                 console.error("Warning: Pikaday must have either 'container' or 'field' property set in order to be displayed.");
-            }           
+            }
         }
 
         if (!opts.defaultDate) {
@@ -707,7 +707,7 @@
                     opts.defaultDate = moment(opts.field.value, opts.format).toDate();
                 } else {
                     opts.defaultDate = new Date(Date.parse(opts.field.value));
-                }                
+                }
             }
             opts.setDefaultDate = true;
         }
@@ -1070,7 +1070,7 @@
         /**
          * render HTML for a particular month
          */
-        render: function(year, month)
+        render: function(year, month, monthData)
         {
             var opts   = this._o,
                 now    = new Date(),
@@ -1098,28 +1098,36 @@
                     isSelected = isDate(this._d) ? compareDates(day, this._d) : false,
                     isToday = compareDates(day, now),
                     isEmpty = i < before || i >= (days + before),
-                    dayData = (typeof opts.calcDayData === 'function') ? opts.calcDayData(day) : true;
+                    monthDay = day.getDate();
+                    dayData = null;
 
                 var d = i - before;
-                var dateObj = {date: day, day: 1+d, month: month, year: year};
+                                
+                if (!monthData) {
+                  dayData = (typeof opts.calcDayData === 'function') ? opts.calcDayData(day) : true;
+                } else {
+                  dayData = monthData[monthDay];
+                }
+
+                var dateObj = {date: day, day: monthDay, month: month, year: year};
 
                 var styleAttrs = {
-                    selected: isSelected, 
-                    today: isToday, 
-                    disabled: isDisabled, 
-                    empty: isEmpty    
+                    selected: isSelected,
+                    today: isToday,
+                    disabled: isDisabled,
+                    empty: isEmpty
                 };
-                
+
                 row.push(renderDay(opts, dateObj, styleAttrs, dayData));
 
                 if (++r === 7) {
                     if (opts.showWeekNumber) {
-                        
+
                         var onejan = new Date(year, 0, 1),
                             weekNum = Math.ceil((((new Date(year, month, d) - onejan) / 86400000) + onejan.getDay()+1)/7);
                         dateObj.weekNum = weekNum;
                         dateObj.day = dateObj.day -1;
-                        
+
                         var weekData = (typeof opts.calcWeekData === 'function') ? opts.calcWeekData(dateObj) : true;
                         row.unshift(renderWeek(opts, weekNum, weekData));
                     }
