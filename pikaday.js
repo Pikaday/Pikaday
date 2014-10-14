@@ -216,6 +216,8 @@
 
       styling: {},
 
+      monthSelectorOn: true,
+
       // number of years either side, or array of upper/lower range
       yearRange: 10,
 
@@ -493,7 +495,12 @@
           monthsInFormat[i] + '</option>');
       }
 
-      monthHtml = '<div class="pika-label ' + (opts.styles.label || '') + '">' + monthsInFormat[month] + '<select class="pika-select pika-select-month">' + arr.join('') + '</select></div>';
+      var monthSelect = '';
+      if (opts.monthSelectorOn) {
+        monthSelect = '<select class="pika-select pika-select-month">' + arr.join('') + '</select>';
+      }
+
+      monthHtml = '<div class="pika-label ' + (opts.styles.label || '') + '">' + monthsInFormat[month] + monthSelect + '</div>';
 
       if (isArray(opts.yearRange)) {
         i = opts.yearRange[0];
