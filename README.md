@@ -98,6 +98,11 @@ The following example shows off most of the new features, changes and improvemen
           return true;
         },
 
+        select: {
+          monthOn: true, // month and year selectors displayed: on/off
+          yearOn: true
+        },
+
         // customized styling!!
         styles: {
             isDisabled: 'disabled',

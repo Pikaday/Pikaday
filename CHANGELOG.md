@@ -4,6 +4,7 @@
 
 - Fixed some dynamic styling bugs (oops!)
 - Added more styling options!
+- Config options for display of month and year selectors
 
 ## 1.4.0 @kmandrup
 
@@ -14,7 +15,7 @@
     - calcDayData  
     - calcWeekData
 
-  - styling controlled via styling Object, (default: {}) that can have styling functions 
+  - styling controlled via styling Object, (default: {}) that can have styling functions
     - toClasses
     - toStyles
     - toAttr
@@ -38,7 +39,7 @@
 - Add configurable number of shown months
 - #51 Add unit tests with ci: [testling](https://ci.testling.com/rikkert/pikaday)
 - Fix #94 blur input field after date selection
-- Add configuable container to render calendar into 
+- Add configuable container to render calendar into
 - Add option to show week numbers, see #147
 
 ## 1.2.0 - 2014-01-28

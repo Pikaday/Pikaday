@@ -216,7 +216,10 @@
 
       styling: {},
 
-      monthSelectorOn: true,
+      select: {
+        monthOn: true,
+        yearOn: true
+      },
 
       // number of years either side, or array of upper/lower range
       yearRange: 10,
@@ -496,26 +499,32 @@
       }
 
       var monthSelect = '';
-      if (opts.monthSelectorOn) {
+      if (opts.select.monthOn) {
         monthSelect = '<select class="pika-select pika-select-month">' + arr.join('') + '</select>';
       }
 
       monthHtml = '<div class="pika-label ' + (opts.styles.label || '') + '">' + monthsInFormat[month] + monthSelect + '</div>';
 
-      if (isArray(opts.yearRange)) {
-        i = opts.yearRange[0];
-        j = opts.yearRange[1] + 1;
-      } else {
-        i = year - opts.yearRange;
-        j = 1 + year + opts.yearRange;
+      var yearSelect = '';
+      if (opts.select.yearOn) {
+        if (isArray(opts.yearRange)) {
+          i = opts.yearRange[0];
+          j = opts.yearRange[1] + 1;
+        } else {
+          i = year - opts.yearRange;
+          j = 1 + year + opts.yearRange;
+        }
+
+        for (arr = []; i < j && i <= opts.maxYear; i++) {
+          if (i >= opts.minYear) {
+            arr.push('<option value="' + i + '"' + (i === year ? ' selected': '') + '>' + (i) + '</option>');
+          }
+        }
+
+        yearSelect = '<select class="pika-select pika-select-year">' + arr.join('') + '</select>';
       }
 
-      for (arr = []; i < j && i <= opts.maxYear; i++) {
-        if (i >= opts.minYear) {
-          arr.push('<option value="' + i + '"' + (i === year ? ' selected': '') + '>' + (i) + '</option>');
-        }
-      }
-      yearHtml = '<div class="pika-label">' + year + opts.yearSuffix + '<select class="pika-select pika-select-year">' + arr.join('') + '</select></div>';
+      yearHtml = '<div class="pika-label">' + year + opts.yearSuffix + yearSelect + '</div>';
 
       if (opts.showMonthAfterYear) {
         html += yearHtml + monthHtml;
