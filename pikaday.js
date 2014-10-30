@@ -189,6 +189,11 @@
         // set in `config` based on if showTime is set
         format: null,
 
+        // an array giving the allowable input format(s).  As with moment,
+        // the input formats may be either a single string or an array of strings.
+        // Usually set in `config`
+        inputFormats: null,
+
         // the initial date to view when first opened
         defaultDate: null,
 
@@ -516,7 +521,7 @@
                 return;
             }
             if (hasMoment) {
-                date = moment(opts.field.value, opts.format);
+                date = moment(opts.field.value, opts.inputFormats);
                 date = (date && date.isValid()) ? date.toDate() : null;
             }
             else {
@@ -591,7 +596,7 @@
 
             if (!opts.defaultDate) {
                 if (hasMoment && opts.field.value) {
-                    opts.defaultDate = moment(opts.field.value, opts.format).toDate();
+                    opts.defaultDate = moment(opts.field.value, opts.inputFormats).toDate();
                 } else {
                     opts.defaultDate = new Date(Date.parse(opts.field.value));
                 }
@@ -688,6 +693,10 @@
                 if (opts.showTime) {
                     opts.format += ' HH:mm:ss';
                 }
+            }
+
+            if(!opts.inputFormats) {
+                opts.inputFormats = opts.format;
             }
 
             return opts;
