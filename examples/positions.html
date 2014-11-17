@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
-    <title>Pikaday alignement example</title>
+    <title>Pikaday alignment example</title>
     <meta name="author" content="Maxime Thirouin">
     <link rel="stylesheet" href="../css/pikaday.css">
     <link rel="stylesheet" href="../css/site.css">
@@ -30,9 +30,11 @@
     <br />
     <input type="text" id="datepicker-bottomright" value="Bottom right (waat?)">
     <br />
+    <input type="text" id="datepicker-bottomright-forced" value="forced to position outside viewport">
+    <br />
     Here is the bottom right position with content before (no automatic adjustment used, , same code as above) <input type="text" id="datepicker-bottomright-forreal" value="Bottom right">
 
-    <p><i>Also, take a look to the bottom right of this page to see an example with position automaticaly adjusted.</i></p>
+    <p><i>Also, take a look to the bottom right of this page to see an example with position automatically adjusted.</i></p>
     <input type="text" id="datepicker-auto" style="position: absolute; bottom: 0; right: 0;" value="Automatic position">
 
     <h2>What is this?</h2>
@@ -79,6 +81,13 @@
     {
         field: document.getElementById('datepicker-bottomright'),
         position: 'bottom right'
+    });
+
+    new Pikaday(
+    {
+        field: document.getElementById('datepicker-bottomright-forced'),
+        position: 'bottom right',
+        reposition: false
     });
 
     new Pikaday(
