@@ -181,9 +181,6 @@
         // ('bottom' & 'left' keywords are not used, 'top' & 'right' are modifier on the bottom/left position)
         position: 'bottom left',
 
-        // optionally add 'is-above' class when drawn above input element
-        isAbove: false,
-
         // the default output format for `.toString()` and `field` value
         format: 'YYYY-MM-DD',
 
@@ -865,9 +862,8 @@
                 }
             }
 
-            if (opts.isAbove) {
-                self.el.classList.remove("is-above");
-            }
+            // removes 'is-above' class for styling purposes
+            self.el.classList.remove('is-above');
 
             // default position is bottom & left
             if (left + width > viewportWidth ||
@@ -885,9 +881,9 @@
                 )
             ) {
                 top = top - height - field.offsetHeight;
-                if (opts.isAbove) {
-                    self.el.classList.add("is-above");
-                }
+
+                //Adds 'is-above' class for styling purposes
+                self.el.classList.add('is-above');
             }
             this.el.style.cssText = [
                 'position: absolute',
