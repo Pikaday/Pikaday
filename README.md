@@ -69,6 +69,10 @@ See the [moment.js example][] for a full version.
 </script>
 ```
 
+For simple formatting the `onToString` callback can be used to intercept the value written
+to the bound form field. The single parameter passed is the result of a `toDateString()` call on the 
+picked date and the value returned by the callback will be inserted into the bound field.
+
 ### Configuration
 
 As the examples demonstrate above
@@ -97,7 +101,8 @@ Pikaday has many useful options:
 * `onOpen` callback function for when the picker becomes visible
 * `onClose` callback function for when the picker is hidden
 * `onDraw` callback function for when the picker draws a new month
-
+* `onToString` callback function for when the picker outputs to the bound form field
+* 
 ## jQuery Plugin
 
 The normal version of Pikaday does not require jQuery, however there is a jQuery plugin if that floats your boat (see `plugins/pikaday.jquery.js` in the repository). This version requires jQuery, naturally, and can be used like other plugins:  
