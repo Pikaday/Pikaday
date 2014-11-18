@@ -181,6 +181,9 @@
         // ('bottom' & 'left' keywords are not used, 'top' & 'right' are modifier on the bottom/left position)
         position: 'bottom left',
 
+        // automatically fit in the viewport even if it means repositioning from the position option
+        reposition: true,
+
         // the default output format for `.toString()` and `field` value
         format: 'YYYY-MM-DD',
 
@@ -869,7 +872,7 @@
             }
 
             // default position is bottom & left
-            if (left + width > viewportWidth ||
+            if ((this._o.reposition && left + width > viewportWidth) ||
                 (
                     this._o.position.indexOf('right') > -1 &&
                     left - width + field.offsetWidth > 0
@@ -877,7 +880,7 @@
             ) {
                 left = left - width + field.offsetWidth;
             }
-            if (top + height > viewportHeight + scrollTop ||
+            if ((this._o.reposition && top + height > viewportHeight + scrollTop) ||
                 (
                     this._o.position.indexOf('top') > -1 &&
                     top - height - field.offsetHeight > 0
@@ -885,6 +888,7 @@
             ) {
                 top = top - height - field.offsetHeight;
             }
+
             this.el.style.cssText = [
                 'position: absolute',
                 'left: ' + left + 'px',
