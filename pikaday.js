@@ -842,7 +842,7 @@
         adjustPosition: function()
         {
             if (this._o.container) return;
-            var opts = this._o, field = opts.trigger, pEl = field, self = this,
+            var field = this._o.trigger, pEl = field, self = this,
             width = this.el.offsetWidth, height = this.el.offsetHeight,
             viewportWidth = window.innerWidth || document.documentElement.clientWidth,
             viewportHeight = window.innerHeight || document.documentElement.clientHeight,
