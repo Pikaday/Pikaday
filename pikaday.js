@@ -237,6 +237,9 @@
             weekdaysShort : ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
         },
 
+        // events array
+        events: [],
+
         // callback function
         onSelect: null,
         onOpen: null,
@@ -271,6 +274,9 @@
         }
         if (isSelected) {
             arr.push('is-selected');
+        }
+        if (hasEvent) {
+            arr.push('has-event');
         }
         return '<td data-day="' + d + '" class="' + arr.join(' ') + '">' +
                  '<button class="pika-button pika-day" type="button" ' +
@@ -922,7 +928,8 @@
                     isDisabled = (opts.minDate && day < opts.minDate) || (opts.maxDate && day > opts.maxDate),
                     isSelected = isDate(this._d) ? compareDates(day, this._d) : false,
                     isToday = compareDates(day, now),
-                    isEmpty = i < before || i >= (days + before);
+                    isEmpty = i < before || i >= (days + before),
+                    hasEvent = opts.events.indexOf(day.toDateString()) !== -1 ? true : false;
 
                 row.push(renderDay(1 + (i - before), month, year, isSelected, isToday, isDisabled, isEmpty));
 
