@@ -240,6 +240,9 @@
             weekdaysShort : ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
         },
 
+        // disable input in the field
+        disableInput: false,
+
         // callback function
         onSelect: null,
         onOpen: null,
@@ -508,6 +511,11 @@
             }
         };
 
+        self._disableInput = function(e) {
+            e = e || window.event;
+            e.preventDefault();
+        }
+
         self.el = document.createElement('div');
         self.el.className = 'pika-single' + (opts.isRTL ? ' is-rtl' : '');
 
@@ -523,6 +531,10 @@
                 opts.field.parentNode.insertBefore(self.el, opts.field.nextSibling);
             }
             addEvent(opts.field, 'change', self._onInputChange);
+
+            if (opts.disableInput) {
+                opts.field.onkeydown = self._disableInput;
+            }
 
             if (!opts.defaultDate) {
                 if (hasMoment && opts.field.value) {

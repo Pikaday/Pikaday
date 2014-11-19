@@ -94,6 +94,7 @@ Pikaday has many useful options:
 * `showMonthAfterYear` render the month after year in the title (default `false`)
 * `numberOfMonths` number of visible calendars
 * `mainCalendar` when `numberOfMonths` is used, this will help you to choose where the main calendar will be (default `left`, can be set to `right`). Only used for the first display or when a selected date is not already visible
+* `disableInput` disable user input to the datepicker (defauls to false)
 * `onSelect` callback function for when a date is selected
 * `onOpen` callback function for when the picker becomes visible
 * `onClose` callback function for when the picker is hidden
