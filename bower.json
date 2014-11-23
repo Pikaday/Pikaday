@@ -15,7 +15,12 @@
   "ignore": [
     "**/.*",
     "node_modules",
-    "components"
+    "components",
+    "examples",
+    "css/site.css",
+    "component.json",
+    "index.html",
+    "package.json"
   ],
   "license" : [
     "BSD",
