@@ -218,6 +218,9 @@
         // Additional text to append to the year in the calendar title
         yearSuffix: '',
 
+        // Visual offset to support Thai solar calendars
+        yearOffset: 0,
+
         // Render the month after year in the calendar title
         showMonthAfterYear: false,
 
@@ -342,10 +345,10 @@
 
         for (arr = []; i < j && i <= opts.maxYear; i++) {
             if (i >= opts.minYear) {
-                arr.push('<option value="' + i + '"' + (i === year ? ' selected': '') + '>' + (i) + '</option>');
+                arr.push('<option value="' + i + '"' + (i === year ? ' selected': '') + '>' + (i + opts.yearOffset) + '</option>');
             }
         }
-        yearHtml = '<div class="pika-label">' + year + opts.yearSuffix + '<select class="pika-select pika-select-year">' + arr.join('') + '</select></div>';
+        yearHtml = '<div class="pika-label">' + (year + opts.yearOffset) + opts.yearSuffix + '<select class="pika-select pika-select-year">' + arr.join('') + '</select></div>';
 
         if (opts.showMonthAfterYear) {
             html += yearHtml + monthHtml;
