@@ -218,7 +218,7 @@
         // Additional text to append to the year in the calendar title
         yearSuffix: '',
 
-        // Visual offset to support Thai solar calendars
+        // Visual offset to support different types of calendars
         yearOffset: 0,
 
         // Render the month after year in the calendar title
