@@ -181,6 +181,9 @@
         // ('bottom' & 'left' keywords are not used, 'top' & 'right' are modifier on the bottom/left position)
         position: 'bottom left',
 
+        // attempt to automatically adjust the position to fit on screen
+        automaticAdjustment: true,
+
         // the default output format for `.toString()` and `field` value
         format: 'YYYY-MM-DD',
 
@@ -847,7 +850,7 @@
             }
         },
 
-        adjustPosition: function(forceDefault)
+        adjustPosition: function()
         {
             if (this._o.container) return;
             var field = this._o.trigger, pEl = field,
@@ -863,30 +866,41 @@
                 top = clientRect.bottom + window.pageYOffset;
             } else {
                 left = pEl.offsetLeft;
-                top  = pEl.offsetTop + pEl.offsetHeight;
-                while((pEl = pEl.offsetParent)) {
+                top = pEl.offsetTop + pEl.offsetHeight;
+                while ((pEl = pEl.offsetParent)) {
                     left += pEl.offsetLeft;
-                    top  += pEl.offsetTop;
+                    top += pEl.offsetTop;
                 }
             }
 
-            // default position is bottom & left
-            if (left + width > viewportWidth ||
-                (
-                    this._o.position.indexOf('right') > -1 &&
-                    left - width + field.offsetWidth > 0
-                )
-            ) {
-                left = left - width + field.offsetWidth;
+            if (this._o.automaticAdjustment) {
+                if (left + width > viewportWidth ||
+                    (
+                        this._o.position.indexOf('right') > -1 &&
+                        left - width + field.offsetWidth > 0
+                    )
+                ) {
+                    left = left - width + field.offsetWidth;
+                }
+
+                if (top + height > viewportHeight + scrollTop ||
+                    (
+                        this._o.position.indexOf('top') > -1 &&
+                        top - height - field.offsetHeight > 0
+                    )
+                ) {
+                    top = top - height - field.offsetHeight;
+                }
+            } else {
+                if (this._o.position.indexOf('right') > -1) {
+                    left = left - width + field.offsetWidth;
+                }
+
+                if (this._o.position.indexOf('top') > -1) {
+                    top = top - height - field.offsetHeight;
+                }
             }
-            if (!forceDefault && top + height > viewportHeight + scrollTop ||
-                (
-                    this._o.position.indexOf('top') > -1 &&
-                    top - height - field.offsetHeight > 0
-                )
-            ) {
-                top = top - height - field.offsetHeight;
-            }
+
             this.el.style.cssText = [
                 'position: absolute',
                 'left: ' + left + 'px',
