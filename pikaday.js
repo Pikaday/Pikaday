@@ -847,7 +847,7 @@
             }
         },
 
-        adjustPosition: function()
+        adjustPosition: function(forceDefault)
         {
             if (this._o.container) return;
             var field = this._o.trigger, pEl = field,
@@ -879,7 +879,7 @@
             ) {
                 left = left - width + field.offsetWidth;
             }
-            if (top + height > viewportHeight + scrollTop ||
+            if (!forceDefault && top + height > viewportHeight + scrollTop ||
                 (
                     this._o.position.indexOf('top') > -1 &&
                     top - height - field.offsetHeight > 0
