@@ -184,6 +184,9 @@
         // the default output format for `.toString()` and `field` value
         format: 'YYYY-MM-DD',
 
+        // if true, when using moment JS the entered date must exactly match the format
+        strictParsing: false,
+		
         // the initial date to view when first opened
         defaultDate: null,
 
@@ -448,7 +451,7 @@
                 return;
             }
             if (hasMoment) {
-                date = moment(opts.field.value, opts.format);
+                date = moment(opts.field.value, opts.format, opts.strictParsing);
                 date = (date && date.isValid()) ? date.toDate() : null;
             }
             else {
