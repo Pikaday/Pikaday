@@ -201,6 +201,8 @@
         // the maximum/latest date that can be selected
         maxDate: null,
 
+		isDisabledDay: undefined,
+
         // number of years either side, or array of upper/lower range
         yearRange: 10,
 
@@ -592,6 +594,9 @@
             if (!isDate(opts.maxDate)) {
                 opts.maxDate = false;
             }
+            if (Object.prototype.toString.call(opts.isDisabledDay) !== '[object Function]') {
+	            opts.isDisabledDay = undefined;
+            }
             if ((opts.minDate && opts.maxDate) && opts.maxDate < opts.minDate) {
                 opts.maxDate = opts.minDate = false;
             }
@@ -923,11 +928,11 @@
             for (var i = 0, r = 0; i < cells; i++)
             {
                 var day = new Date(year, month, 1 + (i - before)),
-                    isDisabled = (opts.minDate && day < opts.minDate) || (opts.maxDate && day > opts.maxDate),
+                    isDisabled = ((opts.minDate && day < opts.minDate) || (opts.maxDate && day > opts.maxDate)) || (opts.isDisabledDay !== undefined && opts.isDisabledDay(day)),
                     isSelected = isDate(this._d) ? compareDates(day, this._d) : false,
                     isToday = compareDates(day, now),
                     isEmpty = i < before || i >= (days + before);
-
+				
                 row.push(renderDay(1 + (i - before), month, year, isSelected, isToday, isDisabled, isEmpty));
 
                 if (++r === 7) {
