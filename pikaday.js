@@ -213,6 +213,7 @@
         minMonth: undefined,
         maxMonth: undefined,
 
+        gotoTodayButton: false,
         isRTL: false,
 
         // Additional text to append to the year in the calendar title
@@ -381,7 +382,7 @@
 
     renderTable = function(opts, data)
     {
-        return '<table cellpadding="0" cellspacing="0" class="pika-table">' + renderHead(opts) + renderBody(data) + renderFooter(opts) + '</table>';
+        return '<table cellpadding="0" cellspacing="0" class="pika-table">' + renderHead(opts) + renderBody(data) + (opts.gotoTodayButton ? renderFooter(opts) :'') + '</table>';
     },
 
 
