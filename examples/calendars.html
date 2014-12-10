@@ -15,11 +15,7 @@
 
     <p class="large">A refreshing JavaScript Datepicker — lightweight, no dependencies, modular CSS.</p>
 
-    <label for="datepicker">Date:</label>
-    <br />
-    2 months <input type="text" id="datepicker-2months">
-    <br />
-    3 months, main aligned to right <input type="text" id="datepicker-3months-right">
+    <label for="datepicker" id=container>Date: <input type="text" id="datepicker-2months"></label>
 
     <h2>What is this?</h2>
 
@@ -33,19 +29,9 @@
 
     var picker2months = new Pikaday(
     {
+        container: document.getElementById('container'),
         numberOfMonths: 2,
         field: document.getElementById('datepicker-2months'),
-        firstDay: 1,
-        minDate: new Date('2000-01-01'),
-        maxDate: new Date('2020-12-31'),
-        yearRange: [2000, 2020]
-    });
-
-    var picker3monthsRight = new Pikaday(
-    {
-        numberOfMonths: 3,
-        mainCalendar: 'right',
-        field: document.getElementById('datepicker-3months-right'),
         firstDay: 1,
         minDate: new Date('2000-01-01'),
         maxDate: new Date('2020-12-31'),
