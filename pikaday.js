@@ -184,8 +184,11 @@
         // automatically fit in the viewport even if it means repositioning from the position option
         reposition: true,
 
-        // the default output format for `.toString()` and `field` value
+        // the default parsing format for moment
         format: 'YYYY-MM-DD',
+       
+        // the default output format for `.toString()` and `field` value
+        outputFormat: 'YYYY-MM-DD',
 
         // the initial date to view when first opened
         defaultDate: null,
@@ -567,7 +570,7 @@
         /**
          * configure functionality
          */
-        config: function(options)
+        config: function (options)
         {
             if (!this._o) {
                 this._o = extend({}, defaults, true);
@@ -582,6 +585,11 @@
             opts.bound = !!(opts.bound !== undefined ? opts.field && opts.bound : opts.field);
 
             opts.trigger = (opts.trigger && opts.trigger.nodeName) ? opts.trigger : opts.field;
+
+            // If output format was not explicitly set and momentJS format specification is not an array, use the same format
+            if (!opts.outputFormat && typeof options.format == "string") {
+                opts.outputFormat = opts.format;
+            }
 
             var nom = parseInt(opts.numberOfMonths, 10) || 1;
             opts.numberOfMonths = nom > 4 ? 4 : nom;
@@ -625,7 +633,7 @@
          */
         toString: function(format)
         {
-            return !isDate(this._d) ? '' : hasMoment ? moment(this._d).format(format || this._o.format) : this._d.toDateString();
+            return !isDate(this._d) ? '' : hasMoment ? moment(this._d).format(format || this._o.outputFormat) : this._d.toDateString();
         },
 
         /**
