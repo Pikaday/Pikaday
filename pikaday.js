@@ -813,16 +813,20 @@
                 maxMonth = opts.maxMonth,
                 html = '';
 
-            if (this._y <= minYear) {
-                this._y = minYear;
-                if (!isNaN(minMonth) && this._m < minMonth) {
-                    this._m = minMonth;
+            for (i = 0; i < this.calendars.length; i++) { 
+
+                if (this.calendars[i].year <= minYear) {
+                    this.calendars[i].year = minYear;
+                    if (!isNaN(minMonth) && this.calendars[i].month < minMonth) {
+                        this.calendars[i].month = minMonth;
+                    }
                 }
-            }
-            if (this._y >= maxYear) {
-                this._y = maxYear;
-                if (!isNaN(maxMonth) && this._m > maxMonth) {
-                    this._m = maxMonth;
+
+                if (this.calendars[i].year >= maxYear) {
+                    this.calendars[i].year = maxYear;
+                    if (!isNaN(maxMonth) && this.calendars[i].month > maxMonth) {
+                        this.calendars[i].month = maxMonth;
+                    }
                 }
             }
 
