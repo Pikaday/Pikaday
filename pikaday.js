@@ -232,12 +232,20 @@
         container: undefined,
 
         // internationalization
-        i18n: {
-            previousMonth : 'Previous Month',
-            nextMonth     : 'Next Month',
-            months        : ['January','February','March','April','May','June','July','August','September','October','November','December'],
-            weekdays      : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
-            weekdaysShort : ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+//        i18n: {
+//            previousMonth : 'Previous Month',
+//            nextMonth     : 'Next Month',
+//            months        : ['January','February','March','April','May','June','July','August','September','October','November','December'],
+//            weekdays      : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
+//            weekdaysShort : ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+//        },
+
+        i18n               : {
+            previousMonth : 'Предыдущий месяц',
+            nextMonth     : 'Следующий месяц',
+            months        : ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+            weekdays      : ['Воскресение', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Субботу'],
+            weekdaysShort : ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб']
         },
 
         // callback function
