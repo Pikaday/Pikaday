@@ -498,12 +498,12 @@
                 }
             }
             do {
-                if (pEl === opts.trigger) {
+                if (hasClass(pEl, 'pika-single') || pEl === opts.trigger) {
                     return;
                 }
             }
             while ((pEl = pEl.parentNode));
-            if (self._v && pEl !== opts.trigger) {
+            if (self._v && target !== opts.trigger && pEl !== opts.trigger) {
                 self.hide();
             }
         };
