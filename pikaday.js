@@ -788,6 +788,7 @@
         setMinDate: function(value)
         {
             this._o.minDate = value;
+            this.draw();
         },
 
         /**
@@ -796,6 +797,7 @@
         setMaxDate: function(value)
         {
             this._o.maxDate = value;
+            this.draw();
         },
 
         /**
