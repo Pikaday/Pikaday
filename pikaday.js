@@ -20,7 +20,7 @@
         {
             // Load moment.js as an optional dependency
             var id = 'moment';
-            moment = req.defined && req.defined(id) ? req(id) : undefined;
+            try { moment = req(id); } catch (e) {}
             return factory(moment);
         });
     } else {
@@ -134,7 +134,7 @@
         var prop, hasProp;
         for (prop in from) {
             hasProp = to[prop] !== undefined;
-            if (hasProp && typeof from[prop] === 'object' && from[prop] != null && from[prop].nodeName === undefined) {
+            if (hasProp && typeof from[prop] === 'object' && from[prop] !== null && from[prop].nodeName === undefined) {
                 if (isDate(from[prop])) {
                     if (overwrite) {
                         to[prop] = new Date(from[prop].getTime());
