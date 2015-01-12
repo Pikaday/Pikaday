@@ -475,6 +475,15 @@
 
         self._onInputBlur = function()
         {
+            // IE allows pika div to gain focus; catch blur the input field
+            var pEl = document.activeElement;
+            do {
+                if (hasClass(pEl, 'pika-single')) {
+                    return;
+                }
+            }
+            while ((pEl = pEl.parentNode));
+            
             if (!self._c) {
                 self._b = sto(function() {
                     self.hide();
