@@ -1,12 +1,14 @@
 # Changelog
 
-## 1.3.0 - TBA
+## 1.3.0 - 2015-01-09
 
 - Fix #79 moving through months can cause calendar to "bounce around"
 - Add configurable number of shown months
 - #51 Add unit tests with ci: [testling](https://ci.testling.com/rikkert/pikaday)
 - Fix #94 blur input field after date selection
 - Add configuable container to render calendar into 
+- Add option to show week numbers, see #147
+- Positioning is now optional, see #192
 
 ## 1.2.0 - 2014-01-28
 
