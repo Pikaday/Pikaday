@@ -20,7 +20,7 @@
         {
             // Load moment.js as an optional dependency
             var id = 'moment';
-            moment = req.defined && req.defined(id) ? req(id) : undefined;
+            try { moment = req(id); } catch (e) {}
             return factory(moment);
         });
     } else {
@@ -138,7 +138,7 @@
         var prop, hasProp;
         for (prop in from) {
             hasProp = to[prop] !== undefined;
-            if (hasProp && typeof from[prop] === 'object' && from[prop].nodeName === undefined) {
+            if (hasProp && typeof from[prop] === 'object' && from[prop] !== null && from[prop].nodeName === undefined) {
                 if (isDate(from[prop])) {
                     if (overwrite) {
                         to[prop] = new Date(from[prop].getTime());
@@ -184,6 +184,9 @@
         // position of the datepicker, relative to the field (default to bottom & left)
         // ('bottom' & 'left' keywords are not used, 'top' & 'right' are modifier on the bottom/left position)
         position: 'bottom left',
+
+        // automatically fit in the viewport even if it means repositioning from the position option
+        reposition: true,
 
         // the default output format for `.toString()` and `field` value
         // set in `config` based on if showTime is set
@@ -568,12 +571,12 @@
                 }
             }
             do {
-                if (hasClass(pEl, 'pika-single')) {
+                if (pEl === opts.trigger) {
                     return;
                 }
             }
             while ((pEl = pEl.parentNode));
-            if (self._v && target !== opts.trigger) {
+            if (self._v && pEl !== opts.trigger) {
                 self.hide();
             }
         };
@@ -764,6 +767,12 @@
         {
             if (!date) {
                 this._d = null;
+
+                if (this._o.field) {
+                    this._o.field.value = '';
+                    fireEvent(this._o.field, 'change', { firedBy: this });
+                }
+
                 return this.draw();
             }
             if (typeof date === 'string') {
@@ -988,7 +997,7 @@
             }
 
             // default position is bottom & left
-            if (left + width > viewportWidth ||
+            if ((this._o.reposition && left + width > viewportWidth) ||
                 (
                     this._o.position.indexOf('right') > -1 &&
                     left - width + field.offsetWidth > 0
@@ -996,7 +1005,7 @@
             ) {
                 left = left - width + field.offsetWidth;
             }
-            if (top + height > viewportHeight + scrollTop ||
+            if ((this._o.reposition && top + height > viewportHeight + scrollTop) ||
                 (
                     this._o.position.indexOf('top') > -1 &&
                     top - height - field.offsetHeight > 0
@@ -1004,6 +1013,7 @@
             ) {
                 top = top - height - field.offsetHeight;
             }
+
             this.el.style.cssText = [
                 'position: absolute',
                 'left: ' + left + 'px',
