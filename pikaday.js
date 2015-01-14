@@ -571,7 +571,8 @@
                 }
             }
             do {
-                if (pEl === opts.trigger) {
+                if (pEl === opts.trigger ||
+                   (opts.showTime && hasClass(pEl, 'pika-time-container'))) {
                     return;
                 }
             }
