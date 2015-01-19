@@ -201,7 +201,14 @@
         // the maximum/latest date that can be selected
         maxDate: null,
 
+		//callback function to determine if a day is selectable
 		isDisabledDay: undefined,
+		
+		//allow the selection of mulible dates
+		allowMultiSelect: false,
+		
+		//multiple dates seperator
+		multipleDatesSeperator: ", ",
 
         // number of years either side, or array of upper/lower range
         yearRange: 10,
@@ -400,14 +407,39 @@
 
             if (!hasClass(target, 'is-disabled')) {
                 if (hasClass(target, 'pika-button') && !hasClass(target, 'is-empty')) {
-                    self.setDate(new Date(target.getAttribute('data-pika-year'), target.getAttribute('data-pika-month'), target.getAttribute('data-pika-day')));
+                    var new_date = new Date(target.getAttribute('data-pika-year'), target.getAttribute('data-pika-month'), target.getAttribute('data-pika-day'));
+					setToStartOfDay(new_date);
+                    if(hasClass(target.parentNode, 'is-selected') && opts.allowMultiSelect){
+						//remove
+						var new_array = [];
+						for(var i = 0; i < self._d.length; i++) {
+							if(new_date.getTime() !== self._d[i].getTime()) {
+								new_array.push(self._d[i]);
+							}
+						}
+						self._d = new_array;
+						self.adjustCalendars();
+						if (self._o.field) {
+			                self._o.field.value = self.toString();
+			                fireEvent(self._o.field, 'change', { firedBy: self });
+			            }
+			            if (typeof self._o.onSelect === 'function') {
+			                self._o.onSelect.call(self, self.getDate());
+			            } 
+                    } else {
+	                    self.setDate(new_date);
+                    }
                     if (opts.bound) {
-                        sto(function() {
-                            self.hide();
-                            if (opts.field) {
-                                opts.field.blur();
-                            }
-                        }, 100);
+	                    if(!opts.allowMultiSelect){
+	                        sto(function() {
+	                            self.hide();
+	                            if (opts.field) {
+	                                opts.field.blur();
+	                            }
+	                        }, 100);
+	                    } else {
+		                    self._c = true;
+	                    }
                     }
                     return;
                 }
@@ -452,14 +484,29 @@
             if (e.firedBy === self) {
                 return;
             }
-            if (hasMoment) {
-                date = moment(opts.field.value, opts.format);
-                date = (date && date.isValid()) ? date.toDate() : null;
-            }
-            else {
-                date = new Date(Date.parse(opts.field.value));
-            }
-            self.setDate(isDate(date) ? date : null);
+            if(opts.allowMultiSelect){
+	            var dates = opts.field.value.split(opts.multipleDatesSeperator.replace(/(?:(?:^|\n)\s+|\s+(?:$|\n))/g,'').replace(/\s+/g,' '));
+	            self._d = [];
+	            for(var i = 0; i < dates.length; i++) {
+		            if (hasMoment) {
+		                date = moment(dates[i].replace(/(?:(?:^|\n)\s+|\s+(?:$|\n))/g,'').replace(/\s+/g,' '), opts.format);
+		                date = (date && date.isValid()) ? date.toDate() : null;
+		            }
+		            else {
+		                date = new Date(Date.parse(dates[i].replace(/(?:(?:^|\n)\s+|\s+(?:$|\n))/g,'').replace(/\s+/g,' ')));
+		            }
+		            self.setDate(isDate(date) ? date : null);
+	            }
+            } else {
+	            if (hasMoment) {
+	                date = moment(opts.field.value, opts.format);
+	                date = (date && date.isValid()) ? date.toDate() : null;
+	            }
+	            else {
+	                date = new Date(Date.parse(opts.field.value));
+	            }
+	            self.setDate(isDate(date) ? date : null);
+	        }
             if (!self._v) {
                 self.show();
             }
@@ -630,7 +677,15 @@
          */
         toString: function(format)
         {
-            return !isDate(this._d) ? '' : hasMoment ? moment(this._d).format(format || this._o.format) : this._d.toDateString();
+	        if(Object.prototype.toString.call(this._d) === '[object Array]') {
+				var ret = [];
+				for(var i = 0; i < this._d.length; i++) {
+					ret.push(!isDate(this._d[i]) ? '' : hasMoment ? moment(this._d[i]).format(format || this._o.format) : this._d[i].toDateString());
+				}
+				return ret.sort().join(this._o.multipleDatesSeperator);
+	        } else {
+				return !isDate(this._d) ? '' : hasMoment ? moment(this._d).format(format || this._o.format) : this._d.toDateString();
+	        }
         },
 
         /**
@@ -638,7 +693,20 @@
          */
         getMoment: function()
         {
-            return hasMoment ? moment(this._d) : null;
+	        if(!hasMoment) return null;
+	        if(this._o.allowMultiSelect) {
+		    	var ret = [];
+		    	if(Object.prototype.toString.call(this._d) !== '[object Array]'){ 
+			    	ret.push(moment(this,_d));
+			    	return ret;
+			    }
+		    	for(var i = 0; i < this._d.length; i++) {
+			    	ret.push(moment(this._d[i]));
+		    	}
+		    	return ret.sort();
+		    } else {
+            	return moment(this._d);
+            }
         },
 
         /**
@@ -646,9 +714,21 @@
          */
         setMoment: function(date, preventOnSelect)
         {
-            if (hasMoment && moment.isMoment(date)) {
-                this.setDate(date.toDate(), preventOnSelect);
-            }
+	        if(!hasMoment) return;
+	        
+	        if(Object.prototype.toString.call(date) === '[object Array]') {
+				var moments = [];
+				for(var i = 0; i < date.length; i++) {
+					if (moment.isMoment(date[i])) {
+						moments.push(date[i].toDate());
+            		}
+				}
+				if(moments.length) this.setDate(moments, preventOnSelect);
+	        } else {
+		     	if (moment.isMoment(date)) {
+                	this.setDate(date.toDate(), preventOnSelect);
+            	}   
+	        }
         },
 
         /**
@@ -656,7 +736,19 @@
          */
         getDate: function()
         {
-            return isDate(this._d) ? new Date(this._d.getTime()) : null;
+	        if(this._o.allowMultiSelect) {
+		        if(Object.prototype.toString.call(this._d) !== '[object Array]'){
+			     	var ret = [];
+			    	for(var i = 0; i < this._d.length; i++) {
+				    	if(isDate(this._d[i])) ret.push(new Date(this._d[i].getTime()));
+			    	}    
+			    	return ret.length ? ret.sort() : [];   
+		        } else {
+			        return [];
+		        }
+	        } else {
+		        return isDate(this._d) ? new Date(this._d.getTime()) : null;
+	        }
         },
 
         /**
@@ -664,7 +756,7 @@
          */
         setDate: function(date, preventOnSelect)
         {
-            if (!date) {
+            if (!date || (Object.prototype.toString.call(date) === '[object Array]' && date.length === 0)) {
                 this._d = null;
 
                 if (this._o.field) {
@@ -674,32 +766,83 @@
 
                 return this.draw();
             }
-            if (typeof date === 'string') {
-                date = new Date(Date.parse(date));
-            }
-            if (!isDate(date)) {
-                return;
-            }
-
+            
+            
             var min = this._o.minDate,
-                max = this._o.maxDate;
-
-            if (isDate(min) && date < min) {
-                date = min;
-            } else if (isDate(max) && date > max) {
-                date = max;
-            }
-
-            this._d = new Date(date.getTime());
-            setToStartOfDay(this._d);
-            this.gotoDate(this._d);
-
-            if (this._o.field) {
-                this._o.field.value = this.toString();
-                fireEvent(this._o.field, 'change', { firedBy: this });
-            }
-            if (!preventOnSelect && typeof this._o.onSelect === 'function') {
-                this._o.onSelect.call(this, this.getDate());
+	            max = this._o.maxDate;
+            
+            if(this._o.allowMultiSelect) {
+	            if(Object.prototype.toString.call(date) !== '[object Array]') {
+					var tmp = [];
+					tmp.push(date);
+					date = tmp;
+	            }
+				var first_valid = null;
+				for(var i = 0; i < date.length; i++ ) {
+					if(typeof date[i] === 'string') date[i] = new Date(Date.parse(date[i]));
+					if(isDate(date[i])) {
+						if(
+							(!isDate(min) || date[i] >= min) &&
+							(!isDate(max) || date[i] <= max) &&
+							(!this._o.isDisabledDay || (!this._o.isDisabledDay(new Date(date[i].getTime()))))
+						) {
+							//valid date now check for duplicates
+							var already_selected = false; 
+							var new_date = new Date(date[i].getTime());
+							setToStartOfDay(new_date);
+							if(this._d){
+								for(var j = 0; j < this._d.length; j++) {
+									if(new_date.getTime() === this._d[j].getTime()) already_selected = true;
+								}
+							}
+							if(already_selected === false) {
+								if(!this._d) this._d = [];
+								this._d.push(new_date);
+								if(first_valid === null) {
+									this.gotoDate(new_date);
+									first_valid = new_date;
+								}
+							}
+						}
+					}
+				}
+				if(first_valid !== null) {
+					if (this._o.field) {
+		                this._o.field.value = this.toString();
+		                fireEvent(this._o.field, 'change', { firedBy: this });
+		            }
+		            if (!preventOnSelect && typeof this._o.onSelect === 'function') {
+		                this._o.onSelect.call(this, this.getDate());
+		            } 
+				}
+            } else {
+	        	if (typeof date === 'string') {
+                	date = new Date(Date.parse(date));
+	            }
+	            if (!isDate(date)) {
+	                return;
+	            }
+	            
+	            if(this._o.isDisabledDay && this._o.isDisabledDay(new Date(date.getTime()))) {
+		            return;
+	            }
+	            if (isDate(min) && date < min) {
+	                date = min;
+	            } else if (isDate(max) && date > max) {
+	                date = max;
+	            }
+	
+	            this._d = new Date(date.getTime());
+	            setToStartOfDay(this._d);
+	            this.gotoDate(this._d);
+	
+	            if (this._o.field) {
+	                this._o.field.value = this.toString();
+	                fireEvent(this._o.field, 'change', { firedBy: this });
+	            }
+	            if (!preventOnSelect && typeof this._o.onSelect === 'function') {
+	                this._o.onSelect.call(this, this.getDate());
+	            }   
             }
         },
 
@@ -834,8 +977,19 @@
             for (var c = 0; c < opts.numberOfMonths; c++) {
                 html += '<div class="pika-lendar">' + renderTitle(this, c, this.calendars[c].year, this.calendars[c].month, this.calendars[0].year) + this.render(this.calendars[c].year, this.calendars[c].month) + '</div>';
             }
-
+           
             this.el.innerHTML = html;
+
+			var close = document.createElement('div');
+			close.className = 'pika-close-btn';
+            close.innerHTML = 'x';
+			
+			var that = this;
+			addEvent(close, 'mousedown', function(){
+				that.hide();
+			}, true);
+			
+			this.el.insertBefore(close, this.el.firstChild);
 
             if (opts.bound) {
                 if(opts.field.type !== 'hidden') {
@@ -929,9 +1083,17 @@
             {
                 var day = new Date(year, month, 1 + (i - before)),
                     isDisabled = ((opts.minDate && day < opts.minDate) || (opts.maxDate && day > opts.maxDate)) || (opts.isDisabledDay !== undefined && opts.isDisabledDay(day)),
-                    isSelected = isDate(this._d) ? compareDates(day, this._d) : false,
+                    isSelected = false,
                     isToday = compareDates(day, now),
                     isEmpty = i < before || i >= (days + before);
+				
+				if(Object.prototype.toString.call(this._d) === '[object Array]'){
+	                for(var j = 0; j < this._d.length; j++) {
+		                if(isDate(this._d[j]) && compareDates(day, this._d[j])) isSelected = true;
+	                }
+                } else {
+                    isSelected = isDate(this._d) ? compareDates(day, this._d) : false;
+                }
 				
                 row.push(renderDay(1 + (i - before), month, year, isSelected, isToday, isDisabled, isEmpty));
 
