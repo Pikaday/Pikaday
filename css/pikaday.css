@@ -6,7 +6,7 @@
  */
 
 .pika-single {
-    z-index: 9999;
+    z-index: 99999999;
     display: block;
     position: relative;
     color: #333;
@@ -70,6 +70,17 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     top: 5px;
     filter: alpha(opacity=0);
     opacity: 0;
+}
+
+.pika-close-btn {
+	line-height: 15px;
+	font-size: 16px;
+	height: 7px;
+	color: #999;
+	font-weight: bold;
+	padding-right: 5px;
+	text-align: right;
+	cursor: pointer;
 }
 
 .pika-prev,
