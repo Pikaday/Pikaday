@@ -260,7 +260,7 @@
         return abbr ? opts.i18n.weekdaysShort[day] : opts.i18n.weekdays[day];
     },
 
-    renderDay = function(d, m, y, isSelected, isToday, isDisabled, isEmpty)
+    renderDay = function(d, m, y, isSelected, isToday, isDisabled, isEmpty, isRangeStart, isRangeEnd, isInRange)
     {
         if (isEmpty) {
             return '<td class="is-empty"></td>';
@@ -274,6 +274,15 @@
         }
         if (isSelected) {
             arr.push('is-selected');
+        }
+        if (isRangeStart) {
+          arr.push('range-start');
+        }
+        if (isRangeEnd) {
+          arr.push('range-end');
+        }
+        if (isInRange) {
+          arr.push('range');
         }
         return '<td data-day="' + d + '" class="' + arr.join(' ') + '">' +
                  '<button class="pika-button pika-day" type="button" ' +
@@ -808,6 +817,24 @@
         },
 
         /**
+         * change the RangeStart
+         */
+        setRangeStart: function(value)
+        {
+            setToStartOfDay(value);
+            this._o.rangeStart = value;
+        },
+
+        /**
+         * change the RangeEnd
+         */
+        setRangeEnd: function(value)
+        {
+            setToStartOfDay(value);
+            this._o.rangeEnd = value;
+        },
+
+        /**
          * refresh the HTML
          */
         draw: function(force)
@@ -935,9 +962,12 @@
                     isDisabled = (opts.minDate && day < opts.minDate) || (opts.maxDate && day > opts.maxDate),
                     isSelected = isDate(this._d) ? compareDates(day, this._d) : false,
                     isToday = compareDates(day, now),
+                    isRangeStart = isDate(this._o.rangeStart) ? compareDates(day, this._o.rangeStart) : false,
+                    isRangeEnd   = isDate(this._o.rangeEnd) ? compareDates(day, this._o.rangeEnd) : false,
+                    isInRange    = isDate(this._o.rangeStart) && isDate(this._o.rangeEnd) && day >= this._o.rangeStart && day <= this._o.rangeEnd,
                     isEmpty = i < before || i >= (days + before);
 
-                row.push(renderDay(1 + (i - before), month, year, isSelected, isToday, isDisabled, isEmpty));
+                row.push(renderDay(1 + (i - before), month, year, isSelected, isToday, isDisabled, isEmpty, isRangeStart, isRangeEnd, isInRange));
 
                 if (++r === 7) {
                     if (opts.showWeekNumber) {
