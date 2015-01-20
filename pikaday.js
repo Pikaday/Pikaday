@@ -268,7 +268,7 @@
         return abbr ? opts.i18n.weekdaysShort[day] : opts.i18n.weekdays[day];
     },
 
-    renderDay = function(d, m, y, isSelected, isToday, isDisabled, isEmpty)
+    renderDay = function(d, m, y, isSelected, isToday, isDisabled, isEmpty, isHighlighted, highlightGroup)
     {
         if (isEmpty) {
             return '<td class="is-empty"></td>';
@@ -282,6 +282,13 @@
         }
         if (isSelected) {
             arr.push('is-selected');
+        }
+        if (highlightGroup != null) {
+            arr.push(highlightGroup);
+        }
+
+        if (isHighlighted != null) {
+            arr.push(isHighlighted);
         }
         return '<td data-day="' + d + '" class="' + arr.join(' ') + '">' +
                  '<button class="pika-button pika-day" type="button" ' +
@@ -384,6 +391,53 @@
         return '<table cellpadding="0" cellspacing="0" class="pika-table">' + renderHead(opts) + renderBody(data) + '</table>';
     },
 
+    compareRoundDates = function(a, b) {
+        return a.getFullYear() == b.getFullYear() && a.getMonth() == b.getMonth() && a.getDate() == b.getDate()
+    },
+    
+    checkHighlightedDays = function(day, days) {
+        if (days) {
+
+            for (var day_i=0, day_count=days.length; day_i<day_count; day_i++) {
+
+                var hDay = days[day_i]
+                var isHighlighted = hDay.toString() == day.toString()
+                if (isHighlighted) {
+                    return "is-highlighted style-" + day_i
+                }
+            }
+        }
+    },
+    
+    checkHighlightRange = function(day, ranges) {
+        var isHighlighted = false
+
+        if (ranges) {
+
+            for (var highlightGroup in ranges) {
+
+                var group = ranges[highlightGroup]
+                var min = group[0]
+                var max = group[1]
+                var isHighlighted = (min <= day) && (day <= max)
+
+                if (isHighlighted) {
+                
+                    if (compareRoundDates(min, day)) {
+                        highlightGroup += " start"
+                    }
+                    
+                    else if (compareRoundDates(max, day)) {
+                        highlightGroup += " end"
+                    }
+
+                    return 'highlight-group-' + highlightGroup
+                }
+            }
+        }
+        
+        return null
+    },
 
     /**
      * Pikaday constructor
@@ -813,6 +867,25 @@
         },
 
         /**
+         * change the highlihgtRanges
+         * @value: hash object where item-key is # in "highlight-group-#" style assigned to day cells in range
+         * and item-value is array of two Date objects denoting range boundaries (earlier date first)
+         */
+        setHighlightRanges: function(value)
+        {
+            this._o.highlightRanges = value;
+        },
+
+        /**
+         * change the highlihgtDays
+         * @value: array of Date object
+         */
+        setHighlightDays: function(value)
+        {
+            this._o.highlightDays = value;
+        },
+
+        /**
          * refresh the HTML
          */
         draw: function(force)
@@ -940,9 +1013,11 @@
                     isDisabled = (opts.minDate && day < opts.minDate) || (opts.maxDate && day > opts.maxDate),
                     isSelected = isDate(this._d) ? compareDates(day, this._d) : false,
                     isToday = compareDates(day, now),
-                    isEmpty = i < before || i >= (days + before);
+                    isEmpty = i < before || i >= (days + before),
+                    isHighlighted = checkHighlightedDays(day, opts.highlightDays),
+                    isInHighlightGroup = checkHighlightRange(day, opts.highlightRanges);
 
-                row.push(renderDay(1 + (i - before), month, year, isSelected, isToday, isDisabled, isEmpty));
+                row.push(renderDay(1 + (i - before), month, year, isSelected, isToday, isDisabled, isEmpty, isHighlighted, isInHighlightGroup));
 
                 if (++r === 7) {
                     if (opts.showWeekNumber) {
