@@ -402,7 +402,7 @@
                 return;
             }
 
-            if (!hasClass(target, 'is-disabled')) {
+            if (!(hasClass(target, 'is-disabled') || hasClass(target.parentElement, 'is-disabled'))) {
                 if (hasClass(target, 'pika-button') && !hasClass(target, 'is-empty')) {
                     self.setDate(new Date(target.getAttribute('data-pika-year'), target.getAttribute('data-pika-month'), target.getAttribute('data-pika-day')));
                     if (opts.bound) {
@@ -489,7 +489,7 @@
                 }
             }
             while ((pEl = pEl.parentNode));
-            
+
             if (!self._c) {
                 self._b = sto(function() {
                     self.hide();
