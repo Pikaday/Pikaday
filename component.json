@@ -1,12 +1,13 @@
 {
-  "name": "pikaday",
+  "name": "pikaday - time",
   "repo": "dbushell/Pikaday",
-  "description": "A refreshing JavaScript Datepicker — lightweight, no dependencies, modular CSS",
+  "description": "Time support added to pikaday",
   "version": "1.3.0",
   "keywords": [
     "datepicker",
     "calendar",
-    "date"
+    "date",
+    "time"
   ],
   "main": "pikaday.js",
   "scripts": ["pikaday.js"],
