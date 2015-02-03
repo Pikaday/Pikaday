@@ -1,12 +1,17 @@
 # Changelog
 
+## 1.3.0 - Time
+
+- Fix #6 Time selector positioning defect in Firefox
+- Fix #7 Handling minutes and seconds in setMinDate
+
 ## 1.3.0 - 2015-01-09
 
 - Fix #79 moving through months can cause calendar to "bounce around"
 - Add configurable number of shown months
 - #51 Add unit tests with ci: [testling](https://ci.testling.com/rikkert/pikaday)
 - Fix #94 blur input field after date selection
-- Add configuable container to render calendar into 
+- Add configuable container to render calendar into
 - Add option to show week numbers, see #147
 - Positioning is now optional, see #192
 
