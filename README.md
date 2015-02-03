@@ -2,6 +2,7 @@ Pikaday - With Time Picker
 ========
 
 ### Key Config Changes
+
 ```javascript
 showTime: true
 showSeconds: false

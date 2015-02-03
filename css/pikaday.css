@@ -82,8 +82,7 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     padding: 0;
     width: 20px;
     height: 30px;
-    /* hide text using text-indent trick, using width value (it's enough) */
-    text-indent: 20px;
+    color: rgba(0, 0, 0, 0);
     white-space: nowrap;
     overflow: hidden;
     background-color: transparent;

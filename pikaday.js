@@ -107,6 +107,12 @@
         return (/Date/).test(Object.prototype.toString.call(obj)) && !isNaN(obj.getTime());
     },
 
+    isWeekend = function(date)
+    {
+        var day = date.getDay();
+        return day === 0 || day === 6;
+    },
+
     isLeapYear = function(year)
     {
         // solution by Matti Virkkunen: http://stackoverflow.com/a/4881951
@@ -450,7 +456,7 @@
                 return;
             }
 
-            if (!hasClass(target, 'is-disabled')) {
+            if (!(hasClass(target, 'is-disabled') || hasClass(target.parentElement, 'is-disabled'))) {
                 if (hasClass(target, 'pika-button') && !hasClass(target, 'is-empty')) {
                     var newDate = new Date(
                             target.getAttribute('data-pika-year'),
@@ -548,6 +554,15 @@
 
         self._onInputBlur = function()
         {
+            // IE allows pika div to gain focus; catch blur the input field
+            var pEl = document.activeElement;
+            do {
+                if (hasClass(pEl, 'pika-single')) {
+                    return;
+                }
+            }
+            while ((pEl = pEl.parentNode));
+
             if (!self._c) {
                 self._b = sto(function() {
                     self.hide();
@@ -571,13 +586,14 @@
                 }
             }
             do {
-                if (pEl === opts.trigger ||
-                   (opts.showTime && hasClass(pEl, 'pika-time-container'))) {
+                if (hasClass(pEl, 'pika-single') ||
+                    pEl === opts.trigger ||
+                    (opts.showTime && hasClass(pEl, 'pika-time-container'))) {
                     return;
                 }
             }
             while ((pEl = pEl.parentNode));
-            if (self._v && pEl !== opts.trigger) {
+            if (self._v && target !== opts.trigger && pEl !== opts.trigger) {
                 self.hide();
             }
         };
@@ -656,6 +672,10 @@
             opts.bound = !!(opts.bound !== undefined ? opts.field && opts.bound : opts.field);
 
             opts.trigger = (opts.trigger && opts.trigger.nodeName) ? opts.trigger : opts.field;
+
+            opts.disableWeekends = !!opts.disableWeekends;
+
+            opts.disableDayFn = (typeof opts.disableDayFn) == "function" ? opts.disableDayFn : null;
 
             var nom = parseInt(opts.numberOfMonths, 10) || 1;
             opts.numberOfMonths = nom > 4 ? 4 : nom;
@@ -1049,10 +1069,13 @@
             for (var i = 0, r = 0; i < cells; i++)
             {
                 var day = new Date(year, month, 1 + (i - before)),
-                    isDisabled = (opts.minDate && day < opts.minDate) || (opts.maxDate && day > opts.maxDate),
                     isSelected = isDate(this._d) ? compareDates(day, this._d) : false,
                     isToday = compareDates(day, now),
-                    isEmpty = i < before || i >= (days + before);
+                    isEmpty = i < before || i >= (days + before),
+                    isDisabled = (opts.minDate && day < opts.minDate) ||
+                                 (opts.maxDate && day > opts.maxDate) ||
+                                 (opts.disableWeekends && isWeekend(day)) ||
+                                 (opts.disableDayFn && opts.disableDayFn(day));
 
                 row.push(renderDay(1 + (i - before), month, year, isSelected, isToday, isDisabled, isEmpty));
 
