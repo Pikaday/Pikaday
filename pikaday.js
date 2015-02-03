@@ -201,6 +201,9 @@
         // the maximum/latest date that can be selected
         maxDate: null,
 
+        // function to determine whether a date is selectable
+        disabledCheck: false,
+
         // number of years either side, or array of upper/lower range
         yearRange: 10,
 
@@ -923,7 +926,7 @@
             for (var i = 0, r = 0; i < cells; i++)
             {
                 var day = new Date(year, month, 1 + (i - before)),
-                    isDisabled = (opts.minDate && day < opts.minDate) || (opts.maxDate && day > opts.maxDate),
+                    isDisabled = (opts.minDate && day < opts.minDate) || (opts.maxDate && day > opts.maxDate) || (opts.disabledCheck && opts.disabledCheck(day)),
                     isSelected = isDate(this._d) ? compareDates(day, this._d) : false,
                     isToday = compareDates(day, now),
                     isEmpty = i < before || i >= (days + before);
