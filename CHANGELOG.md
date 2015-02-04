@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.0.1 - Time
+
+- Fix introduced bug when fixing #7. Add needed guard code.
+
 ## 1.3.0 - Time
 
 - Fix #6 Time selector positioning defect in Firefox
