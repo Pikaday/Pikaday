@@ -1068,8 +1068,8 @@
             cells += 7 - after;
 
             // Ensure we only compare date portion when deciding to show a date in picker
-            var minDate_date = new Date(opts.minDate.getFullYear(), opts.minDate.getMonth(), opts.minDate.getDate()),
-                maxDate_date = new Date(opts.maxDate.getFullYear(), opts.maxDate.getMonth(), opts.maxDate.getDate());
+            var minDate_date = opts.minDate ? new Date(opts.minDate.getFullYear(), opts.minDate.getMonth(), opts.minDate.getDate()) : null;
+            var maxDate_date = opts.maxDate ? new Date(opts.maxDate.getFullYear(), opts.maxDate.getMonth(), opts.maxDate.getDate()) : null;
 
             for (var i = 0, r = 0; i < cells; i++)
             {
