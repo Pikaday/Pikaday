@@ -240,6 +240,9 @@
             weekdaysShort : ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
         },
 
+        // Theme Classname
+        themeClass: null,
+
         // callback function
         onSelect: null,
         onOpen: null,
@@ -483,7 +486,7 @@
                 }
             }
             while ((pEl = pEl.parentNode));
-            
+
             if (!self._c) {
                 self._b = sto(function() {
                     self.hide();
@@ -518,7 +521,7 @@
         };
 
         self.el = document.createElement('div');
-        self.el.className = 'pika-single' + (opts.isRTL ? ' is-rtl' : '');
+        self.el.className = 'pika-single' + (opts.isRTL ? ' is-rtl' : '') + (opts.themeClass ? ' ' + opts.themeClass : '');
 
         addEvent(self.el, 'mousedown', self._onMouseDown, true);
         addEvent(self.el, 'change', self._onChange);
@@ -587,6 +590,8 @@
             opts.isRTL = !!opts.isRTL;
 
             opts.field = (opts.field && opts.field.nodeName) ? opts.field : null;
+
+            opts.themeClass = (typeof opts.themeClass === 'string' && opts.themeClass) ? opts.themeClass : null;
 
             opts.bound = !!(opts.bound !== undefined ? opts.field && opts.bound : opts.field);
 
