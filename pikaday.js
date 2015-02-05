@@ -231,6 +231,9 @@
         // Specify a DOM element to render the calendar in
         container: undefined,
 
+        // Render days in the next and previous months instead of empty cells
+        showDaysInNextAndPreviousMonths: false,
+
         // internationalization
         i18n: {
             previousMonth : 'Previous Month',
@@ -260,12 +263,16 @@
         return abbr ? opts.i18n.weekdaysShort[day] : opts.i18n.weekdays[day];
     },
 
-    renderDay = function(d, m, y, isSelected, isToday, isDisabled, isEmpty)
+    renderDay = function(d, m, y, isSelected, isToday, isDisabled, isEmpty, showDaysInNextAndPreviousMonths)
     {
-        if (isEmpty) {
-            return '<td class="is-empty"></td>';
-        }
         var arr = [];
+        if (isEmpty) {
+            if (showDaysInNextAndPreviousMonths) {
+                arr.push('is-outside-current-month');
+            } else {
+                return '<td class="is-empty"></td>';
+            }
+        }
         if (isDisabled) {
             arr.push('is-disabled');
         }
@@ -923,6 +930,9 @@
                     before += 7;
                 }
             }
+            var previousMonth = month === 0 ? 11 : month - 1,
+                yearOfPreviousMonth = month === 0 ? year - 1 : year,
+                daysInPreviousMonth = getDaysInMonth(yearOfPreviousMonth, previousMonth);
             var cells = days + before,
                 after = cells;
             while(after > 7) {
@@ -935,9 +945,18 @@
                     isDisabled = (opts.minDate && day < opts.minDate) || (opts.maxDate && day > opts.maxDate),
                     isSelected = isDate(this._d) ? compareDates(day, this._d) : false,
                     isToday = compareDates(day, now),
-                    isEmpty = i < before || i >= (days + before);
+                    isEmpty = i < before || i >= (days + before),
+                    dayNumber = 1 + (i - before);
 
-                row.push(renderDay(1 + (i - before), month, year, isSelected, isToday, isDisabled, isEmpty));
+                if (isEmpty) {
+                    if (i < before) {
+                        dayNumber = daysInPreviousMonth + dayNumber;
+                    } else {
+                        dayNumber = dayNumber - days;
+                    }
+                }
+
+                row.push(renderDay(dayNumber, month, year, isSelected, isToday, isDisabled, isEmpty, opts.showDaysInNextAndPreviousMonths));
 
                 if (++r === 7) {
                     if (opts.showWeekNumber) {
