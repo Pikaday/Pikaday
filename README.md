@@ -86,6 +86,8 @@ Pikaday has many useful options:
 * `firstDay` first day of the week (0: Sunday, 1: Monday, etc)
 * `minDate` the minimum/earliest date that can be selected (this should be a native Date object - e.g. `new Date()` or `moment().toDate()`)
 * `maxDate` the maximum/latest date that can be selected (this should be a native Date object - e.g. `new Date()` or `moment().toDate()`)
+* `disableWeekends` disallow selection of Saturdays or Sundays
+* `disableDayFn` callback function that gets passed a Date object for each day in view. Should return true to disable selection of that day.
 * `yearRange` number of years either side (e.g. `10`) or array of upper/lower range (e.g. `[1900,2015]`)
 * `showWeekNumber` show the ISO week number at the head of the row (default `false`)
 * `isRTL` reverse the calendar for right-to-left languages
