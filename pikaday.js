@@ -174,6 +174,9 @@
         // bind the picker to a form field
         field: null,
 
+        //ShowCalendarAvailability
+        showAvailability: false,
+
         // automatically show/hide the picker on `field` focus (default `true` if `field` is set)
         bound: undefined,
 
