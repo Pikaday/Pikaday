@@ -117,6 +117,7 @@ Pikaday has many useful options:
 * `onClose` callback function for when the picker is hidden
 * `onDraw` callback function for when the picker draws a new month
 * `isAvailable` a function, which must return a boolean determining availability. The date object in context is passed as an argument. (default: `true`)
+* `showAvailability` enable showing available dates on calendar, removes "Disabled" attribute from unavailable dates' buttons and adds a class to the datepicker container. (default to `false`)
 
 ## jQuery Plugin
 
