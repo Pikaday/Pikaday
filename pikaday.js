@@ -174,6 +174,9 @@
         // bind the picker to a form field
         field: null,
 
+        //ShowCalendarAvailability
+        showAvailability: false,
+
         // automatically show/hide the picker on `field` focus (default `true` if `field` is set)
         bound: undefined,
 
@@ -263,7 +266,7 @@
         return abbr ? opts.i18n.weekdaysShort[day] : opts.i18n.weekdays[day];
     },
 
-    renderDay = function(d, m, y, isSelected, isToday, isDisabled, isEmpty, isAvailable)
+    renderDay = function(d, m, y, isSelected, isToday, isDisabled, isEmpty, isAvailable, isShowAvailability)
     {
         var attr = '';
         if (isEmpty) {
@@ -281,7 +284,9 @@
         }
         if (!isAvailable) {
             arr.push('not-available');
-            attr = 'disabled ';
+            if(isShowAvailability === false) {
+                attr = 'disabled ';
+            }
         }
         return '<td data-day="' + d + '" class="' + arr.join(' ') + '">' +
                  '<button class="pika-button pika-day" type="button" ' + attr +
@@ -521,6 +526,9 @@
 
         addEvent(self.el, 'mousedown', self._onMouseDown, true);
         addEvent(self.el, 'change', self._onChange);
+        if(opts.showAvailability === true) {
+            self.el.className = 'pika-single future-available' + (opts.isRTL ? ' is-rtl' : '');
+        }
 
         if (opts.field) {
             if (opts.container) {
@@ -939,9 +947,10 @@
                     isSelected = isDate(this._d) ? compareDates(day, this._d) : false,
                     isToday = compareDates(day, now),
                     isEmpty = i < before || i >= (days + before),
-                    isAvailable = (typeof opts.isAvailable === 'function') ? opts.isAvailable(day) : true;
+                    isAvailable = (typeof opts.isAvailable === 'function') ? opts.isAvailable(day) : true,
+                    isShowAvailability = opts.showAvailability;
 
-                row.push(renderDay(1 + (i - before), month, year, isSelected, isToday, isDisabled, isEmpty, isAvailable));
+                row.push(renderDay(1 + (i - before), month, year, isSelected, isToday, isDisabled, isEmpty, isAvailable, isShowAvailability));
 
                 if (++r === 7) {
                     if (opts.showWeekNumber) {
