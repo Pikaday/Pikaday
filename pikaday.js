@@ -489,7 +489,7 @@
                 }
             }
             while ((pEl = pEl.parentNode));
-            
+
             if (!self._c) {
                 self._b = sto(function() {
                     self.hide();
@@ -615,9 +615,7 @@
                 opts.maxDate = opts.minDate = false;
             }
             if (opts.minDate) {
-                setToStartOfDay(opts.minDate);
-                opts.minYear  = opts.minDate.getFullYear();
-                opts.minMonth = opts.minDate.getMonth();
+                this.setMinDate(opts.minDate)
             }
             if (opts.maxDate) {
                 setToStartOfDay(opts.maxDate);
@@ -807,6 +805,9 @@
         setMinDate: function(value)
         {
             this._o.minDate = value;
+            setToStartOfDay(value);
+            this._o.minYear  = value.getFullYear();
+            this._o.minMonth = value.getMonth();            
         },
 
         /**

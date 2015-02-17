@@ -24,6 +24,16 @@ describe('Pikaday public method', function ()
         });
     });
 
+    describe('When specifying minDate option in Constructor', function () {
+        it('Should remove the time portion (flattening to midnight)', function () {
+            var date = new Date(2015, 1, 17, 22, 10, 5),
+                expected = new Date(2015, 1, 17, 0, 0, 0),
+                pikaday = new Pikaday({ minDate: date });
+
+            expect(pikaday._o.minDate).to.eql(expected);
+        });
+    });
+
     describe('#setMinDate()', function () {
         it('should flatten date to midnight ignoring time portion (consistent with minDate option in ctor)', function () {
             var date = new Date(2015, 1, 17, 22, 10, 5),
