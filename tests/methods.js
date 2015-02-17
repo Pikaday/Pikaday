@@ -23,4 +23,15 @@ describe('Pikaday public method', function ()
             expect(pikaday.toString()).to.eql('25-04-14');
         });
     });
+
+    describe('#setMinDate()', function () {
+        it('should flatten date to midnight ignoring time portion (consistent with minDate option in ctor)', function () {
+            var date = new Date(2015, 1, 17, 22, 10, 5),
+                expected = new Date(2015, 1, 17, 0, 0, 0),
+                pikaday = new Pikaday();
+
+            pikaday.setMinDate(date);
+            expect(pikaday._o.minDate).to.eql(expected);
+        });
+    });
 });
