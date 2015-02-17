@@ -101,6 +101,28 @@ Pikaday has many useful options:
 * `onClose` callback function for when the picker is hidden
 * `onDraw` callback function for when the picker draws a new month
 
+### Changing the Defaults
+
+If you want to change the default options, just modify the `Pikaday.prorotype.defaults` object.
+By example, if you want to change the default language, do:
+
+```js
+// After Pikaday load:
+Pikaday.prototype.defaults.i18n = {
+  previousMonth : 'Mês Anterior',
+  nextMonth     : 'Próximo Mês',
+  months        : ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+  weekdays      : ['Domingo','Segunda-Feira','Terça-Feira','Quarta-Feira','Quinta-Feira','Sexta-Feira','Sábado'],
+  weekdaysShort : ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb']
+};
+```
+
+Or for changing the default format:
+
+```js
+Pikaday.prototype.defaults.format = 'DD/MM/YYYY';
+```
+
 ## jQuery Plugin
 
 The normal version of Pikaday does not require jQuery, however there is a jQuery plugin if that floats your boat (see `plugins/pikaday.jquery.js` in the repository). This version requires jQuery, naturally, and can be used like other plugins:  
