@@ -804,10 +804,10 @@
          */
         setMinDate: function(value)
         {
-            this._o.minDate = value;
             setToStartOfDay(value);
+            this._o.minDate = value;
             this._o.minYear  = value.getFullYear();
-            this._o.minMonth = value.getMonth();            
+            this._o.minMonth = value.getMonth();
         },
 
         /**
