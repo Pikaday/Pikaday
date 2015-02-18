@@ -3,6 +3,7 @@
 ## 1.4.0 - TBA
 
 - Add theme class support, see #260
+- Fix on iOS, see #101
 
 ## 1.3.2 - 2015-02-17
 
