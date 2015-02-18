@@ -247,7 +247,7 @@
         },
 
         // Theme Classname
-        themeClass: null,
+        theme: null,
 
         // callback function
         onSelect: null,
@@ -527,7 +527,7 @@
         };
 
         self.el = document.createElement('div');
-        self.el.className = 'pika-single' + (opts.isRTL ? ' is-rtl' : '') + (opts.themeClass ? ' ' + opts.themeClass : '');
+        self.el.className = 'pika-single' + (opts.isRTL ? ' is-rtl' : '') + (opts.theme ? ' ' + opts.theme : '');
 
         addEvent(self.el, 'mousedown', self._onMouseDown, true);
         addEvent(self.el, 'change', self._onChange);
@@ -597,7 +597,7 @@
 
             opts.field = (opts.field && opts.field.nodeName) ? opts.field : null;
 
-            opts.themeClass = (typeof opts.themeClass === 'string' && opts.themeClass) ? opts.themeClass : null;
+            opts.theme = (typeof opts.theme) == 'string' && opts.theme ? opts.theme : null;
 
             opts.bound = !!(opts.bound !== undefined ? opts.field && opts.bound : opts.field);
 

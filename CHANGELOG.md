@@ -2,6 +2,7 @@
 
 ## 1.4.0 - TBA
 
+- Add theme class support, see #260
 
 ## 1.3.2 - 2015-02-17
 
