@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.4.0 - TBA
+
+
+## 1.3.2 - 2015-02-17
+
+- Add options to disable days, see #171
+- Add SCSS file, see #130
+
 ## 1.3.1 - 2015-02-04
 
 - Fix for bug introduced in #166; fixes #224, #230
