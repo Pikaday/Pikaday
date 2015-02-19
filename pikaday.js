@@ -327,6 +327,8 @@
             opts = instance._o,
             isMinYear = year === opts.minYear,
             isMaxYear = year === opts.maxYear,
+            selectYear = !!opts.selectYear,
+            selectMonth = !!opts.selectMonth,
             html = '<div class="pika-title">',
             monthHtml,
             yearHtml,
@@ -339,8 +341,10 @@
                 ((isMinYear && i < opts.minMonth) || (isMaxYear && i > opts.maxMonth) ? 'disabled' : '') + '>' +
                 opts.i18n.months[i] + '</option>');
         }
-        monthHtml = '<div class="pika-label">' + opts.i18n.months[month] + '<select class="pika-select pika-select-month">' + arr.join('') + '</select></div>';
-
+        monthHtml = '<div class="pika-label">' + (selectMonth ? '' : opts.i18n.months[month]) + 
+                            '<select class="pika-select pika-' + (selectMonth ? 'selectable' : 'not-selectable') + ' pika-select-month">' + 
+                                    arr.join('') + '</select></div>';
+        
         if (isArray(opts.yearRange)) {
             i = opts.yearRange[0];
             j = opts.yearRange[1] + 1;
@@ -354,7 +358,8 @@
                 arr.push('<option value="' + i + '"' + (i === year ? ' selected': '') + '>' + (i) + '</option>');
             }
         }
-        yearHtml = '<div class="pika-label">' + year + opts.yearSuffix + '<select class="pika-select pika-select-year">' + arr.join('') + '</select></div>';
+        yearHtml = '<div class="pika-label">' + (selectYear ? '' : (year + opts.yearSuffix) ) + 
+                            '<select class="pika-select pika-' + (selectYear ? 'selectable' : 'not-selectable') + ' pika-select-year">' + arr.join('') + '</select></div>';
 
         if (opts.showMonthAfterYear) {
             html += yearHtml + monthHtml;
@@ -405,7 +410,9 @@
                 return;
             }
 
-            e.preventDefault();
+            if(!hasClass(target, 'pika-selectable'))
+                e.preventDefault();
+
             if (!hasClass(target, 'is-disabled')) {
                 if (hasClass(target, 'pika-button') && !hasClass(target, 'is-empty')) {
                     self.setDate(new Date(target.getAttribute('data-pika-year'), target.getAttribute('data-pika-month'), target.getAttribute('data-pika-day')));

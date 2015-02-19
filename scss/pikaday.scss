@@ -47,7 +47,11 @@
     position: relative;
     text-align: center;
 
-    select {
+    .pika-select {
+
+    }
+    
+    .pika-not-selectable {
         cursor: pointer;
         position: absolute;
         z-index: 9998;
@@ -56,6 +60,12 @@
         top: 5px;
         filter: alpha(opacity=0);
         opacity: 0;
+    }
+
+    .pika-selectable {
+        background: #fff;
+        padding: 4px;
+        border: solid 1px #ccc;
     }
 }
 
