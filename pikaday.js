@@ -274,9 +274,9 @@
         if (isEmpty) {
             var _date = new Date(y, m, d);
             return '<td class="is-empty is-disabled">' +
-                     '<button class="pika-button pika-day" type="button">' +
-                       _date.getDate() +
-                     '</button>' +
+                       '<button class="pika-button pika-day" type="button">' +
+                           _date.getDate() +
+                       '</button>' +
                    '</td>';
         }
         var arr = [];
