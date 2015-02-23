@@ -272,7 +272,12 @@
     renderDay = function(d, m, y, isSelected, isToday, isDisabled, isEmpty)
     {
         if (isEmpty) {
-            return '<td class="is-empty"></td>';
+            var _date = new Date(y, m, d);
+            return '<td class="is-empty is-disabled">' +
+                     '<button class="pika-button pika-day" type="button">' +
+                       _date.getDate() +
+                     '</button>' +
+                   '</td>';
         }
         var arr = [];
         if (isDisabled) {
