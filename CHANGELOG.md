@@ -1,8 +1,28 @@
 # Changelog
 
+## 1.4.0 - TBA
+
+- Add theme class support, see #260
+- Fix on iOS, see #101
+- Fix #249
+
+## 1.3.2 - Time
+
+- Merge changes with main Pikaday
+
+## 1.3.2 - 2015-02-17
+
+- Add options to disable days, see #171
+- Add SCSS file, see #130
+
+## 1.3.1 - 2015-02-04
+
+- Fix for bug introduced in #166; fixes #224, #230
+
 ## 1.3.0.1 - Time
 
 - Fix introduced bug when fixing #7. Add needed guard code.
+- This is a bad version which `npm` and others do not like, lesson learned
 
 ## 1.3.0 - Time
 

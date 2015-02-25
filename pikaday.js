@@ -263,6 +263,9 @@
             noon          : 'Noon'
         },
 
+        // Theme Classname
+        theme: null,
+
         // callback function
         onSelect: null,
         onOpen: null,
@@ -456,7 +459,8 @@
                 return;
             }
 
-            if (!(hasClass(target, 'is-disabled') || hasClass(target.parentElement, 'is-disabled'))) {
+            e.preventDefault();
+            if (!hasClass(target, 'is-disabled')) {
                 if (hasClass(target, 'pika-button') && !hasClass(target, 'is-empty')) {
                     var newDate = new Date(
                             target.getAttribute('data-pika-year'),
@@ -599,9 +603,9 @@
         };
 
         self.el = document.createElement('div');
-        self.el.className = 'pika-single' + (opts.isRTL ? ' is-rtl' : '');
+        self.el.className = 'pika-single' + (opts.isRTL ? ' is-rtl' : '') + (opts.theme ? ' ' + opts.theme : '');
 
-        addEvent(self.el, 'mousedown', self._onMouseDown, true);
+        addEvent(self.el, 'ontouchend' in document ? 'ontouchend' : 'mousedown', self._onMouseDown, true);
         addEvent(self.el, 'change', self._onChange);
 
         if (opts.field) {
@@ -669,6 +673,8 @@
 
             opts.field = (opts.field && opts.field.nodeName) ? opts.field : null;
 
+            opts.theme = (typeof opts.theme) == 'string' && opts.theme ? opts.theme : null;
+
             opts.bound = !!(opts.bound !== undefined ? opts.field && opts.bound : opts.field);
 
             opts.trigger = (opts.trigger && opts.trigger.nodeName) ? opts.trigger : opts.field;
@@ -690,9 +696,7 @@
                 opts.maxDate = opts.minDate = false;
             }
             if (opts.minDate) {
-                if (!opts.showTime) setToStartOfDay(opts.minDate);
-                opts.minYear  = opts.minDate.getFullYear();
-                opts.minMonth = opts.minDate.getMonth();
+               this.setMinDate(opts.minDate);
             }
             if (opts.maxDate) {
                 if (!opts.showTime) setToStartOfDay(opts.maxDate);
@@ -923,7 +927,11 @@
          */
         setMinDate: function(value)
         {
+            if (!this._o.showTime) setToStartOfDay(this._o.minDate);
+                                   setToStartOfDay(value);
             this._o.minDate = value;
+            this._o.minYear  = value.getFullYear();
+            this._o.minMonth = value.getMonth();
         },
 
         /**
