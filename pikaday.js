@@ -459,7 +459,13 @@
                 return;
             }
 
-            e.preventDefault();
+            // Do not preventDefaul when using time picker
+            if (!hasClass(target, 'pika-select-hour')
+                        && !hasClass(target, 'pika-select-minute')
+                        && !hasClass(target, 'pika-select-second')) {
+                e.preventDefault();
+            }
+
             if (!hasClass(target, 'is-disabled')) {
                 if (hasClass(target, 'pika-button') && !hasClass(target, 'is-empty')) {
                     var newDate = new Date(

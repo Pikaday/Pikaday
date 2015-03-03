@@ -6,6 +6,10 @@
 - Fix on iOS, see #101
 - Fix #249
 
+## 1.3.3 - Time
+
+- Fix #13
+
 ## 1.3.2 - Time
 
 - Merge changes with main Pikaday
