@@ -1,6 +1,6 @@
 /*!
  * Pikaday
- *
+ * Version 1.3.2
  * Copyright © 2014 David Bushell | BSD & MIT license | https://github.com/dbushell/Pikaday
  */
 
