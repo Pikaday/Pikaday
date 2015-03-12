@@ -254,7 +254,8 @@
         onOpen: null,
         onClose: null,
         onDraw: null,
-        formatter: null
+        formatter: null,
+        parser: null
     },
 
 
@@ -464,8 +465,9 @@
             if (hasMoment) {
                 date = moment(opts.field.value, opts.format);
                 date = (date && date.isValid()) ? date.toDate() : null;
-            }
-            else {
+            } else if (opts.parser) {
+                date = opts.parser(opts.field.value, opts.format);
+            } else {
                 date = new Date(Date.parse(opts.field.value));
             }
             self.setDate(isDate(date) ? date : null);
