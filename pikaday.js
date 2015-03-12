@@ -253,7 +253,8 @@
         onSelect: null,
         onOpen: null,
         onClose: null,
-        onDraw: null
+        onDraw: null,
+        formatter: null
     },
 
 
@@ -648,7 +649,11 @@
          */
         toString: function(format)
         {
-            return !isDate(this._d) ? '' : hasMoment ? moment(this._d).format(format || this._o.format) : this._d.toDateString();
+            format = format || this._o.format;
+            if (this._o.formatter) {
+                return this._o.formatter(this._d, format);
+            }
+            return !isDate(this._d) ? '' : hasMoment ? moment(this._d).format(format) : this._d.toDateString();
         },
 
         /**
