@@ -549,6 +549,8 @@
             if (!opts.defaultDate) {
                 if (hasMoment && opts.field.value) {
                     opts.defaultDate = moment(opts.field.value, opts.format).toDate();
+                } else if (opts.parser && typeof opts.parser === 'function') {
+                    opts.defaultDate = opts.parser(opts.field.value, opts.format);
                 } else {
                     opts.defaultDate = new Date(Date.parse(opts.field.value));
                 }
