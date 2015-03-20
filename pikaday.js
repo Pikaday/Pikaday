@@ -467,9 +467,6 @@
                 date = new Date(Date.parse(opts.field.value));
             }
             self.setDate(isDate(date) ? date : null);
-            if (!self._v) {
-                self.show();
-            }
         };
 
         self._onInputFocus = function()
