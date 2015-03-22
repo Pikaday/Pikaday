@@ -927,7 +927,7 @@
         render: function(year, month)
         {
             var opts   = this._o,
-                now    = new Date(),
+                now    = opts.defaultDate || new Date(),
                 days   = getDaysInMonth(year, month),
                 before = new Date(year, month, 1).getDay(),
                 data   = [],
