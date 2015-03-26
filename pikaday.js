@@ -174,6 +174,11 @@
         // bind the picker to a form field
         field: null,
 
+	    //ShowPriceOnCalendar
+	    showCustomContent: false,
+
+	    customContent: '',
+
         //ShowCalendarAvailability
         showAvailability: false,
 
@@ -266,7 +271,7 @@
         return abbr ? opts.i18n.weekdaysShort[day] : opts.i18n.weekdays[day];
     },
 
-    renderDay = function(d, m, y, isSelected, isToday, isDisabled, isEmpty, isAvailable, isShowAvailability)
+    renderDay = function(d, m, y, isSelected, isToday, isDisabled, isEmpty, isAvailable, isShowCustomContent, isCustomContent, isShowAvailability)
     {
         var attr = '';
         if (isEmpty) {
@@ -292,6 +297,7 @@
                  '<button class="pika-button pika-day" type="button" ' + attr +
                     'data-pika-year="' + y + '" data-pika-month="' + m + '" data-pika-day="' + d + '">' +
                         d +
+	                    isCustomContent +
                  '</button>' +
                '</td>';
     },
@@ -422,6 +428,20 @@
                     }
                     return;
                 }
+
+                else if (hasClass(target, 'price-on-day')) {
+	                self.setDate(new Date(target.parentNode.getAttribute('data-pika-year'), target.parentNode.getAttribute('data-pika-month'), target.parentNode.getAttribute('data-pika-day')));
+	                if (opts.bound) {
+		                sto(function() {
+			                self.hide();
+			                if (opts.field) {
+				                opts.field.blur();
+			                }
+		                }, 100);
+	                }
+	                return;
+                }
+
                 else if (hasClass(target, 'pika-prev')) {
                     self.prevMonth();
                 }
@@ -528,6 +548,9 @@
         addEvent(self.el, 'change', self._onChange);
         if(opts.showAvailability === true) {
             self.el.className = 'pika-single future-available' + (opts.isRTL ? ' is-rtl' : '');
+	        if (opts.showCustomContent) {
+		        self.el.className = 'pika-single future-available custom-content' + (opts.isRTL ? ' is-rtl' : '');
+	        }
         }
 
         if (opts.field) {
@@ -948,9 +971,11 @@
                     isToday = compareDates(day, now),
                     isEmpty = i < before || i >= (days + before),
                     isAvailable = (typeof opts.isAvailable === 'function') ? opts.isAvailable(day) : true,
-                    isShowAvailability = opts.showAvailability;
+                    isShowAvailability = opts.showAvailability,
+	                isShowCustomContent = opts.showCustomContent,
+	                isCustomContent = opts.customContent;
 
-                row.push(renderDay(1 + (i - before), month, year, isSelected, isToday, isDisabled, isEmpty, isAvailable, isShowAvailability));
+                row.push(renderDay(1 + (i - before), month, year, isSelected, isToday, isDisabled, isEmpty, isAvailable, isShowCustomContent, isCustomContent, isShowAvailability));
 
                 if (++r === 7) {
                     if (opts.showWeekNumber) {
