@@ -177,9 +177,6 @@
 	    //ShowPriceOnCalendar
 	    showCustomContent: false,
 
-        //ShowCalendarAvailability
-        showAvailability: false,
-
         // automatically show/hide the picker on `field` focus (default `true` if `field` is set)
         bound: undefined,
 
@@ -544,12 +541,9 @@
 
         addEvent(self.el, 'mousedown', self._onMouseDown, true);
         addEvent(self.el, 'change', self._onChange);
-        if(opts.showAvailability === true) {
-            self.el.className = 'pika-single future-available' + (opts.isRTL ? ' is-rtl' : '');
-	        if (opts.showCustomContent) {
-		        self.el.className = 'pika-single future-available custom-content' + (opts.isRTL ? ' is-rtl' : '');
-	        }
-        }
+	    if(opts.showCustomContent === true) {
+		    self.el.className = 'pika-single future-available custom-content' + (opts.isRTL ? ' is-rtl' : '');
+	    }
 
         if (opts.field) {
             if (opts.container) {
@@ -968,11 +962,10 @@
                     isSelected = isDate(this._d) ? compareDates(day, this._d) : false,
                     isToday = compareDates(day, now),
                     isEmpty = i < before || i >= (days + before),
-                    isAvailable = (typeof opts.isAvailable === 'function') ? opts.isAvailable(day) : true,
-	                isShowAvailability = opts.showAvailability,
+	                isAvailable = (typeof opts.isAvailable === 'function') && opts.showCustomContent ? opts.isAvailable(day) : true,
 	                customContent = (typeof opts.isCustomContent === 'function') && opts.showCustomContent ? opts.isCustomContent(day) : "";
 
-                row.push(renderDay(1 + (i - before), month, year, isSelected, isToday, isDisabled, isEmpty, isAvailable, customContent, isShowAvailability));
+                row.push(renderDay(1 + (i - before), month, year, isSelected, isToday, isDisabled, isEmpty, isAvailable, customContent));
 
                 if (++r === 7) {
                     if (opts.showWeekNumber) {
