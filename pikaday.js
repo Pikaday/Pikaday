@@ -177,8 +177,6 @@
 	    //ShowPriceOnCalendar
 	    showCustomContent: false,
 
-	    customContent: '',
-
         //ShowCalendarAvailability
         showAvailability: false,
 
@@ -297,7 +295,7 @@
                  '<button class="pika-button pika-day" type="button" ' + attr +
                     'data-pika-year="' + y + '" data-pika-month="' + m + '" data-pika-day="' + d + '">' +
                         d +
-	                    isCustomContent +
+	                    isShowCustomContent +
                  '</button>' +
                '</td>';
     },
@@ -971,11 +969,10 @@
                     isToday = compareDates(day, now),
                     isEmpty = i < before || i >= (days + before),
                     isAvailable = (typeof opts.isAvailable === 'function') ? opts.isAvailable(day) : true,
-                    isShowAvailability = opts.showAvailability,
-	                isShowCustomContent = opts.showCustomContent,
-	                isCustomContent = opts.customContent;
+	                isShowAvailability = opts.showAvailability,
+	                isShowCustomContent = (typeof opts.isCustomContent === 'function') && opts.showCustomContent ? opts.isCustomContent(day) : "";
 
-                row.push(renderDay(1 + (i - before), month, year, isSelected, isToday, isDisabled, isEmpty, isAvailable, isShowCustomContent, isCustomContent, isShowAvailability));
+                row.push(renderDay(1 + (i - before), month, year, isSelected, isToday, isDisabled, isEmpty, isAvailable, isShowCustomContent, isShowAvailability));
 
                 if (++r === 7) {
                     if (opts.showWeekNumber) {
