@@ -174,7 +174,7 @@
         // bind the picker to a form field
         field: null,
 
-	    //ShowPriceOnCalendar
+	    // add custom content to each date
 	    showCustomContent: false,
 
         // automatically show/hide the picker on `field` focus (default `true` if `field` is set)
