@@ -203,7 +203,7 @@
         firstDay: 0,
 
         // the default flag for moment's strict date parsing
-        formatStrict: undefined,
+        formatStrict: false,
 
         // the minimum/earliest date that can be selected
         minDate: null,
