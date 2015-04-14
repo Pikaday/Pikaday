@@ -540,7 +540,22 @@
             if (opts.container) {
                 opts.container.appendChild(self.el);
             } else if (opts.bound) {
-                document.body.appendChild(self.el);
+                if(opts.injectMode === 'relative') {
+                    self.injector = document.createElement('div');
+                    self.injector.className = 'pika-injector';
+
+                    self.injector.appendChild(self.el);
+
+                    if(!!~opts.position.indexOf('top')) {
+                        opts.field.parentNode.insertBefore(self.injector, opts.field);
+                    } else {
+                        opts.field.parentNode.insertBefore(self.injector, opts.field.nextSibling);
+                    }
+
+                } else {
+                    document.body.appendChild(self.el);
+                }
+
             } else {
                 opts.field.parentNode.insertBefore(self.el, opts.field.nextSibling);
             }
