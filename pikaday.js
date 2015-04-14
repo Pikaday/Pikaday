@@ -187,6 +187,10 @@
         // ('bottom' & 'left' keywords are not used, 'top' & 'right' are modifier on the bottom/left position)
         position: 'bottom left',
 
+        // injectMode of the datepicker, either next to the DOM node inside a relative container (default)
+        // or bottomline, before the closing body tag
+        injectMode: 'relative',
+
         // automatically fit in the viewport even if it means repositioning from the position option
         reposition: true,
 
