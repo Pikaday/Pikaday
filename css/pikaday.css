@@ -5,6 +5,11 @@
  * Copyright © 2014 David Bushell | BSD & MIT license | http://dbushell.com/
  */
 
+.pika-injector {
+    display: block;
+    position: relative;
+}
+
 .pika-single {
     z-index: 9999;
     display: block;
@@ -14,6 +19,10 @@
     border: 1px solid #ccc;
     border-bottom-color: #bbb;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.pika-injector > .pika-single {
+    position: absolute;
 }
 
 /*
