@@ -201,3 +201,13 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     cursor: help;
 }
 
+.pika-foot {
+    padding: 5px 10px;
+    text-align: right;
+}
+.pika-foot a {
+      text-decoration: none;
+      font-size: 17px;
+      color: #292929;
+      font-weight: bold;
+}

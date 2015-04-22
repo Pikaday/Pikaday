@@ -249,11 +249,15 @@
         // Theme Classname
         theme: null,
 
+        // Select multiple dates
+        multiple: false,
+
         // callback function
         onSelect: null,
         onOpen: null,
         onClose: null,
-        onDraw: null
+        onDraw: null,
+        onMultiSelect: null
     },
 
 
@@ -393,6 +397,9 @@
     {
         var self = this,
             opts = self.config(options);
+        if(opts.multiple) {
+            this._multiDates = [];
+        }
 
         self._onMouseDown = function(e)
         {
@@ -407,6 +414,24 @@
 
             if (!hasClass(target.parentNode, 'is-disabled')) {
                 if (hasClass(target, 'pika-button') && !hasClass(target, 'is-empty')) {
+                    if(opts.multiple) {
+                        //var date = self.setDate(new Date(target.getAttribute('data-pika-year'), target.getAttribute('data-pika-month'), target.getAttribute('data-pika-day')),false,true);
+                        var date = new Date(target.getAttribute('data-pika-year'), target.getAttribute('data-pika-month'), target.getAttribute('data-pika-day'));
+                        var removed = false;
+                        for(var i = 0, l = self._multiDates.length; i < l; i++) {
+                            if(compareDates(date,self._multiDates[i])) {
+                                
+                                self._multiDates.splice(i,1);
+                                removed = true;
+                                break;
+                            }
+                        }
+                        if(!removed) {
+                            self._multiDates.push(date);
+                        }
+                        self.adjustCalendars();
+                        return;
+                    }
                     self.setDate(new Date(target.getAttribute('data-pika-year'), target.getAttribute('data-pika-month'), target.getAttribute('data-pika-day')));
                     if (opts.bound) {
                         sto(function() {
@@ -486,6 +511,9 @@
 
         self._onInputBlur = function()
         {
+            if(opts.multiple) {
+                return;
+            }
             // IE allows pika div to gain focus; catch blur the input field
             var pEl = document.activeElement;
             do {
@@ -524,6 +552,15 @@
             }
             while ((pEl = pEl.parentNode));
             if (self._v && target !== opts.trigger && pEl !== opts.trigger) {
+                if(opts.multiple && typeof opts.onMultiSelect === 'function') {
+                    var dates = [];
+                    for(var i = 0, l = self._multiDates.length; i < l; i++) {
+                        dates.push(self.setDate(self._multiDates[i],false,true));
+                    }
+                    self._multiDates = [];
+                    opts.onMultiSelect(dates);
+                    self._d = null;
+                }
                 self.hide();
             }
         };
@@ -681,7 +718,7 @@
         /**
          * set the current selection
          */
-        setDate: function(date, preventOnSelect)
+        setDate: function(date, preventOnSelect, returnDate)
         {
             if (!date) {
                 this._d = null;
@@ -710,6 +747,11 @@
             }
 
             this._d = new Date(date.getTime());
+
+            if(typeof returnDate !== 'undefined') {
+                return this.toString();
+            }
+
             setToStartOfDay(this._d);
             this.gotoDate(this._d);
 
@@ -859,6 +901,20 @@
 
             this.el.innerHTML = html;
 
+            if(opts.multiple) {
+                var a = document.createElement('a');
+                a.innerHTML = 'select';
+                a.href = '#';
+                var foot = document.createElement('div');
+                addClass(foot,'pika-foot');
+                foot.appendChild(a);
+                addEvent(a,'click',function(e) {
+                    e.preventDefault();
+                    document.body.click();
+                });
+                this.el.appendChild(foot);
+            }
+
             if (opts.bound) {
                 if(opts.field.type !== 'hidden') {
                     sto(function() {
@@ -955,6 +1011,16 @@
                                  (opts.maxDate && day > opts.maxDate) ||
                                  (opts.disableWeekends && isWeekend(day)) ||
                                  (opts.disableDayFn && opts.disableDayFn(day));
+                if(opts.multiple) {
+                    for(var j = 0, l = this._multiDates.length; j < l; j++) {
+                        if(compareDates(day,this._multiDates[j])) {
+                            isSelected = true;
+                            break;
+                        }
+                    }
+                } else {
+                    isSelected = isDate(this._d) ? compareDates(day, this._d) : false;
+                }
 
                 row.push(renderDay(1 + (i - before), month, year, isSelected, isToday, isDisabled, isEmpty));
 
