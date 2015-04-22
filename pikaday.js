@@ -878,7 +878,7 @@
         adjustPosition: function()
         {
             if (this._o.container) return;
-            var field = this._o.trigger, pEl = field,
+            var field = this._o.trigger, pEl = field, self = this,
             width = this.el.offsetWidth, height = this.el.offsetHeight,
             viewportWidth = window.innerWidth || document.documentElement.clientWidth,
             viewportHeight = window.innerHeight || document.documentElement.clientHeight,
@@ -898,6 +898,9 @@
                 }
             }
 
+            // removes 'is-above' class for styling purposes
+            self.el.classList.remove('is-above');
+
             // default position is bottom & left
             if ((this._o.reposition && left + width > viewportWidth) ||
                 (
@@ -914,6 +917,9 @@
                 )
             ) {
                 top = top - height - field.offsetHeight;
+
+                //Adds 'is-above' class for styling purposes
+                self.el.classList.add('is-above');
             }
 
             this.el.style.position = 'absolute';
