@@ -922,7 +922,6 @@
                 top = top - height - field.offsetHeight;
             }
 
-            this.el.style.position = 'absolute';
             this.el.style.left = left + 'px';
             this.el.style.top = top + 'px';
         },
