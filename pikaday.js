@@ -207,6 +207,9 @@
         // the maximum/latest date that can be selected
         maxDate: null,
 
+        // whether a range of date can be selected
+        range: false,
+
         // number of years either side, or array of upper/lower range
         yearRange: 10,
 
@@ -269,7 +272,7 @@
         return abbr ? opts.i18n.weekdaysShort[day] : opts.i18n.weekdays[day];
     },
 
-    renderDay = function(d, m, y, isSelected, isToday, isDisabled, isEmpty)
+    renderDay = function(d, m, y, isSelected, isToday, isDisabled, isEmpty, isBetween)
     {
         if (isEmpty) {
             return '<td class="is-empty"></td>';
@@ -283,6 +286,9 @@
         }
         if (isSelected) {
             arr.push('is-selected');
+        }
+        if (isBetween) {
+            arr.push('is-between');
         }
         return '<td data-day="' + d + '" class="' + arr.join(' ') + '">' +
                  '<button class="pika-button pika-day" type="button" ' +
@@ -679,12 +685,23 @@
         },
 
         /**
+         * return a Date object of the last day in the current selection
+         */
+        getLastDate: function()
+        {
+            return isDate(this._e) ? new Date(this._e.getTime()) : null;
+        },
+
+        /**
          * set the current selection
          */
         setDate: function(date, preventOnSelect)
         {
+            var opts   = this._o;
+
             if (!date) {
                 this._d = null;
+                this._e = null;
 
                 if (this._o.field) {
                     this._o.field.value = '';
@@ -709,9 +726,24 @@
                 date = max;
             }
 
-            this._d = new Date(date.getTime());
-            setToStartOfDay(this._d);
-            this.gotoDate(this._d);
+            if (!opts.range || !isDate(this._d) || isDate(this._e)) {
+                this._d = new Date(date.getTime());
+                this._e = null;
+                setToStartOfDay(this._d);
+                this.gotoDate(this._d);
+            } else {
+                var newDate = new Date(date.getTime());
+                setToStartOfDay(newDate);
+
+                if (newDate >= this._d) {
+                    this._e = newDate;
+                    this.gotoDate(this._e);
+                } else {
+                    this._e = this._d;
+                    this._d = newDate;
+                    this.gotoDate(this._d);
+                }
+            }
 
             if (this._o.field) {
                 this._o.field.value = this.toString();
@@ -860,11 +892,15 @@
             this.el.innerHTML = html;
 
             if (opts.bound) {
-                if(opts.field.type !== 'hidden') {
+                if (opts.field.type !== 'hidden') {
                     sto(function() {
                         opts.trigger.focus();
                     }, 1);
                 }
+            }
+
+            if (opts.range) {
+                // console.log('range calendar');
             }
 
             if (typeof this._o.onDraw === 'function') {
@@ -948,7 +984,9 @@
             for (var i = 0, r = 0; i < cells; i++)
             {
                 var day = new Date(year, month, 1 + (i - before)),
-                    isSelected = isDate(this._d) ? compareDates(day, this._d) : false,
+                    isSelected = (isDate(this._d) ? compareDates(day, this._d) : false) ||
+                                 (isDate(this._e) ? compareDates(day, this._e) : false),
+                    isBetween = isDate(this._d) && isDate(this._e) ? (day > this._d && day < this._e) : false,
                     isToday = compareDates(day, now),
                     isEmpty = i < before || i >= (days + before),
                     isDisabled = (opts.minDate && day < opts.minDate) ||
@@ -956,7 +994,7 @@
                                  (opts.disableWeekends && isWeekend(day)) ||
                                  (opts.disableDayFn && opts.disableDayFn(day));
 
-                row.push(renderDay(1 + (i - before), month, year, isSelected, isToday, isDisabled, isEmpty));
+                row.push(renderDay(1 + (i - before), month, year, isSelected, isToday, isDisabled, isEmpty, isBetween));
 
                 if (++r === 7) {
                     if (opts.showWeekNumber) {
