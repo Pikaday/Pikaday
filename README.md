@@ -269,6 +269,10 @@ You can use the work [@owenmead][owenmead] did most recently at [owenmead/Pikada
 A more simple time selection approach done by [@xeeali][xeeali] at [xeeali/Pikaday][xeeali Pika] is based on version 1.2.0.  
 Also [@stas][stas] has a fork [stas/Pikaday][stas Pika], but is now quite old
 
+### Skeleton
+
+[Skeleton][skeleton]'s CSS conflicts with Pikaday's. [nathancahill/pikaday-skeleton][pikaday-skeleton] makes them compatible.
+
 
 ## Browser Compatibility
 
@@ -313,6 +317,8 @@ Copyright © 2014 David Bushell | BSD & MIT license
   [owen Pika]:   https://github.com/owenmead/Pikaday                              "Pikaday"
   [xeeali]:      https://github.com/xeeali                                        "@xeeali"
   [xeeali Pika]: https://github.com/xeeali/Pikaday                                "Pikaday"
+  [skeleton]: http://getskeleton.com/                                              "Skeleton"
+  [pikaday-skeleton]: http://github.com/nathancahill/pikaday-skeleton/            "Pikaday Skeleton"
   [moment.js example]: http://dbushell.github.com/Pikaday/examples/moment.html    "Pikaday w/ moment.js"
   [jQuery example]: http://dbushell.github.com/Pikaday/examples/jquery.html       "Pikaday w/ jQuery"
   [AMD example]: http://dbushell.github.com/Pikaday/examples/amd.html             "Pikaday w/ AMD"
