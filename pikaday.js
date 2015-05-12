@@ -67,10 +67,14 @@
             ev = document.createEvent('HTMLEvents');
             ev.initEvent(eventName, true, false);
             ev = extend(ev, data);
-            el.dispatchEvent(ev);
         } else if (document.createEventObject) {
             ev = document.createEventObject();
-            ev = extend(ev, data);
+            ev = extend(ev, data);   
+        }
+        
+        if (el.dispatchEvent) {
+            el.dispatchEvent(ev);
+        } else if (el.fireEvent) {
             el.fireEvent('on' + eventName, ev);
         }
     },
