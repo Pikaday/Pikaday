@@ -356,7 +356,7 @@
                 ((isMinYear && i < opts.minMonth) || (isMaxYear && i > opts.maxMonth) ? 'disabled' : '') + '>' +
                 opts.i18n.months[i] + '</option>');
         }
-        monthHtml = '<div class="pika-label">' + opts.i18n.months[month] + '<select class="pika-select pika-select-month">' + arr.join('') + '</select></div>';
+        monthHtml = '<div class="pika-label">' + opts.i18n.months[month] + '<select class="pika-select pika-select-month" tabindex="-1">' + arr.join('') + '</select></div>';
 
         if (isArray(opts.yearRange)) {
             i = opts.yearRange[0];
@@ -371,7 +371,7 @@
                 arr.push('<option value="' + i + '"' + (i === year ? ' selected': '') + '>' + (i) + '</option>');
             }
         }
-        yearHtml = '<div class="pika-label">' + year + opts.yearSuffix + '<select class="pika-select pika-select-year">' + arr.join('') + '</select></div>';
+        yearHtml = '<div class="pika-label">' + year + opts.yearSuffix + '<select class="pika-select pika-select-year" tabindex="-1">' + arr.join('') + '</select></div>';
 
         if (opts.showMonthAfterYear) {
             html += yearHtml + monthHtml;
@@ -459,14 +459,7 @@
                 return;
             }
 
-            // Do not preventDefaul when using time picker
-            if (!hasClass(target, 'pika-select-hour')
-                        && !hasClass(target, 'pika-select-minute')
-                        && !hasClass(target, 'pika-select-second')) {
-                e.preventDefault();
-            }
-
-            if (!hasClass(target, 'is-disabled')) {
+            if (!hasClass(target.parentNode, 'is-disabled')) {
                 if (hasClass(target, 'pika-button') && !hasClass(target, 'is-empty')) {
                     var newDate = new Date(
                             target.getAttribute('data-pika-year'),
@@ -546,7 +539,9 @@
             else {
                 date = new Date(Date.parse(opts.field.value));
             }
-            self.setDate(isDate(date) ? date : null);
+            if (isDate(date)) {
+              self.setDate(date)
+            }
             if (!self._v) {
                 self.show();
             }
@@ -611,7 +606,7 @@
         self.el = document.createElement('div');
         self.el.className = 'pika-single' + (opts.isRTL ? ' is-rtl' : '') + (opts.theme ? ' ' + opts.theme : '');
 
-        addEvent(self.el, 'ontouchend' in document ? 'ontouchend' : 'mousedown', self._onMouseDown, true);
+        addEvent(self.el, 'ontouchend' in document ? 'touchend' : 'mousedown', self._onMouseDown, true);
         addEvent(self.el, 'change', self._onChange);
 
         if (opts.field) {
@@ -1049,11 +1044,9 @@
                 top = top - height - field.offsetHeight;
             }
 
-            this.el.style.cssText = [
-                'position: absolute',
-                'left: ' + left + 'px',
-                'top: ' + top + 'px'
-            ].join(';');
+            this.el.style.position = 'absolute';
+            this.el.style.left = left + 'px';
+            this.el.style.top = top + 'px';
         },
 
         /**
@@ -1138,7 +1131,9 @@
                 if (this._o.bound) {
                     removeEvent(document, 'click', this._onClick);
                 }
-                this.el.style.cssText = '';
+                this.el.style.position = 'static'; // reset
+                this.el.style.left = 'auto';
+                this.el.style.top = 'auto';
                 addClass(this.el, 'is-hidden');
                 this._v = false;
                 if (v !== undefined && typeof this._o.onClose === 'function') {
