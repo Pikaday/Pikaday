@@ -877,13 +877,19 @@
 
         adjustPosition: function()
         {
+            var field, pEl, width, height, viewportWidth, viewportHeight, scrollTop, left, top, clientRect;
+            
             if (this._o.container) return;
-            var field = this._o.trigger, pEl = field,
-            width = this.el.offsetWidth, height = this.el.offsetHeight,
-            viewportWidth = window.innerWidth || document.documentElement.clientWidth,
-            viewportHeight = window.innerHeight || document.documentElement.clientHeight,
-            scrollTop = window.pageYOffset || document.body.scrollTop || document.documentElement.scrollTop,
-            left, top, clientRect;
+            
+            this.el.style.position = 'absolute';
+            
+            field = this._o.trigger;
+            pEl = field;
+            width = this.el.offsetWidth;
+            height = this.el.offsetHeight;
+            viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+            viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+            scrollTop = window.pageYOffset || document.body.scrollTop || document.documentElement.scrollTop;
 
             if (typeof field.getBoundingClientRect === 'function') {
                 clientRect = field.getBoundingClientRect();
@@ -916,7 +922,6 @@
                 top = top - height - field.offsetHeight;
             }
 
-            this.el.style.position = 'absolute';
             this.el.style.left = left + 'px';
             this.el.style.top = top + 'px';
         },
