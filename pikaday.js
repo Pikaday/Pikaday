@@ -822,7 +822,10 @@
          */
         setMaxDate: function(value)
         {
+            setToStartOfDay(value);
             this._o.maxDate = value;
+            this._o.maxYear  = value.getFullYear();
+            this._o.maxMonth = value.getMonth();
         },
 
         /**
