@@ -219,6 +219,9 @@
         minMonth: undefined,
         maxMonth: undefined,
 
+        startRange: null,
+        endRange: null,
+
         isRTL: false,
 
         // Additional text to append to the year in the calendar title
@@ -269,7 +272,7 @@
         return abbr ? opts.i18n.weekdaysShort[day] : opts.i18n.weekdays[day];
     },
 
-    renderDay = function(d, m, y, isSelected, isToday, isDisabled, isEmpty)
+    renderDay = function(d, m, y, isSelected, isToday, isDisabled, isEmpty, isInRange)
     {
         if (isEmpty) {
             return '<td class="is-empty"></td>';
@@ -283,6 +286,9 @@
         }
         if (isSelected) {
             arr.push('is-selected');
+        }
+        if (isInRange) {
+            arr.push('is-inrange');
         }
         return '<td data-day="' + d + '" class="' + arr.join(' ') + '">' +
                  '<button class="pika-button pika-day" type="button" ' +
@@ -825,6 +831,16 @@
             this._o.maxDate = value;
         },
 
+        setStartRange: function(value)
+        {
+            this._o.startRange = value;
+        },
+
+        setEndRange: function(value)
+        {
+            this._o.endRange = value;
+        },
+
         /**
          * refresh the HTML
          */
@@ -956,12 +972,16 @@
                     isSelected = isDate(this._d) ? compareDates(day, this._d) : false,
                     isToday = compareDates(day, now),
                     isEmpty = i < before || i >= (days + before),
+                    isInRange = opts.startRange && opts.endRange && opts.startRange < day && day < opts.endRange,
                     isDisabled = (opts.minDate && day < opts.minDate) ||
                                  (opts.maxDate && day > opts.maxDate) ||
                                  (opts.disableWeekends && isWeekend(day)) ||
                                  (opts.disableDayFn && opts.disableDayFn(day));
 
-                row.push(renderDay(1 + (i - before), month, year, isSelected, isToday, isDisabled, isEmpty));
+                if (opts.startRange) isSelected = isSelected || compareDates(opts.startRange, day);
+                if (opts.endRange) isSelected = isSelected || compareDates(opts.endRange, day);
+
+                row.push(renderDay(1 + (i - before), month, year, isSelected, isToday, isDisabled, isEmpty, isInRange));
 
                 if (++r === 7) {
                     if (opts.showWeekNumber) {
