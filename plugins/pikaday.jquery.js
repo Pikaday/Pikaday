@@ -1,7 +1,7 @@
 /*!
  * Pikaday jQuery plugin.
  *
- * Copyright © 2013 David Bushell | BSD & MIT license | https://github.com/dbushell/Pikaday
+ * Copyright 2013 David Bushell | BSD & MIT license | https://github.com/dbushell/Pikaday
  */
 
 (function (root, factory)
