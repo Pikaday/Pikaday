@@ -563,7 +563,15 @@
                 self.gotoDate(defDate);
             }
         } else {
-            self.gotoDate(new Date());
+            defDate = new Date();
+
+            if (opts.minDate && opts.minDate > defDate) {
+                defDate = opts.minDate;
+            } else if (opts.maxDate && opts.maxDate < defDate) {
+                defDate = opts.maxDate;
+            }
+
+            self.gotoDate(defDate);
         }
 
         if (opts.bound) {
