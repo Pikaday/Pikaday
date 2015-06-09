@@ -45,6 +45,7 @@
         },
         updateEndDate = function() {
             startPicker.setEndRange(endDate);
+            startPicker.setMaxDate(endDate);
             endPicker.setEndRange(endDate);
         },
         startPicker = new Pikaday({

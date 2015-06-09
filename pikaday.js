@@ -272,28 +272,34 @@
         return abbr ? opts.i18n.weekdaysShort[day] : opts.i18n.weekdays[day];
     },
 
-    renderDay = function(d, m, y, isSelected, isToday, isDisabled, isEmpty, isInRange)
+    renderDay = function(opts)
     {
-        if (isEmpty) {
+        if (opts.isEmpty) {
             return '<td class="is-empty"></td>';
         }
         var arr = [];
-        if (isDisabled) {
+        if (opts.isDisabled) {
             arr.push('is-disabled');
         }
-        if (isToday) {
+        if (opts.isToday) {
             arr.push('is-today');
         }
-        if (isSelected) {
+        if (opts.isSelected) {
             arr.push('is-selected');
         }
-        if (isInRange) {
+        if (opts.isInRange) {
             arr.push('is-inrange');
         }
-        return '<td data-day="' + d + '" class="' + arr.join(' ') + '">' +
+        if (opts.isStartRange) {
+            arr.push('is-startrange');
+        }
+        if (opts.isEndRange) {
+            arr.push('is-endrange');
+        }
+        return '<td data-day="' + opts.day + '" class="' + arr.join(' ') + '">' +
                  '<button class="pika-button pika-day" type="button" ' +
-                    'data-pika-year="' + y + '" data-pika-month="' + m + '" data-pika-day="' + d + '">' +
-                        d +
+                    'data-pika-year="' + opts.year + '" data-pika-month="' + opts.month + '" data-pika-day="' + opts.day + '">' +
+                        opts.day +
                  '</button>' +
                '</td>';
     },
@@ -968,20 +974,32 @@
             cells += 7 - after;
             for (var i = 0, r = 0; i < cells; i++)
             {
-                var day = new Date(year, month, 1 + (i - before)),
+                var dayConfig,
+                    day = new Date(year, month, 1 + (i - before)),
                     isSelected = isDate(this._d) ? compareDates(day, this._d) : false,
                     isToday = compareDates(day, now),
                     isEmpty = i < before || i >= (days + before),
+                    isStartRange = opts.startRange && compareDates(opts.startRange, day),
+                    isEndRange = opts.endRange && compareDates(opts.endRange, day),
                     isInRange = opts.startRange && opts.endRange && opts.startRange < day && day < opts.endRange,
                     isDisabled = (opts.minDate && day < opts.minDate) ||
                                  (opts.maxDate && day > opts.maxDate) ||
                                  (opts.disableWeekends && isWeekend(day)) ||
-                                 (opts.disableDayFn && opts.disableDayFn(day));
+                                 (opts.disableDayFn && opts.disableDayFn(day)),
+                    dayConfig = {
+                        day: 1 + (i - before),
+                        month: month,
+                        year: year,
+                        isSelected: isSelected,
+                        isToday: isToday,
+                        isDisabled: isDisabled,
+                        isEmpty: isEmpty,
+                        isStartRange: isStartRange,
+                        isEndRange: isEndRange,
+                        isInRange: isInRange
+                    };
 
-                if (opts.startRange) isSelected = isSelected || compareDates(opts.startRange, day);
-                if (opts.endRange) isSelected = isSelected || compareDates(opts.endRange, day);
-
-                row.push(renderDay(1 + (i - before), month, year, isSelected, isToday, isDisabled, isEmpty, isInRange));
+                row.push(renderDay(dayConfig));
 
                 if (++r === 7) {
                     if (opts.showWeekNumber) {
