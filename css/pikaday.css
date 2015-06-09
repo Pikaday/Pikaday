@@ -96,7 +96,9 @@ http://nicolasgallagher.com/micro-clearfix-hack/
 }
 
 .pika-prev:hover,
-.pika-next:hover {
+.pika-next:hover,
+.pika-prev:focus,
+.pika-next:focus {
     opacity: 1;
 }
 
@@ -188,11 +190,12 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     opacity: .3;
 }
 
+.pika-button:focus,
 .pika-button:hover {
-    color: #fff !important;
-    background: #ff8000 !important;
-    box-shadow: none !important;
-    border-radius: 3px !important;
+    color: #fff;
+    background: #ff8000;
+    box-shadow: none;
+    border-radius: 3px;
 }
 
 /* styling for abbr */
