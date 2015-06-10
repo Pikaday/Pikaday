@@ -265,9 +265,12 @@
         if (isEmpty) {
             return '<td class="is-empty"></td>';
         }
-        var arr = [];
+        var
+          arr = [],
+          disabled = '';
         if (isDisabled) {
             arr.push('is-disabled');
+            disabled = 'aria-hidden="true" disabled="disabled" ';
         }
         if (isToday) {
             arr.push('is-today');
@@ -276,7 +279,7 @@
             arr.push('is-selected');
         }
         return '<td data-day="' + d + '" class="' + arr.join(' ') + '">' +
-                 '<button class="pika-button pika-day" type="button" ' +
+                 '<button class="pika-button pika-day" type="button" ' + disabled +
                     'data-pika-year="' + y + '" data-pika-month="' + m + '" data-pika-day="' + d + '">' +
                         d +
                  '</button>' +
