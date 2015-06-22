@@ -411,9 +411,6 @@
                     if (opts.bound) {
                         sto(function() {
                             self.hide();
-                            if (opts.field) {
-                                opts.field.blur();
-                            }
                         }, 100);
                     }
                     return;
