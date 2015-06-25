@@ -107,11 +107,11 @@
     }
 
     .is-selected & {
-        color: $pika-button__is-disabled--color;
-        font-weight: $pika-button__is-disabled--font-weight;
-        background: $pika-button__is-disabled--background;
-        box-shadow: $pika-button__is-disabled--box-shadow;
-        border-radius: $pika-button__is-disabled--border-radius;
+        color: $pika-button__is-selected--color;
+        font-weight: $pika-button__is-selected--font-weight;
+        background: $pika-button__is-selected--background;
+        box-shadow: $pika-button__is-selected--box-shadow;
+        border-radius: $pika-button__is-selected--border-radius;
     }
 
     .is-disabled & {
