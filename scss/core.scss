@@ -26,6 +26,11 @@
         z-index: 9998;
         filter: alpha(opacity=0);
         opacity: 0;
+
+        // Following values could be overwritten in the theme.scss. Yes this is redundant. Here's a better solution how to solve this problem: https://github.com/dbushell/Pikaday/issues/351
+        margin: 0;
+        left: 0;
+        top: 5px;
     }
 }
 
