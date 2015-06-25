@@ -1,14 +1,14 @@
 {
   "name": "pikaday",
   "version": "1.3.2",
-  "description": "A refreshing JavaScript Datepicker — lightweight, no dependencies, modular CSS",
+  "description": "A fork of Pikaday, a refreshing JavaScript Datepicker — lightweight, no dependencies, modular CSS",
   "keywords": [
     "datepicker",
     "calendar",
     "date"
   ],
-  "homepage": "http://dbushell.github.io/Pikaday/",
-  "bugs": "https://github.com/dbushell/Pikaday/issues",
+  "homepage": "http://wujekbogdan.github.io/Pikaday/",
+  "bugs": "https://github.com/wujekbogdan/Pikaday/issues",
   "licenses": [
     {
       "type": "BSD",
@@ -22,7 +22,7 @@
   "main": "pikaday.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dbushell/Pikaday.git"
+    "url": "https://github.com/wujekbogdan/Pikaday.git"
   },
   "optionalDependencies": {
     "moment": "2.x"

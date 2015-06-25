@@ -1,7 +1,7 @@
 {
   "name": "pikaday",
-  "repo": "dbushell/Pikaday",
-  "description": "A refreshing JavaScript Datepicker — lightweight, no dependencies, modular CSS",
+  "repo": "wujekbogdan/Pikaday",
+  "description": "A fork of Pikaday, a refreshing JavaScript Datepicker — lightweight, no dependencies, modular CSS",
   "version": "1.3.2",
   "keywords": [
     "datepicker",

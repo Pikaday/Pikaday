@@ -1,6 +1,6 @@
 {
   "name": "pikaday",
-  "description": "A refreshing JavaScript Datepicker — lightweight, no dependencies, modular CSS",
+  "description": "A fork of Pikaday, a refreshing JavaScript Datepicker — lightweight, no dependencies, modular CSS",
   "keywords": [
     "datepicker",
     "calendar",
@@ -23,6 +23,6 @@
   "homepage": "http://dbushell.github.io/Pikaday/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dbushell/Pikaday.git"
+    "url": "https://github.com/wujekbogdan/Pikaday.git"
   }
 }

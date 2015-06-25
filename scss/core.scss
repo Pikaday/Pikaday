@@ -43,7 +43,7 @@
     cursor: pointer;
     position: relative;
     outline: none;
-    text-indent: 100%;
+    text-indent: 100%; /* replaced px based value with 100%. Now text-indent is not width dependent */
     white-space: nowrap;
     overflow: hidden;
     *position: absolute;
