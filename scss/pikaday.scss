@@ -1,3 +1,5 @@
+@import "variables";
+
 /*!
  * Pikaday
  * Copyright © 2014 David Bushell | BSD & MIT license | http://dbushell.com/
@@ -7,11 +9,12 @@
     z-index: 9999;
     display: block;
     position: relative;
-    color: #333;
-    background: #fff;
-    border: 1px solid #ccc;
-    border-bottom-color: #bbb;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: $pika-single--color;
+    background: $pika-single--background;
+    border-width: $pika-single--border-width;
+    border-style: $pika-single--border-style;
+    border-color: $pika-single--border-color;
+    font-family: $pika-single--font-family;
 
     &.is-hidden {
         display: none;
@@ -19,7 +22,7 @@
 
     &.is-bound {
         position: absolute;
-        box-shadow: 0 5px 15px -5px rgba(0,0,0,.5);
+        box-shadow: $pika-single__is-bound--box-shadow;
     }
 }
 
@@ -39,21 +42,21 @@
 
 .pika-lendar {
     float: left;
-    width: 240px;
-    margin: 8px;
+    width: $pika-lendar--width;
+    margin: $pika-lendar--margin;
 }
 
 .pika-title {
     position: relative;
-    text-align: center;
+    text-align: $pika-title--text-align;
 
     select {
         cursor: pointer;
         position: absolute;
         z-index: 9998;
-        margin: 0;
-        left: 0;
-        top: 5px;
+        margin: $pika-title__select--margin;
+        left: $pika-title__select--left;
+        top: $pika-title__select--top;
         filter: alpha(opacity=0);
         opacity: 0;
     }
@@ -65,12 +68,12 @@
     position: relative;
     z-index: 9999;
     overflow: hidden;
-    margin: 0;
-    padding: 5px 3px;
-    font-size: 14px;
-    line-height: 20px;
-    font-weight: bold;
-    background-color: #fff;
+    margin: $pika-label--margin;
+    padding: $pika-label--padding;
+    font-size: $pika-label--font-size;
+    line-height: $pika-label--line-height;
+    font-weight: $pika-label--font-weight;
+    background-color: $pika-label--background-color;
 }
 
 .pika-prev,
@@ -79,42 +82,40 @@
     cursor: pointer;
     position: relative;
     outline: none;
-    border: 0;
-    padding: 0;
-    width: 20px;
-    height: 30px;
-    text-indent: 20px; // hide text using text-indent trick, using width value (it's enough)
+    border: $pika-controls--border;
+    padding: $pika-controls--padding;
+    width: $pika-controls--width;
+    height: $pika-controls--height;
+    text-indent: $pika-controls--width; // hide text using text-indent trick, using width value (it's enough)
     white-space: nowrap;
     overflow: hidden;
-    background-color: transparent;
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: 75% 75%;
-    opacity: .5;
+    background: $pika-controls--background;
+    background-size: $pika-controls--size;
+    opacity: $pika-controls--opacity;
     *position: absolute;
     *top: 0;
 
     &:hover {
-        opacity: 1;
+        opacity: $pika-controls_hover--opacity;
     }
 
     &.is-disabled {
         cursor: default;
-        opacity: .2;
+        opacity: $pika-controls_is-disabled--opacity;
     }
 }
 
 .pika-prev,
 .is-rtl .pika-next {
     float: left;
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAeCAYAAAAsEj5rAAAAUklEQVR42u3VMQoAIBADQf8Pgj+OD9hG2CtONJB2ymQkKe0HbwAP0xucDiQWARITIDEBEnMgMQ8S8+AqBIl6kKgHiXqQqAeJepBo/z38J/U0uAHlaBkBl9I4GwAAAABJRU5ErkJggg==');
+    background-image: $pika-prev--background;
     *left: 0;
 }
 
 .pika-next,
 .is-rtl .pika-prev {
     float: right;
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAeCAYAAAAsEj5rAAAAU0lEQVR42u3VOwoAMAgE0dwfAnNjU26bYkBCFGwfiL9VVWoO+BJ4Gf3gtsEKKoFBNTCoCAYVwaAiGNQGMUHMkjGbgjk2mIONuXo0nC8XnCf1JXgArVIZAQh5TKYAAAAASUVORK5CYII=');
+    background-image: $pika-next--background;
     *right: 0;
 }
 
@@ -124,28 +125,28 @@
 }
 
 .pika-table {
-    width: 100%;
-    border-collapse: collapse;
-    border-spacing: 0;
-    border: 0;
+    width: $pika-table--width;
+    border-collapse: $pika-table--border-collapse;
+    border-spacing: $pika-table--border-spacing;
+    border: $pika-table--border;
 
     th,
     td {
-        width: 14.285714285714286%;
-        padding: 0;
+        width: $pika-table--cell__width;
+        padding: $pika-table--cell__padding;
     }
 
     th {
-        color: #999;
-        font-size: 12px;
-        line-height: 25px;
-        font-weight: bold;
-        text-align: center;
+        color: $pika-table__th--color;
+        font-size: $pika-table__th--font-size;
+        line-height: $pika-table__th--line-height;
+        font-weight: $pika-table__th--font-weight;
+        text-align: $pika-table__th--text-align;
     }
 
     abbr {
-        border-bottom: none;
-        cursor: help;
+        border-bottom: $pika-table__abbr--border-bottom;
+        cursor: $pika-table__abbr--cursor;
     }
 }
 
@@ -155,45 +156,45 @@
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     outline: none;
-    border: 0;
-    margin: 0;
-    width: 100%;
-    padding: 5px;
-    color: #666;
-    font-size: 12px;
-    line-height: 15px;
-    text-align: right;
-    background: #f5f5f5;
+    border: $pika-button--border;
+    margin: $pika-button--margin;
+    width: $pika-button--width;
+    padding: $pika-button--padding;
+    color: $pika-button--color;
+    font-size: $pika-button--font-size;
+    line-height: $pika-button--line-height;
+    text-align: $pika-button--text-align;
+    background: $pika-button--background;
 
     .is-today & {
-        color: #33aaff;
-        font-weight: bold;
+        color: $pika-button__is-today--color;
+        font-weight: $pika-button__is-today--font-weight;
     }
 
     .is-selected & {
-        color: #fff;
-        font-weight: bold;
-        background: #33aaff;
-        box-shadow: inset 0 1px 3px #178fe5;
-        border-radius: 3px;
+        color: $pika-button__is-disabled--color;
+        font-weight: $pika-button__is-disabled--font-weight;
+        background: $pika-button__is-disabled--background;
+        box-shadow: $pika-button__is-disabled--box-shadow;
+        border-radius: $pika-button__is-disabled--border-radius;
     }
 
     .is-disabled & {
         pointer-events: none;
         cursor: default;
-        color: #999;
-        opacity: .3;
+        color: $pika-button__is-disabled--color;
+        opacity: $pika-button__is-disabled--opacity;
     }
 
     &:hover {
-        color: #fff;
-        background: #ff8000;
-        box-shadow: none;
-        border-radius: 3px;
+        color: $pika-button_hover--color;
+        background: $pika-button_hover--background;
+        box-shadow: $pika-button_hover--box-shadow;
+        border-radius: $pika-button_hover--border-radius;
     }
 }
 
 .pika-week {
-    font-size: 11px;
-    color: #999;
+    font-size: $pika-week--font-size;
+    color: $pika-week--color;
 }
