@@ -1,0 +1,86 @@
+.pika-single {
+    @include pica-clearfix();
+    z-index: 9999;
+    display: block;
+    position: relative;
+
+    &.is-hidden {
+        display: none;
+    }
+
+    &.is-bound {
+        position: absolute;
+    }
+}
+
+.pika-lendar {
+    float: left;
+}
+
+.pika-title {
+    position: relative;
+
+    select {
+        cursor: pointer;
+        position: absolute;
+        z-index: 9998;
+        filter: alpha(opacity=0);
+        opacity: 0;
+    }
+}
+
+.pika-label {
+    display: inline-block;
+    *display: inline;
+    position: relative;
+    z-index: 9999;
+    overflow: hidden;
+}
+
+.pika-prev,
+.pika-next {
+    display: block;
+    cursor: pointer;
+    position: relative;
+    outline: none;
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    *position: absolute;
+    *top: 0;
+
+    &.is-disabled {
+        cursor: default;
+    }
+}
+
+.pika-prev,
+.is-rtl .pika-next {
+    float: left;
+    *left: 0;
+}
+
+.pika-next,
+.is-rtl .pika-prev {
+    float: right;
+    *right: 0;
+}
+
+.pika-select {
+    display: inline-block;
+    *display: inline;
+}
+
+.pika-button {
+    cursor: pointer;
+    display: block;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    outline: none;
+
+    .is-disabled & {
+        pointer-events: none;
+        cursor: default;
+    }
+
+}

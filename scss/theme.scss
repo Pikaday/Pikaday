@@ -1,0 +1,133 @@
+.pika-single {
+    color: $pika-single--color;
+    background: $pika-single--background;
+    border-width: $pika-single--border-width;
+    border-style: $pika-single--border-style;
+    border-color: $pika-single--border-color;
+    font-family: $pika-single--font-family;
+
+    &.is-bound {
+        box-shadow: $pika-single__is-bound--box-shadow;
+    }
+}
+
+.pika-lendar {
+    width: $pika-lendar--width;
+    margin: $pika-lendar--margin;
+}
+
+.pika-title {
+    text-align: $pika-title--text-align;
+
+    select {
+        margin: $pika-title__select--margin;
+        left: $pika-title__select--left;
+        top: $pika-title__select--top;
+    }
+}
+
+.pika-label {
+    margin: $pika-label--margin;
+    padding: $pika-label--padding;
+    font-size: $pika-label--font-size;
+    line-height: $pika-label--line-height;
+    font-weight: $pika-label--font-weight;
+    background-color: $pika-label--background-color;
+}
+
+.pika-prev,
+.pika-next {
+    border: $pika-controls--border;
+    padding: $pika-controls--padding;
+    width: $pika-controls--width;
+    height: $pika-controls--height;
+    background: $pika-controls--background;
+    background-size: $pika-controls--size;
+    opacity: $pika-controls--opacity;
+
+    &:hover {
+        opacity: $pika-controls_hover--opacity;
+    }
+
+    &.is-disabled {
+        opacity: $pika-controls_is-disabled--opacity;
+    }
+}
+
+.pika-prev,
+.is-rtl .pika-next {
+    background-image: $pika-prev--background;
+}
+
+.pika-next,
+.is-rtl .pika-prev {
+    background-image: $pika-next--background;
+}
+
+.pika-table {
+    width: $pika-table--width;
+    border-collapse: $pika-table--border-collapse;
+    border-spacing: $pika-table--border-spacing;
+    border: $pika-table--border;
+
+    th,
+    td {
+        width: $pika-table--cell__width;
+        padding: $pika-table--cell__padding;
+    }
+
+    th {
+        color: $pika-table__th--color;
+        font-size: $pika-table__th--font-size;
+        line-height: $pika-table__th--line-height;
+        font-weight: $pika-table__th--font-weight;
+        text-align: $pika-table__th--text-align;
+    }
+
+    abbr {
+        border-bottom: $pika-table__abbr--border-bottom;
+        cursor: $pika-table__abbr--cursor;
+    }
+}
+
+.pika-button {
+    border: $pika-button--border;
+    margin: $pika-button--margin;
+    width: $pika-button--width;
+    padding: $pika-button--padding;
+    color: $pika-button--color;
+    font-size: $pika-button--font-size;
+    line-height: $pika-button--line-height;
+    text-align: $pika-button--text-align;
+    background: $pika-button--background;
+
+    .is-today & {
+        color: $pika-button__is-today--color;
+        font-weight: $pika-button__is-today--font-weight;
+    }
+
+    .is-selected & {
+        color: $pika-button__is-disabled--color;
+        font-weight: $pika-button__is-disabled--font-weight;
+        background: $pika-button__is-disabled--background;
+        box-shadow: $pika-button__is-disabled--box-shadow;
+        border-radius: $pika-button__is-disabled--border-radius;
+    }
+
+    .is-disabled & {
+        color: $pika-button__is-disabled--color;
+        opacity: $pika-button__is-disabled--opacity;
+    }
+
+    &:hover {
+        color: $pika-button_hover--color;
+        background: $pika-button_hover--background;
+        box-shadow: $pika-button_hover--box-shadow;
+        border-radius: $pika-button_hover--border-radius;
+    }
+}
+
+.pika-week {
+    font-size: $pika-week--font-size;
+    color: $pika-week--color;
+}
