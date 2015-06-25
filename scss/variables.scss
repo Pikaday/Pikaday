@@ -39,12 +39,13 @@ $pika-prev--background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAA
 
 $pika-next--background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAeCAYAAAAsEj5rAAAAU0lEQVR42u3VOwoAMAgE0dwfAnNjU26bYkBCFGwfiL9VVWoO+BJ4Gf3gtsEKKoFBNTCoCAYVwaAiGNQGMUHMkjGbgjk2mIONuXo0nC8XnCf1JXgArVIZAQh5TKYAAAAASUVORK5CYII=');
 
+// Im not sure about these - shuld it be customizable or not. Maybe it should be hardcoded in code.scss?
 $pika-table--width: 100%;
 $pika-table--border-collapse: collapse;
 $pika-table--border-spacing: 0;
 $pika-table--border: 0;
 
-$pika-table--cell__width: 14.285714285714286%; // Im not sure about this. Shoud it be customizable? Is there any reason to change it? It's just a result of 100% / 7;
+$pika-table--cell__width: 14.285714285714286%; // Especially Im not sure about this. Is there any reason to change it? It's just a result of 100% / 7;
 $pika-table--cell__padding: 0;
 
 $pika-table__th--color: #999;
