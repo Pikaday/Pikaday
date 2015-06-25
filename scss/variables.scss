@@ -1,0 +1,67 @@
+$pika-single--color: #333;
+$pika-single--border-color: #ccc;
+$pika-single--border-bottoom-color: #bbb;
+$pika-single--background: #fff;
+$pika-single--font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+$pika-single__is-bound--box-shadow: 0 5px 15px -5px rgba(0,0,0,.5);
+
+$pika-lendar--width: 240px;
+$pika-lendar--margin: 8px;
+
+$pika-title--text-align: center;
+$pika-title__select--margin: 0;
+
+$pika-label--padding: 5px 3px;
+$pika-label--font-size: 14px;
+$pika-label--line-height: 20px;
+$pika-label--font-weight: bold;
+$pika-label--background-color: #fff;
+
+$pika-controls--border: 0;
+$pika-controls--padding: 0;
+$pika-controls--width: 20px;
+$pika-controls--height: 30px;
+$pika-controls--background: transparent center center no-repeat;
+$pika-controls--size: 75% 75%;
+$pika-controls--opacity: .5;
+$pika-controls_hover--opacity: 1;
+$pika-controls__is-disabled--opacity: .2;
+
+$pika-prev--background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAeCAYAAAAsEj5rAAAAUklEQVR42u3VMQoAIBADQf8Pgj+OD9hG2CtONJB2ymQkKe0HbwAP0xucDiQWARITIDEBEnMgMQ8S8+AqBIl6kKgHiXqQqAeJepBo/z38J/U0uAHlaBkBl9I4GwAAAABJRU5ErkJggg==');
+
+$pika-next--background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAeCAYAAAAsEj5rAAAAU0lEQVR42u3VOwoAMAgE0dwfAnNjU26bYkBCFGwfiL9VVWoO+BJ4Gf3gtsEKKoFBNTCoCAYVwaAiGNQGMUHMkjGbgjk2mIONuXo0nC8XnCf1JXgArVIZAQh5TKYAAAAASUVORK5CYII=');
+
+$pika-table--width: 100%;
+$pika-table--border-collapse: collapse;
+$pika-table--border-spacing: 0;
+$pika-table--border: 0;
+$pika-table--cell__width: 14.285714285714286%; // Im not sure about this. Shoud it be customizable? Is there any reason to change it? It's just a result of 100% / 7;
+$pika-table--color: #999;
+$pika-table__th--font-size: 12px;
+$pika-table__th--line-height: 25px;
+$pika-table__th--font-weight: bold;
+$pika-table__abbr--border-bottom: none;
+$pika-table__abbr--cursor: help;
+
+$pika-button--border: 0;
+$pika-button--margin: 0;
+$pika-button--width: 100%;
+$pika-button--padding: 5px;
+$pika-button--color: #666;
+$pika-button--font-size: 12px;
+$pika-button--line-height: 15px;
+$pika-button--text-align: right;
+$pika-button--background: #f5f5f5;
+$pika-button__is-today--color: #33aaff;
+$pika-button__is-today--font-weight: bold;
+$pika-button__is-disabled--pointer-events: none;
+$pika-button__is-disabled--cursor: default;
+$pika-button__is-disabled--color: #999;
+$pika-button__is-disabled--opacity: .3;
+$pika-button_hover--color: #fff !important;
+$pika-button_hover--background: #ff8000 !important;
+$pika-button_hover--box-shadow: none !important;
+$pika-button_hover--border-radius: 3px !important;
+
+$pika-week--font-size: 11px;
+$pika-week--color: #999;
