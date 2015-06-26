@@ -472,7 +472,7 @@
                 return;
             }
             if (hasMoment) {
-                date = moment(opts.field.value, opts.format);
+                date = moment(opts.field.value);
                 date = (date && date.isValid()) ? date.toDate() : null;
             }
             else {
