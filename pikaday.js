@@ -478,9 +478,9 @@
             else {
                 date = new Date(Date.parse(opts.field.value));
             }
-            if (isDate(date)) {
-              self.setDate(date);
-            }
+
+            self.setDate(date);
+
             if (!self._v) {
                 self.show();
             }
@@ -900,11 +900,11 @@
         adjustPosition: function()
         {
             var field, pEl, width, height, viewportWidth, viewportHeight, scrollTop, left, top, clientRect;
-            
+
             if (this._o.container) return;
-            
+
             this.el.style.position = 'absolute';
-            
+
             field = this._o.trigger;
             pEl = field;
             width = this.el.offsetWidth;
