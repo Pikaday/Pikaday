@@ -9,7 +9,7 @@
     'use strict';
 
     var moment;
-    if (typeof exports === 'object') {
+    if (typeof exports === 'object' && typeof module !== 'undefined') {
         // CommonJS module
         // Load moment.js as an optional dependency
         try { moment = require('moment'); } catch (e) {}
@@ -900,11 +900,11 @@
         adjustPosition: function()
         {
             var field, pEl, width, height, viewportWidth, viewportHeight, scrollTop, left, top, clientRect;
-            
+
             if (this._o.container) return;
-            
+
             this.el.style.position = 'absolute';
-            
+
             field = this._o.trigger;
             pEl = field;
             width = this.el.offsetWidth;
