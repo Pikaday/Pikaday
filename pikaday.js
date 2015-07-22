@@ -172,6 +172,12 @@
         return calendar;
     },
 
+    isWeekdayDisabled = function(date, disabledWeekdays) {
+        var day = ''+date.getDay();
+        disabledWeekdays = ''+disabledWeekdays;
+        return day === disabledWeekdays || disabledWeekdays.indexOf(day) !== -1 ? true : false;
+    },
+
     /**
      * defaults and localisation
      */
@@ -900,11 +906,11 @@
         adjustPosition: function()
         {
             var field, pEl, width, height, viewportWidth, viewportHeight, scrollTop, left, top, clientRect;
-            
+
             if (this._o.container) return;
-            
+
             this.el.style.position = 'absolute';
-            
+
             field = this._o.trigger;
             pEl = field;
             width = this.el.offsetWidth;
@@ -984,6 +990,7 @@
                     isDisabled = (opts.minDate && day < opts.minDate) ||
                                  (opts.maxDate && day > opts.maxDate) ||
                                  (opts.disableWeekends && isWeekend(day)) ||
+                                 (isWeekdayDisabled(day, opts.disableWeekday)) ||
                                  (opts.disableDayFn && opts.disableDayFn(day)),
                     dayConfig = {
                         day: 1 + (i - before),
