@@ -95,8 +95,8 @@ Pikaday has many useful options:
 * `field` bind the datepicker to a form field
 * `trigger` use a different element to trigger opening the datepicker, see [trigger example][] (default to `field`)
 * `bound` automatically show/hide the datepicker on `field` focus (default `true` if `field` is set)
-* `position` preferred position of the datepicker relative to the form field, e.g.: `top right`, `bottom right` (default to 'bottom left')
-* `automaticAdjustment` avoid displaying the datepicker outside the viewport. See [positions example][] (default: true)
+* `position` preferred position of the datepicker relative to the form field, e.g.: `top right`, `bottom right` **Note:** automatic adjustment may occur to avoid datepicker from being displayed outside the viewport, see [positions example][] (default to 'bottom left')
+* `reposition` can be set to false to not reposition datepicker within the viewport, forcing it to take the configured `position` (default: true)
 * `container` DOM node to render calendar into, see [container example][] (default: undefined)
 * `format` the default output format for `.toString()` and `field` value (requires [Moment.js][moment] for custom formatting)
 * `defaultDate` the initial date to view when first opened
@@ -104,6 +104,8 @@ Pikaday has many useful options:
 * `firstDay` first day of the week (0: Sunday, 1: Monday, etc)
 * `minDate` the minimum/earliest date that can be selected (this should be a native Date object - e.g. `new Date()` or `moment().toDate()`)
 * `maxDate` the maximum/latest date that can be selected (this should be a native Date object - e.g. `new Date()` or `moment().toDate()`)
+* `disableWeekends` disallow selection of Saturdays or Sundays
+* `disableDayFn` callback function that gets passed a Date object for each day in view. Should return true to disable selection of that day.
 * `yearRange` number of years either side (e.g. `10`) or array of upper/lower range (e.g. `[1900,2015]`)
 * `showWeekNumber` show the ISO week number at the head of the row (default `false`)
 * `isRTL` reverse the calendar for right-to-left languages
@@ -112,6 +114,7 @@ Pikaday has many useful options:
 * `showMonthAfterYear` render the month after year in the title (default `false`)
 * `numberOfMonths` number of visible calendars
 * `mainCalendar` when `numberOfMonths` is used, this will help you to choose where the main calendar will be (default `left`, can be set to `right`). Only used for the first display or when a selected date is not already visible
+* `theme` define a classname that can be used as a hook for styling different themes, see [theme example][] (default `null`)
 * `onSelect` callback function for when a date is selected
 * `onOpen` callback function for when the picker becomes visible
 * `onClose` callback function for when the picker is hidden
@@ -236,6 +239,14 @@ Update the minimum/earliest date that can be selected.
 
 Update the maximum/latest date that can be selected.
 
+`picker.setStartRange()`
+
+Update the range start date. For using two Pikaday instances to select a date range.
+
+`picker.setEndRange()`
+
+Update the range end date. For using two Pikaday instances to select a date range.
+
 ### Show and hide datepicker
 
 `picker.isVisible()`
@@ -337,3 +348,4 @@ Copyright © 2014 David Bushell | BSD & MIT license
   [trigger example]: http://dbushell.github.com/Pikaday/examples/trigger.html     "Pikaday using custom trigger"
   [positions example]: http://dbushell.github.com/Pikaday/examples/positions.html "Pikaday using different position options"
   [container example]: http://dbushell.github.com/Pikaday/examples/container.html "Pikaday using custom calendar container"
+  [theme example]: http://dbushell.github.com/Pikaday/examples/theme.html         "Pikaday using multiple themes"

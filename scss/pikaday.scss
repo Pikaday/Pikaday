@@ -1,5 +1,3 @@
-@charset "UTF-8";
-
 /*!
  * Pikaday
  * Copyright © 2014 David Bushell | BSD & MIT license | http://dbushell.com/
@@ -14,27 +12,29 @@
     border: 1px solid #ccc;
     border-bottom-color: #bbb;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+    &.is-hidden {
+        display: none;
+    }
+
+    &.is-bound {
+        position: absolute;
+        box-shadow: 0 5px 15px -5px rgba(0,0,0,.5);
+    }
 }
 
-/*
-clear child float (pika-lendar), using the famous micro clearfix hack
-http://nicolasgallagher.com/micro-clearfix-hack/
-*/
-.pika-single:before,
-.pika-single:after {
-    content: " ";
-    display: table;
-}
-.pika-single:after { clear: both }
-.pika-single { *zoom: 1 }
+// clear child float (pika-lendar), using the famous micro clearfix hack
+// http://nicolasgallagher.com/micro-clearfix-hack/
+.pika-single {
+    *zoom: 1;
 
-.pika-single.is-hidden {
-    display: none;
-}
+    &:before,
+    &:after {
+        content: " ";
+        display: table;
+    }
 
-.pika-single.is-bound {
-    position: absolute;
-    box-shadow: 0 5px 15px -5px rgba(0,0,0,.5);
+    &:after { clear: both }
 }
 
 .pika-lendar {
@@ -46,6 +46,17 @@ http://nicolasgallagher.com/micro-clearfix-hack/
 .pika-title {
     position: relative;
     text-align: center;
+
+    select {
+        cursor: pointer;
+        position: absolute;
+        z-index: 9998;
+        margin: 0;
+        left: 0;
+        top: 5px;
+        filter: alpha(opacity=0);
+        opacity: 0;
+    }
 }
 
 .pika-label {
@@ -61,16 +72,6 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     font-weight: bold;
     background-color: #fff;
 }
-.pika-title select {
-    cursor: pointer;
-    position: absolute;
-    z-index: 9998;
-    margin: 0;
-    left: 0;
-    top: 5px;
-    filter: alpha(opacity=0);
-    opacity: 0;
-}
 
 .pika-prev,
 .pika-next {
@@ -82,8 +83,7 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     padding: 0;
     width: 20px;
     height: 30px;
-    /* hide text using text-indent trick, using width value (it's enough) */
-    text-indent: 20px;
+    text-indent: 20px; // hide text using text-indent trick, using width value (it's enough)
     white-space: nowrap;
     overflow: hidden;
     background-color: transparent;
@@ -93,11 +93,15 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     opacity: .5;
     *position: absolute;
     *top: 0;
-}
 
-.pika-prev:hover,
-.pika-next:hover {
-    opacity: 1;
+    &:hover {
+        opacity: 1;
+    }
+
+    &.is-disabled {
+        cursor: default;
+        opacity: .2;
+    }
 }
 
 .pika-prev,
@@ -114,12 +118,6 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     *right: 0;
 }
 
-.pika-prev.is-disabled,
-.pika-next.is-disabled {
-    cursor: default;
-    opacity: .2;
-}
-
 .pika-select {
     display: inline-block;
     *display: inline;
@@ -130,27 +128,32 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     border-collapse: collapse;
     border-spacing: 0;
     border: 0;
-}
 
-.pika-table th,
-.pika-table td {
-    width: 14.285714285714286%;
-    padding: 0;
-}
+    th,
+    td {
+        width: 14.285714285714286%;
+        padding: 0;
+    }
 
-.pika-table th {
-    color: #999;
-    font-size: 12px;
-    line-height: 25px;
-    font-weight: bold;
-    text-align: center;
+    th {
+        color: #999;
+        font-size: 12px;
+        line-height: 25px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    abbr {
+        border-bottom: none;
+        cursor: help;
+    }
 }
 
 .pika-button {
     cursor: pointer;
     display: block;
-    box-sizing: border-box;
     -moz-box-sizing: border-box;
+    box-sizing: border-box;
     outline: none;
     border: 0;
     margin: 0;
@@ -161,61 +164,36 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     line-height: 15px;
     text-align: right;
     background: #f5f5f5;
+
+    .is-today & {
+        color: #33aaff;
+        font-weight: bold;
+    }
+
+    .is-selected & {
+        color: #fff;
+        font-weight: bold;
+        background: #33aaff;
+        box-shadow: inset 0 1px 3px #178fe5;
+        border-radius: 3px;
+    }
+
+    .is-disabled & {
+        pointer-events: none;
+        cursor: default;
+        color: #999;
+        opacity: .3;
+    }
+
+    &:hover {
+        color: #fff;
+        background: #ff8000;
+        box-shadow: none;
+        border-radius: 3px;
+    }
 }
 
 .pika-week {
     font-size: 11px;
     color: #999;
 }
-
-.is-today .pika-button {
-    color: #33aaff;
-    font-weight: bold;
-}
-
-.is-selected .pika-button {
-    color: #fff;
-    font-weight: bold;
-    background: #33aaff;
-    box-shadow: inset 0 1px 3px #178fe5;
-    border-radius: 3px;
-}
-
-.is-inrange .pika-button {
-    background: #D5E9F7;
-}
-
-.is-startrange .pika-button {
-    color: #fff;
-    background: #6CB31D;
-    box-shadow: none;
-    border-radius: 3px;
-}
-
-.is-endrange .pika-button {
-    color: #fff;
-    background: #33aaff;
-    box-shadow: none;
-    border-radius: 3px;
-}
-
-.is-disabled .pika-button {
-    pointer-events: none;
-    cursor: default;
-    color: #999;
-    opacity: .3;
-}
-
-.pika-button:hover {
-    color: #fff;
-    background: #ff8000;
-    box-shadow: none;
-    border-radius: 3px;
-}
-
-/* styling for abbr */
-.pika-table abbr {
-    border-bottom: none;
-    cursor: help;
-}
-
