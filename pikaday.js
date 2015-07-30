@@ -180,9 +180,6 @@
         // bind the picker to a form field
         field: null,
 
-	    // add custom content to each date
-	    showCustomContent: false,
-
         // automatically show/hide the picker on `field` focus (default `true` if `field` is set)
         bound: undefined,
 
@@ -209,9 +206,6 @@
         minDate: null,
         // the maximum/latest date that can be selected
         maxDate: null,
-
-        // external function used to determine availability
-        isAvailable: null,
 
         // number of years either side, or array of upper/lower range
         yearRange: 10,
@@ -305,8 +299,7 @@
         return '<td data-day="' + opts.day + '" class="' + arr.join(' ') + '">' +
                  '<button class="pika-button pika-day" type="button" ' +
                     'data-pika-year="' + opts.year + '" data-pika-month="' + opts.month + '" data-pika-day="' + opts.day + '">' +
-                        opts.day +
-	                    customContent +
+                        opts.day
                  '</button>' +
                '</td>';
     },
@@ -566,9 +559,6 @@
 
         addEvent(self.el, 'ontouchend' in document ? 'touchend' : 'mousedown', self._onMouseDown, true);
         addEvent(self.el, 'change', self._onChange);
-	    if(opts.showCustomContent === true) {
-		    self.el.className = 'pika-single future-available custom-content' + (opts.isRTL ? ' is-rtl' : '');
-	    }
 
         if (opts.field) {
             if (opts.container) {
@@ -924,11 +914,11 @@
         adjustPosition: function()
         {
             var field, pEl, width, height, viewportWidth, viewportHeight, scrollTop, left, top, clientRect;
-            
+
             if (this._o.container) return;
-            
+
             this.el.style.position = 'absolute';
-            
+
             field = this._o.trigger;
             pEl = field;
             width = this.el.offsetWidth;
@@ -967,12 +957,11 @@
                     )
                 ) {
                     top = top - height - field.offsetHeight;
-                }
             } else {
                 if (this._o.position.indexOf('right') > -1) {
                     left = left - width + field.offsetWidth;
                 }
-
+            }
             this.el.style.left = left + 'px';
             this.el.style.top = top + 'px';
         },
