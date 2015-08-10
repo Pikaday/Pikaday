@@ -187,6 +187,10 @@
         // ('bottom' & 'left' keywords are not used, 'top' & 'right' are modifier on the bottom/left position)
         position: 'bottom left',
 
+        // injectMode of the datepicker, either next to the DOM node inside a relative container (default)
+        // or bottomline, before the closing body tag
+        injectMode: 'relative',
+
         // automatically fit in the viewport even if it means repositioning from the position option
         reposition: true,
 
@@ -550,7 +554,22 @@
             if (opts.container) {
                 opts.container.appendChild(self.el);
             } else if (opts.bound) {
-                document.body.appendChild(self.el);
+                if(opts.injectMode === 'relative') {
+                    self.injector = document.createElement('div');
+                    self.injector.className = 'pika-injector';
+
+                    self.injector.appendChild(self.el);
+
+                    if(!!~opts.position.indexOf('top')) {
+                        opts.field.parentNode.insertBefore(self.injector, opts.field);
+                    } else {
+                        opts.field.parentNode.insertBefore(self.injector, opts.field.nextSibling);
+                    }
+
+                } else {
+                    document.body.appendChild(self.el);
+                }
+
             } else {
                 opts.field.parentNode.insertBefore(self.el, opts.field.nextSibling);
             }
@@ -876,7 +895,10 @@
             }
 
             for (var c = 0; c < opts.numberOfMonths; c++) {
-                html += '<div class="pika-lendar">' + renderTitle(this, c, this.calendars[c].year, this.calendars[c].month, this.calendars[0].year) + this.render(this.calendars[c].year, this.calendars[c].month) + '</div>';
+                html += '<div class="pika-lendar">' +
+                    renderTitle(this, c, this.calendars[c].year, this.calendars[c].month, this.calendars[0].year) +
+                    this.render(this.calendars[c].year, this.calendars[c].month) +
+                '</div>';
             }
 
             this.el.innerHTML = html;
@@ -902,50 +924,69 @@
             var field, pEl, width, height, viewportWidth, viewportHeight, scrollTop, left, top, clientRect;
             
             if (this._o.container) return;
-            
-            this.el.style.position = 'absolute';
-            
-            field = this._o.trigger;
-            pEl = field;
-            width = this.el.offsetWidth;
-            height = this.el.offsetHeight;
-            viewportWidth = window.innerWidth || document.documentElement.clientWidth;
-            viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-            scrollTop = window.pageYOffset || document.body.scrollTop || document.documentElement.scrollTop;
 
-            if (typeof field.getBoundingClientRect === 'function') {
-                clientRect = field.getBoundingClientRect();
-                left = clientRect.left + window.pageXOffset;
-                top = clientRect.bottom + window.pageYOffset;
-            } else {
-                left = pEl.offsetLeft;
-                top  = pEl.offsetTop + pEl.offsetHeight;
-                while((pEl = pEl.offsetParent)) {
-                    left += pEl.offsetLeft;
-                    top  += pEl.offsetTop;
+            var opts = this._o,
+                field = opts.trigger, pEl = field,
+                width = this.el.offsetWidth, height = this.el.offsetHeight,
+                viewportWidth = window.innerWidth || document.documentElement.clientWidth,
+                viewportHeight = window.innerHeight || document.documentElement.clientHeight,
+                scrollTop = window.pageYOffset || document.body.scrollTop || document.documentElement.scrollTop,
+                left, top, clientRect,
+                cssText = ['position: absolute'];
+
+            if(opts.injectMode === 'relative') {
+                var positions = opts.position.split(/\s+/),
+                    positionSwap = {
+                        top: 'bottom',
+                        bottom: 'top'
+                    },
+                    position, i, l;
+
+                for(i=0, l=positions.length; i<l; i++) {
+                    position = positions[i];
+
+                    // switch position properties if top or bottom
+                    if(position in positionSwap)
+                        position = positionSwap[position];
+
+                    cssText.push(position + ':0');
                 }
-            }
+            } else {
+                if (typeof field.getBoundingClientRect === 'function') {
+                    clientRect = field.getBoundingClientRect();
+                    left = clientRect.left + window.pageXOffset;
+                    top = clientRect.bottom + window.pageYOffset;
+                } else {
+                    left = pEl.offsetLeft;
+                    top = pEl.offsetTop + pEl.offsetHeight;
+                    while ((pEl = pEl.offsetParent)) {
+                        left += pEl.offsetLeft;
+                        top += pEl.offsetTop;
+                    }
+                }
 
-            // default position is bottom & left
-            if ((this._o.reposition && left + width > viewportWidth) ||
-                (
-                    this._o.position.indexOf('right') > -1 &&
+                // default position is bottom & left
+                if ((opts.reposition && left + width > viewportWidth) ||
+                    (
+                    opts.position.indexOf('right') > -1 &&
                     left - width + field.offsetWidth > 0
-                )
-            ) {
-                left = left - width + field.offsetWidth;
-            }
-            if ((this._o.reposition && top + height > viewportHeight + scrollTop) ||
-                (
-                    this._o.position.indexOf('top') > -1 &&
+                    )
+                ) {
+                    left = left - width + field.offsetWidth;
+                }
+                if ((opts.reposition && top + height > viewportHeight + scrollTop) ||
+                    (
+                    opts.position.indexOf('top') > -1 &&
                     top - height - field.offsetHeight > 0
-                )
-            ) {
-                top = top - height - field.offsetHeight;
+                    )
+                ) {
+                    top = top - height - field.offsetHeight;
+                }
+
+                cssText.push('left: ' + left + 'px', 'top: ' + top + 'px');
             }
 
-            this.el.style.left = left + 'px';
-            this.el.style.top = top + 'px';
+            this.el.style.cssText = cssText.join(';');
         },
 
         /**

@@ -5,6 +5,15 @@
  * Copyright © 2014 David Bushell | BSD & MIT license | http://dbushell.com/
  */
 
+.pika-injector {
+    display: block;
+    position: relative;
+}
+
+.pika-injector > .pika-single {
+    position: absolute;
+}
+
 .pika-single {
     z-index: 9999;
     display: block;
