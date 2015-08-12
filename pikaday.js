@@ -471,13 +471,9 @@
             if (e.firedBy === self) {
                 return;
             }
-            if (hasMoment) {
-                date = moment(opts.field.value, opts.format);
-                date = (date && date.isValid()) ? date.toDate() : null;
-            }
-            else {
-                date = new Date(Date.parse(opts.field.value));
-            }
+
+            date = opts.dateParseFn(opts.field.value, opts.format);
+
             if (isDate(date)) {
               self.setDate(date);
             }
@@ -557,11 +553,7 @@
             addEvent(opts.field, 'change', self._onInputChange);
 
             if (!opts.defaultDate) {
-                if (hasMoment && opts.field.value) {
-                    opts.defaultDate = moment(opts.field.value, opts.format).toDate();
-                } else {
-                    opts.defaultDate = new Date(Date.parse(opts.field.value));
-                }
+                opts.defaultDate = opts.dateParseFn(opts.field.value, opts.format);
                 opts.setDefaultDate = true;
             }
         }
@@ -653,6 +645,19 @@
                 }
             }
 
+            opts.dateFormatFn = opts.dateFormatFn || (hasMoment ?
+                function(date, format) { return moment(date).format(format); } :
+                function(date) { return date.toDateString() }
+            );
+
+            opts.dateParseFn = opts.dateParseFn || (hasMoment ?
+                function(fieldValue, format) {
+                    var date = moment(fieldValue, format);
+                    return (date && date.isValid()) ? date.toDate() : null;
+                } :
+                function (fieldValue) { return new Date(Date.parse(fieldValue)); }
+            );
+
             return opts;
         },
 
@@ -661,7 +666,7 @@
          */
         toString: function(format)
         {
-            return !isDate(this._d) ? '' : hasMoment ? moment(this._d).format(format || this._o.format) : this._d.toDateString();
+            return !isDate(this._d) ? '' : this._o.dateFormatFn(this._d, format || this._o.format)
         },
 
         /**

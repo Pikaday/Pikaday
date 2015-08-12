@@ -81,6 +81,8 @@ Pikaday has many useful options:
 * `reposition` can be set to false to not reposition datepicker within the viewport, forcing it to take the configured `position` (default: true)
 * `container` DOM node to render calendar into, see [container example][] (default: undefined) 
 * `format` the default output format for `.toString()` and `field` value (requires [Moment.js][moment] for custom formatting)
+* `dateFormatFn` callback function used to convert the selected date to a string for populating the form field.
+* `dateParseFn` callback function used to parse the form field value into a date.
 * `defaultDate` the initial date to view when first opened
 * `setDefaultDate` make the `defaultDate` the initial selected value
 * `firstDay` first day of the week (0: Sunday, 1: Monday, etc)

@@ -2,6 +2,11 @@
 
 ## 1.4.0 - TBA
 
+- Add support for custom date parsing / formatting - see [#378](https://github.com/dbushell/Pikaday/pull/378]). (Also 
+[#128](https://github.com/dbushell/Pikaday/pull/128), 
+[#160](https://github.com/dbushell/Pikaday/pull/160), 
+[#278](https://github.com/dbushell/Pikaday/pull/278]).)
+
 ## 1.3.3 - 2015-02-17
 
 - Add theme class support, see #260
