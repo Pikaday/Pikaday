@@ -178,7 +178,8 @@
         border-radius: 3px;
     }
 
-    .is-disabled & {
+    .is-disabled &,
+    .is-outside-current-month & {
         pointer-events: none;
         cursor: default;
         color: #999;
