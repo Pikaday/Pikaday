@@ -172,6 +172,25 @@
         return calendar;
     },
 
+    DefaultDateFormatter = {
+        format: function (date, format) {
+            return date.toDateString();
+        },
+        parse: function (str, format) {
+            return new Date(Date.parse(date));
+        }
+    },
+
+    MomentDateFormatter = {
+        format: function (date, format) {
+            return moment(date).format(format)
+        },
+        parse: function (str, format) {
+            var date = moment(str, format);
+            return (date && date.isValid()) ? date.toDate() : null;
+        }
+    },
+
     /**
      * defaults and localisation
      */
@@ -192,6 +211,9 @@
 
         // the default output format for `.toString()` and `field` value
         format: 'YYYY-MM-DD',
+        // An object with `.format(date, format)` and `.parse(str, format)` methods which can be
+        // used to take complete control over formatting
+        formatter: hasMoment ? MomentDateFormatter : DefaultDateFormatter,
 
         // the initial date to view when first opened
         defaultDate: null,
@@ -397,7 +419,6 @@
         return '<table cellpadding="0" cellspacing="0" class="pika-table">' + renderHead(opts) + renderBody(data) + '</table>';
     },
 
-
     /**
      * Pikaday constructor
      */
@@ -471,13 +492,7 @@
             if (e.firedBy === self) {
                 return;
             }
-            if (hasMoment) {
-                date = moment(opts.field.value, opts.format);
-                date = (date && date.isValid()) ? date.toDate() : null;
-            }
-            else {
-                date = new Date(Date.parse(opts.field.value));
-            }
+            date = self._o.formatter.parse(opts.field.value, opts.format);
             if (isDate(date)) {
               self.setDate(date);
             }
@@ -556,12 +571,8 @@
             }
             addEvent(opts.field, 'change', self._onInputChange);
 
-            if (!opts.defaultDate) {
-                if (hasMoment && opts.field.value) {
-                    opts.defaultDate = moment(opts.field.value, opts.format).toDate();
-                } else {
-                    opts.defaultDate = new Date(Date.parse(opts.field.value));
-                }
+            if (!opts.defaultDate && opts.field.value) {
+                opts.defaultDate = opts.formatter.parse(opts.field.value, opts.format);
                 opts.setDefaultDate = true;
             }
         }
@@ -661,7 +672,7 @@
          */
         toString: function(format)
         {
-            return !isDate(this._d) ? '' : hasMoment ? moment(this._d).format(format || this._o.format) : this._d.toDateString();
+            return !isDate(this._d) ? '' : this._o.formatter.format(this._d, format || this._o.format);
         },
 
         /**

@@ -80,6 +80,7 @@ Pikaday has many useful options:
 * `position` preferred position of the datepicker relative to the form field, e.g.: `top right`, `bottom right` **Note:** automatic adjustment may occur to avoid datepicker from being displayed outside the viewport, see [positions example][] (default to 'bottom left')
 * `reposition` can be set to false to not reposition datepicker within the viewport, forcing it to take the configured `position` (default: true)
 * `container` DOM node to render calendar into, see [container example][] (default: undefined) 
+* `formatter` An object with `.format(date, format)` and `.parse(str, format)` methods which can be used to take complete control over formatting
 * `format` the default output format for `.toString()` and `field` value (requires [Moment.js][moment] for custom formatting)
 * `defaultDate` the initial date to view when first opened
 * `setDefaultDate` make the `defaultDate` the initial selected value
