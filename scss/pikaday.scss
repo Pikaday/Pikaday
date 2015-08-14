@@ -186,6 +186,10 @@
         opacity: .3;
     }
 
+    .is-outside-current-month & {
+        pointer-events: auto;
+    }
+
     &:hover {
         color: #fff;
         background: #ff8000;
