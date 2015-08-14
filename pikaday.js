@@ -980,7 +980,6 @@
             var previousMonth = month === 0 ? 11 : month - 1,
                 yearOfPreviousMonth = month === 0 ? year - 1 : year,
                 daysInPreviousMonth = getDaysInMonth(yearOfPreviousMonth, previousMonth);
-            console.log(previousMonth, yearOfPreviousMonth, daysInPreviousMonth);
             var cells = days + before,
                 after = cells;
             while(after > 7) {
