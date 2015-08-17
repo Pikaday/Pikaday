@@ -557,7 +557,8 @@
         self.el = document.createElement('div');
         self.el.className = 'pika-single' + (opts.isRTL ? ' is-rtl' : '') + (opts.theme ? ' ' + opts.theme : '');
 
-        addEvent(self.el, 'ontouchend' in document ? 'touchend' : 'mousedown', self._onMouseDown, true);
+        addEvent(self.el, 'mousedown', self._onMouseDown, true);
+        addEvent(self.el, 'touchend', self._onMouseDown, true);
         addEvent(self.el, 'change', self._onChange);
 
         if (opts.field) {
