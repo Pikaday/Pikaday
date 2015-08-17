@@ -10,6 +10,21 @@ That screencast is from 2012. In the meantime, Meteor has become a mature JavaSc
 development framework. Read more at [Why Meteor](http://www.meteorpedia.com/read/Why_Meteor).
 
 
+# Usage
+
+Ideally instantiate inside `onRendered` template hook. 
+
+```javascript
+Template.xxxxx.onRendered(function() {
+
+  this.picker = new Pikaday({
+    field: document.getElementById('datepicker'),
+  });
+});
+
+```
+
+
 # Issues
 
 If you encounter an issue while using this package, please file an issue in this repo.
