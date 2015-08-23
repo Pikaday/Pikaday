@@ -428,6 +428,8 @@
                             }
                         }, 100);
                     }
+                    // if this is touch event prevent mouse events emulation
+                    e.preventDefault();
                     return;
                 }
                 else if (hasClass(target, 'pika-prev')) {
