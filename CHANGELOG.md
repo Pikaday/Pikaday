@@ -2,6 +2,8 @@
 
 ## 1.4.0 - TBA
 
+- Fix touch device support, see #374, #276, #301, #303, #324, #366 and #386
+
 ## 1.3.3 - 2015-02-17
 
 - Add theme class support, see #260
