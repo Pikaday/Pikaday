@@ -428,9 +428,6 @@
                             }
                         }, 100);
                     }
-                    // if this is touch event prevent mouse events emulation
-                    e.preventDefault();
-                    return;
                 }
                 else if (hasClass(target, 'pika-prev')) {
                     self.prevMonth();
@@ -440,6 +437,7 @@
                 }
             }
             if (!hasClass(target, 'pika-select')) {
+                // if this is touch event prevent mouse events emulation
                 if (e.preventDefault) {
                     e.preventDefault();
                 } else {
