@@ -119,6 +119,11 @@
         return year % 4 === 0 && year % 100 !== 0 || year % 400 === 0;
     },
 
+    getFirstFormat = function(format)
+    {
+      return isArray(format) ? format[0] : format;
+    },
+
     getDaysInMonth = function(year, month)
     {
         return [31, isLeapYear(year) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][month];
@@ -662,7 +667,7 @@
          */
         toString: function(format)
         {
-            return !isDate(this._d) ? '' : hasMoment ? moment(this._d).format(format || this._o.format) : this._d.toDateString();
+            return !isDate(this._d) ? '' : hasMoment ? moment(this._d).format(format || getFirstFormat(this._o.format)) : this._d.toDateString();
         },
 
         /**
