@@ -1,0 +1,6 @@
+/**
+ * This theme is an example to show how you can add triangles to the dropdowns.
+ */
+.triangle-theme .pika-label:after {
+    content:" \25be";
+}
