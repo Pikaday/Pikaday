@@ -493,7 +493,11 @@
 
         self._onInputClick = function()
         {
-            self.show();
+            if (!self._v) {
+                self.show();
+            } else {
+                self.hide();
+            }
         };
 
         self._onInputBlur = function()
@@ -582,7 +586,7 @@
         if (opts.bound) {
             this.hide();
             self.el.className += ' is-bound';
-            addEvent(opts.trigger, 'click', self._onInputClick);
+            addEvent(opts.trigger, 'mousedown', self._onInputClick);
             addEvent(opts.trigger, 'focus', self._onInputFocus);
             addEvent(opts.trigger, 'blur', self._onInputBlur);
         } else {
