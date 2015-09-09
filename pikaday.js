@@ -427,10 +427,15 @@
     Pikaday = function(options)
     {
         var self = this,
+            startPoint,
+            isTouching = false,
             opts = self.config(options);
 
         self._onMouseDown = function(e)
         {
+            if (isTouching) {
+                return;
+            }
             if (!self._v) {
                 return;
             }
@@ -591,13 +596,13 @@
             }
         };
 
-        var startPoint;
-
         self._onTouchStart = function(e) {
+          isTouching = true;
           if (e.touches.length > 1) return;
           startPoint = getTouchXY(e.touches[0]);
         };
         self._onTouchEnd = function(e) {
+          isTouching = false;
           if (e.changedTouches.length > 1) return;
           if (!isBigMove(getTouchXY(e.changedTouches[0]), startPoint)) {
             self._onMouseDown(e);
@@ -605,6 +610,7 @@
           startPoint = null;
         };
         self._onTouchCancel = function() {
+          isTouching = false;
           startPoint = null;
         };
 
