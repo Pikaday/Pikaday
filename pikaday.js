@@ -645,6 +645,17 @@
             if (!isDate(opts.today)) {
                 opts.today = now();
             }
+            
+            if (typeof opts.moment  === 'function')
+            {
+
+                if (this.testMomentObj(opts.moment))
+                {
+                    hasMoment = true;
+                    moment = opts.moment
+                }
+                    
+            }
 
             if (isArray(opts.yearRange)) {
                 var fallback = new Date().getFullYear() - 10;
@@ -692,6 +703,20 @@
         getDate: function()
         {
             return isDate(this._d) ? new Date(this._d.getTime()) : null;
+        },
+            
+        /**
+         * set the current selection
+         */
+        setMomentObj: function(momentObj)
+        {
+           
+            if (this.testMomentObj(opts.moment))
+            {
+                hasMoment = true;
+                moment = opts.moment
+            }
+            
         },
 
         /**
@@ -1065,6 +1090,30 @@
                 }
             }
         },
+        
+        /*
+        
+            Test moment obj
+        */
+        testMomentObj: function(obj) {
+        
+            try {
+
+                var testMoment = obj("1-1-2000").toDate();
+
+                if (typeof testMoment === 'object')
+                {
+                    return true;
+                }
+
+            }
+            catch (err)
+            {}
+
+            return false;
+            
+        },
+        
 
         /**
          * GAME OVER
