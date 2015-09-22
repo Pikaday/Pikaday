@@ -274,11 +274,12 @@
 
     renderDay = function(opts)
     {
+        var arr = [], tooltip = '';
+
         if (opts.isEmpty) {
             return '<td class="is-empty"></td>';
         }
-        var arr = [];
-        if (opts.isDisabled) {
+        if (opts.isDisabled || opts.customHTML.isDisabled) {
             arr.push('is-disabled');
         }
         if (opts.isToday) {
@@ -296,7 +297,14 @@
         if (opts.isEndRange) {
             arr.push('is-endrange');
         }
+        if (opts.customHTML.hasOwnProperty('class')) {
+            arr.push(opts.customHTML.class);
+        }
+        if (opts.customHTML.hasOwnProperty('tooltip')){
+            tooltip = '<div class="pika-day-tooltip">' + opts.customHTML.tooltip + '</div>';
+        }
         return '<td data-day="' + opts.day + '" class="' + arr.join(' ') + '">' +
+                 tooltip +
                  '<button class="pika-button pika-day" type="button" ' +
                     'data-pika-year="' + opts.year + '" data-pika-month="' + opts.month + '" data-pika-day="' + opts.day + '">' +
                         opts.day +
@@ -619,6 +627,8 @@
             opts.trigger = (opts.trigger && opts.trigger.nodeName) ? opts.trigger : opts.field;
 
             opts.disableWeekends = !!opts.disableWeekends;
+
+            opts.beforeRenderDayFn = (typeof opts.beforeRenderDayFn) === 'function' ? opts.beforeRenderDayFn : function(date){return{};};
 
             opts.disableDayFn = (typeof opts.disableDayFn) === 'function' ? opts.disableDayFn : null;
 
@@ -976,6 +986,7 @@
             for (var i = 0, r = 0; i < cells; i++)
             {
                 var day = new Date(year, month, 1 + (i - before)),
+                    customHTML = opts.beforeRenderDayFn(day),
                     isSelected = isDate(this._d) ? compareDates(day, this._d) : false,
                     isToday = compareDates(day, now),
                     isEmpty = i < before || i >= (days + before),
@@ -985,11 +996,13 @@
                     isDisabled = (opts.minDate && day < opts.minDate) ||
                                  (opts.maxDate && day > opts.maxDate) ||
                                  (opts.disableWeekends && isWeekend(day)) ||
-                                 (opts.disableDayFn && opts.disableDayFn(day)),
+                                 (opts.disableDayFn && opts.disableDayFn(day)) ||
++                                 (customHTML.isDisabled),
                     dayConfig = {
                         day: 1 + (i - before),
                         month: month,
                         year: year,
+                        customHTML: customHTML,
                         isSelected: isSelected,
                         isToday: isToday,
                         isDisabled: isDisabled,

@@ -136,8 +136,37 @@ http://nicolasgallagher.com/micro-clearfix-hack/
 .pika-table td {
     width: 14.285714285714286%;
     padding: 0;
+    position: relative;
 }
-
+.pika-table td .pika-day-tooltip{
+    background-color: rgba(0,0,0,0.8);
+    border-radius: 3px;
+    bottom:  35px;
+    color: #fff;
+    display: none;
+    font-size: 14px;
+    margin-left: -40px;
+    margin-top: -40px;
+    padding: 8px;
+    position: absolute;
+    text-align: center;
+    width: 100px;
+    z-index: 9999;
+}
+.pika-table td .pika-day-tooltip::after{
+    border-top: 8px solid rgba(0,0,0,0.8);
+    border-right: 8px solid transparent;
+    border-left: 8px solid transparent;
+    content: '';
+    left: 50%;
+    margin-left: -8px;
+    position: absolute;
+    top: 100%;
+    width: 0; height: 0;
+}
+.pika-table td:hover .pika-day-tooltip{
+    display: block;
+}
 .pika-table th {
     color: #999;
     font-size: 12px;
@@ -218,4 +247,3 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     border-bottom: none;
     cursor: help;
 }
-
