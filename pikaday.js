@@ -296,6 +296,10 @@
         if (opts.isEndRange) {
             arr.push('is-endrange');
         }
+        if (opts.dayClasses) {
+            arr.push(opts.dayClasses);
+        }
+        
         return '<td data-day="' + opts.day + '" class="' + arr.join(' ') + '">' +
                  '<button class="pika-button pika-day" type="button" ' +
                     'data-pika-year="' + opts.year + '" data-pika-month="' + opts.month + '" data-pika-day="' + opts.day + '">' +
@@ -621,6 +625,8 @@
             opts.disableWeekends = !!opts.disableWeekends;
 
             opts.disableDayFn = (typeof opts.disableDayFn) === 'function' ? opts.disableDayFn : null;
+            
+            opts.dayClassesFn = (typeof opts.dayClassesFn) === 'function' ? opts.dayClassesFn : null;
 
             var nom = parseInt(opts.numberOfMonths, 10) || 1;
             opts.numberOfMonths = nom > 4 ? 4 : nom;
@@ -986,6 +992,7 @@
                                  (opts.maxDate && day > opts.maxDate) ||
                                  (opts.disableWeekends && isWeekend(day)) ||
                                  (opts.disableDayFn && opts.disableDayFn(day)),
+                    dayClasses = opts.dayClassesFn ? opts.dayClassesFn(day) : '',
                     dayConfig = {
                         day: 1 + (i - before),
                         month: month,
@@ -996,7 +1003,8 @@
                         isEmpty: isEmpty,
                         isStartRange: isStartRange,
                         isEndRange: isEndRange,
-                        isInRange: isInRange
+                        isInRange: isInRange,
+                        dayClasses: dayClasses
                     };
 
                 row.push(renderDay(dayConfig));
