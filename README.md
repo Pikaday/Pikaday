@@ -1,6 +1,17 @@
 Pikaday
 ========
 
+####This version of Pikaday has been modified to include the ability to mark a certain day cell with custom css classes so that special days can be marked with different styling.
+
+```javascript
+var picker = new Pikaday({ dayClassesFn: function(day) {
+  //will add a 'fifth-day' and 'special-day' class to the html in the pikaday calendar so that you can target the calendar cell with css.
+  if(day.getDate() == 5) {
+    return 'fifth-day special-day';
+  }
+}});
+```
+
 ### A refreshing JavaScript Datepicker
 
 * Lightweight (less than 5kb minified and gzipped)
@@ -88,6 +99,7 @@ Pikaday has many useful options:
 * `maxDate` the maximum/latest date that can be selected (this should be a native Date object - e.g. `new Date()` or `moment().toDate()`)
 * `disableWeekends` disallow selection of Saturdays or Sundays
 * `disableDayFn` callback function that gets passed a Date object for each day in view. Should return true to disable selection of that day.
+* `dayClassesFn` callback function that gets passed a Date object for each day in view. Should return a string with the classes that will be added to the markup, each class should be seperated with a space.
 * `yearRange` number of years either side (e.g. `10`) or array of upper/lower range (e.g. `[1900,2015]`)
 * `showWeekNumber` show the ISO week number at the head of the row (default `false`)
 * `isRTL` reverse the calendar for right-to-left languages
