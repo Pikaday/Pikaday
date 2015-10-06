@@ -1,5 +1,7 @@
 # Changelog
 
+- Add option to change increment value of time.
+
 ## 1.4.0 - TBA
 
 - Add theme class support, see #260

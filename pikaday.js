@@ -244,6 +244,9 @@
         showTime: true,
         showSeconds: false,
         use24hour: false,
+        incrementHourBy: 1,
+        incrementMinuteBy: 1,
+        incrementSecondBy: 1,
 
         // when numberOfMonths is used, this will help you to choose where the main calendar will be (default `left`, can be set to `right`)
         // only used for the first display or when a selected date is not visible
@@ -402,9 +405,9 @@
         return '<table cellpadding="0" cellspacing="0" class="pika-table">' + renderHead(opts) + renderBody(data) + '</table>';
     },
 
-    renderTimePicker = function(num_options, selected_val, select_class, display_func) {
+    renderTimePicker = function(num_options, selected_val, select_class, display_func, increment_by) {
         var to_return = '<td><select class="pika-select '+select_class+'">';
-        for (var i=0; i<num_options; i++) {
+        for (var i = 0; i < num_options; i += increment_by) {
             to_return += '<option value="'+i+'" '+(i==selected_val ? 'selected' : '')+'>'+display_func(i)+'</option>'
         }
         to_return += '</select></td>';
@@ -427,13 +430,14 @@
                         return to_return;
                     }
                 }
-            }) +
+            },
+            opts.incrementHourBy) +
             '<td>:</td>' +
-            renderTimePicker(60, mm, 'pika-select-minute', function(i) { if (i < 10) return "0" + i; return i });
+            renderTimePicker(60, mm, 'pika-select-minute', function(i) { if (i < 10) return "0" + i; return i }, opts.incrementMinuteBy);
 
         if (opts.showSeconds) {
             to_return += '<td>:</td>' +
-                renderTimePicker(60, ss, 'pika-select-second', function(i) { if (i < 10) return "0" + i; return i });
+                renderTimePicker(60, ss, 'pika-select-second', function(i) { if (i < 10) return "0" + i; return i }, opts.incrementSecondBy);
         }
         return to_return + '</tr></tbody></table>';
     },
