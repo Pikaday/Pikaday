@@ -2,10 +2,10 @@
 'use strict';
 
 Package.describe({
-  name: "dbushell:pikaday",
-  summary: "A refreshing JavaScript Datepicker — official Meteor packaging",
+  name: "wzoom:pikaday",
+  summary: "JavaScript Datepicker — Meteor packaging",
   version: "1.3.3",
-  git: "",
+  git: "https://github.com/wzoom/Pikaday",
   documentation: 'README.md',
 });
 
@@ -23,6 +23,6 @@ Package.onUse(function (api) {
 
 Package.onTest(function(api) {
     api.use('tinytest');
-    api.use('dbushell:pikaday');
+    api.use('wzoom:pikaday');
     api.addFiles('meteor/tests.js');
 });
