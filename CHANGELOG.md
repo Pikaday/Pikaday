@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.4.0 - TBA
+## 1.4.0 - 2015-10-30
 
 - Fix touch device support, see #374, #276, #301, #303, #324, #366 and #386
 - Add theme example with triangles added to the dropdowns, see #380
