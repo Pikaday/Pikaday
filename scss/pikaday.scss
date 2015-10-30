@@ -186,14 +186,32 @@
     }
 
     &:hover {
-        color: #fff !important;
-        background: #ff8000 !important;
-        box-shadow: none !important;
-        border-radius: 3px !important;
+        color: #fff;
+        background: #ff8000;
+        box-shadow: none;
+        border-radius: 3px;
     }
 }
 
 .pika-week {
     font-size: 11px;
     color: #999;
+}
+
+.is-inrange .pika-button {
+    background: #D5E9F7;
+}
+
+.is-startrange .pika-button {
+    color: #fff;
+    background: #6CB31D;
+    box-shadow: none;
+    border-radius: 3px;
+}
+
+.is-endrange .pika-button {
+    color: #fff;
+    background: #33aaff;
+    box-shadow: none;
+    border-radius: 3px;
 }

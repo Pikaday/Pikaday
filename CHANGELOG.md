@@ -1,9 +1,15 @@
 # Changelog
 
-## 1.4.0 - TBA
+## 1.4.0 - 2015-10-30
+
+- Fix touch device support, see #374, #276, #301, #303, #324, #366 and #386
+
+## 1.3.3 - 2015-02-17
 
 - Add theme class support, see #260
-- Fix on iOS, see #101
+- Fix on iOS, see #101, #121
+- Add date range example, see #337
+- Fix dates used in examples, see #329
 
 ## 1.3.2 - 2015-02-17
 

@@ -219,6 +219,14 @@ Update the minimum/earliest date that can be selected.
 
 Update the maximum/latest date that can be selected.
 
+`picker.setStartRange()`
+
+Update the range start date. For using two Pikaday instances to select a date range.
+
+`picker.setEndRange()`
+
+Update the range end date. For using two Pikaday instances to select a date range.
+
 ### Show and hide datepicker
 
 `picker.isVisible()`
