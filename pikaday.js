@@ -822,10 +822,11 @@
          */
         setMinDate: function(value)
         {
-            setToStartOfDay(value);
-            this._o.minDate = value;
-            this._o.minYear  = value.getFullYear();
-            this._o.minMonth = value.getMonth();
+            var clone = new Date(value.getTime());
+            setToStartOfDay(clone);
+            this._o.minDate = clone;
+            this._o.minYear  = clone.getFullYear();
+            this._o.minMonth = clone.getMonth();
             this.draw();
         },
 
@@ -834,10 +835,11 @@
          */
         setMaxDate: function(value)
         {
-            setToStartOfDay(value);
-            this._o.maxDate = value;
-            this._o.maxYear = value.getFullYear();
-            this._o.maxMonth = value.getMonth();
+            var clone = new Date(value.getTime());
+            setToStartOfDay(clone);
+            this._o.maxDate = clone;
+            this._o.maxYear = clone.getFullYear();
+            this._o.maxMonth = clone.getMonth();
             this.draw();
         },
 
