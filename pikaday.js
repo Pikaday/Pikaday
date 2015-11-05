@@ -978,7 +978,9 @@
                 }
             }
             var previousMonth = month === 0 ? 11 : month - 1,
+                nextMonth = month === 11 ? 0 : month + 1,
                 yearOfPreviousMonth = month === 0 ? year - 1 : year,
+                yearOfNextMonth = month === 11 ? year + 1 : year,
                 daysInPreviousMonth = getDaysInMonth(yearOfPreviousMonth, previousMonth);
             var cells = days + before,
                 after = cells;
@@ -993,6 +995,8 @@
                     isToday = compareDates(day, now),
                     isEmpty = i < before || i >= (days + before),
                     dayNumber = 1 + (i - before),
+                    monthNumber = month,
+                    yearNumber = year,
                     isStartRange = opts.startRange && compareDates(opts.startRange, day),
                     isEndRange = opts.endRange && compareDates(opts.endRange, day),
                     isInRange = opts.startRange && opts.endRange && opts.startRange < day && day < opts.endRange,
@@ -1004,15 +1008,19 @@
                 if (isEmpty) {
                     if (i < before) {
                         dayNumber = daysInPreviousMonth + dayNumber;
+                        monthNumber = previousMonth;
+                        yearNumber = yearOfPreviousMonth;
                     } else {
                         dayNumber = dayNumber - days;
+                        monthNumber = nextMonth;
+                        yearNumber = yearOfNextMonth;
                     }
                 }
 
                 var dayConfig = {
                         day: dayNumber,
-                        month: month,
-                        year: year,
+                        month: monthNumber,
+                        year: yearNumber,
                         isSelected: isSelected,
                         isToday: isToday,
                         isDisabled: isDisabled,
