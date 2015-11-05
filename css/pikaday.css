@@ -207,10 +207,6 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     opacity: .3;
 }
 
-.is-outside-current-month .pika-button {
-    pointer-events: auto;
-}
-
 .pika-button:hover {
     color: #fff;
     background: #ff8000;
