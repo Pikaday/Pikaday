@@ -94,6 +94,7 @@ Pikaday has many useful options:
 * `i18n` language defaults for month and weekday names (see internationalization below)
 * `yearSuffix` additional text to append to the year in the title
 * `showMonthAfterYear` render the month after year in the title (default `false`)
+* `showDaysInNextAndPreviousMonths` render days of the calendar grid that fall in the next or previous months to the current month instead of rendering an empty table cell (default: false)
 * `numberOfMonths` number of visible calendars
 * `mainCalendar` when `numberOfMonths` is used, this will help you to choose where the main calendar will be (default `left`, can be set to `right`). Only used for the first display or when a selected date is not already visible
 * `theme` define a classname that can be used as a hook for styling different themes, see [theme example][] (default `null`)
