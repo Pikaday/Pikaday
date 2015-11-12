@@ -11,16 +11,10 @@
     var moment;
     if (typeof exports === 'object') {
         // CommonJS module
-        // Load moment.js as an optional dependency
-        try { moment = require('moment'); } catch (e) {}
-        module.exports = factory(moment);
+        module.exports = factory(require('moment'));
     } else if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
-        define(function (req)
-        {
-            // Load moment.js as an optional dependency
-            var id = 'moment';
-            try { moment = req(id); } catch (e) {}
+        define(["moment"], function (moment) {
             return factory(moment);
         });
     } else {
@@ -33,9 +27,7 @@
     /**
      * feature detection and helper functions
      */
-    var hasMoment = typeof moment === 'function',
-
-    hasEventListeners = !!window.addEventListener,
+    var hasEventListeners = !!window.addEventListener,
 
     document = window.document,
 
@@ -435,6 +427,7 @@
                             }
                         }, 100);
                     }
+                    return;
                 }
                 else if (hasClass(target, 'pika-prev')) {
                     self.prevMonth();
@@ -444,7 +437,6 @@
                 }
             }
             if (!hasClass(target, 'pika-select')) {
-                // if this is touch event prevent mouse events emulation
                 if (e.preventDefault) {
                     e.preventDefault();
                 } else {
@@ -478,13 +470,8 @@
             if (e.firedBy === self) {
                 return;
             }
-            if (hasMoment) {
-                date = moment(opts.field.value, opts.format);
-                date = (date && date.isValid()) ? date.toDate() : null;
-            }
-            else {
-                date = new Date(Date.parse(opts.field.value));
-            }
+            date = moment(opts.field.value, opts.format);
+            date = (date && date.isValid()) ? date.toDate() : null;
             if (isDate(date)) {
               self.setDate(date);
             }
@@ -550,8 +537,7 @@
         self.el = document.createElement('div');
         self.el.className = 'pika-single' + (opts.isRTL ? ' is-rtl' : '') + (opts.theme ? ' ' + opts.theme : '');
 
-        addEvent(self.el, 'mousedown', self._onMouseDown, true);
-        addEvent(self.el, 'touchend', self._onMouseDown, true);
+        addEvent(self.el, 'ontouchend' in document ? 'touchend' : 'mousedown', self._onMouseDown, true);
         addEvent(self.el, 'change', self._onChange);
 
         if (opts.field) {
@@ -565,11 +551,7 @@
             addEvent(opts.field, 'change', self._onInputChange);
 
             if (!opts.defaultDate) {
-                if (hasMoment && opts.field.value) {
-                    opts.defaultDate = moment(opts.field.value, opts.format).toDate();
-                } else {
-                    opts.defaultDate = new Date(Date.parse(opts.field.value));
-                }
+                opts.defaultDate = moment(opts.field.value, opts.format).toDate();
                 opts.setDefaultDate = true;
             }
         }
@@ -667,7 +649,7 @@
          */
         toString: function(format)
         {
-            return !isDate(this._d) ? '' : hasMoment ? moment(this._d).format(format || this._o.format) : this._d.toDateString();
+            return !isDate(this._d) ? '' : moment(this._d).format(format || this._o.format);
         },
 
         /**
@@ -675,7 +657,7 @@
          */
         getMoment: function()
         {
-            return hasMoment ? moment(this._d) : null;
+            return moment(this._d);
         },
 
         /**
@@ -683,7 +665,7 @@
          */
         setMoment: function(date, preventOnSelect)
         {
-            if (hasMoment && moment.isMoment(date)) {
+            if (moment.isMoment(date)) {
                 this.setDate(date.toDate(), preventOnSelect);
             }
         },
@@ -990,7 +972,8 @@
             cells += 7 - after;
             for (var i = 0, r = 0; i < cells; i++)
             {
-                var day = new Date(year, month, 1 + (i - before)),
+                var dayConfig,
+                    day = new Date(year, month, 1 + (i - before)),
                     isSelected = isDate(this._d) ? compareDates(day, this._d) : false,
                     isToday = compareDates(day, now),
                     isEmpty = i < before || i >= (days + before),
@@ -1091,7 +1074,6 @@
         {
             this.hide();
             removeEvent(this.el, 'mousedown', this._onMouseDown, true);
-            removeEvent(this.el, 'touchend', this._onMouseDown, true);
             removeEvent(this.el, 'change', this._onChange);
             if (this._o.field) {
                 removeEvent(this._o.field, 'change', this._onInputChange);
