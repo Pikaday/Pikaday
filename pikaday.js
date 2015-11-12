@@ -312,10 +312,19 @@
     },
 
     renderWeek = function (d, m, y) {
-        // Lifted from http://javascript.about.com/library/blweekyear.htm, lightly modified.
-        var onejan = new Date(y, 0, 1),
-            weekNum = Math.ceil((((new Date(y, m, d) - onejan) / 86400000) + onejan.getDay()+1)/7);
-        return '<td class="pika-week">' + weekNum + '</td>';
+        // solution lifted (and slightly modified) from jQuery UI (MIT license): https://github.com/jquery/jquery-ui
+        var date = new Date(y, m, d);
+        var time, weekNum,
+    			checkDate = new Date( date.getTime() );
+
+    		// Find Thursday of this week starting on Monday
+    		checkDate.setDate( checkDate.getDate() + 4 - ( checkDate.getDay() || 7 ) );
+
+    		time = checkDate.getTime();
+    		checkDate.setMonth( 0 ); // Compare with Jan 1
+    		checkDate.setDate( 1 );
+    		weekNum = Math.floor( Math.round( ( time - checkDate ) / 86400000 ) / 7 ) + 1;
+            return '<td class="pika-week">' + weekNum + '</td>';
     },
 
     renderRow = function(days, isRTL)
