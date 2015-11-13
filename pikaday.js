@@ -236,6 +236,9 @@
         // how many months are visible
         numberOfMonths: 1,
 
+        // option to show a button panel, with one button to set the date to current date, and another button to hide the panel
+        showButtonPanel: false,
+
         // when numberOfMonths is used, this will help you to choose where the main calendar will be (default `left`, can be set to `right`)
         // only used for the first display or when a selected date is not visible
         mainCalendar: 'left',
@@ -443,6 +446,19 @@
                 else if (hasClass(target, 'pika-next')) {
                     self.nextMonth();
                 }
+                else if (hasClass(target, 'pika-button-now')) {
+                    self.setDate(new Date());
+                }
+                else if (hasClass(target, 'pika-button-done')) {
+                    if (opts.bound) {
+                        sto(function() {
+                            self.hide();
+                            if (opts.field) {
+                                opts.field.blur();
+                            }
+                        }, 100);
+                    }
+                }
             }
             if (!hasClass(target, 'pika-select')) {
                 if (e.preventDefault) {
@@ -615,6 +631,8 @@
             var opts = extend(this._o, options, true);
 
             opts.isRTL = !!opts.isRTL;
+
+            opts.showButtonPanel = !!opts.showButtonPanel;
 
             opts.field = (opts.field && opts.field.nodeName) ? opts.field : null;
 
@@ -884,6 +902,10 @@
 
             for (var c = 0; c < opts.numberOfMonths; c++) {
                 html += '<div class="pika-lendar">' + renderTitle(this, c, this.calendars[c].year, this.calendars[c].month, this.calendars[0].year) + this.render(this.calendars[c].year, this.calendars[c].month) + '</div>';
+            }
+
+            if (opts.showButtonPanel){
+                html += '<div class="pika-button-container"><hr/><button type="button" class="pika-button-now">Today</button><button type="button" class="pika-button-done">Done</button></div>';
             }
 
             this.el.innerHTML = html;
