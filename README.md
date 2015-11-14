@@ -79,7 +79,7 @@ Pikaday has many useful options:
 * `bound` automatically show/hide the datepicker on `field` focus (default `true` if `field` is set)
 * `position` preferred position of the datepicker relative to the form field, e.g.: `top right`, `bottom right` **Note:** automatic adjustment may occur to avoid datepicker from being displayed outside the viewport, see [positions example][] (default to 'bottom left')
 * `reposition` can be set to false to not reposition datepicker within the viewport, forcing it to take the configured `position` (default: true)
-* `container` DOM node to render calendar into, see [container example][] (default: undefined) 
+* `container` DOM node to render calendar into, see [container example][] (default: undefined)
 * `format` the default output format for `.toString()` and `field` value (requires [Moment.js][moment] for custom formatting)
 * `defaultDate` the initial date to view when first opened
 * `setDefaultDate` make the `defaultDate` the initial selected value
@@ -260,7 +260,9 @@ i18n: {
     nextMonth     : 'Next Month',
     months        : ['January','February','March','April','May','June','July','August','September','October','November','December'],
     weekdays      : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
-    weekdaysShort : ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+    weekdaysShort : ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
+    today         : 'Today',
+    done          : 'Done'
 }
 ```
 
