@@ -449,7 +449,7 @@
                     self.nextMonth();
                 }
                 else if (hasClass(target, 'pika-button-now')) {
-                    self.setDate(new Date());
+                    self.setToToday();
                 }
                 else if (hasClass(target, 'pika-button-done')) {
                     if (opts.bound) {
@@ -759,6 +759,10 @@
             if (!preventOnSelect && typeof this._o.onSelect === 'function') {
                 this._o.onSelect.call(this, this.getDate());
             }
+        },
+
+        setToToday: function(){
+            this.setDate(new Date());
         },
 
         /**
