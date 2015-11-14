@@ -252,7 +252,9 @@
             nextMonth     : 'Next Month',
             months        : ['January','February','March','April','May','June','July','August','September','October','November','December'],
             weekdays      : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
-            weekdaysShort : ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+            weekdaysShort : ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
+            today         : 'Today',
+            done          : 'Done'
         },
 
         // Theme Classname
@@ -905,7 +907,7 @@
             }
 
             if (opts.showButtonPanel){
-                html += '<div class="pika-button-container"><hr/><button type="button" class="pika-button-now">Today</button><button type="button" class="pika-button-done">Done</button></div>';
+                html += '<div class="pika-button-container"><hr/><button type="button" class="pika-button-now">' + opts.i18n.today + '</button><button type="button" class="pika-button-done">' + opts.i18n.done + '</button></div>';
             }
 
             this.el.innerHTML = html;
