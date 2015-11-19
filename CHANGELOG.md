@@ -1,6 +1,9 @@
 # Changelog
 
-## 1.4.0 - TBA
+## 1.4.0 - 2015-10-30
+
+- Fix touch device support, see #374, #276, #301, #303, #324, #366 and #386
+- Add theme example with triangles added to the dropdowns, see #380
 
 ## 1.3.3 - 2015-02-17
 
@@ -24,7 +27,7 @@
 - Add configurable number of shown months
 - #51 Add unit tests with ci: [testling](https://ci.testling.com/rikkert/pikaday)
 - Fix #94 blur input field after date selection
-- Add configuable container to render calendar into 
+- Add configuable container to render calendar into
 - Add option to show week numbers, see #147
 - Positioning is now optional, see #192
 
