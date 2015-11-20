@@ -868,11 +868,13 @@
 
         setStartRange: function(value)
         {
+            this._d = null; // Reset selected date
             this._o.startRange = value;
         },
 
         setEndRange: function(value)
         {
+            this._d = null; // Reset selected date
             this._o.endRange = value;
         },
 
