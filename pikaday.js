@@ -296,6 +296,9 @@
         if (opts.isEndRange) {
             arr.push('is-endrange');
         }
+        if (opts.isNotAvailable) {
+            arr.push('is-not-available');
+        }
         return '<td data-day="' + opts.day + '" class="' + arr.join(' ') + '">' +
                  '<button class="pika-button pika-day" type="button" ' +
                     'data-pika-year="' + opts.year + '" data-pika-month="' + opts.month + '" data-pika-day="' + opts.day + '">' +
@@ -1004,6 +1007,7 @@
                                  (opts.maxDate && day > opts.maxDate) ||
                                  (opts.disableWeekends && isWeekend(day)) ||
                                  (opts.disableDayFn && opts.disableDayFn(day)),
+                    isNotAvailable = typeof opts.isNotAvailable !== 'undefined' ? opts.isNotAvailable(moment(day).format('YYYY-MM-DD')) : false,
                     dayConfig = {
                         day: 1 + (i - before),
                         month: month,
@@ -1014,7 +1018,8 @@
                         isEmpty: isEmpty,
                         isStartRange: isStartRange,
                         isEndRange: isEndRange,
-                        isInRange: isInRange
+                        isInRange: isInRange,
+                        isNotAvailable: isNotAvailable
                     };
 
                 row.push(renderDay(dayConfig));
