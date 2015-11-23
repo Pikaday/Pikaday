@@ -1007,7 +1007,7 @@
                                  (opts.maxDate && day > opts.maxDate) ||
                                  (opts.disableWeekends && isWeekend(day)) ||
                                  (opts.disableDayFn && opts.disableDayFn(day)),
-                    isNotAvailable = typeof opts.isNotAvailable !== 'undefined' ? opts.isNotAvailable(moment(day).format('YYYY-MM-DD')) : false,
+                    isNotAvailable = typeof opts.isNotAvailable === 'function' ? opts.isNotAvailable(moment(day).format('YYYY-MM-DD')) : false,
                     dayConfig = {
                         day: 1 + (i - before),
                         month: month,
