@@ -281,7 +281,6 @@
             return '<td class="is-empty"></td>';
         }
         var arr = [];
-        var specialDeal;
         if (opts.isDisabled) {
             arr.push('is-disabled');
         }
@@ -305,7 +304,6 @@
         }
         if (opts.isDeal) {
             arr.push('is-deal');
-            specialDeal = '<span class="deal-symbol"></span>';
         }
         return '<td data-day="' + opts.day + '" class="' + arr.join(' ') + '">' +
                  '<button class="pika-button pika-day" type="button" ' +
