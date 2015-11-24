@@ -256,7 +256,10 @@
         onSelect: null,
         onOpen: null,
         onClose: null,
-        onDraw: null
+        onDraw: null,
+
+        //Optional legend
+        legend: ''
     },
 
 
@@ -295,6 +298,12 @@
         }
         if (opts.isEndRange) {
             arr.push('is-endrange');
+        }
+        if (opts.isNotAvailable) {
+            arr.push('is-not-available');
+        }
+        if (opts.isDeal) {
+            arr.push('is-deal');
         }
         return '<td data-day="' + opts.day + '" class="' + arr.join(' ') + '">' +
                  '<button class="pika-button pika-day" type="button" ' +
@@ -875,7 +884,8 @@
                 maxYear = opts.maxYear,
                 minMonth = opts.minMonth,
                 maxMonth = opts.maxMonth,
-                html = '';
+                html = '',
+                legend = typeof opts.legend !== 'undefined' ? opts.legend : '';
 
             if (this._y <= minYear) {
                 this._y = minYear;
@@ -891,7 +901,7 @@
             }
 
             for (var c = 0; c < opts.numberOfMonths; c++) {
-                html += '<div class="pika-lendar">' + renderTitle(this, c, this.calendars[c].year, this.calendars[c].month, this.calendars[0].year) + this.render(this.calendars[c].year, this.calendars[c].month) + '</div>';
+                html += '<div class="pika-lendar">' + renderTitle(this, c, this.calendars[c].year, this.calendars[c].month, this.calendars[0].year) + this.render(this.calendars[c].year, this.calendars[c].month) + legend + '</div>';
             }
 
             this.el.innerHTML = html;
@@ -1004,6 +1014,8 @@
                                  (opts.maxDate && day > opts.maxDate) ||
                                  (opts.disableWeekends && isWeekend(day)) ||
                                  (opts.disableDayFn && opts.disableDayFn(day)),
+                    isNotAvailable = typeof opts.isNotAvailable === 'function' ? opts.isNotAvailable(moment(day).format('YYYY-MM-DD')) : false,
+                    isDeal = typeof opts.isDeal === 'function' ? opts.isDeal(moment(day).format('YYYY-MM-DD')) : false,
                     dayConfig = {
                         day: 1 + (i - before),
                         month: month,
@@ -1014,7 +1026,9 @@
                         isEmpty: isEmpty,
                         isStartRange: isStartRange,
                         isEndRange: isEndRange,
-                        isInRange: isInRange
+                        isInRange: isInRange,
+                        isNotAvailable: isNotAvailable,
+                        isDeal: isDeal
                     };
 
                 row.push(renderDay(dayConfig));
