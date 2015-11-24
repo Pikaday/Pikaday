@@ -278,6 +278,7 @@
             return '<td class="is-empty"></td>';
         }
         var arr = [];
+        var specialDeal;
         if (opts.isDisabled) {
             arr.push('is-disabled');
         }
@@ -298,6 +299,10 @@
         }
         if (opts.isNotAvailable) {
             arr.push('is-not-available');
+        }
+        if (opts.isDeal) {
+            arr.push('is-deal');
+            specialDeal = '<span class="deal-symbol"></span>';
         }
         return '<td data-day="' + opts.day + '" class="' + arr.join(' ') + '">' +
                  '<button class="pika-button pika-day" type="button" ' +
@@ -1008,6 +1013,7 @@
                                  (opts.disableWeekends && isWeekend(day)) ||
                                  (opts.disableDayFn && opts.disableDayFn(day)),
                     isNotAvailable = typeof opts.isNotAvailable === 'function' ? opts.isNotAvailable(moment(day).format('YYYY-MM-DD')) : false,
+                    isDeal = typeof opts.isDeal === 'function' ? opts.isDeal(moment(day).format('YYYY-MM-DD')) : false,
                     dayConfig = {
                         day: 1 + (i - before),
                         month: month,
@@ -1019,7 +1025,8 @@
                         isStartRange: isStartRange,
                         isEndRange: isEndRange,
                         isInRange: isInRange,
-                        isNotAvailable: isNotAvailable
+                        isNotAvailable: isNotAvailable,
+                        isDeal: isDeal
                     };
 
                 row.push(renderDay(dayConfig));
