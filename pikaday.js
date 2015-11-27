@@ -349,11 +349,13 @@
             opts = instance._o,
             isMinYear = year === opts.minYear,
             isMaxYear = year === opts.maxYear,
-            html = '<div class="pika-title">',
-            monthHtml,
-            yearHtml,
+            title = document.createElement('div'),
+            monthElement = document.createElement('div'),
+            yearElement = document.createElement('div'),
             prev = true,
             next = true;
+        
+        title.className = 'pika-title';
 
         for (arr = [], i = 0; i < 12; i++) {
             arr.push('<option value="' + (year === refYear ? i - c : 12 + i - c) + '"' +
@@ -361,7 +363,9 @@
                 ((isMinYear && i < opts.minMonth) || (isMaxYear && i > opts.maxMonth) ? 'disabled' : '') + '>' +
                 opts.i18n.months[i] + '</option>');
         }
-        monthHtml = '<div class="pika-label">' + opts.i18n.months[month] + '<select class="pika-select pika-select-month" tabindex="-1">' + arr.join('') + '</select></div>';
+        
+        monthElement.className = 'pika-label';
+        monthElement.innerHTML = opts.i18n.months[month] + '<select class="pika-select pika-select-month" tabindex="-1">' + arr.join('') + '</select>';
 
         if (isArray(opts.yearRange)) {
             i = opts.yearRange[0];
@@ -376,12 +380,16 @@
                 arr.push('<option value="' + i + '"' + (i === year ? ' selected': '') + '>' + (i) + '</option>');
             }
         }
-        yearHtml = '<div class="pika-label">' + year + opts.yearSuffix + '<select class="pika-select pika-select-year" tabindex="-1">' + arr.join('') + '</select></div>';
+
+        yearElement.className = 'pika-label';
+        yearElement.innerHTML = year + opts.yearSuffix + '<select class="pika-select pika-select-year" tabindex="-1">' + arr.join('') + '</select>';
 
         if (opts.showMonthAfterYear) {
-            html += yearHtml + monthHtml;
+            title.appendChild(yearElement);
+            title.appendChild(monthElement);
         } else {
-            html += monthHtml + yearHtml;
+            title.appendChild(monthElement);
+            title.appendChild(yearElement);
         }
 
         if (isMinYear && (month === 0 || opts.minMonth >= month)) {
@@ -393,13 +401,31 @@
         }
 
         if (c === 0) {
-            html += '<button class="pika-prev' + (prev ? '' : ' is-disabled') + '" type="button">' + opts.i18n.previousMonth + '</button>';
+            var prevButton = document.createElement('button');
+            prevButton.className = 'pika-prev' + (prev ? '' : ' is-disabled');
+            prevButton.type = 'button';
+            prevButton.innerHTML = opts.i18n.previousMonth;
+            prevButton.onclick = function () {
+              if (prev) {
+                instance.prevMonth();
+              }
+            };
+            title.appendChild(prevButton);
         }
         if (c === (instance._o.numberOfMonths - 1) ) {
-            html += '<button class="pika-next' + (next ? '' : ' is-disabled') + '" type="button">' + opts.i18n.nextMonth + '</button>';
+            var nextButton = document.createElement('button');
+            nextButton.className = 'pika-next' + (next ? '' : ' is-disabled');
+            nextButton.type = 'button';
+            nextButton.innerHTML = opts.i18n.nextMonth;
+            nextButton.onclick = function () {
+              if (next) {
+                instance.nextMonth();
+              }
+            };
+            title.appendChild(nextButton);
         }
 
-        return html += '</div>';
+        return title;
     },
 
     renderTable = function(opts, data)
@@ -438,12 +464,6 @@
                             }
                         }, 100);
                     }
-                }
-                else if (hasClass(target, 'pika-prev')) {
-                    self.prevMonth();
-                }
-                else if (hasClass(target, 'pika-next')) {
-                    self.nextMonth();
                 }
             }
             if (!hasClass(target, 'pika-select')) {
@@ -605,8 +625,6 @@
      * public Pikaday API
      */
     Pikaday.prototype = {
-
-
         /**
          * configure functionality
          */
@@ -853,11 +871,13 @@
 
         setStartRange: function(value)
         {
+            this._d = null; // Reset selected date
             this._o.startRange = value;
         },
 
         setEndRange: function(value)
         {
+            this._d = null; // Reset selected date
             this._o.endRange = value;
         },
 
@@ -873,8 +893,7 @@
                 minYear = opts.minYear,
                 maxYear = opts.maxYear,
                 minMonth = opts.minMonth,
-                maxMonth = opts.maxMonth,
-                html = '';
+                maxMonth = opts.maxMonth;
 
             if (this._y <= minYear) {
                 this._y = minYear;
@@ -890,10 +909,16 @@
             }
 
             for (var c = 0; c < opts.numberOfMonths; c++) {
-                html += '<div class="pika-lendar">' + renderTitle(this, c, this.calendars[c].year, this.calendars[c].month, this.calendars[0].year) + this.render(this.calendars[c].year, this.calendars[c].month) + '</div>';
-            }
+                var lendarElement = document.createElement('div');
+                lendarElement.className = 'pika-lendar';
+                lendarElement.appendChild(renderTitle(this, c, this.calendars[c].year, this.calendars[c].month, this.calendars[0].year));
+                var table = document.createElement('div');
+                table.innerHTML = this.render(this.calendars[c].year, this.calendars[c].month);
+                lendarElement.appendChild(table);
 
-            this.el.innerHTML = html;
+                this.el.innerHTML = '';
+                this.el.appendChild(lendarElement);
+            }
 
             if (opts.bound) {
                 if(opts.field.type !== 'hidden') {
