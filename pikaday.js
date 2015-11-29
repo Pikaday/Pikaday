@@ -898,7 +898,9 @@
             if (opts.bound) {
                 if(opts.field.type !== 'hidden') {
                     sto(function() {
-                        opts.trigger.focus();
+                        if (!opts.field.disabled) {
+                            opts.trigger.focus();
+                        }
                     }, 1);
                 }
             }
