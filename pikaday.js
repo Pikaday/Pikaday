@@ -486,8 +486,6 @@
 
                 switch(e.keyCode){
                     case 13:
-                        opts.field.blur();
-                        break;
                     case 27:
                         opts.field.blur();
                         break;
@@ -780,7 +778,7 @@
         },
 
         /**
-         * return a Date object of the current selection
+         * return a Date object of the current selection with fallback for the current date
          */
         getDate: function()
         {
