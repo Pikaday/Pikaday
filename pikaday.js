@@ -478,6 +478,87 @@
             }
         };
 
+        self._onKeyChange = function(e)
+        {
+            e = e || window.event;
+
+            if (self.isVisible()) {
+
+                switch(e.keyCode){
+                    case 13:
+                        opts.field.blur();
+                        break;
+                    case 27:
+                        opts.field.blur();
+                        break;
+                    case 37:
+                        self._onArrowLeft();
+                        break;
+                    case 38:
+                        self._onArrowUp();
+                        break;
+                    case 39:
+                        self._onArrowRight();
+                        break;
+                    case 40:
+                        self._onArrowDown();
+                        break;
+                }
+            }
+        };
+
+        self._onArrowLeft = function()
+        {
+            var day = this.getDate();
+
+            var prevDay = new Date(day.valueOf() - 1*24*60*60*1000);
+
+            if (hasMoment) {
+                prevDay = moment(day).subtract("days", 1).toDate();
+            }
+
+            self.setDate(prevDay);
+        }
+
+        self._onArrowUp = function()
+        {
+            var day = this.getDate();
+
+            var prevDay = new Date(day.valueOf() - 7*24*60*60*1000);
+
+            if (hasMoment) {
+                prevDay = moment(day).subtract("days", 1).toDate();
+            }
+
+            self.setDate(prevDay);
+        }
+
+        self._onArrowRight = function()
+        {
+            var day = this.getDate();
+
+            var nextDay = new Date(day.valueOf() + 1*24*60*60*1000);
+
+            if (hasMoment) {
+                nextDay = moment(day).add("days", 1).toDate();
+            }
+
+            self.setDate(nextDay);
+        }
+
+        self._onArrowDown = function()
+        {
+            var day = this.getDate();
+
+            var nextDay = new Date(day.valueOf() + 7*24*60*60*1000);
+
+            if (hasMoment) {
+                nextDay = moment(day).add("days", 1).toDate();
+            }
+
+            self.setDate(nextDay);
+        }
+
         self._onInputChange = function(e)
         {
             var date;
@@ -562,6 +643,7 @@
         addEvent(self.el, 'mousedown', self._onMouseDown, true);
         addEvent(self.el, 'touchend', self._onMouseDown, true);
         addEvent(self.el, 'change', self._onChange);
+        addEvent(document, 'keydown', self._onKeyChange);
 
         if (opts.field) {
             if (opts.container) {
@@ -702,7 +784,7 @@
          */
         getDate: function()
         {
-            return isDate(this._d) ? new Date(this._d.getTime()) : null;
+            return isDate(this._d) ? new Date(this._d.getTime()) : new Date();
         },
 
         /**
@@ -1064,7 +1146,7 @@
 
         show: function()
         {
-            if (!this._v) {
+            if (!this.isVisible()) {
                 removeClass(this.el, 'is-hidden');
                 this.el.setAttribute('aria-hidden', 'false');
                 this._v = true;
