@@ -840,14 +840,14 @@
 
             if (sign === 'add') {
                 newDay = new Date(day.valueOf() + difference);
-            } else {
+            } else if (sign === 'subtract') {
                 newDay = new Date(day.valueOf() - difference);
             }
 
             if (hasMoment) {
                 if (sign === 'add') {
                     newDay = moment(day).add("days", days).toDate();
-                else {
+                } else if (sign === 'subtract') {
                     newDay = moment(day).subtract("days", days).toDate();
                 }
             }
