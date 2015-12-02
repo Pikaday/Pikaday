@@ -507,54 +507,22 @@
 
         self._onArrowLeft = function()
         {
-            var day = this.getDate();
-
-            var prevDay = new Date(day.valueOf() - 1*24*60*60*1000);
-
-            if (hasMoment) {
-                prevDay = moment(day).subtract("days", 1).toDate();
-            }
-
-            self.setDate(prevDay);
+            this.adjustDate('subtract', 1);
         }
 
         self._onArrowUp = function()
         {
-            var day = this.getDate();
-
-            var prevDay = new Date(day.valueOf() - 7*24*60*60*1000);
-
-            if (hasMoment) {
-                prevDay = moment(day).subtract("days", 1).toDate();
-            }
-
-            self.setDate(prevDay);
+            this.adjustDate('subtract', 7);
         }
 
         self._onArrowRight = function()
         {
-            var day = this.getDate();
-
-            var nextDay = new Date(day.valueOf() + 1*24*60*60*1000);
-
-            if (hasMoment) {
-                nextDay = moment(day).add("days", 1).toDate();
-            }
-
-            self.setDate(nextDay);
+            this.adjustDate('add', 1);
         }
 
         self._onArrowDown = function()
         {
-            var day = this.getDate();
-
-            var nextDay = new Date(day.valueOf() + 7*24*60*60*1000);
-
-            if (hasMoment) {
-                nextDay = moment(day).add("days", 1).toDate();
-            }
-
-            self.setDate(nextDay);
+            this.adjustDate('add', 7);
         }
 
         self._onInputChange = function(e)
@@ -861,6 +829,30 @@
             }
 
             this.adjustCalendars();
+        },
+
+        adjustDate: function(sign, days) {
+
+            var day = this.getDate();
+            var difference = parseInt(days)*24*60*60*1000;
+
+            var newDay;
+
+            if (sign === 'add') {
+                newDay = new Date(day.valueOf() + difference);
+            } else {
+                newDay = new Date(day.valueOf() - difference);
+            }
+
+            if (hasMoment) {
+                if (sign === 'add') {
+                    newDay = moment(day).add("days", days).toDate();
+                else {
+                    newDay = moment(day).subtract("days", days).toDate();
+                }
+            }
+
+            this.setDate(newDay);
         },
 
         adjustCalendars: function() {
