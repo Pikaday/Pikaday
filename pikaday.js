@@ -490,40 +490,20 @@
                         opts.field.blur();
                         break;
                     case 37:
-                        self._onArrowLeft();
+                        this.adjustDate('subtract', 1);
                         break;
                     case 38:
-                        self._onArrowUp();
+                        this.adjustDate('subtract', 7);
                         break;
                     case 39:
-                        self._onArrowRight();
+                        this.adjustDate('add', 1);
                         break;
                     case 40:
-                        self._onArrowDown();
+                        this.adjustDate('add', 7);
                         break;
                 }
             }
         };
-
-        self._onArrowLeft = function()
-        {
-            this.adjustDate('subtract', 1);
-        }
-
-        self._onArrowUp = function()
-        {
-            this.adjustDate('subtract', 7);
-        }
-
-        self._onArrowRight = function()
-        {
-            this.adjustDate('add', 1);
-        }
-
-        self._onArrowDown = function()
-        {
-            this.adjustDate('add', 7);
-        }
 
         self._onInputChange = function(e)
         {
