@@ -490,16 +490,16 @@
                         opts.field.blur();
                         break;
                     case 37:
-                        this.adjustDate('subtract', 1);
+                        self.adjustDate('subtract', 1);
                         break;
                     case 38:
-                        this.adjustDate('subtract', 7);
+                        self.adjustDate('subtract', 7);
                         break;
                     case 39:
-                        this.adjustDate('add', 1);
+                        self.adjustDate('add', 1);
                         break;
                     case 40:
-                        this.adjustDate('add', 7);
+                        self.adjustDate('add', 7);
                         break;
                 }
             }
