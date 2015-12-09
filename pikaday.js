@@ -826,9 +826,9 @@
 
             if (hasMoment) {
                 if (sign === 'add') {
-                    newDay = moment(day).add("days", days).toDate();
+                    newDay = moment(day).add(days, "days").toDate();
                 } else if (sign === 'subtract') {
-                    newDay = moment(day).subtract("days", days).toDate();
+                    newDay = moment(day).subtract(days, "days").toDate();
                 }
             }
 
