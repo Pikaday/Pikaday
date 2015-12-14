@@ -730,9 +730,11 @@
                 date = max;
             }
 
-            this._d = new Date(date.getTime());
-            setToStartOfDay(this._d);
-            this.gotoDate(this._d);
+			if(!this._d || this._d.getTime() !== date.getTime()) {
+				this._d = new Date(date.getTime());
+				setToStartOfDay(this._d);
+				this.gotoDate(this._d);
+			}
 
             if (this._o.field) {
                 this._o.field.value = this.toString();
