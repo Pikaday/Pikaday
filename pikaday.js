@@ -353,7 +353,7 @@
             next = true;
 
         if (c === 0) {
-            html += '<button class="pika-prev' + (prev ? '' : ' is-disabled') + '" type="button">' + opts.i18n.previousMonth + '</button>';
+            html += '<a class="pika-prev' + (prev ? '' : ' is-disabled') + '">' + opts.i18n.previousMonth + '</a>';
         }
 
         for (arr = [], i = 0; i < 12; i++) {
@@ -394,7 +394,7 @@
         }
         
         if (c === (instance._o.numberOfMonths - 1) ) {
-            html += '<button class="pika-next' + (next ? '' : ' is-disabled') + '" type="button">' + opts.i18n.nextMonth + '</button>';
+            html += '<a class="pika-next' + (next ? '' : ' is-disabled') + '">' + opts.i18n.nextMonth + '</a>';
         }
 
         return html += '</div>';
