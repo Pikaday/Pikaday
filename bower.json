@@ -1,6 +1,5 @@
 {
   "name": "pikaday",
-  "version": "1.3.2",
   "description": "A refreshing JavaScript Datepicker — lightweight, no dependencies, modular CSS",
   "keywords": [
     "datepicker",
