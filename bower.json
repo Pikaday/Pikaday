@@ -1,12 +1,12 @@
 {
   "name": "pikaday-time",
-  "version": "1.3.3",
   "description": "Time support added to pikaday",
   "keywords": [
     "datepicker",
     "calendar",
     "date",
-    "time"
+    "time",
+    "datetime"
   ],
   "main": [
     "./pikaday.js",

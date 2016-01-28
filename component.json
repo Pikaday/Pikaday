@@ -1,13 +1,14 @@
 {
   "name": "pikaday-time",
-  "repo": "dbushell/Pikaday",
+  "repo": "owenmead/Pikaday",
   "description": "Time support added to pikaday",
-  "version": "1.3.3",
+  "version": "1.4.0",
   "keywords": [
     "datepicker",
     "calendar",
     "date",
-    "time"
+    "time",
+    "datetime"
   ],
   "main": "pikaday.js",
   "scripts": ["pikaday.js"],
