@@ -495,6 +495,9 @@
                     if (self._d && opts.showTime) {
                         newDate.setHours(self._d.getHours());
                         newDate.setMinutes(self._d.getMinutes());
+                        if (opts.showSeconds) {
+                            newDate.setSeconds(self._d.getSeconds());
+                        }
                     }
                     self.setDate(newDate);
                     if (opts.bound) {
