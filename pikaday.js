@@ -254,6 +254,9 @@
         showSeconds: false,
         use24hour: false,
 
+        // option to prevent calendar from auto-closing after date is selected
+        autoClose: true,
+
         // when numberOfMonths is used, this will help you to choose where the main calendar will be (default `left`, can be set to `right`)
         // only used for the first display or when a selected date is not visible
         mainCalendar: 'left',
@@ -496,7 +499,9 @@
                     self.setDate(newDate);
                     if (opts.bound) {
                         sto(function() {
-                            self.hide();
+                            if (opts.autoClose) {
+                                self.hide();
+                            }
                             if (opts.field) {
                                 opts.field.blur();
                             }
@@ -590,7 +595,7 @@
             }
             while ((pEl = pEl.parentNode));
 
-            if (!self._c) {
+            if (opts.autoClose && !self._c) {
                 self._b = sto(function() {
                     self.hide();
                 }, 50);
@@ -694,6 +699,8 @@
             var opts = extend(this._o, options, true);
 
             opts.isRTL = !!opts.isRTL;
+
+            opts.autoClose = !!opts.autoClose;
 
             opts.field = (opts.field && opts.field.nodeName) ? opts.field : null;
 
