@@ -5,6 +5,12 @@
 - Fix touch device support, see #374, #276, #301, #303, #324, #366 and #386
 - Add theme example with triangles added to the dropdowns, see #380
 
+## 1.4.0 - Time
+- Add option to change increment value of time. Thanks @andreynering
+- Added `autoClose` option to disable autoclose when date selected. Thanks @ctcpip
+- Add options `incrementHourBy`, `incrementMinuteBy`, and `incrementSecondBy`. Thanks @andreynering
+- Fixed a bug where seconds would be reset when changing date. Thanks @vandry
+
 ## 1.3.3 - 2015-02-17
 
 - Add theme class support, see #260
