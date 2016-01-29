@@ -431,6 +431,7 @@
     },
 
     renderTimePicker = function(num_options, selected_val, select_class, display_func, increment_by) {
+        increment_by = increment_by || 1;
         var to_return = '<td><select class="pika-select '+select_class+'">';
         for (var i = 0; i < num_options; i += increment_by) {
             to_return += '<option value="'+i+'" '+(i==selected_val ? 'selected' : '')+'>'+display_func(i)+'</option>'
