@@ -10,6 +10,7 @@
 - Added `autoClose` option to disable autoclose when date selected. Thanks @ctcpip
 - Add options `incrementHourBy`, `incrementMinuteBy`, and `incrementSecondBy`. Thanks @andreynering
 - Fixed a bug where seconds would be reset when changing date. Thanks @vandry
+- Fixed missing SCSS code issue. Thanks @mik-laj
 
 ## 1.3.3 - 2015-02-17
 
