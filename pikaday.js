@@ -476,13 +476,23 @@
 
         self._onInputChange = function(e)
         {
-            var date;
+            var format,
+                date;
 
             if (e.firedBy === self) {
                 return;
             }
             if (hasMoment) {
-                date = moment(opts.field.value, opts.format, opts.formatStrict);
+                if (opts.field.value && opts.format) {
+                    // Accept typing all formats like ["MMddyy", "MMddyyyy", "MM/dd/yy", "MM/dd/yyyy"]
+                    if (/\d{8}|[^\s]{10}/.test(opts.field.value) && !/Y{4}$/.test(opts.format)) {
+                        format = opts.format.replace(/Y+/g, "YYYY");
+                    } else if (/\d{6}|[^\s]{8}/.test(opts.field.value) && /Y{3}$/.test(opts.format)) {
+                        format = opts.format.replace(/Y+/g, "YY");
+                    }
+                }
+
+                date = moment(opts.field.value, format || opts.format, opts.formatStrict);
                 date = (date && date.isValid()) ? date.toDate() : null;
             }
             else {
