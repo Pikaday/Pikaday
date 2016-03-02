@@ -81,6 +81,7 @@ Pikaday has many useful options:
 * `reposition` can be set to false to not reposition datepicker within the viewport, forcing it to take the configured `position` (default: true)
 * `container` DOM node to render calendar into, see [container example][] (default: undefined) 
 * `format` the default output format for `.toString()` and `field` value (requires [Moment.js][moment] for custom formatting)
+* `formatStrict` the default flag for moment's strict date parsing (requires [Moment.js][moment] for custom formatting)
 * `defaultDate` the initial date to view when first opened
 * `setDefaultDate` make the `defaultDate` the initial selected value
 * `firstDay` first day of the week (0: Sunday, 1: Monday, etc)
@@ -94,6 +95,7 @@ Pikaday has many useful options:
 * `i18n` language defaults for month and weekday names (see internationalization below)
 * `yearSuffix` additional text to append to the year in the title
 * `showMonthAfterYear` render the month after year in the title (default `false`)
+* `showDaysInNextAndPreviousMonths` render days of the calendar grid that fall in the next or previous months to the current month instead of rendering an empty table cell (default: false)
 * `numberOfMonths` number of visible calendars
 * `mainCalendar` when `numberOfMonths` is used, this will help you to choose where the main calendar will be (default `left`, can be set to `right`). Only used for the first display or when a selected date is not already visible
 * `theme` define a classname that can be used as a hook for styling different themes, see [theme example][] (default `null`)
@@ -218,6 +220,14 @@ Update the minimum/earliest date that can be selected.
 `picker.setMaxDate()`
 
 Update the maximum/latest date that can be selected.
+
+`picker.setStartRange()`
+
+Update the range start date. For using two Pikaday instances to select a date range.
+
+`picker.setEndRange()`
+
+Update the range end date. For using two Pikaday instances to select a date range.
 
 ### Show and hide datepicker
 
