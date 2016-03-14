@@ -904,10 +904,7 @@
             }
 
             if (typeof this._o.onDraw === 'function') {
-                var self = this;
-                sto(function() {
-                    self._o.onDraw.call(self);
-                }, 0);
+                this._o.onDraw(this);
             }
         },
 
