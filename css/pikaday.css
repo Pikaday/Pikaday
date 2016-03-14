@@ -39,8 +39,8 @@ http://nicolasgallagher.com/micro-clearfix-hack/
 
 .pika-lendar {
     float: left;
-    width: 100%;
-    padding: 8px;
+    width: 240px;
+    margin: 8px;
 }
 
 .pika-title {
@@ -138,12 +138,6 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     padding: 0;
 }
 
-.pika-table td {
-    height: 0;
-    padding-bottom: 14.33%;
-    position: relative;
-}
-
 .pika-table th {
     color: #999;
     font-size: 12px;
@@ -165,13 +159,8 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     color: #666;
     font-size: 12px;
     line-height: 15px;
-    text-align: center;
+    text-align: right;
     background: #f5f5f5;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
 }
 
 .pika-week {
