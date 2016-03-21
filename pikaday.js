@@ -290,7 +290,12 @@
         }
         if (opts.isDisabled) {
             arr.push('is-disabled');
+        } else if(opts.isAfterMax) {
+            arr.push('is-afterMax');
+        } else if (opts.isBeforeStartRange) {
+            arr.push('is-beforeStart');
         }
+
         if (opts.isToday) {
             arr.push('is-today');
         }
@@ -731,15 +736,20 @@
             }
 
             this._d = new Date(date.getTime());
-            setToStartOfDay(this._d);
-            this.gotoDate(this._d);
 
-            if (this._o.field) {
-                this._o.field.value = this.toString();
-                fireEvent(this._o.field, 'change', { firedBy: this });
-            }
-            if (!preventOnSelect && typeof this._o.onSelect === 'function') {
-                this._o.onSelect.call(this, this.getDate());
+            // UPDATE the field IF startRange < date < MaxRange
+            if (!this._o.startRange || !this._o.maxRange || /*!moment(this._d).isSame(this._o.startRange) &&*/
+                !moment(this._d).isAfter(this._o.maxRange) && !moment(this._d).isBefore(this._o.startRange)) {
+
+                setToStartOfDay(this._d);
+                this.gotoDate(this._d);
+                if (this._o.field) {
+                    this._o.field.value = this.toString();
+                    fireEvent(this._o.field, 'change', { firedBy: this });
+                }
+                if (!preventOnSelect && typeof this._o.onSelect === 'function') {
+                    this._o.onSelect.call(this, this.getDate());
+                }
             }
         },
 
@@ -859,6 +869,11 @@
         setEndRange: function(value)
         {
             this._o.endRange = value;
+        },
+
+        setMaxRange: function(value)
+        {
+            this._o.maxRange = value;
         },
 
         /**
@@ -994,7 +1009,6 @@
             for (var i = 0, r = 0; i < cells; i++)
             {
                 var day = new Date(year, month, 1 + (i - before)),
-                    isSelected = isDate(this._d) ? compareDates(day, this._d) : false,
                     isToday = compareDates(day, now),
                     isEmpty = i < before || i >= (days + before),
                     dayNumber = 1 + (i - before),
@@ -1006,7 +1020,11 @@
                     isDisabled = (opts.minDate && day < opts.minDate) ||
                                  (opts.maxDate && day > opts.maxDate) ||
                                  (opts.disableWeekends && isWeekend(day)) ||
-                                 (opts.disableDayFn && opts.disableDayFn(day));
+                                 (opts.disableDayFn && opts.disableDayFn(day)),
+                    isAfterMax = opts.maxRange && day > opts.maxRange,
+                    isBeforeStartRange = opts.startRange && day < opts.startRange,
+                    //isSelected = isDate(this._d) ? compareDates(day, this._d) : false,
+                    isSelected = !isBeforeStartRange && !isAfterMax && (isDate(this._d) ? compareDates(day, this._d) : false);
 
                 if (isEmpty) {
                     if (i < before) {
@@ -1031,7 +1049,10 @@
                         isStartRange: isStartRange,
                         isEndRange: isEndRange,
                         isInRange: isInRange,
-                        showDaysInNextAndPreviousMonths: opts.showDaysInNextAndPreviousMonths
+                        showDaysInNextAndPreviousMonths: opts.showDaysInNextAndPreviousMonths,
+                        isAfterMax: isAfterMax,
+                        // Only when end date is not selected
+                        isBeforeStartRange: isBeforeStartRange && !opts.endRange
                     };
 
                 row.push(renderDay(dayConfig));
