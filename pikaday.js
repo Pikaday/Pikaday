@@ -841,6 +841,7 @@
                 this._o.minDate = defaults.minDate;
                 this._o.minYear  = defaults.minYear;
                 this._o.minMonth = defaults.minMonth;
+                this._o.startRange = defaults.startRange;
             }
 
             this.draw();
@@ -860,6 +861,7 @@
                 this._o.maxDate = defaults.maxDate;
                 this._o.maxYear = defaults.maxYear;
                 this._o.maxMonth = defaults.maxMonth;
+                this._o.endRange = defaults.endRange;
             }
 
             this.draw();
