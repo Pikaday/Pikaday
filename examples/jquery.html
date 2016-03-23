@@ -11,27 +11,19 @@
 <body>
     <a href="https://github.com/dbushell/Pikaday"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
 
-    <h1>Pikaday - jQuery example</h1>
-
-    <p class="large">A refreshing JavaScript Datepicker — lightweight, no dependencies, modular CSS.</p>
+    <h1>Date range pikaday - using </h1>
 
     <div id="datepicker_container">
       <div class="flow-element">
         <label for="datepicker_from">From:</label>
-        <input type="text" id="datepicker_from" data-type="from">
+        <input type="text" id="datepicker_from" data-daterangepicker-type="from">
         <label for="datepicker_to">To:</label>
-        <input type="text" id="datepicker_to" data-type="to">
+        <input type="text" id="datepicker_to" data-daterangepicker-type="to">
       </div>
       <div class="flow-element">
-        <div id="container" data-type="container"></div>
+        <div id="container" data-daterangepicker-type="container"></div>
       </div>
     </div>
-
-    <h2>What is this?</h2>
-
-    <p>Since version 1.0 Pikaday is a stable and battle tested date-picker. Feel free to use it however you like but please report any bugs or feature requests to the <a href="https://github.com/dbushell/Pikaday/issues">GitHub issue tracker</a>, thanks!</p>
-
-    <p class="small">Copyright © 2014 <a href="http://dbushell.com/">David Bushell</a> | BSD &amp; MIT license | Example by <a href="https://github.com/rikkert">Ramiro Rikkert</a></p>
 
     <script type="text/javascript" src="../node_modules/moment/min/moment.min.js"></script>
     <script type="text/javascript" src="http://underscorejs.org/underscore-min.js"></script>
@@ -41,8 +33,7 @@
     <script src="../plugins/pikaday.jquery.js"></script>
     <script>
 
-    var rangeMaxDuration = 6;
-        disabledRanges = [
+      var disabledRanges = [
           { start: moment('2016-03-16'), end: moment('2016-03-17') },
           { start: moment('2016-03-28'), end: moment('2016-03-30') },
           { start: moment('2016-04-01'), end: moment('2016-04-05') },
@@ -50,9 +41,20 @@
       ];
 
     $('#datepicker_container').daterangepicker({
+      format: 'DD/MM/YYYY',
       disabledDays: disabledRanges,
-      maxRangeDuration: rangeMaxDuration,
-
+      maxRangeDuration: 6,
+      // contract end
+      // limitDate: moment('2016-04-26'),
+      initRange: {
+        start: moment('2016-04-07'),
+        end: moment('2016-04-11')
+      },
+      // allowDisabledDateInRange: true,
+      // getEndRangeMaxfct: function(currentMax) {
+      //   var endContract = moment('2016-04-18');
+      //   return currentMax.isAfter(endContract)?endContract:currentMax;
+      // },
       onRangeChange: function (ev, date) {
         console.log('Date range', moment(date.start).format('YYYY-MM-DD'), moment(date.end).format('YYYY-MM-DD'));
       }
