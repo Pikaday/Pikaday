@@ -290,7 +290,8 @@
         }
         if (opts.isDisabled) {
             arr.push('is-disabled');
-        } else if(opts.isAfterMax) {
+        }
+        if(opts.isAfterMax) {
             arr.push('is-afterMax');
         } else if (opts.isBeforeStartRange) {
             arr.push('is-beforeStart');
