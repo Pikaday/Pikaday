@@ -24,10 +24,10 @@
     // Pikaday Wrapper to manage Dates Range
     var DatePicker = {
 
-        onRangeChange: null,
         maxRangeDuration: null,
         allowDisabledDateInRange : false,
         getEndRangeMaxfct: null,
+
         defaultsPikaday: {
             format: 'YYYY-MM-DD',
             firstDay: 1,
@@ -90,6 +90,11 @@
             return this;
         },
 
+        _updateInputs: function(ev, date) {
+            $('input[name=from]').val(date.start);
+            $('input[name=to]').val(date.end);
+        },
+
         // Apply 2 constrains: maxRangeDuration && allowDisabledDateInRange
         getEndRangeMax: function(date) {
             var	max = moment(date).clone().add(this.maxRangeDuration - 1, 'days'),
@@ -108,14 +113,14 @@
         },
 
         setStartRange: function(date) {
-            this.start = date;
+            this.start = moment(date).startOf('day');
             this.pikaday.setStartRange(date);
             this.pikaday.setMaxRange(this.currentMax);
             this.pikaday.config({field: this.inputTo});
         },
 
         setEndRange: function (date) {
-            this.end = date;
+            this.end = moment(date).endOf('day');
             this.currentMax = null;
             this.pikaday.setMaxRange();
             this.pikaday.config({field: this.inputFrom});
@@ -127,10 +132,14 @@
         },
 
         setOneDayRange: function(day) {
-            this.oneDayRange = day;
+            this.oneDayRange = moment(date).startOf('day');
             this.pikaday.setStartRange();
             $(this.inputTo).val(moment(day).format('YYYY-MM-DD'));
-            $(this.pikaday.el).trigger('rangeUpdate', [{ start: day, end: day }]);
+
+            $(this.pikaday.el).trigger('rangeUpdate', [{
+                start: this.oneDayRange,
+                end:  moment(date).endOf('day')
+            }]);
         },
 
         reset: function () {
@@ -142,6 +151,7 @@
 
         setupEvents: function () {
             $(this.pikaday.el).on('rangeUpdate', this.onRangeChange);
+            $(this.pikaday.el).on('rangeUpdate', this._updateInputs);
 
             $(this.inputFrom).on('click', _.bind(function() {
                 this.pikaday.setDate();
@@ -191,6 +201,9 @@
                     options.inputTo = self.find('input[data-type=to]').get(0);
                     options.container = self.find('[data-type=container]').get(0);
 
+                    // initial state: no dates selected
+                    self.append('<input type="hidden" name="from" value="">');
+                    self.append('<input type="hidden" name="to" value="">');
                     self.data('daterangepicker', DatePicker.init(options));
                 }
             } else {
