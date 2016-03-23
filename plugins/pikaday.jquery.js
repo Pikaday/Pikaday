@@ -21,18 +21,25 @@
 }(this, function ($, _, moment, Pikaday) {
     'use strict';
 
+    var defaults = {
+        format: 'YYYY-MM-DD',
+        inputFrom: document.getElementById('from'),
+        inputTo: document.getElementById('to'),
+        container: document.getElementById('container'),
+        limitDate: null,
+        maxRangeDuration: null,
+        allowDisabledDateInRange: false,
+        getEndRangeMaxfct: null
+    };
+
     // Pikaday Wrapper to manage Dates Range
     var DatePicker = {
-
-        maxRangeDuration: null,
-        allowDisabledDateInRange : false,
-        getEndRangeMaxfct: null,
-
         defaultsPikaday: {
-            format: 'YYYY-MM-DD',
+            format: defaults.format,
             firstDay: 1,
             showWeekNumber: true,
             minDate: new Date(2016, 0, 1),
+            maxDate: new Date(2016, 3, 12),
             showDaysInNextAndPreviousMonths: true,
             bound: false
         },
@@ -40,13 +47,15 @@
         init: function (options) {
             var self = this;
             options = options || {};
-            $.extend(this, options);
+            $.extend(this, defaults, options);
 
             this.currentDate = new Date();
 
             this.pikaday = new Pikaday($.extend(this.defaultsPikaday, {
                 field: this.inputFrom,
-                container: this.container
+                container: this.container,
+                format: this.format,
+                maxDate: this.limitDate && this.limitDate.toDate()
             }));
 
             this.pikaday.config({
@@ -85,8 +94,15 @@
                     self.pikaday.draw();
                 }
             });
-
             this.setupEvents();
+
+            // Set an initial range
+            if (this.initRange) {
+                this.start = this.initRange.start;
+                this.end = this.initRange.end;
+                this.pikaday.setStartRange(this.initRange.start.toDate());
+                this.pikaday.setEndRange(this.initRange.end.toDate());
+            }
             return this;
         },
 
@@ -108,6 +124,8 @@
                     max = closestDisabledDays[0].start.clone().subtract(1, 'days');
                 }
             }
+            max = (max.isAfter(this.limitDate))?this.limitDate:max;
+            // Added constrains
             max = (this.getEndRangeMaxfct)? this.getEndRangeMaxfct(max): max;
             return max.toDate();
         },
@@ -132,19 +150,20 @@
         },
 
         setOneDayRange: function(day) {
-            this.oneDayRange = moment(date).startOf('day');
+            this.oneDayRange = moment(day).startOf('day');
             this.pikaday.setStartRange();
-            $(this.inputTo).val(moment(day).format('YYYY-MM-DD'));
+            $(this.inputTo).val(moment(day).format(this.format));
 
             $(this.pikaday.el).trigger('rangeUpdate', [{
                 start: this.oneDayRange,
-                end:  moment(date).endOf('day')
+                end:  moment(day).endOf('day')
             }]);
         },
 
         reset: function () {
             this.pikaday.setStartRange();
             this.pikaday.setEndRange();
+            this.pikaday.setMaxRange();
             this.start = this.end = this.oneDayRange = null;
             $(this.inputTo).val('');
         },
@@ -154,7 +173,10 @@
             $(this.pikaday.el).on('rangeUpdate', this._updateInputs);
 
             $(this.inputFrom).on('click', _.bind(function() {
+                this.pikaday.config({field: this.inputFrom});
+                $(this.inputFrom).val('');
                 this.pikaday.setDate();
+
                 this.reset();
                 this.pikaday.draw();
             }, this));
@@ -197,9 +219,9 @@
                     var options = $.extend({}, args[0]);
                     options.field = self[0];
 
-                    options.inputFrom = self.find('input[data-type=from]').get(0);
-                    options.inputTo = self.find('input[data-type=to]').get(0);
-                    options.container = self.find('[data-type=container]').get(0);
+                    options.inputFrom = self.find('[data-daterangepicker-type=from]').get(0);
+                    options.inputTo = self.find('[data-daterangepicker-type=to]').get(0);
+                    options.container = self.find('[data-daterangepicker-type=container]').get(0);
 
                     // initial state: no dates selected
                     self.append('<input type="hidden" name="from" value="">');
