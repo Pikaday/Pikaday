@@ -204,14 +204,20 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     border-radius: 3px;
 }
 
-.is-disabled .pika-button {
-    pointer-events: none;
+/* Manage max possible date for a range */
+
+.is-past .pika-button {
+    /*pointer-events: none;*/
     cursor: default;
     color: #999;
     opacity: .3;
 }
 
-/* Manage max possible date for a range */
+.is-disabled .pika-button {
+    cursor: default;
+    color: #999;
+    opacity: .3;
+}
 
 .is-afterMax.is-endrange .pika-button {
 	background: #E25C5B;
@@ -231,13 +237,6 @@ http://nicolasgallagher.com/micro-clearfix-hack/
 
 .is-beforeStart .pika-button {
     cursor: default;
-}
-
-.pika-table td:not(.is-beforeStart):not(.is-afterMax) .pika-button:hover {
-	color: #fff;
-	background: #45B489;
-	box-shadow: none;
-	border-radius: 3px;
 }
 
 /***************************/

@@ -290,7 +290,10 @@
         }
         if (opts.isDisabled) {
             arr.push('is-disabled');
+        }if (opts.isPast) {
+            arr.push('is-past');
         }
+
         if(opts.isAfterMax) {
             arr.push('is-afterMax');
         } else if (opts.isBeforeStartRange) {
@@ -920,10 +923,7 @@
             }
 
             if (typeof this._o.onDraw === 'function') {
-                var self = this;
-                sto(function() {
-                    self._o.onDraw.call(self);
-                }, 0);
+                this._o.onDraw.call(self);
             }
         },
 
@@ -1018,10 +1018,13 @@
                     isStartRange = opts.startRange && compareDates(opts.startRange, day),
                     isEndRange = opts.endRange && compareDates(opts.endRange, day),
                     isInRange = opts.startRange && opts.endRange && opts.startRange < day && day < opts.endRange,
-                    isDisabled = (opts.minDate && day < opts.minDate) ||
-                                 (opts.maxDate && day > opts.maxDate) ||
-                                 (opts.disableWeekends && isWeekend(day)) ||
-                                 (opts.disableDayFn && opts.disableDayFn(day)),
+                    isPast =     (opts.minDate && day < opts.minDate)           ||
+                                 (opts.maxDate && day > opts.maxDate)           ||
+                                 (opts.disableWeekends && isWeekend(day))       ||
+                                //  (opts.disableDayFn && opts.disableDayFn(day))  ||
+                                 (opts.disabledBeforeToday && day.getTime() < now.getTime()),
+
+                    isDisabled = opts.disableDayFn && opts.disableDayFn(day),
                     isAfterMax = opts.maxRange && day > opts.maxRange,
                     isBeforeStartRange = opts.startRange && day < opts.startRange,
                     //isSelected = isDate(this._d) ? compareDates(day, this._d) : false,
@@ -1046,6 +1049,7 @@
                         isSelected: isSelected,
                         isToday: isToday,
                         isDisabled: isDisabled,
+                        isPast: isPast,
                         isEmpty: isEmpty,
                         isStartRange: isStartRange,
                         isEndRange: isEndRange,
