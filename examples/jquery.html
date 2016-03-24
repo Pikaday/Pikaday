@@ -16,16 +16,16 @@
     <div id="datepicker_container">
       <div class="flow-element">
         <label for="datepicker_from">From:</label>
-        <input type="text" id="datepicker_from" data-daterangepicker-type="from">
+        <input type="text" id="datepicker_from" data-daterangepicker-type="start">
         <label for="datepicker_to">To:</label>
-        <input type="text" id="datepicker_to" data-daterangepicker-type="to">
+        <input type="text" id="datepicker_to" data-daterangepicker-type="end">
       </div>
       <div class="flow-element">
         <div id="container" data-daterangepicker-type="container"></div>
       </div>
     </div>
 
-    <script type="text/javascript" src="../node_modules/moment/min/moment.min.js"></script>
+    <script type="text/javascript" src="../node_modules/moment/min/moment-with-locales.min.js"></script>
     <script type="text/javascript" src="http://underscorejs.org/underscore-min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <!-- First load pikaday.js and then the jQuery plugin -->
@@ -44,12 +44,22 @@
       format: 'DD/MM/YYYY',
       disabledDays: disabledRanges,
       maxRangeDuration: 6,
+      disabledBeforeToday: true,
+
+      onDisabledDateOver: function (date, status) {
+        console.log('Over');
+      },
+
+      onDisabledDateLeave: function (date, status) {
+        console.log('Leave');
+      },
+
       // contract end
       // limitDate: moment('2016-04-26'),
-      initRange: {
-        start: moment('2016-04-07'),
-        end: moment('2016-04-11')
-      },
+      // initRange: {
+      //   start: moment('2016-04-07'),
+      //   end: moment('2016-04-11')
+      // },
       // allowDisabledDateInRange: true,
       // getEndRangeMaxfct: function(currentMax) {
       //   var endContract = moment('2016-04-18');
