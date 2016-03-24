@@ -29,7 +29,8 @@
         limitDate: null,
         maxRangeDuration: null,
         allowDisabledDateInRange: false,
-        getEndRangeMaxfct: null
+        getEndRangeMaxfct: null,
+        disabledBeforeToday: false
     };
 
     // Pikaday Wrapper to manage Dates Range
@@ -55,13 +56,14 @@
                 field: this.inputFrom,
                 container: this.container,
                 format: this.format,
-                maxDate: this.limitDate && this.limitDate.toDate()
+                maxDate: this.limitDate && this.limitDate.toDate(),
+                disabledBeforeToday: this.disabledBeforeToday
             }));
 
             this.pikaday.config({
                 disableDayFn: function(date) {
                     date = moment(date);
-                    return date.isBefore(moment(), 'days') || _.some(options.disabledDays, function(current) {
+                    return _.some(options.disabledDays, function(current) {
                         return	date.isSame(current.start)	||
                                 date.isSame(current.end)	||
                                 date.isBetween(current.start, current.end);
@@ -104,11 +106,6 @@
                 this.pikaday.setEndRange(this.initRange.end.toDate());
             }
             return this;
-        },
-
-        _updateInputs: function(ev, date) {
-            $('input[name=from]').val(date.start);
-            $('input[name=to]').val(date.end);
         },
 
         // Apply 2 constrains: maxRangeDuration && allowDisabledDateInRange
@@ -169,8 +166,11 @@
         },
 
         setupEvents: function () {
+            $(this.pikaday.el).on('rangeUpdate', _.bind(function (ev) {
+                $('[name=' + this.output.from + ']').val(this.start.format());
+                $('[name=' + this.output.to + ']').val(this.end.format());
+            }, this));
             $(this.pikaday.el).on('rangeUpdate', this.onRangeChange);
-            $(this.pikaday.el).on('rangeUpdate', this._updateInputs);
 
             $(this.inputFrom).on('click', _.bind(function() {
                 this.pikaday.config({field: this.inputFrom});
@@ -181,12 +181,29 @@
                 this.pikaday.draw();
             }, this));
 
+            $(this.pikaday.el).on('disabledDateOver', this.onDisabledDateOver);
+            $(this.pikaday.el).on('disabledDateLeave', this.onDisabledDateLeave);
+
+            this.hasAlreadyLeave = true;
             $(this.pikaday.el).on('mouseover', _.bind(function(ev) {
+                if ($(ev.target).hasClass('pika-day')) {
+                    if ($(ev.target).parent().hasClass('is-disabled')) {
+                        if (this.hasAlreadyLeave) {
+                            this.hasAlreadyLeave = false;
+                            $(this.pikaday.el).trigger('disabledDateOver');
+                        }
+                    } else if(!this.hasAlreadyLeave) {
+                        this.hasAlreadyLeave = true;
+                        $(this.pikaday.el).trigger('disabledDateLeave');
+                    }
+                }
+
                 if (!this.end && this.start && $(ev.target).hasClass('pika-day')) {
                     var target = ev.target,
-                        _d = new Date(new Date(	target.getAttribute('data-pika-year'),
-                                                target.getAttribute('data-pika-month'),
-                                                target.getAttribute('data-pika-day')));
+                        _d = new Date(  target.getAttribute('data-pika-year'),
+                                        target.getAttribute('data-pika-month'),
+                                        target.getAttribute('data-pika-day'));
+
                     if (this.currentDate.getTime() !== _d.getTime()) {
                         this.currentDate = _d;
                         var endRange;
@@ -219,13 +236,20 @@
                     var options = $.extend({}, args[0]);
                     options.field = self[0];
 
-                    options.inputFrom = self.find('[data-daterangepicker-type=from]').get(0);
-                    options.inputTo = self.find('[data-daterangepicker-type=to]').get(0);
+                    var inputs = self.find('[data-daterangepicker-type]');
+                    options.inputFrom = inputs.get(0);
+                    options.inputTo = inputs.get(1);
                     options.container = self.find('[data-daterangepicker-type=container]').get(0);
 
                     // initial state: no dates selected
-                    self.append('<input type="hidden" name="from" value="">');
-                    self.append('<input type="hidden" name="to" value="">');
+                    options.output = {
+                        from: options.inputFrom.getAttribute('data-daterangepicker-type'),
+                        to: options.inputTo.getAttribute('data-daterangepicker-type')
+                    };
+
+                    self.append('<input type="hidden" name="'+ options.output.from +'" value="">');
+                    self.append('<input type="hidden" name="'+ options.output.to +'" value="">');
+
                     self.data('daterangepicker', DatePicker.init(options));
                 }
             } else {
