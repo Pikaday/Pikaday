@@ -100,10 +100,10 @@
 
             // Set an initial range
             if (this.initRange) {
-                this.start = this.initRange.start;
-                this.end = this.initRange.end;
-                this.pikaday.setStartRange(this.initRange.start.toDate());
-                this.pikaday.setEndRange(this.initRange.end.toDate());
+                this.start = moment(this.initRange.start);
+                this.end = moment(this.initRange.end);
+                this.pikaday.setStartRange(this.start.toDate());
+                this.pikaday.setEndRange(this.end.toDate());
             }
             return this;
         },
@@ -251,6 +251,15 @@
 
                     $(options.inputFrom).removeAttr('name');
                     $(options.inputTo).removeAttr('name');
+
+                    var initRange = {
+                        start: $(options.inputFrom).val(),
+                        end: $(options.inputTo).val()
+                    }
+
+                    if (initRange.start && initRange.end) {
+                        options.initRange = initRange;
+                    }
 
                     self.data('daterangepicker', DatePicker.init(options));
                 }
