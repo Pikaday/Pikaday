@@ -151,9 +151,11 @@
             this.pikaday.setStartRange();
             $(this.inputTo).val(moment(day).format(this.format));
 
+            this.start = this.oneDayRange;
+            this.end = moment(day).endOf('day');
             $(this.pikaday.el).trigger('rangeUpdate', [{
-                start: this.oneDayRange,
-                end:  moment(day).endOf('day')
+                start: this.start,
+                end: this.end
             }]);
         },
 
