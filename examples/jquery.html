@@ -21,7 +21,7 @@
         <input type="text" id="datepicker_to" data-daterangepicker-type="end">
       </div>
       <div class="flow-element">
-        <div id="container" data-daterangepicker-type="container"></div>
+        <div data-name="calendar_container"></div>
       </div>
     </div>
 
@@ -43,28 +43,32 @@
     $('#datepicker_container').daterangepicker({
       format: 'DD/MM/YYYY',
       disabledDays: disabledRanges,
-      maxRangeDuration: 6,
+      maxRangeDuration: 1,
       disabledBeforeToday: true,
 
-      onDisabledDateOver: function (date, status) {
-        console.log('Over');
-      },
-
-      onDisabledDateLeave: function (date, status) {
-        console.log('Leave');
-      },
+      // onDisabledDateOver: function (date, status) {
+      //   console.log('Over');
+      // },
+      //
+      // onDisabledDateLeave: function (date, status) {
+      //   console.log('Leave');
+      // },
 
       // contract end
       // limitDate: moment('2016-04-26'),
+
       // initRange: {
       //   start: moment('2016-04-07'),
       //   end: moment('2016-04-11')
       // },
+
       // allowDisabledDateInRange: true,
+
       // getEndRangeMaxfct: function(currentMax) {
       //   var endContract = moment('2016-04-18');
       //   return currentMax.isAfter(endContract)?endContract:currentMax;
       // },
+
       onRangeChange: function (ev, date) {
         console.log('Date range', moment(date.start).format('YYYY-MM-DD'), moment(date.end).format('YYYY-MM-DD'));
       }

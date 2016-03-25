@@ -241,7 +241,7 @@
                     var inputs = self.find('[data-daterangepicker-type]');
                     options.inputFrom = inputs.get(0);
                     options.inputTo = inputs.get(1);
-                    options.container = self.find('[data-daterangepicker-type=container]').get(0);
+                    options.container = self.find('[data-name=calendar_container]').get(0);
 
                     // initial state: no dates selected
                     options.output = {
