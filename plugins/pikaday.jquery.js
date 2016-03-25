@@ -187,7 +187,7 @@
             this.hasAlreadyLeave = true;
             $(this.pikaday.el).on('mouseover', _.bind(function(ev) {
                 if ($(ev.target).hasClass('pika-day')) {
-                    if ($(ev.target).parent().hasClass('is-disabled')) {
+                    if ($(ev.target).parent().hasClass('is-disabled') && !$(ev.target).parent().hasClass('is-past')) {
                         if (this.hasAlreadyLeave) {
                             this.hasAlreadyLeave = false;
                             $(this.pikaday.el).trigger('disabledDateOver');
