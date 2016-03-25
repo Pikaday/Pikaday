@@ -238,19 +238,19 @@
                     var options = $.extend({}, args[0]);
                     options.field = self[0];
 
-                    var inputs = self.find('[data-daterangepicker-type]');
-                    options.inputFrom = inputs.get(0);
-                    options.inputTo = inputs.get(1);
-                    options.container = self.find('[data-name=calendar_container]').get(0);
-
-                    // initial state: no dates selected
+                    options.container = self.find('.Picker-calendarContainer').get(0);
+                    options.inputFrom = self.find('.Picker-from').get(0);
+                    options.inputTo = self.find('.Picker-to').get(0);
                     options.output = {
-                        from: options.inputFrom.getAttribute('data-daterangepicker-type'),
-                        to: options.inputTo.getAttribute('data-daterangepicker-type')
+                        from: options.inputFrom.getAttribute('name'),
+                        to: options.inputTo.getAttribute('name')
                     };
 
                     self.append('<input type="hidden" name="'+ options.output.from +'" value="">');
                     self.append('<input type="hidden" name="'+ options.output.to +'" value="">');
+
+                    $(options.inputFrom).removeAttr('name');
+                    $(options.inputTo).removeAttr('name');
 
                     self.data('daterangepicker', DatePicker.init(options));
                 }

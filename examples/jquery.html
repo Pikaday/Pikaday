@@ -16,12 +16,12 @@
     <div id="datepicker_container">
       <div class="flow-element">
         <label for="datepicker_from">From:</label>
-        <input type="text" id="datepicker_from" data-daterangepicker-type="start">
+        <input type="text" id="datepicker_from" name="start" class="Picker-from">
         <label for="datepicker_to">To:</label>
-        <input type="text" id="datepicker_to" data-daterangepicker-type="end">
+        <input type="text" id="datepicker_to" name="end" class="Picker-to">
       </div>
       <div class="flow-element">
-        <div data-name="calendar_container"></div>
+        <div class="Picker-calendarContainer"></div>
       </div>
     </div>
 
@@ -43,7 +43,7 @@
     $('#datepicker_container').daterangepicker({
       format: 'DD/MM/YYYY',
       disabledDays: disabledRanges,
-      maxRangeDuration: 1,
+      maxRangeDuration: 5,
       disabledBeforeToday: true,
 
       // onDisabledDateOver: function (date, status) {
