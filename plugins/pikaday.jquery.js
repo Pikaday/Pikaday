@@ -217,6 +217,13 @@
                     }
                 }
             }, this));
+
+            $(this.pikaday.el).on('mouseleave', _.bind(function(ev) {
+                if (this.start && !this.end) {
+                    this.pikaday.setEndRange();
+                    this.pikaday.draw();
+                }
+            }, this));
         }
     };
 
