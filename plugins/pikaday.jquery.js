@@ -64,9 +64,9 @@
                 disableDayFn: function(date) {
                     date = moment(date);
                     return _.some(options.disabledDays, function(current) {
-                        return	date.isSame(current.start)	||
-                                date.isSame(current.end)	||
-                                date.isBetween(current.start, current.end);
+                        return moment(current.start).format('YYYYMMDD') === date.format('YYYYMMDD') ||
+                               moment(current.end).format('YYYYMMDD') === date.format('YYYYMMDD')   ||
+                               date.isBetween(moment(current.start), moment(current.end));
                     });
                 },
 
