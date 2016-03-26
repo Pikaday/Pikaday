@@ -16,9 +16,9 @@
     <div id="datepicker_container">
       <div class="flow-element">
         <label for="datepicker_from">From:</label>
-        <input type="text" id="datepicker_from" name="start" class="Picker-from">
+        <input type="text" id="datepicker_from" name="start" class="Picker-from" value="2016-04-10">
         <label for="datepicker_to">To:</label>
-        <input type="text" id="datepicker_to" name="end" class="Picker-to">
+        <input type="text" id="datepicker_to" name="end" class="Picker-to" value="2016-04-12">
       </div>
       <div class="flow-element">
         <div class="Picker-calendarContainer"></div>
@@ -34,10 +34,10 @@
     <script>
 
       var disabledRanges = [
-          { start: moment('2016-03-16'), end: moment('2016-03-17') },
-          { start: moment('2016-03-28'), end: moment('2016-03-30') },
-          { start: moment('2016-04-01'), end: moment('2016-04-05') },
-          { start: moment('2016-04-20'), end: moment('2016-04-20') }
+          { start: new Date('2016-03-16'), end: new Date('2016-03-17') },
+          { start: new Date('2016-03-28'), end: new Date('2016-03-30') },
+          { start: new Date('2016-04-01'), end: new Date('2016-04-05') },
+          { start: new Date('2016-04-20'), end: new Date('2016-04-20') }
       ];
 
     $('#datepicker_container').daterangepicker({
@@ -58,8 +58,8 @@
       // limitDate: moment('2016-04-26'),
 
       // initRange: {
-      //   start: moment('2016-04-07'),
-      //   end: moment('2016-04-11')
+      //   start: '2016-04-07',
+      //   end: '2016-04-11'
       // },
 
       // allowDisabledDateInRange: true,

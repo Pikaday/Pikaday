@@ -21,11 +21,59 @@
 }(this, function ($, _, moment, Pikaday) {
     'use strict';
 
+    function getInitRange (inputFrom, inputTo) {
+        // initial state: range setup in markup
+        var initRange = {
+            start: $(inputFrom).val(),
+            end: $(inputTo).val()
+        }
+        // Options
+        if (initRange.start && initRange.end) {
+            return initRange;
+        }
+    }
+
+    function updateMarkup(options) {
+        $(options.field).append('<input type="hidden" name="'+ options.output.from +'" value="">');
+        $(options.field).append('<input type="hidden" name="'+ options.output.to +'" value="">');
+        $(options.inputFrom).removeAttr('name');
+        $(options.inputTo).removeAttr('name');
+    }
+
+    var DateRangePicker = function (options) {
+        var element = $(options.field),
+            selectors = {
+                calendar: '.Picker-calendarContainer',
+                from: '.Picker-from',
+                to: '.Picker-to'
+            };
+
+        var inputFrom = $(selectors.from, element).get(0),
+            inputTo = $(selectors.to, element).get(0);
+
+        var options = $.extend({}, options, {
+            initRange: getInitRange(inputFrom, inputTo),
+            container: $(selectors.calendar, element).get(0),
+            inputFrom: inputFrom,
+            inputTo: inputTo,
+            output: { // <input type=hidden> for form validation
+                from: inputFrom.getAttribute('name'),
+                to: inputTo.getAttribute('name')
+            }
+        });
+
+        // Update Markup
+        updateMarkup(options);
+
+        this.init(options);
+    }
+
+
     var defaults = {
         format: 'YYYY-MM-DD',
         inputFrom: document.getElementById('from'),
         inputTo: document.getElementById('to'),
-        container: document.getElementById('container'),
+        container: document.getElementById('calendar'),
         limitDate: null,
         maxRangeDuration: null,
         allowDisabledDateInRange: false,
@@ -34,7 +82,7 @@
     };
 
     // Pikaday Wrapper to manage Dates Range
-    var DatePicker = {
+    DateRangePicker.prototype = {
         defaultsPikaday: {
             format: defaults.format,
             firstDay: 1,
@@ -80,7 +128,7 @@
                         self.currentMax = self.getEndRangeMax(date);
 
                         // If max = start day => the end date is by default = start date
-                        if (self.currentMax && date.getTime() === self.currentMax.getTime()) {
+                        if (self.currentMax && moment(date).format('YYYYMMDD') === moment(self.currentMax).format('YYYYMMDD')) {
                             self.setOneDayRange(date);
                         } else {
                             self.setStartRange(date);
@@ -105,6 +153,8 @@
                 this.pikaday.setStartRange(this.start.toDate());
                 this.pikaday.setEndRange(this.end.toDate());
             }
+
+            console.log(this)
             return this;
         },
 
@@ -115,10 +165,12 @@
 
             if (!this.allowDisabledDateInRange) {
                 closestDisabledDays = _.filter(this.disabledDays, function (current) {
-                    return	current.start.isSame(max) || current.start.isBetween(moment(date), max);
+                    return moment(current.start).format('YYYYMMDD') === max.format('YYYYMMDD') ||
+                           moment(current.start).isBetween(moment(date), max);
+                    // return	moment(current.start).isSame(max) || moment(current.start).isBetween(moment(date), max);
                 });
                 if(closestDisabledDays.length) {
-                    max = closestDisabledDays[0].start.clone().subtract(1, 'days');
+                    max = moment(closestDisabledDays[0].start).subtract(1, 'days');
                 }
             }
             max = (max.isAfter(this.limitDate))?this.limitDate:max;
@@ -227,57 +279,22 @@
         }
     };
 
-
-    $.fn.daterangepicker = function()
-    {
+    $.fn.daterangepicker = function(options) {
         var args = arguments;
-
         if (!args || !args.length) {
             args = [{ }];
         }
 
         return this.each(function() {
-            var self   = $(this),
-                plugin = self.data('daterangepicker');
+            var $this = $(this),
+                data = $this.data('daterangepicker');
 
-            if (!(plugin instanceof Pikaday)) {
-                if (typeof args[0] === 'object') {
-                    var options = $.extend({}, args[0]);
-                    options.field = self[0];
-
-                    options.container = self.find('.Picker-calendarContainer').get(0);
-                    options.inputFrom = self.find('.Picker-from').get(0);
-                    options.inputTo = self.find('.Picker-to').get(0);
-                    options.output = {
-                        from: options.inputFrom.getAttribute('name'),
-                        to: options.inputTo.getAttribute('name')
-                    };
-
-                    self.append('<input type="hidden" name="'+ options.output.from +'" value="">');
-                    self.append('<input type="hidden" name="'+ options.output.to +'" value="">');
-
-                    $(options.inputFrom).removeAttr('name');
-                    $(options.inputTo).removeAttr('name');
-
-                    var initRange = {
-                        start: $(options.inputFrom).val(),
-                        end: $(options.inputTo).val()
-                    }
-
-                    if (initRange.start && initRange.end) {
-                        options.initRange = initRange;
-                    }
-
-                    self.data('daterangepicker', DatePicker.init(options));
-                }
-            } else {
-                if (typeof args[0] === 'string' && typeof plugin[args[0]] === 'function') {
-                    plugin[args[0]].apply(plugin, Array.prototype.slice.call(args,1));
-
-                    if (args[0] === 'destroy') {
-                        self.removeData('daterangepicker');
-                    }
-                }
+            if (!data && typeof args[0] === 'object') {
+                var options = $.extend({}, args[0]);
+                options.field = $this.get(0);
+                $this.data('daterangepicker', $.extend(new DateRangePicker(options)));
+            } else if (typeof option == 'string') {
+                data[option].call($this);
             }
         });
     };
