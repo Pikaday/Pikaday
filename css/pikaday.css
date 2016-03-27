@@ -207,7 +207,7 @@ http://nicolasgallagher.com/micro-clearfix-hack/
 /* Manage max possible date for a range */
 
 .is-past .pika-button {
-    /*pointer-events: none;*/
+    pointer-events: none;
     cursor: default;
     color: #999;
     opacity: .3;
