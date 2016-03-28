@@ -1,12 +1,13 @@
 {
-  "name": "pikaday",
-  "description": "A refreshing JavaScript Datepicker — lightweight, no dependencies, modular CSS",
+  "name": "Date Range Picker",
+  "description": "A date range picker JQuery plugin based on Pikaday",
   "keywords": [
     "datepicker",
     "calendar",
     "date"
   ],
   "main": [
+    "./plugins/daterangepicker.jquery.js"
     "./pikaday.js",
     "./css/pikaday.css"
   ],
@@ -20,9 +21,9 @@
     "BSD",
     "MIT"
   ],
-  "homepage": "http://dbushell.github.io/Pikaday/",
+  "homepage": "https://github.com/stephane71/Pikaday",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dbushell/Pikaday.git"
+    "url": "https://github.com/stephane71/Pikaday.git"
   }
 }
