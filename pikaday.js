@@ -4,7 +4,7 @@
  * Copyright © 2014 David Bushell | BSD & MIT license | https://github.com/dbushell/Pikaday
  */
 
-(function (root, factory)
+(function (factory)
 {
     'use strict';
 
@@ -24,9 +24,9 @@
             return factory(moment);
         });
     } else {
-        root.Pikaday = factory(root.moment);
+        window.Pikaday = factory(window.moment);
     }
-}(this, function (moment)
+}(function (moment)
 {
     'use strict';
 
