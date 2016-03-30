@@ -832,7 +832,7 @@
          */
         setMinDate: function(value)
         {
-            if(value) {
+            if(value instanceof Date) {
                 setToStartOfDay(value);
                 this._o.minDate = value;
                 this._o.minYear  = value.getFullYear();
@@ -852,7 +852,7 @@
          */
         setMaxDate: function(value)
         {
-            if(value) {
+            if(value instanceof Date) {
                 setToStartOfDay(value);
                 this._o.maxDate = value;
                 this._o.maxYear = value.getFullYear();
