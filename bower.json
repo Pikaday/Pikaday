@@ -7,7 +7,7 @@
     "date"
   ],
   "main": [
-    "./plugins/daterangepicker.jquery.js"
+    "./plugins/daterangepicker.jquery.js",
     "./pikaday.js",
     "./css/pikaday.css"
   ],
