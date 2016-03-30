@@ -91,7 +91,8 @@
         maxRangeDuration: null,
         allowDisabledDateInRange: false,
         getEndRangeMaxfct: null,
-        disabledBeforeToday: false
+        disabledBeforeToday: false,
+        minDate: new Date(2016, 0, 1)
     };
 
     var defaultsPikaday = {
@@ -116,8 +117,9 @@
                 field: this.config.inputFrom,
                 container: this.config.container,
                 format: this.config.format,
-                maxDate: this.config.limitDate && this.config.limitDate.toDate(),
-                disabledBeforeToday: this.config.disabledBeforeToday
+                maxDate: this.config.limitDate,
+                disabledBeforeToday: this.config.disabledBeforeToday,
+                minDate: this.config.minDate
             }));
 
             this.pikaday.config({
