@@ -92,13 +92,14 @@
         allowDisabledDateInRange: false,
         getEndRangeMaxfct: null,
         disabledBeforeToday: false,
-        minDate: new Date(2016, 0, 1)
+        minDate: new Date(2016, 0, 1),
+        showWeekNumber: false
     };
 
     var defaultsPikaday = {
         format: defaults.format,
         firstDay: 1,
-        showWeekNumber: true,
+        showWeekNumber: false,
         minDate: new Date(2016, 0, 1),
         maxDate: new Date(2016, 3, 12),
         showDaysInNextAndPreviousMonths: true,
@@ -119,7 +120,8 @@
                 format: this.config.format,
                 maxDate: this.config.limitDate,
                 disabledBeforeToday: this.config.disabledBeforeToday,
-                minDate: this.config.minDate
+                minDate: this.config.minDate,
+                showWeekNumber: this.config.showWeekNumber
             }));
 
             this.pikaday.config({
