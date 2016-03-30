@@ -21,9 +21,9 @@
     "BSD",
     "MIT"
   ],
-  "homepage": "https://github.com/stephane71/Pikaday",
+  "homepage": "https://github.com/stephane71/Daterangepicker",
   "repository": {
     "type": "git",
-    "url": "https://github.com/stephane71/Pikaday.git"
+    "url": "https://github.com/stephane71/Daterangepicker.git"
   }
 }
