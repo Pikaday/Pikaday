@@ -167,31 +167,47 @@
 
             // Binding
             this.$el.on('rangeUpdate', selectors.calendar, $.proxy(this.config.onRangeChange, this));
-            this.$el.on('hover.disabledDates', selectors.calendar, $.proxy(this.config.onHoverDisabledDate, this));
-            this.$el.on('leave.disabledDates', selectors.calendar, $.proxy(this.config.onLeaveDisabledDate, this));
+            // this.$el.on('mouseover.disabledDates', selectors.calendar, $.proxy(this.config.onHoverDisabledDate, this));
+            // this.$el.on('leave.disabledDates', selectors.calendar, $.proxy(this.config.onLeaveDisabledDate, this));
 
             return this;
         },
 
         // Apply 2 constrains: maxRangeDuration && allowDisabledDateInRange
         getEndRangeMax: function(date) {
-            var	max = moment(date).clone().add(this.config.maxRangeDuration - 1, 'days'),
-                closestDisabledDays;
+            // If no max duration && no disabled dates after current date
+            // -> no limit in the range
+            var	max = null;
 
+            if (this.config.maxRangeDuration) {
+                max =  moment(date).clone().add(this.config.maxRangeDuration - 1, 'days').toDate();
+            }
+            // If we don't want any disabled dates in a range
+            //      -> find the closest disabled start range (in this.consfig.disabledDays)
             if (!this.config.allowDisabledDateInRange) {
-                closestDisabledDays = _.filter(this.config.disabledDays, function (current) {
-                    return moment(current.start).format('YYYYMMDD') === max.format('YYYYMMDD') ||
-                           moment(current.start).isBetween(moment(date), max);
-                    // return	moment(current.start).isSame(max) || moment(current.start).isBetween(moment(date), max);
-                });
+                var fct;
+                if (!this.config.maxRangeDuration) {
+                    fct = function (current) {
+                        return current.start.getTime() > date.getTime();
+                    };
+                } else {
+                    // DANGER!! timezones :(
+                    // Improve that test...
+                    fct = function (current) {
+                        return moment(current.start).format('YYYYMMDD') === moment(max).format('YYYYMMDD') ||
+                               moment(current.start).isBetween(moment(date), max);
+                    };
+                }
+                var closestDisabledDays = _.filter(this.config.disabledDays, fct);
                 if(closestDisabledDays.length) {
-                    max = moment(closestDisabledDays[0].start).subtract(1, 'days');
+                    max = moment(closestDisabledDays[0].start).subtract(1, 'days').toDate();
                 }
             }
-            max = (max.isAfter(this.config.limitDate))?this.config.limitDate:max;
+
+            max = (max && moment(max).isAfter(this.config.limitDate))?this.config.limitDate:max;
             // Added constrains
             max = (this.config.getEndRangeMaxfct)? this.config.getEndRangeMaxfct(max): max;
-            return max.toDate();
+            return max;
         },
 
         setStartRange: function(date) {
