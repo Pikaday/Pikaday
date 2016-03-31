@@ -30,7 +30,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <!-- First load pikaday.js and then the jQuery plugin -->
     <script src="../pikaday.js"></script>
-    <script src="../plugins/pikaday.jquery.js"></script>
+    <script src="../plugins/daterangepicker.jquery.js"></script>
     <script>
 
       var disabledRanges = [
@@ -42,20 +42,24 @@
 
     $('#datepicker_container').daterangepicker({
       format: 'DD/MM/YYYY',
+
       disabledDays: disabledRanges,
-      maxRangeDuration: 5,
+      maxRangeDuration: undefined,
+
       disabledBeforeToday: true,
+
+      // Last date of the contract -> PAS EN MOMENT !!!!!!!!
+      limitDate: new Date(2016,4,12),
+      // minDate: new Date(2016,3,14),
+      // showWeekNumber: true,
 
       // onDisabledDateOver: function (date, status) {
       //   console.log('Over');
       // },
       //
-      // onDisabledDateLeave: function (date, status) {
-      //   console.log('Leave');
-      // },
-
-      // contract end
-      // limitDate: moment('2016-04-26'),
+      onDisabledDateLeave: function (date, status) {
+        console.log('Leave');
+      },
 
       // initRange: {
       //   start: '2016-04-07',

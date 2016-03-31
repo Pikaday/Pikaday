@@ -437,7 +437,13 @@
             }
 
             if (!hasClass(target, 'is-disabled')) {
-                if (hasClass(target, 'pika-button') && !hasClass(target, 'is-empty') && !hasClass(target.parentNode, 'is-disabled')) {
+                if (hasClass(target, 'pika-button') &&
+                    !hasClass(target, 'is-empty') &&
+                    !hasClass(target.parentNode, 'is-past') &&
+                    !hasClass(target.parentNode, 'is-disabled') &&
+                    !hasClass(target.parentNode, 'is-afterMax') &&
+                    !hasClass(target.parentNode, 'is-beforeStart')
+                ) {
                     self.setDate(new Date(target.getAttribute('data-pika-year'), target.getAttribute('data-pika-month'), target.getAttribute('data-pika-day')));
                     if (opts.bound) {
                         sto(function() {
@@ -741,19 +747,14 @@
 
             this._d = new Date(date.getTime());
 
-            // UPDATE the field IF startRange < date < MaxRange
-            if (!this._o.startRange || !this._o.maxRange || /*!moment(this._d).isSame(this._o.startRange) &&*/
-                !moment(this._d).isAfter(this._o.maxRange) && !moment(this._d).isBefore(this._o.startRange)) {
-
-                setToStartOfDay(this._d);
-                this.gotoDate(this._d);
-                if (this._o.field) {
-                    this._o.field.value = this.toString();
-                    fireEvent(this._o.field, 'change', { firedBy: this });
-                }
-                if (!preventOnSelect && typeof this._o.onSelect === 'function') {
-                    this._o.onSelect.call(this, this.getDate());
-                }
+            setToStartOfDay(this._d);
+            this.gotoDate(this._d);
+            if (this._o.field) {
+                this._o.field.value = this.toString();
+                fireEvent(this._o.field, 'change', { firedBy: this });
+            }
+            if (!preventOnSelect && typeof this._o.onSelect === 'function') {
+                this._o.onSelect.call(this, this.getDate());
             }
         },
 
