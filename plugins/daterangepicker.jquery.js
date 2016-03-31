@@ -92,7 +92,8 @@
         allowDisabledDateInRange: false,
         getEndRangeMaxfct: null,
         disabledBeforeToday: false,
-        minDate: new Date(2016, 0, 1),
+        disabledBefore: new Date(2016, 0, 1),
+        // minDate: new Date(2016, 0, 1),
         showWeekNumber: false
     };
 
@@ -120,7 +121,7 @@
                 format: this.config.format,
                 maxDate: this.config.limitDate,
                 disabledBeforeToday: this.config.disabledBeforeToday,
-                minDate: this.config.minDate,
+                minDate: this.config.disabledBefore,
                 showWeekNumber: this.config.showWeekNumber
             }));
 
