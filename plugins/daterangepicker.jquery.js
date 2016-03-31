@@ -163,10 +163,10 @@
 
             // Set an initial range
             if (this.config.initRange) {
-                this.start = moment(this.config.initRange.start);
-                this.end = moment(this.config.initRange.end);
-                this.pikaday.setStartRange(this.start.toDate());
-                this.pikaday.setEndRange(this.end.toDate());
+                this.start = moment(this.config.initRange.start).toDate();
+                this.end = moment(this.config.initRange.end).toDate();
+                this.pikaday.setStartRange(this.start);
+                this.pikaday.setEndRange(this.end);
             }
 
             // Binding
@@ -215,14 +215,14 @@
         },
 
         setStartRange: function(date) {
-            this.start = moment(date).startOf('day');
+            this.start = moment(date).startOf('day').toDate();
             this.pikaday.setStartRange(date);
             this.pikaday.setMaxRange(this.currentMax);
             this.pikaday.config({field: this.config.inputTo});
         },
 
         setEndRange: function (date) {
-            this.end = moment(date).endOf('day');
+            this.end = moment(date).endOf('day').toDate();
             this.currentMax = null;
             this.pikaday.setMaxRange();
             this.pikaday.config({field: this.config.inputFrom});
@@ -237,8 +237,8 @@
             this.pikaday.setStartRange();
             $(this.config.inputTo).val(moment(day).format(this.config.format));
 
-            this.start = moment(day).startOf('day');
-            this.end = moment(day).endOf('day');
+            this.start = moment(day).startOf('day').toDate();
+            this.end = moment(day).endOf('day').toDate();
             $(this.pikaday.el).trigger('rangeUpdate', [{
                 start: this.start,
                 end: this.end
@@ -279,7 +279,7 @@
                 if (this.currentDate.getTime() !== _d.getTime() && !$(ev.target).parent().hasClass('is-beforeStart')) {
                     this.currentDate = _d;
                     var endRange;
-                    if (moment(this.currentDate).isAfter(this.start)) {
+                    if (this.currentDate.getTime() >= this.start.getTime()) {
                         endRange = _d;
                     }
                     this.pikaday.setEndRange(endRange);
@@ -296,8 +296,8 @@
         },
 
         _onRangeUpdate: function (ev) {
-            $('[name=' + this.config.output.from + ']').val(this.start.format());
-            $('[name=' + this.config.output.to + ']').val(this.end.format());
+            $('[name=' + this.config.output.from + ']').val(moment(this.start).format());
+            $('[name=' + this.config.output.to + ']').val(moment(this.end).format());
         },
 
         _onInputClick: function(ev) {
