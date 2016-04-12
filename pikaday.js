@@ -944,7 +944,7 @@
                     left - width + field.offsetWidth > 0
                 )
             ) {
-                left = left - width + field.offsetWidth;
+                left = Math.max(left - width + field.offsetWidth, 0);
             }
             if ((this._o.reposition && top + height > viewportHeight + scrollTop) ||
                 (
@@ -952,7 +952,7 @@
                     top - height - field.offsetHeight > 0
                 )
             ) {
-                top = top - height - field.offsetHeight;
+                top = Math.max(top - height - field.offsetHeight, 0);
             }
 
             this.el.style.left = left + 'px';
