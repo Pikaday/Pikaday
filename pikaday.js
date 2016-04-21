@@ -315,9 +315,20 @@
     },
 
     renderWeek = function (d, m, y) {
-        // Lifted from http://javascript.about.com/library/blweekyear.htm, lightly modified.
-        var onejan = new Date(y, 0, 1),
-            weekNum = Math.ceil((((new Date(y, m, d) - onejan) / 86400000) + onejan.getDay()+1)/7);
+        var target = new Date(y, m, d);
+
+        var dayNr = (target.getDay() + 6) % 7;
+        target.setDate(target.getDate() - dayNr + 3);
+
+        var firstThursday = target.valueOf();
+        target.setMonth(0, 1);
+
+        if (target.getDay() != 4) {
+            target.setMonth(0, 1 + ((4 - target.getDay()) + 7) % 7);
+        }
+
+        var weekNum = 1 + Math.ceil((firstThursday - target) / 604800000);
+
         return '<td class="pika-week">' + weekNum + '</td>';
     },
 
