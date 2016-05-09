@@ -1,5 +1,5 @@
-Pikaday
-========
+Pikaday [a11y version]
+======================
 
 ### A refreshing JavaScript Datepicker
 
