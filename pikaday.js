@@ -335,9 +335,9 @@
         return '<td class="pika-week">' + weekNum + '</td>';
     },
 
-    renderRow = function(days, isRTL, isRowSelected)
+    renderRow = function(days, isRTL, weekMode, isRowSelected)
     {
-        return '<tr' + (isRowSelected ? ' class="is-selected"' : '') + '>' + (isRTL ? days.reverse() : days).join('') + '</tr>';
+        return '<tr class="pika-row ' + (weekMode ? ' week-mode' : '') + (isRowSelected ? ' is-selected' : '') + '">' + (isRTL ? days.reverse() : days).join('') + '</tr>';
     },
 
     renderBody = function(rows)
@@ -1138,7 +1138,7 @@
                     if (opts.showWeekNumber) {
                         row.unshift(renderWeek(i - before, month, year));
                     }
-                    data.push(renderRow(row, opts.isRTL, isWeekSelected));
+                    data.push(renderRow(row, opts.isRTL, opts.weekMode, isWeekSelected));
                     row = [];
                     r = 0;
                     isWeekSelected = false;

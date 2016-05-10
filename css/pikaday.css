@@ -214,7 +214,8 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     opacity: .3;
 }
 
-.pika-button:hover {
+.pika-button:hover,
+.pika-row.week-mode:hover .pika-button {
     color: #fff;
     background: #ff8000;
     box-shadow: none;
