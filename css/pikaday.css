@@ -215,7 +215,7 @@ http://nicolasgallagher.com/micro-clearfix-hack/
 }
 
 .pika-button:hover,
-.pika-row.week-mode:hover .pika-button {
+.pika-row.pick-whole-week:hover .pika-button {
     color: #fff;
     background: #ff8000;
     box-shadow: none;

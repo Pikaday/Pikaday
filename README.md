@@ -99,7 +99,7 @@ Pikaday has many useful options:
 * `disableDayFn` callback function that gets passed a Date object for each day in view. Should return true to disable selection of that day.
 * `yearRange` number of years either side (e.g. `10`) or array of upper/lower range (e.g. `[1900,2015]`)
 * `showWeekNumber` show the ISO week number at the head of the row (default `false`)
-* `weekMode` select a whole week instead of a day (default `false`)
+* `pickWholeWeek` select a whole week instead of a day (default `false`)
 * `isRTL` reverse the calendar for right-to-left languages
 * `i18n` language defaults for month and weekday names (see internationalization below)
 * `yearSuffix` additional text to append to the year in the title
