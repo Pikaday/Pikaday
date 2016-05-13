@@ -337,7 +337,7 @@
 
     renderRow = function(days, isRTL, pickWholeWeek, isRowSelected)
     {
-        return '<tr class="pika-row ' + (pickWholeWeek ? ' pick-whole-week' : '') + (isRowSelected ? ' is-selected' : '') + '">' + (isRTL ? days.reverse() : days).join('') + '</tr>';
+        return '<tr class="pika-row' + (pickWholeWeek ? ' pick-whole-week' : '') + (isRowSelected ? ' is-selected' : '') + '">' + (isRTL ? days.reverse() : days).join('') + '</tr>';
     },
 
     renderBody = function(rows)
