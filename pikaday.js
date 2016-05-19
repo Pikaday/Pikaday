@@ -584,7 +584,6 @@
         self.el = document.createElement('div');
         self.el.setAttribute('role', 'application');
         self.el.className = 'pika-single' + (opts.isRTL ? ' is-rtl' : '') + (opts.theme ? ' ' + opts.theme : '');
-        self.el.setAttribute('aria-hidden', 'true');
 
         addEvent(self.el, 'mousedown', self._onMouseDown, true);
         addEvent(self.el, 'touchend', self._onMouseDown, true);
@@ -1131,7 +1130,6 @@
         {
             if (!this.isVisible()) {
                 removeClass(this.el, 'is-hidden');
-                this.el.setAttribute('aria-hidden', 'false');
                 this._v = true;
                 this.draw();
                 if (this._o.bound) {
@@ -1155,7 +1153,6 @@
                 this.el.style.left = 'auto';
                 this.el.style.top = 'auto';
                 addClass(this.el, 'is-hidden');
-                this.el.setAttribute('aria-hidden', 'true');
                 this._v = false;
                 if (v !== undefined && typeof this._o.onClose === 'function') {
                     this._o.onClose.call(this);
