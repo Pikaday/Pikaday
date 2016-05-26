@@ -229,6 +229,10 @@ Update the range start date. For using two Pikaday instances to select a date ra
 
 Update the range end date. For using two Pikaday instances to select a date range.
 
+`picker.setError`
+
+Prepend html error to the picker.
+
 ### Show and hide datepicker
 
 `picker.isVisible()`

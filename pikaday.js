@@ -262,7 +262,8 @@
         onSelect: null,
         onOpen: null,
         onClose: null,
-        onDraw: null
+        onDraw: null,
+        errorText: null
     },
 
 
@@ -403,6 +404,14 @@
         }
 
         return html += '</div>';
+    },
+
+    renderError = function(error)
+    {
+      if (error != "" && error != undefined)
+        return '<div class="pika-error">' + error + '</div>';
+      else
+        return "";
     },
 
     renderTable = function(opts, data, randId)
@@ -933,6 +942,12 @@
             this._o.endRange = value;
         },
 
+        setError: function(value)
+        {
+          this._o.errorText = value;
+          this.draw();
+        },
+
         /**
          * refresh the HTML
          */
@@ -965,7 +980,7 @@
             randId = 'pika-title-' + Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 2);
 
             for (var c = 0; c < opts.numberOfMonths; c++) {
-                html += '<div class="pika-lendar">' + renderTitle(this, c, this.calendars[c].year, this.calendars[c].month, this.calendars[0].year, randId) + this.render(this.calendars[c].year, this.calendars[c].month, randId) + '</div>';
+                html += '<div class="pika-lendar">' + renderError(opts.errorText) + renderTitle(this, c, this.calendars[c].year, this.calendars[c].month, this.calendars[0].year, randId) + this.render(this.calendars[c].year, this.calendars[c].month, randId) + '</div>';
             }
 
             this.el.innerHTML = html;
