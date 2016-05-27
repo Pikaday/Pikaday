@@ -522,7 +522,7 @@
             if (isDate(date)) {
               self.setDate(date);
             }
-            if (!self._v) {
+            if (!self._v && !opts.trigger) {
                 self.show();
             }
         };
