@@ -505,7 +505,22 @@
             }
         };
 
-        self._onInputChange = function(e)
+        var debounce;
+
+        self._onInputChange = function (e) {
+            if (!opts.debounce) {
+                return onInputChange(e);
+            }
+            if (debounce) {
+                clearTimeout(debounce);
+            }
+            debounce = setTimeout(function () {
+                debounce = null;
+                onInputChange(e);
+            }, opts.debounce);
+        };
+
+        function onInputChange(e)
         {
             var date;
 
@@ -525,7 +540,7 @@
             if (!self._v) {
                 self.show();
             }
-        };
+        }
 
         self._onInputFocus = function()
         {
