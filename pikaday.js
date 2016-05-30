@@ -412,7 +412,7 @@
 
     isBigMove = function(pointA, pointB) {
       if (!pointA || !pointB) return false;
-      return Math.abs(pointA.x - pointB.x) > 20 || Math.abs(pointA.y - pointB.y) > 20;
+      return Math.abs(pointA.x - pointB.x) > 10 || Math.abs(pointA.y - pointB.y) > 10;
     },
 
     getTouchXY = function(touch) {
