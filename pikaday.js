@@ -1067,7 +1067,8 @@
             cells += 7 - after;
             for (var i = 0, r = 0; i < cells; i++)
             {
-                var day = new Date(year, month, 1 + (i - before) + opts.firstDay),
+                var day = new Date(year, month, 1 + (i - before)),
+                    correctedDay = new Date(year, month, 1 + (i - before) + opts.firstDay),
                     isSelected = isDate(this._d) ? compareDates(day, this._d) : false,
                     isToday = compareDates(day, now),
                     isEmpty = i < before || i >= (days + before),
