@@ -178,6 +178,10 @@ Returns the selected date in a string format. If [Moment.js][moment] exists (rec
 
 Returns a basic JavaScript `Date` object of the selected day, or `null` if no selection.
 
+`picker.setDate(null)`
+
+Remove selected date from calendar and input
+
 `picker.setDate('2015-01-01')`
 
 Set the current selection. This will be restricted within the bounds of `minDate` and `maxDate` options if they're specified. You can optionally pass a boolean as the second parameter to prevent triggering of the onSelect callback (true), allowing the date to be set silently.
