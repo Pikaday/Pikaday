@@ -1,0 +1,12 @@
+node_modules
+.c9revisions
+.c9
+examples
+tests
+.editorconfig
+.gitattributes
+.jshintrc
+.npmignore
+bower.json
+CHANGELOG.md
+index.html
