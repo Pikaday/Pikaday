@@ -262,7 +262,10 @@
         onSelect: null,
         onOpen: null,
         onClose: null,
-        onDraw: null
+        onDraw: null,
+
+        // assistive technologies
+        ariaLabelСhangeable: true
     },
 
 
@@ -982,7 +985,9 @@
                 this._o.onDraw(this);
             }
           // let the screen reader user know to use arrow keys
-          this._o.field.setAttribute('aria-label', 'Use the arrow keys to pick a date');
+          if (opts.ariaLabelСhangeable) {
+            this._o.field.setAttribute('aria-label', 'Use the arrow keys to pick a date');
+          }
         },
 
         adjustPosition: function()
