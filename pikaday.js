@@ -592,6 +592,8 @@
         if (opts.field) {
             if (opts.container) {
                 opts.container.appendChild(self.el);
+            } else if (opts.boundContainer) {
+                opts.boundContainer.appendChild(self.el);
             } else if (opts.bound) {
                 document.body.appendChild(self.el);
             } else {
