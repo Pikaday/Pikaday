@@ -216,6 +216,9 @@
         // show week numbers at head of row
         showWeekNumber: false,
 
+        // show the day name header row
+        showDayNames: true,
+
         // used internally (don't config outside)
         minYear: 0,
         maxYear: 9999,
@@ -407,7 +410,8 @@
 
     renderTable = function(opts, data, randId)
     {
-        return '<table cellpadding="0" cellspacing="0" class="pika-table" role="grid" aria-labelledby="' + randId + '">' + renderHead(opts) + renderBody(data) + '</table>';
+        return '<table cellpadding="0" cellspacing="0" class="pika-table" role="grid" aria-labelledby="' + 
+            randId + '">' + (opts.showDayNames ? renderHead(opts) : '') + renderBody(data) + '</table>';
     },
 
 
