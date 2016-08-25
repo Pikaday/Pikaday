@@ -43,7 +43,11 @@
                 }
             } else {
                 if (typeof args[0] === 'string' && typeof plugin[args[0]] === 'function') {
-                    plugin[args[0]].apply(plugin, Array.prototype.slice.call(args,1));
+                    try {
+                        plugin[args[0]].apply(plugin, Array.prototype.slice.call(args,1));
+                    } catch (exception) {
+                        console.log(exception);
+                    }
 
                     if (args[0] === 'destroy') {
                         self.removeData('pikaday');
