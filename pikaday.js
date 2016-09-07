@@ -841,7 +841,12 @@
                     year: this.calendars[0].year
                 });
             }
+
             this.draw();
+
+            if (this._o.bound) {
+                this.adjustPosition();
+            }
         },
 
         gotoToday: function()
@@ -988,6 +993,8 @@
         adjustPosition: function()
         {
             var field, pEl, width, height, viewportWidth, viewportHeight, scrollTop, left, top, clientRect;
+            var positionClass = 'is-below';
+            var inversePositionClass = 'is-above';
 
             if (this._o.container) return;
 
@@ -1030,10 +1037,20 @@
                 )
             ) {
                 top = top - height - field.offsetHeight;
+                positionClass = 'is-above';
+                inversePositionClass = 'is-below';
             }
 
             this.el.style.left = left + 'px';
             this.el.style.top = top + 'px';
+
+            if (hasClass(this.el, inversePositionClass)) {
+                removeClass(this.el, inversePositionClass);
+            }
+
+            if (!hasClass(this.el, positionClass)) {
+                addClass(this.el, positionClass);
+            }
         },
 
         /**
