@@ -1067,13 +1067,9 @@
                 after -= 7;
             }
             cells += 7 - after;
-
-            function pad(s) { return (s < 10) ? '0' + s : s; }
-
             for (var i = 0, r = 0; i < cells; i++)
             {
-                var day = new Date(year, month, 1 + (i - before)),
-                	day_formatted = pad(day.getMonth() + 1) + '/' + pad(day.getDate()) + '/' +  day.getFullYear(),
+                var day = new Date(year, month, 1 + (i - before)),                	
                     isSelected = isDate(this._d) ? compareDates(day, this._d) : false,
                     isToday = compareDates(day, now),
                     isEmpty = i < before || i >= (days + before),
@@ -1087,7 +1083,7 @@
                                  (opts.maxDate && day > opts.maxDate) ||
                                  (opts.disableWeekends && isWeekend(day)) ||
                                  (opts.disableDayFn && opts.disableDayFn(day)) ||
-                                 ( opts.availableDates.indexOf(day_formatted) == -1 );								 
+                                 ( opts.availableDates.map(Number).indexOf(+day) == -1 );								 
 								 ;
 
                 if (isEmpty) {
