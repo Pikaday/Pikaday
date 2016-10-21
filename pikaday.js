@@ -462,6 +462,14 @@
                     var today = new Date();
                     self.gotoDate(today);
                     self.setDate(today);
+                    if (opts.bound) {
+                        sto(function() {
+                            self.hide();
+                            if (opts.field) {
+                                opts.field.blur();
+                            }
+                        }, 100);
+                    }
                 }
             }
             if (!hasClass(target, 'pika-select')) {
