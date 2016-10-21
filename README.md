@@ -85,6 +85,7 @@ Pikaday has many useful options:
 * `defaultDate` the initial date to view when first opened
 * `setDefaultDate` make the `defaultDate` the initial selected value
 * `firstDay` first day of the week (0: Sunday, 1: Monday, etc)
+* `todayButton` show a 'goto today button' underneath calendar (default `false`) [demo](http://codepen.io/tieppt/pen/YGdpwa)
 * `minDate` the minimum/earliest date that can be selected (this should be a native Date object - e.g. `new Date()` or `moment().toDate()`)
 * `maxDate` the maximum/latest date that can be selected (this should be a native Date object - e.g. `new Date()` or `moment().toDate()`)
 * `disableWeekends` disallow selection of Saturdays or Sundays
