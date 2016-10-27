@@ -1,8 +1,18 @@
 # Changelog
 
+## 1.5.0 - 2016-10-27
+
+- Make Pikaday accessibile, see #522
+- Add possibility to reset the max and min date to the date picker
+- Make Pikaday XHTML compatible, see #492
+- Remove unnecessary setTimeout call, fixes #496
+- Make disabled buttons not clickable in IE 10 and below, fixes #288
+- Show days in next and previous months
+
 ## 1.4.0 - 2015-10-30
 
-- Fix touch device support, see #374, #276, #301, #303, #324, #366 and #386
+- Fix touch device support, see #374
+- Add possibility to reset the max and min date to the date picker
 
 ## 1.3.3 - 2015-02-17
 
@@ -26,7 +36,7 @@
 - Add configurable number of shown months
 - #51 Add unit tests with ci: [testling](https://ci.testling.com/rikkert/pikaday)
 - Fix #94 blur input field after date selection
-- Add configuable container to render calendar into 
+- Add configuable container to render calendar into
 - Add option to show week numbers, see #147
 - Positioning is now optional, see #192
 

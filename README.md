@@ -11,7 +11,7 @@ Pikaday
 
 ![Pikaday Screenshot][screenshot]
 
-**Production ready?** Since version 1.0.0 Pikaday is stable and used in production. If you do however find bugs or have feature requests please submit them to the [GitHub issue tracker][issues].  
+**Production ready?** Since version 1.0.0 Pikaday is stable and used in production. If you do however find bugs or have feature requests please submit them to the [GitHub issue tracker][issues].
 Also see the [changelog](CHANGELOG.md)
 
 
@@ -50,7 +50,7 @@ var picker = new Pikaday({
 field.parentNode.insertBefore(picker.el, field.nextSibling);
 ```
 
-For advanced formatting load [Moment.js][moment] prior to Pikaday:  
+For advanced formatting load [Moment.js][moment] prior to Pikaday:
 See the [moment.js example][] for a full version.
 
 ```html
@@ -79,8 +79,9 @@ Pikaday has many useful options:
 * `bound` automatically show/hide the datepicker on `field` focus (default `true` if `field` is set)
 * `position` preferred position of the datepicker relative to the form field, e.g.: `top right`, `bottom right` **Note:** automatic adjustment may occur to avoid datepicker from being displayed outside the viewport, see [positions example][] (default to 'bottom left')
 * `reposition` can be set to false to not reposition datepicker within the viewport, forcing it to take the configured `position` (default: true)
-* `container` DOM node to render calendar into, see [container example][] (default: undefined) 
+* `container` DOM node to render calendar into, see [container example][] (default: undefined)
 * `format` the default output format for `.toString()` and `field` value (requires [Moment.js][moment] for custom formatting)
+* `formatStrict` the default flag for moment's strict date parsing (requires [Moment.js][moment] for custom formatting)
 * `defaultDate` the initial date to view when first opened
 * `setDefaultDate` make the `defaultDate` the initial selected value
 * `firstDay` first day of the week (0: Sunday, 1: Monday, etc)
@@ -94,6 +95,7 @@ Pikaday has many useful options:
 * `i18n` language defaults for month and weekday names (see internationalization below)
 * `yearSuffix` additional text to append to the year in the title
 * `showMonthAfterYear` render the month after year in the title (default `false`)
+* `showDaysInNextAndPreviousMonths` render days of the calendar grid that fall in the next or previous months to the current month instead of rendering an empty table cell (default: false)
 * `numberOfMonths` number of visible calendars
 * `mainCalendar` when `numberOfMonths` is used, this will help you to choose where the main calendar will be (default `left`, can be set to `right`). Only used for the first display or when a selected date is not already visible
 * `theme` define a classname that can be used as a hook for styling different themes, see [theme example][] (default `null`)
@@ -104,7 +106,7 @@ Pikaday has many useful options:
 
 ## jQuery Plugin
 
-The normal version of Pikaday does not require jQuery, however there is a jQuery plugin if that floats your boat (see `plugins/pikaday.jquery.js` in the repository). This version requires jQuery, naturally, and can be used like other plugins:  
+The normal version of Pikaday does not require jQuery, however there is a jQuery plugin if that floats your boat (see `plugins/pikaday.jquery.js` in the repository). This version requires jQuery, naturally, and can be used like other plugins:
 See the [jQuery example][] for a full version.
 
 ```html
@@ -124,7 +126,7 @@ $('.datepicker').eq(0).pikaday('show').pikaday('gotoYear', 2042);
 
 ## AMD support
 
-If you use a modular script loader than Pikaday is not bound to the global object and will fit nicely in your build process. You can require Pikaday just like any other module.  
+If you use a modular script loader than Pikaday is not bound to the global object and will fit nicely in your build process. You can require Pikaday just like any other module.
 See the [AMD example][] for a full version.
 
 ```javascript
@@ -132,7 +134,7 @@ require(['pikaday'], function(Pikaday) {
     var picker = new Pikaday({ field: document.getElementById('datepicker') });
 });
 ```
-The same applies for the jQuery plugin mentioned above.  
+The same applies for the jQuery plugin mentioned above.
 See the [jQuery AMD example][] for a full version.
 
 ```javascript
@@ -270,11 +272,11 @@ You must provide 12 months and 7 weekdays (with abbreviations). Always specify w
 
 ### Timepicker
 
-Pikaday is a pure datepicker. It will not support picking a time of day. However, there have been efforts to add time support to Pikaday.  
+Pikaday is a pure datepicker. It will not support picking a time of day. However, there have been efforts to add time support to Pikaday.
 See [#1][issue1] and [#18][issue18]. These reside in their own fork.
 
-You can use the work [@owenmead][owenmead] did most recently at [owenmead/Pikaday][owen Pika]  
-A more simple time selection approach done by [@xeeali][xeeali] at [xeeali/Pikaday][xeeali Pika] is based on version 1.2.0.  
+You can use the work [@owenmead][owenmead] did most recently at [owenmead/Pikaday][owen Pika]
+A more simple time selection approach done by [@xeeali][xeeali] at [xeeali/Pikaday][xeeali Pika] is based on version 1.2.0.
 Also [@stas][stas] has a fork [stas/Pikaday][stas Pika], but is now quite old
 
 
