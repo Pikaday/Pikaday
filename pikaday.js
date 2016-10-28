@@ -246,6 +246,9 @@
         // Specify a DOM element to render the calendar in
         container: undefined,
 
+        // Function to get the current time, as a Date object
+        clock: function() { return new Date(); },
+
         // internationalization
         i18n: {
             previousMonth : 'Previous Month',
@@ -846,7 +849,7 @@
 
         gotoToday: function()
         {
-            this.gotoDate(new Date());
+            this.gotoDate(this._o.clock());
         },
 
         /**
@@ -1045,7 +1048,7 @@
         render: function(year, month, randId)
         {
             var opts   = this._o,
-                now    = new Date(),
+                now    = this._o.clock(),
                 days   = getDaysInMonth(year, month),
                 before = new Date(year, month, 1).getDay(),
                 data   = [],
