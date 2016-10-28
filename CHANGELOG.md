@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.5.1 - 2016-10-28
+
+- Only set attribute if field is bound, see #567
+
 ## 1.5.0 - 2016-10-27
 
 - Make Pikaday accessibile, see #522
