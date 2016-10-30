@@ -682,6 +682,20 @@
             if (opts.maxDate) {
                 this.setMaxDate(opts.maxDate);
             }
+            if (!isDate(opts.today)) {
+                opts.today = now();
+            }
+            
+            if (typeof opts.moment  === 'function')
+            {
+
+                if (this.testMomentObj(opts.moment))
+                {
+                    hasMoment = true;
+                    moment = opts.moment
+                }
+                    
+            }
 
             if (isArray(opts.yearRange)) {
                 var fallback = new Date().getFullYear() - 10;
@@ -730,7 +744,32 @@
         {
             return isDate(this._d) ? new Date(this._d.getTime()) : new Date();
         },
+            
+        /**
+         * set the current selection
+         */
+        setMomentObj: function(momentObj)
+        {
+           
+            if (this.testMomentObj(opts.moment))
+            {
+                hasMoment = true;
+                moment = opts.moment
+            }
+            
+        },
 
+        /**
+         * set the todays date
+         */
+        setToday: function(date){
+            
+            if(!date || !isDate(date))
+                return;
+            
+            this._o.today = date;
+        },
+        
         /**
          * set the current selection
          */
@@ -846,7 +885,7 @@
 
         gotoToday: function()
         {
-            this.gotoDate(new Date());
+            this.gotoDate(this._o.today);
         },
 
         /**
@@ -1072,7 +1111,7 @@
             {
                 var day = new Date(year, month, 1 + (i - before)),
                     isSelected = isDate(this._d) ? compareDates(day, this._d) : false,
-                    isToday = compareDates(day, now),
+                    isToday = compareDates(day, opts.today),
                     isEmpty = i < before || i >= (days + before),
                     dayNumber = 1 + (i - before),
                     monthNumber = month,
@@ -1163,6 +1202,30 @@
                 }
             }
         },
+        
+        /*
+        
+            Test moment obj
+        */
+        testMomentObj: function(obj) {
+        
+            try {
+
+                var testMoment = obj("1-1-2000").toDate();
+
+                if (typeof testMoment === 'object')
+                {
+                    return true;
+                }
+
+            }
+            catch (err)
+            {}
+
+            return false;
+            
+        },
+        
 
         /**
          * GAME OVER
