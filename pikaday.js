@@ -13,6 +13,7 @@
         // CommonJS module
         // Load moment.js as an optional dependency
         try { moment = require('moment'); } catch (e) {}
+        try { moment = require('moment-timezone'); } catch (e) {}
         module.exports = factory(moment);
     } else if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
@@ -981,7 +982,7 @@
             if (typeof this._o.onDraw === 'function') {
                 this._o.onDraw(this);
             }
-            
+
             if (opts.bound) {
                 // let the screen reader user know to use arrow keys
                 opts.field.setAttribute('aria-label', 'Use the arrow keys to pick a date');
