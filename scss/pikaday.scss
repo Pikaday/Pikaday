@@ -26,13 +26,14 @@ $pd-day-selected-bg: #33aaff !default;
 $pd-day-selected-shadow: #178fe5 !default;
 $pd-day-disabled-color: #999 !default;
 $pd-week-color: #999 !default;
+$pd-z-index: 9999 !default;
 
 // Font
 $pd-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !default;
 
 
 .pika-single {
-    z-index: 9999;
+    z-index: $pd-z-index;
     display: block;
     position: relative;
     color: $pd-text-color;
@@ -78,7 +79,7 @@ $pd-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !default;
     select {
         cursor: pointer;
         position: absolute;
-        z-index: 9998;
+        z-index: $pd-z-index - 1;
         margin: 0;
         left: 0;
         top: 5px;
@@ -91,7 +92,7 @@ $pd-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !default;
     display: inline-block;
     *display: inline;
     position: relative;
-    z-index: 9999;
+    z-index: $pd-z-index;
     overflow: hidden;
     margin: 0;
     padding: 5px 3px;
