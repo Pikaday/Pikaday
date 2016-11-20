@@ -435,18 +435,8 @@ class Pikaday {
     };
 
     this._onInputChange = function(e) {
-      var date;
+      this.setDate();
 
-      if (e.firedBy === this) {
-        return;
-      }
-
-      date = moment(opts.field.value, opts.format, opts.formatStrict);
-      date = (date && date.isValid()) ? date.toDate() : null;
-
-      if (isDate(date)) {
-        this.setDate(date);
-      }
       if (!this._v) {
         this.show();
       }
