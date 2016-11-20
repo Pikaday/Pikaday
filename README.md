@@ -26,7 +26,7 @@ Also see the [changelog](CHANGELOG.md)
 Add the JavaScript to the end of your document:
 
 ```html
-<script src="pikaday.js"></script>
+<script src="./dist/pikaday.js"></script>
 <script>
     var picker = new Pikaday({ field: document.getElementById('datepicker') });
 </script>
