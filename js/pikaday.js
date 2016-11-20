@@ -682,12 +682,12 @@ class Pikaday {
   /**
    * clear the current selection
    */
-  clearDate(clearField, preventOnClear) {
+  clearDate(preventOnClear) {
     this._d = null;
     this.draw();
 
-    if (clearField && this._o.field) {
-      this._o.field.value = null;
+    if (this._o.clearInvalidInput && this._o.field) {
+      this._o.field.value = '';
       fireEvent(this._o.field, 'change', {
         firedBy: this
       });
