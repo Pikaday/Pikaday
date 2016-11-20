@@ -441,8 +441,10 @@ class Pikaday {
         return;
       }
 
-      this.setDate(date);
+      date = moment(opts.field.value, opts.format, opts.formatStrict);
+      date = (date && date.isValid()) ? date.toDate() : null;
 
+      this.setDate(date);
       if (!this._v) {
         this.show();
       }
@@ -642,23 +644,15 @@ class Pikaday {
    */
   setDate(date, preventOnSelect) {
     if (!date) {
-      this._d = null;
-
-      if (this._o.field) {
-        this._o.field.value = '';
-        fireEvent(this._o.field, 'change', {
-          firedBy: this
-        });
-      }
-
-      return this.draw();
+      this.clearDate(preventOnSelect);
+      return;
     }
     if (typeof date === 'string') {
       date = this.parseDate(date);
     }
 
     if (!isDate(date)) {
-      return this.clearDate(this._o.clearInvalidInput, preventOnSelect);
+      return this.clearDate(preventOnSelect);
     }
 
     var min = this._o.minDate;
