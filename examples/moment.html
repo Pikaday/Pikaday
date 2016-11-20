@@ -32,7 +32,8 @@
     <script src="../pikaday.js"></script>
     <script>
 
-    // You can get and set dates with moment objects
+    // You can get and set dates with moment objects.
+    // Multiple input formats can be used with Moment.js via the 'inputFormats' option.
     var picker = new Pikaday(
     {
         field: document.getElementById('datepicker'),
@@ -45,9 +46,9 @@
             document.getElementById('selected').appendChild(date);
         }
     });
-    
+
     picker.setMoment(moment().dayOfYear(366));
-    
+
     </script>
 </body>
 </html>
