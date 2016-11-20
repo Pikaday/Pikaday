@@ -536,7 +536,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 
 	    this._onInputChange = function (e) {
-	      this.setDate();
+	      var date;
+
+	      if (e.firedBy === this) {
+	        return;
+	      }
+
+	      this.setDate(date);
 
 	      if (!this._v) {
 	        this.show();
