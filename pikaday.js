@@ -747,7 +747,7 @@
                 return this.draw();
             }
             if (typeof date === 'string') {
-                date = new Date(Date.parse(date));
+                date =  moment(date, this._o.format).toDate();
             }
             if (!isDate(date)) {
                 return;
@@ -981,7 +981,7 @@
             if (typeof this._o.onDraw === 'function') {
                 this._o.onDraw(this);
             }
-            
+
             if (opts.bound) {
                 // let the screen reader user know to use arrow keys
                 opts.field.setAttribute('aria-label', 'Use the arrow keys to pick a date');
