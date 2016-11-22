@@ -103,6 +103,12 @@ Pikaday has many useful options:
 * `onOpen` callback function for when the picker becomes visible
 * `onClose` callback function for when the picker is hidden
 * `onDraw` callback function for when the picker draws a new month
+* `renderPreviousStepper` function used to override the default rendering of the previous month stepper element, accepting two arguments: `enabled` and `label`.
+  The `enabled` argument is a boolean which indicates whether or not the stepper can step back a month, when false it indicates that it has reached the minDate limit.
+  The `label` argument will be the value supplied to the `i18n.previousMonth` configuration value. See [step-render example][].
+* `renderNextStepper` function used to override the default rendering of the next month stepper element, accepting two arguments: `enabled` and `label`.
+  The `enabled` argument is a boolean which indicates whether or not the stepper can step forward a month, when false it indicates that it has reached the maxDate limit.
+  The `label` argument will be the value supplied to the `i18n.nextMonth` configuration value. See [step-render example][].
 
 ## jQuery Plugin
 
@@ -331,3 +337,4 @@ Copyright © 2014 David Bushell | BSD & MIT license
   [positions example]: http://dbushell.github.com/Pikaday/examples/positions.html "Pikaday using different position options"
   [container example]: http://dbushell.github.com/Pikaday/examples/container.html "Pikaday using custom calendar container"
   [theme example]: http://dbushell.github.com/Pikaday/examples/theme.html         "Pikaday using multiple themes"
+  [step-render example]: http://dbushell.github.com/Pikaday/examples/stepper-renderers.html "Pikaday using custom stepper renderers"

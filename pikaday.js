@@ -262,7 +262,22 @@
         onSelect: null,
         onOpen: null,
         onClose: null,
-        onDraw: null
+        onDraw: null,
+
+        // Renderers
+        // Renderers for the previous stepper should ensure that the interactive
+        // element has the class 'pika-prev' and it exists as the top-level
+        // element.
+        renderPreviousStepper: function(enabled, label) {
+            return renderPreviousStepper(enabled, label);
+        },
+
+        // Renderers for the next stepper should ensure that the interactive
+        // element has the class 'pika-prev' and it exists as the top-level
+        // element.
+        renderNextStepper: function(enabled, label) {
+            return renderNextStepper(enabled, label);
+        }
     },
 
 
@@ -396,10 +411,10 @@
         }
 
         if (c === 0) {
-            html += '<button class="pika-prev' + (prev ? '' : ' is-disabled') + '" type="button">' + opts.i18n.previousMonth + '</button>';
+            html += opts.renderPreviousStepper(prev, opts.i18n.previousMonth);
         }
         if (c === (instance._o.numberOfMonths - 1) ) {
-            html += '<button class="pika-next' + (next ? '' : ' is-disabled') + '" type="button">' + opts.i18n.nextMonth + '</button>';
+            html += opts.renderNextStepper(next, opts.i18n.nextMonth);
         }
 
         return html += '</div>';
@@ -408,6 +423,14 @@
     renderTable = function(opts, data, randId)
     {
         return '<table cellpadding="0" cellspacing="0" class="pika-table" role="grid" aria-labelledby="' + randId + '">' + renderHead(opts) + renderBody(data) + '</table>';
+    },
+
+    renderPreviousStepper = function(enabled, label) {
+        return '<button class="pika-prev' + (enabled ? '' : ' is-disabled') + '" type="button">' + label + '</button>';
+    },
+
+    renderNextStepper = function(enabled, label) {
+        return '<button class="pika-next' + (enabled ? '' : ' is-disabled') + '" type="button">' + label + '</button>';
     },
 
 

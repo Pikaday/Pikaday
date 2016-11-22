@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+    <title>Pikaday</title>
+    <meta name="author" content="David Bushell">
+    <link rel="stylesheet" href="../css/pikaday.css">
+    <link rel="stylesheet" href="../css/site.css">
+    <style>
+      body > svg {
+        display: none;
+      }
+
+      .pika-prev, .pika-next {
+        /* Override some default pikaday styles in order to show the SVGs */
+        background: none;
+        text-indent: 0px;
+        width: 24px;
+        height: 24px;
+      }
+      .pika-prev > svg, .pika-next > svg {
+        width: 24px;
+        height: 24px;
+        fill: #33aaff;
+      }
+    </style>
+</head>
+<body>
+    <h1>Pikaday</h1>
+    <svg>
+      <symbol viewBox="0 0 24 24" id="icon-prev"><path d="M14.5 20c-.13 0-.26-.05-.35-.15l-8-8c-.1-.09-.15-.22-.15-.35s.05-.26.15-.35l8-8c.2-.2.51-.2.71 0s.2.51 0 .71L7.2 11.5l7.65 7.65c.2.2.2.51 0 .71-.09.09-.22.14-.35.14z"></path></symbol>
+      <symbol viewBox="0 0 24 24" id="icon-next"><path d="M9.5 20c-.13 0-.26-.05-.35-.15-.2-.2-.2-.51 0-.71l7.65-7.65-7.66-7.64c-.2-.2-.2-.51 0-.71s.51-.2.71 0l8 8c.1.1.15.23.15.36s-.05.26-.15.35l-8 8c-.1.1-.23.15-.35.15z"></path></symbol>
+    </svg>
+
+    <p class="large">A refreshing JavaScript Datepicker — lightweight, no dependencies, modular CSS.</p>
+
+    <p><a href="https://github.com/dbushell/Pikaday"><strong>Pikaday source on GitHub</strong></a></p>
+
+    <label for="datepicker">Date:</label>
+    <br>
+    <input type="text" id="datepicker">
+
+    <h2>What is this?</h2>
+
+    <p>Since version 1.0 Pikaday is a stable and battle tested date-picker. Feel free to use it however you like but please report any bugs or feature requests to the <a href="https://github.com/dbushell/Pikaday/issues">GitHub issue tracker</a>, thanks!</p>
+
+    <p class="small">Copyright © 2014 <a href="http://dbushell.com/">David Bushell</a> | BSD &amp; MIT license</p>
+
+
+    <script src="../pikaday.js"></script>
+    <script>
+      var picker,
+          buildSVG;
+
+      buildSVG = function(klass, href) {
+        // Wrap the SVG in a div and disable pointer events to prevent issues
+        // on IE 11.  This also has the side-effect of allowing the Pikaday
+        // handlers to work as expected (they make some assumptions about the
+        // structure of the markup).
+        return '<div class="' + klass + '">' +
+                 '<svg style="pointer-events: none;"><use xlink:href="' + href + '"></use></svg>' +
+               '</div>';
+      };
+
+      picker = new Pikaday({
+        field: document.getElementById('datepicker'),
+        firstDay: 1,
+        minDate: new Date('2000-01-01'),
+        maxDate: new Date('2020-12-31'),
+        yearRange: [2000,2020],
+        renderPreviousStepper: function(enabled, label) {
+          return buildSVG('pika-prev', '#icon-prev');
+        },
+        renderNextStepper: function(enabled, label) {
+          return buildSVG('pika-next', '#icon-next');
+        }
+      });
+    </script>
+</body>
+</html>
