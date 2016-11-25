@@ -183,6 +183,9 @@
         // automatically show/hide the picker on `field` focus (default `true` if `field` is set)
         bound: undefined,
 
+        // automatically blur the form field when a date is selected
+        blurOnSelect: true,
+
         // position of the datepicker, relative to the field (default to bottom & left)
         // ('bottom' & 'left' keywords are not used, 'top' & 'right' are modifier on the bottom/left position)
         position: 'bottom left',
@@ -436,7 +439,7 @@
                     if (opts.bound) {
                         sto(function() {
                             self.hide();
-                            if (opts.field) {
+                            if (opts.field && opts.blurOnSelect) {
                                 opts.field.blur();
                             }
                         }, 100);
