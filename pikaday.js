@@ -1035,6 +1035,7 @@
                     top - height - field.offsetHeight > 0
                 )
             ) {
+                addClass(this.el, 'is-top');
                 top = top - height - field.offsetHeight;
             }
 
@@ -1160,6 +1161,7 @@
                 this.el.style.left = 'auto';
                 this.el.style.top = 'auto';
                 addClass(this.el, 'is-hidden');
+                removeClass(this.el, 'is-top');
                 this._v = false;
                 if (v !== undefined && typeof this._o.onClose === 'function') {
                     this._o.onClose.call(this);
