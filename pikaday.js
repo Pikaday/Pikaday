@@ -262,7 +262,10 @@
         onSelect: null,
         onOpen: null,
         onClose: null,
-        onDraw: null
+        onDraw: null,
+
+        // assistive technologies
+        ariaLabelСhangeable: true
     },
 
 
@@ -981,10 +984,10 @@
             if (typeof this._o.onDraw === 'function') {
                 this._o.onDraw(this);
             }
-            
-            if (opts.bound) {
-                // let the screen reader user know to use arrow keys
-                opts.field.setAttribute('aria-label', 'Use the arrow keys to pick a date');
+
+            // let the screen reader user know to use arrow keys
+            if (opts.ariaLabelСhangeable && opts.bound) {
+                this._o.field.setAttribute('aria-label', 'Use the arrow keys to pick a date');
             }
         },
 
@@ -1032,6 +1035,7 @@
                     top - height - field.offsetHeight > 0
                 )
             ) {
+                addClass(this.el, 'is-top');
                 top = top - height - field.offsetHeight;
             }
 
@@ -1157,6 +1161,7 @@
                 this.el.style.left = 'auto';
                 this.el.style.top = 'auto';
                 addClass(this.el, 'is-hidden');
+                removeClass(this.el, 'is-top');
                 this._v = false;
                 if (v !== undefined && typeof this._o.onClose === 'function') {
                     this._o.onClose.call(this);
