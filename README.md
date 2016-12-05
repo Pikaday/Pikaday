@@ -1,6 +1,11 @@
 Pikaday
 ========
 
+[![NPM version][npm-image]][npm-url]
+[![License][license-image]][license-url]
+[![Downloads][downloads-image]][downloads-url]
+
+
 ### A refreshing JavaScript Datepicker
 
 * Lightweight (less than 5kb minified and gzipped)
@@ -14,6 +19,9 @@ Pikaday
 **Production ready?** Since version 1.0.0 Pikaday is stable and used in production. If you do however find bugs or have feature requests please submit them to the [GitHub issue tracker][issues].
 Also see the [changelog](CHANGELOG.md)
 
+## Installation
+
+    npm install pikaday
 
 ## Usage
 
@@ -331,3 +339,12 @@ Copyright © 2014 David Bushell | BSD & MIT license
   [positions example]: http://dbushell.github.com/Pikaday/examples/positions.html "Pikaday using different position options"
   [container example]: http://dbushell.github.com/Pikaday/examples/container.html "Pikaday using custom calendar container"
   [theme example]: http://dbushell.github.com/Pikaday/examples/theme.html         "Pikaday using multiple themes"
+
+
+
+[npm-image]: https://img.shields.io/npm/v/pikaday.svg?style=flat-square
+[npm-url]: https://npmjs.org/package/pikaday
+[license-image]: https://img.shields.io/:license-mit-blue.svg?style=flat-square
+[license-url]: LICENSE.md
+[downloads-image]: http://img.shields.io/npm/dm/pikaday.svg?style=flat-square
+[downloads-url]: https://npmjs.org/package/pikaday
