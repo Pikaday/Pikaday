@@ -664,6 +664,8 @@
 
             opts.disableDayFn = (typeof opts.disableDayFn) === 'function' ? opts.disableDayFn : null;
 
+            opts.selectDayFn = (typeof opts.selectDayFn) === 'function' ? opts.selectDayFn : null;
+
             var nom = parseInt(opts.numberOfMonths, 10) || 1;
             opts.numberOfMonths = nom > 4 ? 4 : nom;
 
@@ -981,7 +983,7 @@
             if (typeof this._o.onDraw === 'function') {
                 this._o.onDraw(this);
             }
-            
+
             if (opts.bound) {
                 // let the screen reader user know to use arrow keys
                 opts.field.setAttribute('aria-label', 'Use the arrow keys to pick a date');
@@ -1071,7 +1073,8 @@
             for (var i = 0, r = 0; i < cells; i++)
             {
                 var day = new Date(year, month, 1 + (i - before)),
-                    isSelected = isDate(this._d) ? compareDates(day, this._d) : false,
+                    isSelected = (opts.selectDayFn && opts.selectDayFn(day)) ||
+                                 (isDate(this._d) && compareDates(day, this._d)),
                     isToday = compareDates(day, now),
                     isEmpty = i < before || i >= (days + before),
                     dayNumber = 1 + (i - before),
