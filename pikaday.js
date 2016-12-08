@@ -308,6 +308,7 @@
         if (opts.isEndRange) {
             arr.push('is-endrange');
         }
+
         return '<td data-day="' + opts.day + '" class="' + arr.join(' ') + '" aria-selected="' + ariaSelected + '">' +
                  '<button class="pika-button pika-day" type="button" ' +
                     'data-pika-year="' + opts.year + '" data-pika-month="' + opts.month + '" data-pika-day="' + opts.day + '">' +
@@ -1075,8 +1076,7 @@
             for (var i = 0, r = 0; i < cells; i++)
             {
                 var day = new Date(year, month, 1 + (i - before)),
-                    isSelected = (opts.selectDayFn && opts.selectDayFn(day)) ||
-                                 (isDate(this._d) && compareDates(day, this._d)),
+                    isSelected = !!opts.selectDayFn ? opts.selectDayFn(day) : (isDate(this._d) && compareDates(day, this._d)),
                     isToday = compareDates(day, now),
                     isEmpty = i < before || i >= (days + before),
                     dayNumber = 1 + (i - before),
