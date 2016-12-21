@@ -486,7 +486,9 @@
                 switch(e.keyCode){
                     case 13:
                     case 27:
-                        opts.field.blur();
+                        if (opts.field) {
+                            opts.field.blur();
+                        }
                         break;
                     case 37:
                         e.preventDefault();
