@@ -26,17 +26,20 @@
     <p class="small">Copyright © 2014 <a href="http://dbushell.com/">David Bushell</a> | BSD &amp; MIT license</p>
 
 
-    <script src="pikaday.js"></script>
+    <script src="./dist/pikaday.js"></script>
     <script>
 
     var picker = new Pikaday(
     {
         field: document.getElementById('datepicker'),
         firstDay: 1,
-        minDate: new Date(2000, 0, 1),
+        minDate: new Date(),
+        clearInvalidInput: true,
         maxDate: new Date(2020, 12, 31),
         yearRange: [2000,2020]
     });
+
+    window.pickers = [picker]
 
     </script>
 </body>

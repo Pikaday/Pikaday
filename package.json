@@ -1,7 +1,7 @@
 {
   "name": "pikaday",
-  "version": "1.4.0",
-  "description": "A refreshing JavaScript Datepicker — lightweight, no dependencies, modular CSS",
+  "version": "2.0.1",
+  "description": "A refreshing JavaScript Datepicker — lightweight, modular CSS",
   "keywords": [
     "datepicker",
     "calendar",
@@ -19,17 +19,21 @@
       "url": "http://opensource.org/licenses/MIT"
     }
   ],
-  "main": "pikaday.js",
+  "main": "js/pikaday.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/dbushell/Pikaday.git"
   },
-  "optionalDependencies": {
-    "moment": "2.x"
-  },
   "devDependencies": {
+    "babel": "^6.5.2",
+    "babel-core": "^6.18.2",
+    "babel-loader": "^6.2.8",
+    "babel-plugin-transform-runtime": "^6.15.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-stage-0": "^6.16.0",
+    "expect.js": "^0.3.1",
     "mocha": "~1.18.2",
-    "expect.js": "^0.3.1"
+    "webpack": "^1.13.3"
   },
   "testling": {
     "harness": "mocha",
@@ -37,9 +41,14 @@
     "browsers": [
       "ie/7..latest",
       "chrome/latest",
-      "firefox/3.6", "firefox/latest",
+      "firefox/3.6",
+      "firefox/latest",
       "safari/latest",
       "opera/latest"
     ]
+  },
+  "dependencies": {
+    "babel-runtime": "^6.18.0",
+    "moment": "^2.16.0"
   }
 }

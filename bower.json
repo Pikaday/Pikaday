@@ -1,13 +1,13 @@
 {
   "name": "pikaday",
-  "description": "A refreshing JavaScript Datepicker — lightweight, no dependencies, modular CSS",
+  "description": "A refreshing JavaScript Datepicker — lightweight, modular CSS",
   "keywords": [
     "datepicker",
     "calendar",
     "date"
   ],
   "main": [
-    "./pikaday.js",
+    "./dist/pikaday.js",
     "./css/pikaday.css"
   ],
   "dependencies": {},
