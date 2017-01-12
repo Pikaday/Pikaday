@@ -8,7 +8,7 @@
     "calendar",
     "date"
   ],
-  "main": "pikaday.js",
+  "main": "dist/pikaday.js",
   "scripts": ["pikaday.js"],
   "styles":  ["css/pikaday.css"],
   "dependencies": {},

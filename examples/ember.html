@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+    <title>Pikaday - Ember example</title>
+    <meta name="author" content="Brendan Brewster">
+    <link rel="stylesheet" href="../css/pikaday.css">
+    <link rel="stylesheet" href="../css/site.css">
+</head>
+<body>
+    <a href="https://github.com/dbushell/Pikaday"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+
+    <h1>Pikaday + Ember</h1>
+
+    <p class="large">A refreshing JavaScript Datepicker — lightweight, no dependencies, modular CSS.</p>
+
+    <p>This example shows how Pikaday can be used in an Ember component. The input field is bound to an Ember property that updates the selected text below. The helper buttons show that updating the Ember property also updates the Pikaday instance.</p>
+
+    <script type="text/x-handlebars" data-template-name="index">
+        <label for="datepicker">Date:</label>
+        {{date-input
+            id="datepicker"
+            date=date
+            minDate=minDate
+            maxDate=maxDate
+        }}
+        <div><b>Selected:</b> {{formattedDate}}</div>
+
+        <button {{action gotoToday}}>Today</button>
+        <button {{action clearDate}}>Clear Date</button>
+    </script>
+
+    <h2>What is this?</h2>
+
+    <p>Since version 1.0 Pikaday is a stable and battle tested date-picker. Feel free to use it however you like but please report any bugs or feature requests to the <a href="https://github.com/dbushell/Pikaday/issues">GitHub issue tracker</a>, thanks!</p>
+
+    <p class="small">Copyright © 2014 <a href="http://dbushell.com/">David Bushell</a> | BSD &amp; MIT license | Example by <a href="https://github.com/bjbrewster">Brendan Brewster</a></p>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0/handlebars.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/ember.js/1.4.0/ember.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
+    <script src="../dist/pikaday.js"></script>
+    <script>
+    Ember.STRINGS = {
+        date_format: 'DD MMM YYYY',
+        date_input_formats: 'DD MMM YYYY,MMM DD YYYY'
+    }
+
+    App = Ember.Application.create();
+
+    App.IndexController = Ember.ObjectController.extend({
+        minDate: function() { return moment().subtract(3, 'years').toDate(); }.property(),
+        maxDate: function() { return moment().add(3, 'years').toDate(); }.property(),
+
+        formattedDate: function() {
+            var date = this.get('date');
+            return moment(date).format('MMMM Do YYYY');
+        }.property('date'),
+
+        actions: {
+            gotoToday: function() { this.set('date', new Date()); },
+            clearDate: function() { this.set('date', null); }
+        }
+    });
+
+    App.ExampleModel = Ember.Object.extend({
+        date: null
+    });
+
+    App.IndexRoute = Ember.Route.extend({
+        model: function() {
+            return App.ExampleModel.create({ date: moment().add(5, 'days').toDate() });
+        }
+    });
+
+    App.DateInputComponent = Ember.TextField.extend({
+        date: null,
+        minDate: null,
+        maxDate: null,
+        format: null,
+        inputFormats: null,
+        pikaday: null,
+
+        dateDidChange: function() {
+            var date = this.get('date'),
+                pikaday = this.get('pikaday');
+            if (pikaday && !moment(date).isSame(pikaday.getDate())) {
+                pikaday.setDate(date);
+            }
+        }.observes('date'),
+
+        initPikaday: function() {
+            var self = this,
+                format = this.get('format') || Em.String.loc('date_format'),
+                inputFormats = this.get('inputFormats') || Em.String.loc('date_input_formats'),
+                date = moment(this.get('date')),
+                minDate = moment(this.get('minDate')),
+                maxDate = moment(this.get('maxDate')),
+                pikaday = new Pikaday({
+                    field: this.$()[0],
+                    clearInvalidInput: true,
+                    format: format ? format : undefined,
+                    inputFormats: inputFormats ? inputFormats.split(',') : undefined,
+                    setDefaultDate: date.isValid(),
+                    defaultDate: date.isValid() ? date.toDate() : undefined,
+                    minDate: minDate.isValid() ? minDate.toDate() : undefined,
+                    maxDate: maxDate.isValid() ? maxDate.toDate() : undefined,
+                    onSelect: function(date) { self.set('date', date); },
+                    onClear: function() { self.set('date', null); }
+                });
+            this.set('pikaday', pikaday);
+        }.on('didInsertElement')
+    });
+    </script>
+</body>
+</html>
