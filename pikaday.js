@@ -246,6 +246,9 @@
         // Specify a DOM element to render the calendar in
         container: undefined,
 
+        // Blur field when date is selected
+        blurFieldOnSelect : true,
+
         // internationalization
         i18n: {
             previousMonth : 'Previous Month',
@@ -436,7 +439,7 @@
                     if (opts.bound) {
                         sto(function() {
                             self.hide();
-                            if (opts.field) {
+                            if (opts.blurFieldOnSelect && opts.field) {
                                 opts.field.blur();
                             }
                         }, 100);
