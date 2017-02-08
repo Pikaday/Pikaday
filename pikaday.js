@@ -258,6 +258,9 @@
         // Theme Classname
         theme: null,
 
+        // events array
+        events: [],
+
         // callback function
         onSelect: null,
         onOpen: null,
@@ -298,6 +301,9 @@
         if (opts.isSelected) {
             arr.push('is-selected');
             ariaSelected = 'true';
+        }
+		if (opts.hasEvent) {
+            arr.push('has-event');
         }
         if (opts.isInRange) {
             arr.push('is-inrange');
@@ -981,7 +987,7 @@
             if (typeof this._o.onDraw === 'function') {
                 this._o.onDraw(this);
             }
-            
+
             if (opts.bound) {
                 // let the screen reader user know to use arrow keys
                 opts.field.setAttribute('aria-label', 'Use the arrow keys to pick a date');
@@ -1073,6 +1079,7 @@
                 var day = new Date(year, month, 1 + (i - before)),
                     isSelected = isDate(this._d) ? compareDates(day, this._d) : false,
                     isToday = compareDates(day, now),
+                    hasEvent = opts.events.indexOf(day.toDateString()) !== -1 ? true : false,
                     isEmpty = i < before || i >= (days + before),
                     dayNumber = 1 + (i - before),
                     monthNumber = month,
@@ -1101,6 +1108,7 @@
                         day: dayNumber,
                         month: monthNumber,
                         year: yearNumber,
+						hasEvent: hasEvent,
                         isSelected: isSelected,
                         isToday: isToday,
                         isDisabled: isDisabled,
