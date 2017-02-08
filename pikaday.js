@@ -302,7 +302,7 @@
             arr.push('is-selected');
             ariaSelected = 'true';
         }
-		if (opts.hasEvent) {
+        if (opts.hasEvent) {
             arr.push('has-event');
         }
         if (opts.isInRange) {
@@ -1108,7 +1108,7 @@
                         day: dayNumber,
                         month: monthNumber,
                         year: yearNumber,
-						hasEvent: hasEvent,
+                        hasEvent: hasEvent,
                         isSelected: isSelected,
                         isToday: isToday,
                         isDisabled: isDisabled,
