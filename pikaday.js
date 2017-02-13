@@ -981,7 +981,7 @@
             if (typeof this._o.onDraw === 'function') {
                 this._o.onDraw(this);
             }
-            
+
             if (opts.bound) {
                 // let the screen reader user know to use arrow keys
                 opts.field.setAttribute('aria-label', 'Use the arrow keys to pick a date');
@@ -1133,13 +1133,13 @@
         show: function()
         {
             if (!this.isVisible()) {
-                removeClass(this.el, 'is-hidden');
                 this._v = true;
                 this.draw();
                 if (this._o.bound) {
                     addEvent(document, 'click', this._onClick);
                     this.adjustPosition();
                 }
+                removeClass(this.el, 'is-hidden');
                 if (typeof this._o.onOpen === 'function') {
                     this._o.onOpen.call(this);
                 }
