@@ -29,7 +29,9 @@
   },
   "devDependencies": {
     "mocha": "~1.18.2",
-    "expect.js": "^0.3.1"
+    "expect.js": "^0.3.1",
+    "testling": "^1.7",
+    "jshint": "^2.9"
   },
   "testling": {
     "harness": "mocha",
@@ -41,5 +43,9 @@
       "safari/latest",
       "opera/latest"
     ]
+  },
+  "scripts": {
+    "test": "testling",
+    "lint": "jshint *.js plugins/*.js tests/*.js"
   }
 }
