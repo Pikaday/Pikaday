@@ -5,6 +5,12 @@ describe('Pikaday public method', function ()
 {
     'use strict';
 
+    describe('#getDate()', function() {
+        it('should return null if date not set', function() {
+            expect(new Pikaday().getDate()).to.be(null);
+        });
+    });
+
     describe('#toString()', function ()
     {
         it('should return empty string when date not set', function ()

@@ -735,11 +735,11 @@
         },
 
         /**
-         * return a Date object of the current selection with fallback for the current date
+         * return a Date object of the current selection
          */
         getDate: function()
         {
-            return isDate(this._d) ? new Date(this._d.getTime()) : new Date();
+            return isDate(this._d) ? new Date(this._d.getTime()) : null;
         },
 
         /**
@@ -822,7 +822,7 @@
 
         adjustDate: function(sign, days) {
 
-            var day = this.getDate();
+            var day = this.getDate() || new Date();
             var difference = parseInt(days)*24*60*60*1000;
 
             var newDay;
