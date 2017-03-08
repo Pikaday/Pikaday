@@ -758,7 +758,11 @@
                 return this.draw();
             }
             if (typeof date === 'string') {
-                date = new Date(Date.parse(date));
+                var millisecondsPerSecond = 1000,
+                millisecondsPerMin = millisecondsPerSecond * 60,
+                localTimeZoneOffsetFromUTCinMilliseconds = (new Date().getTimezoneOffset() * millisecondsPerMin),
+                localizedDateFromUnixEpochInMilliseconds = (Date.parse(date) + localTimeZoneOffsetFromUTCinMilliseconds);
+                date = new Date(localizedDateFromUnixEpochInMilliseconds);
             }
             if (!isDate(date)) {
                 return;
