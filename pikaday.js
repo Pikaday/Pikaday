@@ -193,6 +193,10 @@
         // the default output format for `.toString()` and `field` value
         format: 'YYYY-MM-DD',
 
+        // the formatter function which gets passed a current date object and format
+        // and returns a string
+        formatter: null,
+
         // the initial date to view when first opened
         defaultDate: null,
 
@@ -716,7 +720,17 @@
          */
         toString: function(format)
         {
-            return !isDate(this._d) ? '' : hasMoment ? moment(this._d).format(format || this._o.format) : this._d.toDateString();
+            format = format || this._o.format;
+            if (!isDate) {
+                return '';
+            }
+            if (this._o.formatter) {
+              return this._o.formatter(this._d, format);
+            }
+            if (hasMoment) {
+              return moment(this._d).format(format);
+            }
+            return this._d.toDateString();
         },
 
         /**
