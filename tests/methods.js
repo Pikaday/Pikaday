@@ -28,6 +28,38 @@ describe('Pikaday public method', function ()
             pikaday.setDate(date);
             expect(pikaday.toString()).to.eql('25-04-14');
         });
+
+        it('should use formatter function if one is provided', function () {
+            var date = new Date(2014, 3, 25),
+            pikaday = new Pikaday({
+                formatter: function(d) {
+                    var date = d.getDate();
+                    var month = d.getMonth() + 1;
+                    return 'custom: ' + date + '/' + month;
+                }
+            });
+
+            pikaday.setDate(date);
+            expect(pikaday.toString()).to.eql('custom: 25/4');
+        });
+
+        it('should pass current format option to the formatter function', function () {
+            var date = new Date(2014, 3, 25);
+            var expectedFormat = 'DD/MM/YYYY';
+            var passedFormat;
+
+            var pikaday = new Pikaday({
+                format: expectedFormat,
+                formatter: function(d, format) {
+                    passedFormat = format;
+                    return '';
+                }
+            });
+
+            pikaday.setDate(date);
+            pikaday.toString(); // invoke toString to set the passedFormat variable
+            expect(passedFormat).to.eql(expectedFormat);
+        });
     });
 
     describe('When specifying minDate option in Constructor', function () {
