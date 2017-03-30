@@ -271,7 +271,10 @@
         onSelect: null,
         onOpen: null,
         onClose: null,
-        onDraw: null
+        onDraw: null,
+
+        // close after selects date
+        closeOnClick: true,
     },
 
 
@@ -445,7 +448,7 @@
             if (!hasClass(target, 'is-disabled')) {
                 if (hasClass(target, 'pika-button') && !hasClass(target, 'is-empty') && !hasClass(target.parentNode, 'is-disabled')) {
                     self.setDate(new Date(target.getAttribute('data-pika-year'), target.getAttribute('data-pika-month'), target.getAttribute('data-pika-day')));
-                    if (opts.bound) {
+                    if (opts.bound && opts.closeOnClick) {
                         sto(function() {
                             self.hide();
                             if (opts.blurFieldOnSelect && opts.field) {

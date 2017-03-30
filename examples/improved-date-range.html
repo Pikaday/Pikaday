@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+	<title>Pikaday - Date Range example</title>
+	<meta name="author" content="David Bushell">
+	<link rel="stylesheet" href="../css/pikaday.css">
+	<link rel="stylesheet" href="../css/site.css">
+</head>
+<body>
+	<h1>Pikaday - Date Range example</h1>
+
+	<p class="large">A refreshing JavaScript Datepicker — lightweight, no dependencies, modular CSS.</p>
+
+	<p><a href="https://github.com/dbushell/Pikaday"><strong>Pikaday source on GitHub</strong></a></p>
+
+	<div style="display: inline-block; position: relative; width: 100%">
+		<label for="start">Date Range:</label>
+		<br>
+		<div id="trigger-div">
+ 			<input type="text" id="startDummy" onclick="openRelatedDatePicker"> - <input type="text" id="endDummy" onclick="openRelatedDatePicker">
+		</div>
+
+ 		<div style="display: none">		
+	 		<input type="text" id="start">
+	 		<input type="text" id="end">
+ 		</div>
+
+		<div id="daterangediv" style="position: absolute; top: 60px; width: auto; display: table;" ></div>
+	</div>
+
+	<div >
+		
+		
+	</div>
+
+	<h2>What is this?</h2>
+
+	<p>Since version 1.0 Pikaday is a stable and battle tested date-picker. Feel free  to the <a href="https://github.com/dbushell/Pikaday/issues">GitHub issue tracker</a>, thanks!</p>
+
+	<p class="small">Copyrighto use it however you like but please report any bugs or feature requestst &copy; 2014 <a href="http://dbushell.com/">David Bushell</a> | BSD &amp; MIT license</p>
+
+	<script src="../pikaday.js"></script>
+	<script type="text/javascript">
+		var open,
+			selectedDate, 	// This should contain current selected date
+			lastSelected = {
+				startDate: null,
+				endDate: null
+			},
+			rangeDate, 	// This should contain the 'rendered' date.
+
+			// Page-related functions
+			resetDateRelatedFields = function() {
+				selectedDate = null;
+				lastSelected = {
+					startDate: null,
+					endDate: null
+				};
+				rangePicker.setStartRange(null),
+				rangePicker.setEndRange(null),
+				rangePicker.setDate(null)
+			},
+			openRelatedDatePicker = function() {
+				rangePicker.show();
+			},
+
+			rangePickerSetter = function (futureDate) {
+				rangePicker.setStartRange(futureDate);
+				lastSelected.startDate = futureDate;
+				lastSelected.endDate = null;
+			}
+
+			// datepicker-related functions
+			onSelectRangePicker = function() {
+				selectedDate = rangePicker.getDate();
+				if (lastSelected.startDate && lastSelected.endDate) {
+					var futureDate = new Date(selectedDate.getTime());
+					resetDateRelatedFields();
+					rangePickerSetter(futureDate);
+				} else {
+					if (!lastSelected.startDate) {
+						rangePicker.setStartRange(selectedDate);
+						lastSelected.startDate = selectedDate;
+					} else {
+						if (selectedDate < lastSelected.startDate) {
+							resetDateRelatedFields();
+							rangePickerSetter(selectedDate);
+						} else {
+							rangePicker.setEndRange(selectedDate);
+							lastSelected.endDate = selectedDate;
+							rangePicker.hide();
+						}
+					}
+
+				}
+				rangePicker.draw(true);
+
+			},
+			rangePicker = new Pikaday({
+				field: document.getElementById('start'),
+				trigger: document.getElementById('trigger-div'),
+				minDate: new Date(2017, 3, 3),
+				defaultDate: new Date(2017, 3, 3),
+				bound: true,
+				numberOfMonths: 2,
+				container: document.getElementById('daterangediv'),
+				onSelect: onSelectRangePicker,
+				closeOnClick: false
+			})
+	</script>
+</body>
