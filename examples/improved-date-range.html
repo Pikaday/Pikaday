@@ -3,13 +3,13 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
-	<title>Pikaday - Date Range example</title>
+	<title>Pikaday - Fake Date Range example</title>
 	<meta name="author" content="Willy">
 	<link rel="stylesheet" href="../css/pikaday.css">
 	<link rel="stylesheet" href="../css/site.css">
 </head>
 <body>
-	<h1>Pikaday - Date Range example</h1>
+	<h1>Pikaday - Fake Date Range example</h1>
 
 	<p class="large">A refreshing JavaScript Datepicker — lightweight, no dependencies, modular CSS.</p>
 
@@ -70,7 +70,11 @@
 				rangePicker.setStartRange(futureDate);
 				lastSelected.startDate = futureDate;
 				lastSelected.endDate = null;
-			}
+			},
+			writeDateToDummyField = function () {
+				document.getElementById("startDummy").value = (lastSelected.startDate) ? lastSelected.startDate : "";
+				document.getElementById("endDummy").value = (lastSelected.endDate) ? lastSelected.endDate : "";
+			},
 
 			// datepicker-related functions
 			onSelectRangePicker = function() {
@@ -96,7 +100,7 @@
 
 				}
 				rangePicker.draw(true);
-
+				writeDateToDummyField();
 			},
 			rangePicker = new Pikaday({
 				field: document.getElementById('start'),
