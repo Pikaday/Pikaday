@@ -1,5 +1,11 @@
 #### 1.0.1 (2017-4-4)
 
+##### Chores
+
+* **documentation:** fix documentation to show Pikarange ([f7a74769](https://github.com/willypt/Pikarange/commit/f7a7476901ee3873f22ce3c2ef2682a2eb1ebf35))
+
+#### 1.0.1 (2017-4-4)
+
 ## 1.0.0 (2017-4-4)
 
 ##### Chores
