@@ -1,6 +1,6 @@
 {
   "name": "pikarange",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A forked refreshing JavaScript Datepicker — lightweight, no dependencies, modular CSS, just like Pikaday",
   "keywords": [
     "datepicker",

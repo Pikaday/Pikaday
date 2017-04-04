@@ -5,7 +5,6 @@ Pikarange
 [![License][license-image]][license-url]
 [![Downloads][downloads-image]][downloads-url]
 
-### ON WORK
 
 ### A refreshing JavaScript Datepicker
 
@@ -13,20 +12,20 @@ Pikarange
 * No dependencies (but plays well with [Moment.js][moment])
 * Modular CSS classes for easy styling
 
-[**Try Pikaday Demo →**][Pikaday]
+[**Try Pikarange Demo →**][Pikaday]
 
-![Pikaday Screenshot][screenshot]
+![Pikarange Screenshot][screenshot]
 
-**Production ready?** Since version 1.0.0 Pikaday is stable and used in production. If you do however find bugs or have feature requests please submit them to the [GitHub issue tracker][issues].
+**Production ready?** Since version 1.0 Pikaday is a stable and battle tested date-picker. Pikarange is forked from it and offers added features. Feel free to use it however you like but please report any bugs or feature requests to the [GitHub issue tracker][issues].
 Also see the [changelog](CHANGELOG.md)
 
 ## Installation
 
-    npm install pikaday
+    npm install pikarange
 
 ## Usage
 
-**Pikaday** can be bound to an input field:
+**Pikarange** can be bound to an input field:
 
 ```html
 <input type="text" id="datepicker">
@@ -35,23 +34,23 @@ Also see the [changelog](CHANGELOG.md)
 Add the JavaScript to the end of your document:
 
 ```html
-<script src="pikaday.js"></script>
+<script src="pikarange.js"></script>
 <script>
-    var picker = new Pikaday({ field: document.getElementById('datepicker') });
+    var picker = new Pikarange({ field: document.getElementById('datepicker') });
 </script>
 ```
 
 If you're using **jQuery** make sure to pass only the first element:
 
 ```javascript
-var picker = new Pikaday({ field: $('#datepicker')[0] });
+var picker = new Pikarange({ field: $('#datepicker')[0] });
 ```
 
-If the Pikaday instance is not bound to a field you can append the element anywhere:
+If the Pikarange instance is not bound to a field you can append the element anywhere:
 
 ```javascript
 var field = document.getElementById('datepicker');
-var picker = new Pikaday({
+var picker = new Pikarange({
     onSelect: function(date) {
         field.value = picker.toString();
     }
@@ -66,9 +65,9 @@ See the [moment.js example][] for a full version.
 <input type="text" id="datepicker" value="9 Oct 2014">
 
 <script src="moment.js"></script>
-<script src="pikaday.js"></script>
+<script src="pikarange.js"></script>
 <script>
-    var picker = new Pikaday({
+    var picker = new Pikarange({
         field: document.getElementById('datepicker'),
         format: 'D MMM YYYY',
         onSelect: function() {
@@ -115,43 +114,45 @@ Pikaday has many useful options:
 * `onOpen` callback function for when the picker becomes visible
 * `onClose` callback function for when the picker is hidden
 * `onDraw` callback function for when the picker draws a new month
+* `closeOnClick` controls so that the calendar does not closes after getting value
+
 
 ## jQuery Plugin
 
-The normal version of Pikaday does not require jQuery, however there is a jQuery plugin if that floats your boat (see `plugins/pikaday.jquery.js` in the repository). This version requires jQuery, naturally, and can be used like other plugins:
+The normal version of Pikarange does not require jQuery, however there is a jQuery plugin if that floats your boat (see `plugins/pikarange.jquery.js` in the repository). This version requires jQuery, naturally, and can be used like other plugins:
 See the [jQuery example][] for a full version.
 
 ```html
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="pikaday.js"></script>
-<script src="plugins/pikaday.jquery.js"></script>
+<script src="pikarange.js"></script>
+<script src="plugins/pikarange.jquery.js"></script>
 <script>
 
 // activate datepickers for all elements with a class of `datepicker`
-$('.datepicker').pikaday({ firstDay: 1 });
+$('.datepicker').pikarange({ firstDay: 1 });
 
 // chain a few methods for the first datepicker, jQuery style!
-$('.datepicker').eq(0).pikaday('show').pikaday('gotoYear', 2042);
+$('.datepicker').eq(0).pikarange('show').pikarange('gotoYear', 2042);
 
 </script>
 ```
 
 ## AMD support
 
-If you use a modular script loader than Pikaday is not bound to the global object and will fit nicely in your build process. You can require Pikaday just like any other module.
+If you use a modular script loader than Pikarange is not bound to the global object and will fit nicely in your build process. You can require Pikarange just like any other module.
 See the [AMD example][] for a full version.
 
 ```javascript
-require(['pikaday'], function(Pikaday) {
-    var picker = new Pikaday({ field: document.getElementById('datepicker') });
+require(['pikarange'], function(Pikarange) {
+    var picker = new Pikarange({ field: document.getElementById('datepicker') });
 });
 ```
 The same applies for the jQuery plugin mentioned above.
 See the [jQuery AMD example][] for a full version.
 
 ```javascript
-require(['jquery', 'pikaday.jquery'], function($) {
-    $('#datepicker').pikaday();
+require(['jquery', 'pikarange.jquery'], function($) {
+    $('#datepicker').pikarange();
 });
 ```
 
@@ -161,7 +162,7 @@ If you use a CommonJS compatible environment you can use the require function to
 
 
 ```javascript
-var pikaday = require('pikaday');
+var pikarange = require('pikarange');
 ```
 
 When you bundle all your required modules with [Browserify][browserify] and you don't use [Moment.js][moment] specify the ignore option:
@@ -177,14 +178,14 @@ If you're using **Ruby on Rails**, make sure to check out the [Pikaday gem][gem]
 You can control the date picker after creation:
 
 ```javascript
-var picker = new Pikaday({ field: document.getElementById('datepicker') });
+var picker = new Pikarange({ field: document.getElementById('datepicker') });
 ```
 
 ### Get and set date
 
 `picker.toString('YYYY-MM-DD')`
 
-Returns the selected date in a string format. If [Moment.js][moment] exists (recommended) then Pikaday can return any format that Moment understands, otherwise you're stuck with JavaScript's default.
+Returns the selected date in a string format. If [Moment.js][moment] exists (recommended) then Pikarange can return any format that Moment understands, otherwise you're stuck with JavaScript's default.
 
 `picker.getDate()`
 
@@ -196,7 +197,7 @@ Set the current selection. This will be restricted within the bounds of `minDate
 
 `picker.getMoment()`
 
-Returns a [Moment.js][moment] object for the selected date (Moment must be loaded before Pikaday).
+Returns a [Moment.js][moment] object for the selected date (Moment must be loaded before Pikarange).
 
 `picker.setMoment(moment('14th February 2014', 'DDo MMMM YYYY'))`
 
@@ -235,11 +236,11 @@ Update the maximum/latest date that can be selected.
 
 `picker.setStartRange()`
 
-Update the range start date. For using two Pikaday instances to select a date range.
+Update the range start date. For using two Pikarange instances to select a date range.
 
 `picker.setEndRange()`
 
-Update the range end date. For using two Pikaday instances to select a date range.
+Update the range end date. For using two Pikarange instances to select a date range.
 
 ### Show and hide datepicker
 
@@ -284,7 +285,7 @@ You must provide 12 months and 7 weekdays (with abbreviations). Always specify w
 
 ### Timepicker
 
-Pikaday is a pure datepicker. It will not support picking a time of day. However, there have been efforts to add time support to Pikaday.
+Pikarange is a pure datepicker. It will not support picking a time of day. However, there have been efforts to add time support to Pikaday.
 See [#1][issue1] and [#18][issue18]. These reside in their own fork.
 
 You can use the work [@owenmead][owenmead] did most recently at [owenmead/Pikaday][owen Pika]
@@ -292,22 +293,11 @@ A more simple time selection approach done by [@xeeali][xeeali] at [xeeali/Pikad
 Also [@stas][stas] has a fork [stas/Pikaday][stas Pika], but is now quite old
 
 
-## Browser Compatibility
-
-* IE 7+
-* Chrome 8+
-* Firefox 3.5+
-* Safari 3+
-* Opera 10.6+
-
-[![browser compatibility](https://ci.testling.com/rikkert/pikaday.png)
-](https://ci.testling.com/rikkert/pikaday)
-
-
 * * *
 
 ## Authors
 
+* Willy PT [GitHub][WillyPT]
 * David Bushell [http://dbushell.com][Bushell] [@dbushell][Bushell Twitter]
 * Ramiro Rikkert [GitHub][Rikkert] [@RamRik][Rikkert Twitter]
 
@@ -322,6 +312,7 @@ Copyright © 2014 David Bushell | BSD & MIT license
   [issues]:      https://github.com/dbushell/Pikaday/issues                       "Issue tracker"
   [gem]:         https://rubygems.org/gems/pikaday-gem                            "RoR gem"
   [mdn_date]:    https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Date  "Date"
+  [WillyPT]:     https://github.com/willypt                                       "WillyPT GitHub"
   [Bushell]:     http://dbushell.com/                                             "dbushell.com"
   [Bushell Twitter]: https://twitter.com/dbushell                                 "@dbushell"
   [Rikkert]:     https://github.com/rikkert                                       "Rikkert GitHub"
@@ -346,9 +337,9 @@ Copyright © 2014 David Bushell | BSD & MIT license
 
 
 
-[npm-image]: https://img.shields.io/npm/v/pikaday.svg?style=flat-square
-[npm-url]: https://npmjs.org/package/pikaday
+[npm-image]: https://img.shields.io/npm/v/pikarange.svg?style=flat-square
+[npm-url]: https://npmjs.org/package/pikarange
 [license-image]: https://img.shields.io/:license-mit-blue.svg?style=flat-square
 [license-url]: LICENSE.md
-[downloads-image]: http://img.shields.io/npm/dm/pikaday.svg?style=flat-square
-[downloads-url]: https://npmjs.org/package/pikaday
+[downloads-image]: http://img.shields.io/npm/dm/pikarange.svg?style=flat-square
+[downloads-url]: https://npmjs.org/package/pikarange
