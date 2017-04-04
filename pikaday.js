@@ -271,7 +271,11 @@
         onSelect: null,
         onOpen: null,
         onClose: null,
-        onDraw: null
+        onDraw: null,
+
+        // customization functions 
+        parse: null,
+        toString: null,
     },
 
 
@@ -526,7 +530,9 @@
             if (e.firedBy === self) {
                 return;
             }
-            if (hasMoment) {
+            if ( typeof opts.parse === 'function' ) {
+                date = opts.parse(opts.field.value, opts.format, opts.formatStrict);
+            } else if (hasMoment) {
                 date = moment(opts.field.value, opts.format, opts.formatStrict);
                 date = (date && date.isValid()) ? date.toDate() : null;
             }
@@ -614,7 +620,9 @@
             addEvent(opts.field, 'change', self._onInputChange);
 
             if (!opts.defaultDate) {
-                if (hasMoment && opts.field.value) {
+                if ( typeof opts.parse === 'function' ) {
+                    opts.defaultDate = opts.parse(opts.field.value, opts.format);
+                } else if (hasMoment && opts.field.value) {
                     opts.defaultDate = moment(opts.field.value, opts.format).toDate();
                 } else {
                     opts.defaultDate = new Date(Date.parse(opts.field.value));
@@ -716,7 +724,17 @@
          */
         toString: function(format)
         {
-            return !isDate(this._d) ? '' : hasMoment ? moment(this._d).format(format || this._o.format) : this._d.toDateString();
+            if (!isDate(this._d)) {
+                return '';
+            }
+
+            if ( typeof this._o.toString === 'function' ) {
+                return this._o.toString(this._d, format || this._o.format);
+            } else if (hasMoment) {
+                return moment(this._d).format(format || this._o.format);
+            } else {
+                return this._d.toDateString();
+            }
         },
 
         /**
