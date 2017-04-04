@@ -227,6 +227,7 @@
 
         startRange: null,
         endRange: null,
+        dateHover: null,
 
         isRTL: false,
 
@@ -434,6 +435,27 @@
         var self = this,
             opts = self.config(options);
 
+        self._onMouseOver = function(e)
+        {
+            if (!self._v) {
+                return;
+            }
+            e = e || window.event;
+            var target = e.target || e.srcElement;
+            if (!target) {
+                return;
+            }
+
+            if (!hasClass(target, 'is-disabled')) {
+                if (opts.startRange && !opts.endRange && hasClass(target, 'pika-button') && !hasClass(target, 'is-empty') && !hasClass(target.parentNode, 'is-disabled')) {
+                    var dateHover = new Date(target.getAttribute('data-pika-year'), target.getAttribute('data-pika-month'), target.getAttribute('data-pika-day'));
+                    self._o.dateHover = dateHover;
+                    sto(function() {
+                        self.draw(true);
+                    }, 100)
+                }
+            }
+        }
         self._onMouseDown = function(e)
         {
             if (!self._v) {
@@ -601,6 +623,7 @@
         self.el = document.createElement('div');
         self.el.className = 'pika-single' + (opts.isRTL ? ' is-rtl' : '') + (opts.theme ? ' ' + opts.theme : '');
 
+        addEvent(self.el, 'mouseover', self._onMouseOver, true);
         addEvent(self.el, 'mousedown', self._onMouseDown, true);
         addEvent(self.el, 'touchend', self._onMouseDown, true);
         addEvent(self.el, 'change', self._onChange);
@@ -940,6 +963,11 @@
             this.draw();
         },
 
+        setDateHover: function(value)
+        {
+            this._o.dateHover = value;
+        },
+
         setStartRange: function(value)
         {
             this._o.startRange = value;
@@ -1098,7 +1126,9 @@
                     yearNumber = year,
                     isStartRange = opts.startRange && compareDates(opts.startRange, day),
                     isEndRange = opts.endRange && compareDates(opts.endRange, day),
-                    isInRange = opts.startRange && opts.endRange && opts.startRange < day && day < opts.endRange,
+                    isInRange = 
+                        (opts.startRange && opts.endRange && opts.startRange < day && day < opts.endRange) ||
+                        (opts.startRange && !opts.endRange && opts.startRange < day && day < opts.dateHover),
                     isDisabled = (opts.minDate && day < opts.minDate) ||
                                  (opts.maxDate && day > opts.maxDate) ||
                                  (opts.disableWeekends && isWeekend(day)) ||
