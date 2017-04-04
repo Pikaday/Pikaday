@@ -3,17 +3,17 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
-	<title>Pikaday - Fake Date Range example</title>
+	<title>Pikarange - Date Range with Single Pikarange example</title>
 	<meta name="author" content="Willy">
-	<link rel="stylesheet" href="../css/pikaday.css">
+	<link rel="stylesheet" href="../css/pikarange.css">
 	<link rel="stylesheet" href="../css/site.css">
 </head>
 <body>
-	<h1>Pikaday - Fake Date Range example</h1>
+	<h1>Pikarange - Date Range with Single Pikarange example</h1>
 
 	<p class="large">A refreshing JavaScript Datepicker — lightweight, no dependencies, modular CSS.</p>
 
-	<p><a href="https://github.com/dbushell/Pikaday"><strong>Pikaday source on GitHub</strong></a></p>
+	<p><a href="https://github.com/willypt/Pikarange"><strong>Pikarange source on GitHub</strong></a></p>
 
 	<div style="display: inline-block; position: relative; width: 100%">
 		<label for="start">Date Range:</label>
@@ -37,11 +37,12 @@
 
 	<h2>What is this?</h2>
 
-	<p>Since version 1.0 Pikaday is a stable and battle tested date-picker. Feel free  to the <a href="https://github.com/dbushell/Pikaday/issues">GitHub issue tracker</a>, thanks!</p>
+    <p>Since version 1.0 Pikaday is a stable and battle tested date-picker. Pikarange is forked from it and offers added features. Feel free to use it however you like but please report any bugs or feature requests to the <a href="https://github.com/willypt/Pikarange">GitHub issue tracker</a>, thanks!</p>
 
-	<p class="small">Copyrighto use it however you like but please report any bugs or feature requestst &copy; 2014 <a href="http://dbushell.com/">David Bushell</a> | BSD &amp; MIT license</p>
+    <p class="small">Copyright © 2017 <a href="http://willypt.github.io/">Willy PT</a> | BSD &amp; MIT license
 
-	<script src="../pikaday.js"></script>
+
+	<script src="../pikarange.js"></script>
 	<script type="text/javascript">
 		var open,
 			selectedDate, 	// This should contain current selected date
@@ -102,7 +103,7 @@
 				rangePicker.draw(true);
 				writeDateToDummyField();
 			},
-			rangePicker = new Pikaday({
+			rangePicker = new Pikarange({
 				field: document.getElementById('start'),
 				trigger: document.getElementById('trigger-div'),
 				minDate: new Date(2017, 3, 3),

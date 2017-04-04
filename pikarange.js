@@ -2,6 +2,10 @@
  * Pikaday
  *
  * Copyright © 2014 David Bushell | BSD & MIT license | https://github.com/dbushell/Pikaday
+ *
+ * Pikarange
+ *
+ * Copyright © 2017 Willy PT | BSD & MIT license | https://github.com/willypt/Pikarange
  */
 
 (function (root, factory)
@@ -24,7 +28,7 @@
             return factory(moment);
         });
     } else {
-        root.Pikaday = factory(root.moment);
+        root.Pikarange = factory(root.moment);
     }
 }(this, function (moment)
 {
@@ -428,9 +432,9 @@
 
 
     /**
-     * Pikaday constructor
+     * Pikarange constructor
      */
-    Pikaday = function(options)
+    Pikarange = function(options)
     {
         var self = this,
             opts = self.config(options);
@@ -674,9 +678,9 @@
 
 
     /**
-     * public Pikaday API
+     * public Pikarange API
      */
-    Pikaday.prototype = {
+    Pikarange.prototype = {
 
 
         /**
@@ -1243,6 +1247,6 @@
 
     };
 
-    return Pikaday;
+    return Pikarange;
 
 }));

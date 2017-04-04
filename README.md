@@ -1,4 +1,4 @@
-Pikaday
+Pikarange
 ========
 
 [![NPM version][npm-image]][npm-url]
