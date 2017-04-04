@@ -3,17 +3,17 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
-    <title>Pikaday - Date Range example</title>
+    <title>Pikarange - Date Range example</title>
     <meta name="author" content="David Bushell">
-    <link rel="stylesheet" href="../css/pikaday.css">
+    <link rel="stylesheet" href="../css/pikarange.css">
     <link rel="stylesheet" href="../css/site.css">
 </head>
 <body>
-    <h1>Pikaday - Date Range example</h1>
+    <h1>Pikarange - Date Range example</h1>
 
-    <p class="large">A refreshing JavaScript Datepicker — lightweight, no dependencies, modular CSS.</p>
+    <p class="large">A refreshing JavaScript Datepicker — lightweight, no dependencies, modular CSS. Just like <a href="https://github.com/dbushell/Pikaday">Pikaday</a></p>
 
-    <p><a href="https://github.com/dbushell/Pikaday"><strong>Pikaday source on GitHub</strong></a></p>
+    <p><a href="https://github.com/willypt/Pikarange"><strong>Pikarange source on GitHub</strong></a></p>
 
     <div style="display: inline-block">
         <label for="start">Start:</label>
@@ -29,12 +29,12 @@
 
     <h2>What is this?</h2>
 
-    <p>Since version 1.0 Pikaday is a stable and battle tested date-picker. Feel free to use it however you like but please report any bugs or feature requests to the <a href="https://github.com/dbushell/Pikaday/issues">GitHub issue tracker</a>, thanks!</p>
+    <p>Since version 1.0 Pikaday is a stable and battle tested date-picker. Pikarange is forked from it and offers added features. Feel free to use it however you like but please report any bugs or feature requests to the <a href="https://github.com/willypt/Pikarange">GitHub issue tracker</a>, thanks!</p>
 
     <p class="small">Copyright &copy; 2014 <a href="http://dbushell.com/">David Bushell</a> | BSD &amp; MIT license</p>
 
 
-    <script src="../pikaday.js"></script>
+    <script src="../pikarange.js"></script>
     <script>
     var startDate,
         endDate,
@@ -48,7 +48,7 @@
             startPicker.setMaxDate(endDate);
             endPicker.setEndRange(endDate);
         },
-        startPicker = new Pikaday({
+        startPicker = new Pikarange({
             field: document.getElementById('start'),
             minDate: new Date(),
             maxDate: new Date(2020, 12, 31),
@@ -57,7 +57,7 @@
                 updateStartDate();
             }
         }),
-        endPicker = new Pikaday({
+        endPicker = new Pikarange({
             field: document.getElementById('end'),
             minDate: new Date(),
             maxDate: new Date(2020, 12, 31),

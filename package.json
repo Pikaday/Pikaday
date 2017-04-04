@@ -1,14 +1,16 @@
 {
-  "name": "pikaday",
-  "version": "1.5.1",
-  "description": "A refreshing JavaScript Datepicker — lightweight, no dependencies, modular CSS",
+  "name": "pikarange",
+  "version": "1.0.0",
+  "description": "A forked refreshing JavaScript Datepicker — lightweight, no dependencies, modular CSS, just like Pikaday",
   "keywords": [
     "datepicker",
     "calendar",
-    "date"
+    "date",
+    "pikaday",
+    "pikarange"
   ],
-  "homepage": "http://dbushell.github.io/Pikaday/",
-  "bugs": "https://github.com/dbushell/Pikaday/issues",
+  "homepage": "http://willypt.github.io/Pikarange/",
+  "bugs": "https://github.com/willypt/Pikarange/issues",
   "licenses": [
     {
       "type": "BSD",
@@ -19,19 +21,20 @@
       "url": "http://opensource.org/licenses/MIT"
     }
   ],
-  "main": "pikaday.js",
+  "main": "pikarange.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dbushell/Pikaday.git"
+    "url": "https://github.com/willypt/Pikarange.git"
   },
   "optionalDependencies": {
     "moment": "2.x"
   },
   "devDependencies": {
-    "mocha": "~1.18.2",
     "expect.js": "^0.3.1",
-    "testling": "^1.7",
-    "jshint": "^2.9"
+    "generate-changelog": "^1.1.0",
+    "jshint": "^2.9",
+    "mocha": "~1.18.2",
+    "testling": "^1.7"
   },
   "testling": {
     "harness": "mocha",
@@ -39,13 +42,17 @@
     "browsers": [
       "ie/7..latest",
       "chrome/latest",
-      "firefox/3.6", "firefox/latest",
+      "firefox/3.6",
+      "firefox/latest",
       "safari/latest",
       "opera/latest"
     ]
   },
   "scripts": {
     "test": "testling",
-    "lint": "jshint *.js plugins/*.js tests/*.js"
+    "lint": "jshint *.js plugins/*.js tests/*.js",
+    "release:major": "changelog -M && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version major && git push origin && git push origin --tags",
+    "release:minor": "changelog -m && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version minor && git push origin && git push origin --tags",
+    "release:patch": "changelog -p && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version patch && git push origin && git push origin --tags"
   }
 }

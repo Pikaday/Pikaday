@@ -1,7 +1,7 @@
 /*!
- * Pikaday jQuery plugin.
+ * Pikarange jQuery plugin.
  *
- * Copyright © 2013 David Bushell | BSD & MIT license | https://github.com/dbushell/Pikaday
+ * Copyright © 2017 Willy PT | BSD & MIT license | https://github.com/willypt/Pikarange
  */
 
 (function (root, factory)
@@ -10,19 +10,19 @@
 
     if (typeof exports === 'object') {
         // CommonJS module
-        factory(require('jquery'), require('../pikaday'));
+        factory(require('jquery'), require('../pikarange'));
     } else if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
-        define(['jquery', 'pikaday'], factory);
+        define(['jquery', 'pikarange'], factory);
     } else {
         // Browser globals
-        factory(root.jQuery, root.Pikaday);
+        factory(root.jQuery, root.Pikarange);
     }
-}(this, function ($, Pikaday)
+}(this, function ($, Pikarange)
 {
     'use strict';
 
-    $.fn.pikaday = function()
+    $.fn.pikarange = function()
     {
         var args = arguments;
 
@@ -33,20 +33,20 @@
         return this.each(function()
         {
             var self   = $(this),
-                plugin = self.data('pikaday');
+                plugin = self.data('pikarange');
 
-            if (!(plugin instanceof Pikaday)) {
+            if (!(plugin instanceof Pikarange)) {
                 if (typeof args[0] === 'object') {
                     var options = $.extend({}, args[0]);
                     options.field = self[0];
-                    self.data('pikaday', new Pikaday(options));
+                    self.data('pikarange', new Pikarange(options));
                 }
             } else {
                 if (typeof args[0] === 'string' && typeof plugin[args[0]] === 'function') {
                     plugin[args[0]].apply(plugin, Array.prototype.slice.call(args,1));
 
                     if (args[0] === 'destroy') {
-                        self.removeData('pikaday');
+                        self.removeData('pikarange');
                     }
                 }
             }

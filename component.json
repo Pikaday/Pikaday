@@ -1,17 +1,19 @@
 {
   "name": "pikaday",
   "repo": "dbushell/Pikaday",
-  "description": "A refreshing JavaScript Datepicker — lightweight, no dependencies, modular CSS",
+  "description": "A forked refreshing JavaScript Datepicker — lightweight, no dependencies, modular CSS, just like Pikaday",
   "version": "1.5.1",
   "keywords": [
     "datepicker",
     "calendar",
-    "date"
+    "date",
+    "pikaday",
+    "pikarange"
   ],
   "main": "pikaday.js",
-  "scripts": ["pikaday.js"],
-  "styles":  ["css/pikaday.css"],
+  "scripts": ["pikarange.js"],
+  "styles":  ["css/pikarange.css"],
   "dependencies": {},
-  "demo": "http://dbushell.github.io/Pikaday/",
+  "demo": "http://willypt.github.io/Pikarange/",
   "license": "MIT"
 }

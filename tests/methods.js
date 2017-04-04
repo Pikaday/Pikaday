@@ -1,13 +1,13 @@
-var Pikaday = require('../'),
+var Pikarange = require('../'),
     expect = require('expect.js');
 
-describe('Pikaday public method', function ()
+describe('Pikarange public method', function ()
 {
     'use strict';
 
     describe('#getDate()', function() {
         it('should return null if date not set', function() {
-            expect(new Pikaday().getDate()).to.be(null);
+            expect(new Pikarange().getDate()).to.be(null);
         });
     });
 
@@ -15,18 +15,18 @@ describe('Pikaday public method', function ()
     {
         it('should return empty string when date not set', function ()
         {
-            var pikaday = new Pikaday();
-            expect(pikaday.toString()).to.be.empty;
+            var pikarange = new Pikarange();
+            expect(pikarange.toString()).to.be.empty;
         });
 
         it('should return date string, formatted by moment, when date is set', function() {
             var date = new Date(2014, 3, 25),
-            pikaday = new Pikaday({
+            pikarange = new Pikarange({
                 format: 'DD-MM-YY'
             });
 
-            pikaday.setDate(date);
-            expect(pikaday.toString()).to.eql('25-04-14');
+            pikarange.setDate(date);
+            expect(pikarange.toString()).to.eql('25-04-14');
         });
     });
 
@@ -34,9 +34,9 @@ describe('Pikaday public method', function ()
         it('Should remove the time portion (flattening to midnight)', function () {
             var date = new Date(2015, 1, 17, 22, 10, 5),
                 expected = new Date(2015, 1, 17, 0, 0, 0),
-                pikaday = new Pikaday({ minDate: date });
+                pikarange = new Pikarange({ minDate: date });
 
-            expect(pikaday._o.minDate).to.eql(expected);
+            expect(pikarange._o.minDate).to.eql(expected);
         });
     });
 
@@ -44,10 +44,10 @@ describe('Pikaday public method', function ()
         it('should flatten date to midnight ignoring time portion (consistent with minDate option in ctor)', function () {
             var date = new Date(2015, 1, 17, 22, 10, 5),
                 expected = new Date(2015, 1, 17, 0, 0, 0),
-                pikaday = new Pikaday();
+                pikarange = new Pikarange();
 
-            pikaday.setMinDate(date);
-            expect(pikaday._o.minDate).to.eql(expected);
+            pikarange.setMinDate(date);
+            expect(pikarange._o.minDate).to.eql(expected);
         });
     });
 });
