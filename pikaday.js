@@ -193,9 +193,12 @@
         // the default output format for `.toString()` and `field` value
         format: 'YYYY-MM-DD',
 
-        // the formatter function which gets passed a current date object and format
+        // the toString function which gets passed a current date object and format
         // and returns a string
-        formatter: null,
+        toString: null,
+
+        // used to create date object from current input string
+        parse: null,
 
         // the initial date to view when first opened
         defaultDate: null,
@@ -527,7 +530,9 @@
             if (e.firedBy === self) {
                 return;
             }
-            if (hasMoment) {
+            if (opts.parse) {
+                date = opts.parse(opts.field.value, opts.format);
+            } else if (hasMoment) {
                 date = moment(opts.field.value, opts.format, opts.formatStrict);
                 date = (date && date.isValid()) ? date.toDate() : null;
             }
@@ -718,11 +723,11 @@
         toString: function(format)
         {
             format = format || this._o.format;
-            if (!isDate) {
+            if (!isDate(this._d)) {
                 return '';
             }
-            if (this._o.formatter) {
-              return this._o.formatter(this._d, format);
+            if (this._o.toString) {
+              return this._o.toString(this._d, format);
             }
             if (hasMoment) {
               return moment(this._d).format(format);
