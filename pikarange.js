@@ -271,7 +271,8 @@
 
         // events array
         events: [],
-
+        //eventDescriptions: [], // todo feature
+        
         // callback function
         onSelect: null,
         onOpen: null,
@@ -280,6 +281,10 @@
 
         // close after selects date
         closeOnClick: true,
+
+        // day and week label control
+        clickableDayAndWeekLabel: true
+
     },
 
 
@@ -384,7 +389,10 @@
                 opts.i18n.months[i] + '</option>');
         }
 
-        monthHtml = '<div class="pika-label">' + opts.i18n.months[month] + '<select class="pika-select pika-select-month" tabindex="-1">' + arr.join('') + '</select></div>';
+        monthHtml = '<div class="pika-label">' + opts.i18n.months[month] 
+            + ((opts.clickableDayAndWeekLabel === true)? '<select class="pika-select pika-select-month" tabindex="-1">' : '<div class="pika-select pika-select-month" tabindex="-1">') 
+            + ((opts.clickableDayAndWeekLabel === true)? arr.join('') : "")
+            + ((opts.clickableDayAndWeekLabel === true)? '</select></div>': '</div></div>');
 
         if (isArray(opts.yearRange)) {
             i = opts.yearRange[0];
@@ -399,7 +407,10 @@
                 arr.push('<option value="' + i + '"' + (i === year ? ' selected="selected"': '') + '>' + (i) + '</option>');
             }
         }
-        yearHtml = '<div class="pika-label">' + year + opts.yearSuffix + '<select class="pika-select pika-select-year" tabindex="-1">' + arr.join('') + '</select></div>';
+        yearHtml = '<div class="pika-label">' + year + opts.yearSuffix 
+            + ((opts.clickableDayAndWeekLabel === true)? '<select class="pika-select pika-select-year" tabindex="-1">' : '<div class="pika-select pika-select-month" tabindex="-1">')
+            + ((opts.clickableDayAndWeekLabel === true)? arr.join('') : "") 
+            + ((opts.clickableDayAndWeekLabel === true)? '</select></div>': '</div></div>');
 
         if (opts.showMonthAfterYear) {
             html += yearHtml + monthHtml;
