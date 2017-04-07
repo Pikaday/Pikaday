@@ -431,6 +431,11 @@
         var self = this,
             opts = self.config(options);
 
+        if (options.moment !== undefined) {
+            moment = options.moment;
+            hasMoment = true;
+        }
+        
         self._onMouseDown = function(e)
         {
             if (!self._v) {
