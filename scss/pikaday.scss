@@ -208,11 +208,14 @@ $pd-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !default;
     }
 
     .is-disabled &,
-    .is-outside-current-month & {
-        pointer-events: none;
+    .is-outside-current-month & {        
         cursor: default;
         color: $pd-day-disabled-color;
         opacity: .3;
+    }
+
+    .is-disabled & {
+        pointer-events: none;
     }
 
     &:hover {
@@ -220,6 +223,10 @@ $pd-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !default;
         background: $pd-day-hover-bg;
         box-shadow: none;
         border-radius: 3px;
+    }
+
+    .is-selection-disabled {
+        pointer-events: none;
     }
 }
 

@@ -206,12 +206,21 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     border-radius: 3px;
 }
 
-.is-disabled .pika-button,
-.is-outside-current-month .pika-button {
+.is-disabled .pika-button {
     pointer-events: none;
     cursor: default;
     color: #999;
     opacity: .3;
+}
+
+.is-outside-current-month .pika-button {
+    cursor: default;
+    color: #999;
+    opacity: .3;
+}
+
+.is-selection-disabled {
+    pointer-events: none;
 }
 
 .pika-button:hover,
