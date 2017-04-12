@@ -214,13 +214,13 @@ http://nicolasgallagher.com/micro-clearfix-hack/
 }
 
 .is-outside-current-month .pika-button {
-    cursor: default;
     color: #999;
     opacity: .3;
 }
 
 .is-selection-disabled {
     pointer-events: none;
+    cursor: default;
 }
 
 .pika-button:hover,
