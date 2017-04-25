@@ -252,6 +252,9 @@
         // Blur field when date is selected
         blurFieldOnSelect : true,
 
+        // Show the shortcut buttons
+        showButtons: false,
+
         // internationalization
         i18n: {
             previousMonth : 'Previous Month',
@@ -422,6 +425,30 @@
         return '<table cellpadding="0" cellspacing="0" class="pika-table" role="grid" aria-labelledby="' + randId + '">' + renderHead(opts) + renderBody(data) + '</table>';
     },
 
+    renderButtons = function(opts) {
+        if (opts.showButtons) {
+            var today = new Date();
+            var tomorrow = new Date();
+            var nextWeek = new Date();
+
+            tomorrow.setDate(today.getDate() + 1);
+            nextWeek.setDate(today.getDate() + 7);
+
+            console.log(today);
+            console.log(tomorrow);
+            console.log(nextWeek);
+
+            var todayButton = '<button class="pika-button" data-pika-year="' + today.getFullYear() + '" data-pika-month="' + today.getMonth() + '" data-pika-day="' + today.getDate() + '">Today</button>';
+            var tomorrowButton = '<button class="pika-button" data-pika-year="' + tomorrow.getFullYear() + '" data-pika-month="' + tomorrow.getMonth() + '" data-pika-day="' + tomorrow.getDate() + '">Tomorrow</button>';
+            var nextWeekButton = '<button class="pika-button" data-pika-year="' + nextWeek.getFullYear() + '" data-pika-month="' + nextWeek.getMonth() + '" data-pika-day="' + nextWeek.getDate() + '">Next Week</button>';
+            // var todayButton = '<button class="pika-button">Today</button>';
+            
+            return '<div class="pika-buttons">' + todayButton + tomorrowButton + nextWeekButton + '</div>';
+        }
+
+        return '';
+    },
+
 
     /**
      * Pikaday constructor
@@ -441,6 +468,7 @@
             if (!target) {
                 return;
             }
+            console.log(target);
 
             if (!hasClass(target, 'is-disabled')) {
                 if (hasClass(target, 'pika-button') && !hasClass(target, 'is-empty') && !hasClass(target.parentNode, 'is-disabled')) {
@@ -575,6 +603,7 @@
             e = e || window.event;
             var target = e.target || e.srcElement,
                 pEl = target;
+            console.log(target);
             if (!target) {
                 return;
             }
@@ -977,6 +1006,8 @@
             }
 
             randId = 'pika-title-' + Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 2);
+
+            html += renderButtons(opts);
 
             for (var c = 0; c < opts.numberOfMonths; c++) {
                 html += '<div class="pika-lendar">' + renderTitle(this, c, this.calendars[c].year, this.calendars[c].month, this.calendars[0].year, randId) + this.render(this.calendars[c].year, this.calendars[c].month, randId) + '</div>';

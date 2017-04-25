@@ -102,6 +102,19 @@ $pd-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !default;
     background-color: $pd-title-bg;
 }
 
+.pika-buttons {
+    margin: auto;
+    padding-top: 8px;
+    padding-left: 8px;
+    padding-right: 8px;
+
+    .pika-button {
+        display: inline-block;
+        width: 33%;
+        text-align: center;
+    }
+}
+
 .pika-prev,
 .pika-next {
     display: block;
