@@ -92,6 +92,8 @@ Pikaday has many useful options:
 * `formatStrict` the default flag for moment's strict date parsing (requires [Moment.js][moment] for custom formatting)
 * `defaultDate` the initial date to view when first opened
 * `setDefaultDate` make the `defaultDate` the initial selected value
+* `showButtons` shows the three buttons on top of the calendar that allow the user to immediately choose the day today, tomorrow or next week.
+* `rangePreview` will make the calendar update the end range to whichever date you are hovering over when a start of the range has already been set.
 * `firstDay` first day of the week (0: Sunday, 1: Monday, etc)
 * `minDate` the minimum/earliest date that can be selected (this should be a native Date object - e.g. `new Date()` or `moment().toDate()`)
 * `maxDate` the maximum/latest date that can be selected (this should be a native Date object - e.g. `new Date()` or `moment().toDate()`)
