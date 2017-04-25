@@ -61,6 +61,13 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     font-weight: bold;
     background-color: #fff;
 }
+
+.pika-buttons .pika-button {
+    display: inline-block;
+    width: 33%;
+    text-align: center;
+}
+
 .pika-title select {
     cursor: pointer;
     position: absolute;
