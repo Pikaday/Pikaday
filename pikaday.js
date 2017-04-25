@@ -434,15 +434,11 @@
             tomorrow.setDate(today.getDate() + 1);
             nextWeek.setDate(today.getDate() + 7);
 
-            console.log(today);
-            console.log(tomorrow);
-            console.log(nextWeek);
-
             var todayButton = '<button class="pika-button" data-pika-year="' + today.getFullYear() + '" data-pika-month="' + today.getMonth() + '" data-pika-day="' + today.getDate() + '">Today</button>';
             var tomorrowButton = '<button class="pika-button" data-pika-year="' + tomorrow.getFullYear() + '" data-pika-month="' + tomorrow.getMonth() + '" data-pika-day="' + tomorrow.getDate() + '">Tomorrow</button>';
             var nextWeekButton = '<button class="pika-button" data-pika-year="' + nextWeek.getFullYear() + '" data-pika-month="' + nextWeek.getMonth() + '" data-pika-day="' + nextWeek.getDate() + '">Next Week</button>';
             // var todayButton = '<button class="pika-button">Today</button>';
-            
+
             return '<div class="pika-buttons">' + todayButton + tomorrowButton + nextWeekButton + '</div>';
         }
 
@@ -468,7 +464,6 @@
             if (!target) {
                 return;
             }
-            console.log(target);
 
             if (!hasClass(target, 'is-disabled')) {
                 if (hasClass(target, 'pika-button') && !hasClass(target, 'is-empty') && !hasClass(target.parentNode, 'is-disabled')) {
@@ -514,6 +509,40 @@
             }
             else if (hasClass(target, 'pika-select-year')) {
                 self.gotoYear(target.value);
+            }
+        };
+
+        self._onmouseover = function(e) {
+            if (!self._v) {
+                return;
+            }
+            e = e || window.event;
+            var target = e.target || e.srcElement;
+            if (!target) {
+                return;
+            }
+
+            // If we're hovering over a button and we have a startDate
+            // set up, automatically set the hovered date as the endDate.
+            // This simulates a "range-effect" while hovering.
+            if (!hasClass(target, 'is-disabled')) {
+                if (hasClass(target, 'pika-button') &&
+                        !hasClass(target, 'is-empty') &&
+                        !hasClass(target.parentNode, 'is-disabled')) {
+                    if (self._o.startRange && self._o.previewRange) {
+                        var end = new Date(target
+                            .getAttribute('data-pika-year'), target
+                            .getAttribute('data-pika-month'), target
+                            .getAttribute('data-pika-day'))
+                        if (typeof(self._o.endRange) !== 'undefined') {
+                            if (self._o.endRange.getDate() != end.getDate()) {
+                                self.setEndRange(end);
+                            }
+                        } else {
+                            self.setEndRange(end);
+                        }
+                    }
+                }
             }
         };
 
@@ -603,7 +632,6 @@
             e = e || window.event;
             var target = e.target || e.srcElement,
                 pEl = target;
-            console.log(target);
             if (!target) {
                 return;
             }
@@ -630,6 +658,7 @@
         addEvent(self.el, 'mousedown', self._onMouseDown, true);
         addEvent(self.el, 'touchend', self._onMouseDown, true);
         addEvent(self.el, 'change', self._onChange);
+        addEvent(self.el, 'mouseover', self._onmouseover);
         addEvent(document, 'keydown', self._onKeyChange);
 
         if (opts.field) {
@@ -969,11 +998,13 @@
         setStartRange: function(value)
         {
             this._o.startRange = value;
+            this.draw();
         },
 
         setEndRange: function(value)
         {
             this._o.endRange = value;
+            this.draw();
         },
 
         /**
@@ -1226,6 +1257,7 @@
             removeEvent(this.el, 'mousedown', this._onMouseDown, true);
             removeEvent(this.el, 'touchend', this._onMouseDown, true);
             removeEvent(this.el, 'change', this._onChange);
+            removeEvent(this.el, 'mouseEnter', this._onmouseover);
             if (this._o.field) {
                 removeEvent(this._o.field, 'change', this._onInputChange);
                 if (this._o.bound) {
