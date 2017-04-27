@@ -136,6 +136,8 @@
     compareDates = function(a,b)
     {
         // weak date comparison (use setToStartOfDay(date) to ensure correct result)
+        setToStartOfDay(a);
+        setToStartOfDay(b);
         return a.getTime() === b.getTime();
     },
 
@@ -271,7 +273,8 @@
 
         // events array
         events: [],
-
+        //eventDescriptions: [], // todo feature
+        
         // callback function
         onSelect: null,
         onOpen: null,
@@ -280,6 +283,10 @@
 
         // close after selects date
         closeOnClick: true,
+
+        // day and week label control
+        clickableDayAndWeekLabel: true
+
     },
 
 
@@ -384,7 +391,10 @@
                 opts.i18n.months[i] + '</option>');
         }
 
-        monthHtml = '<div class="pika-label">' + opts.i18n.months[month] + '<select class="pika-select pika-select-month" tabindex="-1">' + arr.join('') + '</select></div>';
+        monthHtml = '<div class="pika-label">' + opts.i18n.months[month] 
+            + ((opts.clickableDayAndWeekLabel === true)? '<select class="pika-select pika-select-month" tabindex="-1">' : '<div class="pika-select pika-select-month" tabindex="-1">') 
+            + ((opts.clickableDayAndWeekLabel === true)? arr.join('') : "")
+            + ((opts.clickableDayAndWeekLabel === true)? '</select></div>': '</div></div>');
 
         if (isArray(opts.yearRange)) {
             i = opts.yearRange[0];
@@ -399,7 +409,10 @@
                 arr.push('<option value="' + i + '"' + (i === year ? ' selected="selected"': '') + '>' + (i) + '</option>');
             }
         }
-        yearHtml = '<div class="pika-label">' + year + opts.yearSuffix + '<select class="pika-select pika-select-year" tabindex="-1">' + arr.join('') + '</select></div>';
+        yearHtml = '<div class="pika-label">' + year + opts.yearSuffix 
+            + ((opts.clickableDayAndWeekLabel === true)? '<select class="pika-select pika-select-year" tabindex="-1">' : '<div class="pika-select pika-select-month" tabindex="-1">')
+            + ((opts.clickableDayAndWeekLabel === true)? arr.join('') : "") 
+            + ((opts.clickableDayAndWeekLabel === true)? '</select></div>': '</div></div>');
 
         if (opts.showMonthAfterYear) {
             html += yearHtml + monthHtml;
@@ -1121,7 +1134,6 @@
             for (var i = 0, r = 0; i < cells; i++)
             {
                 var day = new Date(year, month, 1 + (i - before)),
-                    isSelected = isDate(this._d) ? compareDates(day, this._d) : false,
                     isToday = compareDates(day, now),
                     hasEvent = opts.events.indexOf(day.toDateString()) !== -1 ? true : false,
                     isEmpty = i < before || i >= (days + before),
@@ -1136,7 +1148,8 @@
                     isDisabled = (opts.minDate && day < opts.minDate) ||
                                  (opts.maxDate && day > opts.maxDate) ||
                                  (opts.disableWeekends && isWeekend(day)) ||
-                                 (opts.disableDayFn && opts.disableDayFn(day));
+                                 (opts.disableDayFn && opts.disableDayFn(day)),
+                    isSelected = (isDate(this._d) && !isStartRange) ? (compareDates(day, this._d)) : false;
 
                 if (isEmpty) {
                     if (i < before) {
