@@ -2,6 +2,10 @@
  * Pikaday
  *
  * Copyright © 2014 David Bushell | BSD & MIT license | https://github.com/dbushell/Pikaday
+ *
+ * Pikarange
+ *
+ * Copyright © 2017 Willy PT | BSD & MIT license | https://github.com/willypt/Pikarange
  */
 
 (function (root, factory)
@@ -24,7 +28,7 @@
             return factory(moment);
         });
     } else {
-        root.Pikaday = factory(root.moment);
+        root.Pikarange = factory(root.moment);
     }
 }(this, function (moment)
 {
@@ -132,6 +136,8 @@
     compareDates = function(a,b)
     {
         // weak date comparison (use setToStartOfDay(date) to ensure correct result)
+        setToStartOfDay(a);
+        setToStartOfDay(b);
         return a.getTime() === b.getTime();
     },
 
@@ -227,6 +233,7 @@
 
         startRange: null,
         endRange: null,
+        dateHover: null,
 
         isRTL: false,
 
@@ -266,12 +273,20 @@
 
         // events array
         events: [],
-
+        //eventDescriptions: [], // todo feature
+        
         // callback function
         onSelect: null,
         onOpen: null,
         onClose: null,
-        onDraw: null
+        onDraw: null,
+
+        // close after selects date
+        closeOnClick: true,
+
+        // day and week label control
+        clickableDayAndWeekLabel: true
+
     },
 
 
@@ -376,7 +391,10 @@
                 opts.i18n.months[i] + '</option>');
         }
 
-        monthHtml = '<div class="pika-label">' + opts.i18n.months[month] + '<select class="pika-select pika-select-month" tabindex="-1">' + arr.join('') + '</select></div>';
+        monthHtml = '<div class="pika-label">' + opts.i18n.months[month] 
+            + ((opts.clickableDayAndWeekLabel === true)? '<select class="pika-select pika-select-month" tabindex="-1">' : '<div class="pika-select pika-select-month" tabindex="-1">') 
+            + ((opts.clickableDayAndWeekLabel === true)? arr.join('') : "")
+            + ((opts.clickableDayAndWeekLabel === true)? '</select></div>': '</div></div>');
 
         if (isArray(opts.yearRange)) {
             i = opts.yearRange[0];
@@ -391,7 +409,10 @@
                 arr.push('<option value="' + i + '"' + (i === year ? ' selected="selected"': '') + '>' + (i) + '</option>');
             }
         }
-        yearHtml = '<div class="pika-label">' + year + opts.yearSuffix + '<select class="pika-select pika-select-year" tabindex="-1">' + arr.join('') + '</select></div>';
+        yearHtml = '<div class="pika-label">' + year + opts.yearSuffix 
+            + ((opts.clickableDayAndWeekLabel === true)? '<select class="pika-select pika-select-year" tabindex="-1">' : '<div class="pika-select pika-select-month" tabindex="-1">')
+            + ((opts.clickableDayAndWeekLabel === true)? arr.join('') : "") 
+            + ((opts.clickableDayAndWeekLabel === true)? '</select></div>': '</div></div>');
 
         if (opts.showMonthAfterYear) {
             html += yearHtml + monthHtml;
@@ -424,13 +445,34 @@
 
 
     /**
-     * Pikaday constructor
+     * Pikarange constructor
      */
-    Pikaday = function(options)
+    Pikarange = function(options)
     {
         var self = this,
             opts = self.config(options);
 
+        self._onMouseOver = function(e)
+        {
+            if (!self._v) {
+                return;
+            }
+            e = e || window.event;
+            var target = e.target || e.srcElement;
+            if (!target) {
+                return;
+            }
+
+            if (!hasClass(target, 'is-disabled')) {
+                if (opts.startRange && !opts.endRange && hasClass(target, 'pika-button') && !hasClass(target, 'is-empty') && !hasClass(target.parentNode, 'is-disabled')) {
+                    var dateHover = new Date(target.getAttribute('data-pika-year'), target.getAttribute('data-pika-month'), target.getAttribute('data-pika-day'));
+                    self._o.dateHover = dateHover;
+                    sto(function() {
+                        self.draw(true);
+                    }, 100)
+                }
+            }
+        }
         self._onMouseDown = function(e)
         {
             if (!self._v) {
@@ -445,7 +487,7 @@
             if (!hasClass(target, 'is-disabled')) {
                 if (hasClass(target, 'pika-button') && !hasClass(target, 'is-empty') && !hasClass(target.parentNode, 'is-disabled')) {
                     self.setDate(new Date(target.getAttribute('data-pika-year'), target.getAttribute('data-pika-month'), target.getAttribute('data-pika-day')));
-                    if (opts.bound) {
+                    if (opts.bound && opts.closeOnClick) {
                         sto(function() {
                             self.hide();
                             if (opts.blurFieldOnSelect && opts.field) {
@@ -598,6 +640,7 @@
         self.el = document.createElement('div');
         self.el.className = 'pika-single' + (opts.isRTL ? ' is-rtl' : '') + (opts.theme ? ' ' + opts.theme : '');
 
+        addEvent(self.el, 'mouseover', self._onMouseOver, true);
         addEvent(self.el, 'mousedown', self._onMouseDown, true);
         addEvent(self.el, 'touchend', self._onMouseDown, true);
         addEvent(self.el, 'change', self._onChange);
@@ -648,9 +691,9 @@
 
 
     /**
-     * public Pikaday API
+     * public Pikarange API
      */
-    Pikaday.prototype = {
+    Pikarange.prototype = {
 
 
         /**
@@ -937,6 +980,11 @@
             this.draw();
         },
 
+        setDateHover: function(value)
+        {
+            this._o.dateHover = value;
+        },
+
         setStartRange: function(value)
         {
             this._o.startRange = value;
@@ -1086,7 +1134,6 @@
             for (var i = 0, r = 0; i < cells; i++)
             {
                 var day = new Date(year, month, 1 + (i - before)),
-                    isSelected = isDate(this._d) ? compareDates(day, this._d) : false,
                     isToday = compareDates(day, now),
                     hasEvent = opts.events.indexOf(day.toDateString()) !== -1 ? true : false,
                     isEmpty = i < before || i >= (days + before),
@@ -1095,11 +1142,14 @@
                     yearNumber = year,
                     isStartRange = opts.startRange && compareDates(opts.startRange, day),
                     isEndRange = opts.endRange && compareDates(opts.endRange, day),
-                    isInRange = opts.startRange && opts.endRange && opts.startRange < day && day < opts.endRange,
+                    isInRange = 
+                        (opts.startRange && opts.endRange && opts.startRange < day && day < opts.endRange) ||
+                        (opts.startRange && !opts.endRange && opts.startRange < day && day < opts.dateHover),
                     isDisabled = (opts.minDate && day < opts.minDate) ||
                                  (opts.maxDate && day > opts.maxDate) ||
                                  (opts.disableWeekends && isWeekend(day)) ||
-                                 (opts.disableDayFn && opts.disableDayFn(day));
+                                 (opts.disableDayFn && opts.disableDayFn(day)),
+                    isSelected = (isDate(this._d) && !isStartRange) ? (compareDates(day, this._d)) : false;
 
                 if (isEmpty) {
                     if (i < before) {
@@ -1210,6 +1260,6 @@
 
     };
 
-    return Pikaday;
+    return Pikarange;
 
 }));
