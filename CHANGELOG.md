@@ -1,3 +1,13 @@
+#### 1.0.2 (2017-4-27)
+
+##### New Features
+
+* **label:** add option to disable label click ([a85c7cc2](https://github.com/willypt/Pikarange/commit/a85c7cc250813dd8ee3bac48cce536d159bc082b))
+
+##### Bug Fixes
+
+* **compare date:** fix comparing date using startofday ([577f3361](https://github.com/willypt/Pikarange/commit/577f33610bc168464957c886223ce5f166614042))
+
 #### 1.0.1 (2017-4-4)
 
 ##### Chores
