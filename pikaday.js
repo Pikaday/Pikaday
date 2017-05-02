@@ -431,15 +431,38 @@
             var tomorrow = new Date();
             var nextWeek = new Date();
 
+            if (opts.useNextWeekend) {
+                var nextWeekend = new Date(today.getFullYear(), today.getMonth(),
+                    today.getDate());
+                nextWeekend.setDate(nextWeekend.getDate() + (6 - nextWeekend.getDay()));
+            }
+
             tomorrow.setDate(today.getDate() + 1);
             nextWeek.setDate(today.getDate() + 7);
 
-            var todayButton = '<button class="pika-button" data-pika-year="' + today.getFullYear() + '" data-pika-month="' + today.getMonth() + '" data-pika-day="' + today.getDate() + '">Today</button>';
-            var tomorrowButton = '<button class="pika-button" data-pika-year="' + tomorrow.getFullYear() + '" data-pika-month="' + tomorrow.getMonth() + '" data-pika-day="' + tomorrow.getDate() + '">Tomorrow</button>';
-            var nextWeekButton = '<button class="pika-button" data-pika-year="' + nextWeek.getFullYear() + '" data-pika-month="' + nextWeek.getMonth() + '" data-pika-day="' + nextWeek.getDate() + '">Next Week</button>';
-            // var todayButton = '<button class="pika-button">Today</button>';
+            var todayButton = '<button class="pika-button" data-pika-year="' +
+                today.getFullYear() + '" data-pika-month="' + today.getMonth() +
+                '" data-pika-day="' + today.getDate() + '">Today</button>';
+            var tomorrowButton = '<button class="pika-button" data-pika-year="' +
+                tomorrow.getFullYear() + '" data-pika-month="' +
+                tomorrow.getMonth() + '" data-pika-day="' + tomorrow.getDate() +
+                 '">Tomorrow</button>';
+            if (opts.useNextWeekend) {
+                var nextWeekendButton = '<button class="pika-button" data-pika-year="' +
+                    nextWeekend.getFullYear() + '" data-pika-month="' +
+                    nextWeekend.getMonth() + '" data-pika-day="' + nextWeekend.getDate() +
+                    '">Next Weekend</button>';
 
-            return '<div class="pika-buttons">' + todayButton + tomorrowButton + nextWeekButton + '</div>';
+            } else {
+                var nextWeekButton = '<button class="pika-button" data-pika-year="' +
+                    nextWeek.getFullYear() + '" data-pika-month="' +
+                    nextWeek.getMonth() + '" data-pika-day="' + nextWeek.getDate() +
+                    '">Next Week</button>';
+            }
+
+            return '<div class="pika-buttons">' + todayButton + tomorrowButton +
+                ((nextWeekendButton) ? nextWeekendButton : nextWeekButton) +
+                '</div>';
         }
 
         return '';

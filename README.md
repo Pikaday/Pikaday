@@ -93,6 +93,7 @@ Pikaday has many useful options:
 * `defaultDate` the initial date to view when first opened
 * `setDefaultDate` make the `defaultDate` the initial selected value
 * `showButtons` shows the three buttons on top of the calendar that allow the user to immediately choose the day today, tomorrow or next week.
+* `useNextWeekend` replaces the `Next Week` button with `Next Weekend`, which chooses the next weekend day (earliest coming Saturday) instead of the day next week. `showButtons` must be first set to `true` to use this.
 * `rangePreview` will make the calendar update the end range to whichever date you are hovering over when a start of the range has already been set.
 * `firstDay` first day of the week (0: Sunday, 1: Monday, etc)
 * `minDate` the minimum/earliest date that can be selected (this should be a native Date object - e.g. `new Date()` or `moment().toDate()`)
