@@ -60,7 +60,7 @@ field.parentNode.insertBefore(picker.el, field.nextSibling);
 
 ### Formatting
 
-By default, dates are formatted and parsed using standard javascript Date object.
+By default, dates are formatted and parsed using standard JavaScript Date object.
 If [Moment.js][moment] is available in scope, it will be used to format and parse input values. You can pass an additional `format` option to the configuration which will be passed to the `moment` constructor.
 See the [moment.js example][] for a full version.
 
@@ -106,9 +106,9 @@ var picker = new Pikaday({
     parse(dateString, format) {
         // dateString is the result of `toString` method
         const parts = dateString.split('/');
-        const day = parseInt(parts[0], 10); 
-        const month = parseInt(parts[1] - 1, 10); 
-        const year = parseInt(parts[1], 10); 
+        const day = parseInt(parts[0], 10);
+        const month = parseInt(parts[1] - 1, 10);
+        const year = parseInt(parts[1], 10);
         return new Date(year, month, day);
     }
 });
