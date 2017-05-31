@@ -62,10 +62,9 @@ describe('Pikaday public method', function ()
         });
 
         it('should use parse function if one is provided', function () {
-            var date = new Date(2014, 3, 25);
             var expectedDate = new Date(2017, 3, 6);
             var pikaday = new Pikaday({
-                parse: function(value, format) {
+                parse: function() {
                     return new Date(2017, 3, 6);
                 }
             });
@@ -82,7 +81,6 @@ describe('Pikaday public method', function ()
         });
 
         it('should pass input value and current format to the parse function', function () {
-            var date = new Date(2014, 3, 25);
             var expectedValue = 'test value';
             var expectedFormat = 'DD/MM/YYYY';
             var passedValue;

@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.6.0 - 2017-05-31
+
+- Add custom parsers, see #613
+- Re-introduce correct null behavor, fixes #654
+- Pick a whole week, see #516
+- Added `events` option: dates that you would like to differentiate from regular days, see #152
+- Fix the (re)position issue, see #643, #642
+- Configure if field is blurred when date is selected, see #631
+- Prevent error when no field is bound, fixes #611
+
 ## 1.5.1 - 2016-10-28
 
 - Only set attribute if field is bound, see #567

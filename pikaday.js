@@ -59,22 +59,6 @@
         }
     },
 
-    fireEvent = function(el, eventName, data)
-    {
-        var ev;
-
-        if (document.createEvent) {
-            ev = document.createEvent('HTMLEvents');
-            ev.initEvent(eventName, true, false);
-            ev = extend(ev, data);
-            el.dispatchEvent(ev);
-        } else if (document.createEventObject) {
-            ev = document.createEventObject();
-            ev = extend(ev, data);
-            el.fireEvent('on' + eventName, ev);
-        }
-    },
-
     trim = function(str)
     {
         return str.trim ? str.trim() : str.replace(/^\s+|\s+$/g,'');
@@ -158,6 +142,22 @@
             }
         }
         return to;
+    },
+
+    fireEvent = function(el, eventName, data)
+    {
+        var ev;
+
+        if (document.createEvent) {
+            ev = document.createEvent('HTMLEvents');
+            ev.initEvent(eventName, true, false);
+            ev = extend(ev, data);
+            el.dispatchEvent(ev);
+        } else if (document.createEventObject) {
+            ev = document.createEventObject();
+            ev = extend(ev, data);
+            el.fireEvent('on' + eventName, ev);
+        }
     },
 
     adjustCalendar = function(calendar) {
@@ -853,14 +853,6 @@
                 newDay = new Date(day.valueOf() + difference);
             } else if (sign === 'subtract') {
                 newDay = new Date(day.valueOf() - difference);
-            }
-
-            if (hasMoment) {
-                if (sign === 'add') {
-                    newDay = moment(day).add(days, "days").toDate();
-                } else if (sign === 'subtract') {
-                    newDay = moment(day).subtract(days, "days").toDate();
-                }
             }
 
             this.setDate(newDay);
