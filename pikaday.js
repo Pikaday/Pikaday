@@ -246,6 +246,10 @@
         // Render days of the calendar grid that fall in the next or previous month
         showDaysInNextAndPreviousMonths: false,
 
+        // If minDate and maxDate are supplied then convert date to minDate, if passed date is less than minDate
+        // or convert date to maxDate, if passed date is greater than max Date.
+        convertDateToMinOrMaxDate: true,
+
         // how many months are visible
         numberOfMonths: 1,
 
@@ -786,13 +790,15 @@
                 return;
             }
 
-            var min = this._o.minDate,
-                max = this._o.maxDate;
+            if (this._o.convertDateToMinOrMaxDate) {
+              var min = this._o.minDate,
+                  max = this._o.maxDate;
 
-            if (isDate(min) && date < min) {
-                date = min;
-            } else if (isDate(max) && date > max) {
-                date = max;
+              if (isDate(min) && date < min) {
+                  date = min;
+              } else if (isDate(max) && date > max) {
+                  date = max;
+              }  
             }
 
             this._d = new Date(date.getTime());
