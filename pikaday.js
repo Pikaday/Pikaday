@@ -1176,11 +1176,11 @@
             if (!this.isVisible()) {
                 this._v = true;
                 this.draw();
+                removeClass(this.el, 'is-hidden');
                 if (this._o.bound) {
                     addEvent(document, 'click', this._onClick);
                     this.adjustPosition();
                 }
-                removeClass(this.el, 'is-hidden');
                 if (typeof this._o.onOpen === 'function') {
                     this._o.onOpen.call(this);
                 }
