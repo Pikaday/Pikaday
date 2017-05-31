@@ -10,7 +10,7 @@
 
     if (typeof exports === 'object') {
         // CommonJS module
-        factory(require('jquery'), require('../pikaday'));
+        factory(require('jquery'), require('pikaday'));
     } else if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
         define(['jquery', 'pikaday'], factory);
