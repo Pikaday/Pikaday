@@ -321,6 +321,14 @@ i18n: {
 
 You must provide 12 months and 7 weekdays (with abbreviations). Always specify weekdays in this order with Sunday first. You can change the `firstDay` option to reorder if necessary (0: Sunday, 1: Monday, etc). You can also set `isRTL` to `true` for languages that are read right-to-left.
 
+`previousMonth` and `nextMonth` support custom HTML, which lets you customise the way previous and next month options look, e.g.
+
+```javascript
+i18n: {
+    previousMonth : '<span>Prev</span>',
+    ...
+}
+```
 
 ## Extensions
 

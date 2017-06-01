@@ -69,6 +69,18 @@
         return (' ' + el.className + ' ').indexOf(' ' + cn + ' ') !== -1;
     },
 
+    /**
+     * Check if any of the parents has the specifid class.
+     * @param {Element} el The target element.
+     * @param {string} cn The class to check for.
+     * @returns {boolean} True if any of the parents has the specified class.
+     */
+    parentHasClass = function(el, cn)
+    {
+        while ((el = el.parentElement) && !hasClass(el, cn));
+        return !!el;
+    },
+
     addClass = function(el, cn)
     {
         if (!hasClass(el, cn)) {
@@ -469,10 +481,10 @@
                         }, 100);
                     }
                 }
-                else if (hasClass(target, 'pika-prev')) {
+                else if (hasClass(target, 'pika-prev') || parentHasClass(target, 'pika-prev')) {
                     self.prevMonth();
                 }
-                else if (hasClass(target, 'pika-next')) {
+                else if (hasClass(target, 'pika-next') || parentHasClass(target, 'pika-next')) {
                     self.nextMonth();
                 }
             }
@@ -572,12 +584,9 @@
         {
             // IE allows pika div to gain focus; catch blur the input field
             var pEl = document.activeElement;
-            do {
-                if (hasClass(pEl, 'pika-single')) {
-                    return;
-                }
+            if (parentHasClass(pEl, 'pika-single')) {
+                return;
             }
-            while ((pEl = pEl.parentNode));
 
             if (!self._c) {
                 self._b = sto(function() {
@@ -601,8 +610,11 @@
                     addEvent(target, 'change', self._onChange);
                 }
             }
+            if (parentHasClass(pEl, 'pika-single')) {
+                return;
+            }
             do {
-                if (hasClass(pEl, 'pika-single') || pEl === opts.trigger) {
+                if (pEl === opts.trigger) {
                     return;
                 }
             }
