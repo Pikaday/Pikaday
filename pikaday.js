@@ -1104,7 +1104,7 @@
             var isWeekSelected = false;
             for (var i = 0, r = 0; i < cells; i++)
             {
-                var day = new Date(year, month, 1 + (i - before)),
+                var day = new Date(year, month, 1 + (i - before) + opts.firstDay),
                     isSelected = isDate(this._d) ? compareDates(day, this._d) : false,
                     isToday = compareDates(day, now),
                     hasEvent = opts.events.indexOf(day.toDateString()) !== -1 ? true : false,
