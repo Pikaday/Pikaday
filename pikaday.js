@@ -280,6 +280,7 @@
         // callback function
         onSelect: null,
         onOpen: null,
+        canOpen: null,
         onClose: null,
         onDraw: null
     },
@@ -1174,7 +1175,11 @@
 
         show: function()
         {
-            if (!this.isVisible()) {
+            var canOpen = true;
+            if(typeof this._o.canOpen === 'function') {
+                canOpen = this._o.canOpen.call(this);
+            }
+            if (canOpen && !this.isVisible()) {
                 this._v = true;
                 this.draw();
                 removeClass(this.el, 'is-hidden');

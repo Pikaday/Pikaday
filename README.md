@@ -152,6 +152,7 @@ Pikaday has many useful options:
 * `blurFieldOnSelect` defines if the field is blurred when a date is selected (default `true`)
 * `onSelect` callback function for when a date is selected
 * `onOpen` callback function for when the picker becomes visible
+* `canOpen` callback function for asking if the picker should open
 * `onClose` callback function for when the picker is hidden
 * `onDraw` callback function for when the picker draws a new month
 
