@@ -788,7 +788,7 @@
                 return this.draw();
             }
             if (typeof date === 'string') {
-                date = new Date(Date.parse(date));
+                date =  moment(date, this._o.format).toDate();
             }
             if (!isDate(date)) {
                 return;
