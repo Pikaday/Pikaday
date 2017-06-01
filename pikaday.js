@@ -246,6 +246,9 @@
         // Render days of the calendar grid that fall in the next or previous month
         showDaysInNextAndPreviousMonths: false,
 
+        // Allows user to select days that fall in the next or previous month
+        enableSelectionDaysInNextAndPreviousMonths: false,
+
         // how many months are visible
         numberOfMonths: 1,
 
@@ -301,6 +304,11 @@
         if (opts.isEmpty) {
             if (opts.showDaysInNextAndPreviousMonths) {
                 arr.push('is-outside-current-month');
+
+                if(!opts.enableSelectionDaysInNextAndPreviousMonths) {
+                    arr.push('is-selection-disabled')
+                }
+
             } else {
                 return '<td class="is-empty"></td>';
             }
@@ -1136,7 +1144,8 @@
                         isStartRange: isStartRange,
                         isEndRange: isEndRange,
                         isInRange: isInRange,
-                        showDaysInNextAndPreviousMonths: opts.showDaysInNextAndPreviousMonths
+                        showDaysInNextAndPreviousMonths: opts.showDaysInNextAndPreviousMonths,
+                        enableSelectionDaysInNextAndPreviousMonths: opts.enableSelectionDaysInNextAndPreviousMonths
                     };
 
                 if (opts.pickWholeWeek && isSelected) {
