@@ -114,6 +114,36 @@ var picker = new Pikaday({
 });
 ```
 
+Using Unix Timestamp as value:
+```html
+<input type="text" id="datepicker" value="1351810800">
+
+<script src="moment.js"></script>
+<script src="pikaday.js"></script>
+<script>
+    var newPicker = new Pikaday({
+        field: document.getElementById('datepicker'),
+        defaultDate: timestamp2date(document.getElementById('datepicker').value),
+        format: 'DD-MM-YYYY',
+        onSelect: function() {
+            var date = this.getMoment().format('DD-MM-YYYY');
+            var timestamp = date2timestamp(date)/1000;
+            document.getElementById('datepicker').value = timestamp;
+        }
+    });
+    // Helper functions
+    function date2timestamp(date) {
+        date=date.split("-");
+        var newDate=date[1]+"/"+date[0]+"/"+date[2];
+        return new Date(newDate).getTime();
+    }
+    function timestamp2date(timestamp) {
+        var date = new Date(timestamp*1000);
+        return date.getDay()+"-"+date.getMonth()+"-"+date.getFullYear();
+    }
+</script>
+``` 
+
 ### Configuration
 
 As the examples demonstrate above
