@@ -281,7 +281,8 @@
         onSelect: null,
         onOpen: null,
         onClose: null,
-        onDraw: null
+        onDraw: null,
+        onBeforeRender: null
     },
 
 
@@ -999,6 +1000,10 @@
 
             for (var c = 0; c < opts.numberOfMonths; c++) {
                 html += '<div class="pika-lendar">' + renderTitle(this, c, this.calendars[c].year, this.calendars[c].month, this.calendars[0].year, randId) + this.render(this.calendars[c].year, this.calendars[c].month, randId) + '</div>';
+            }
+
+            if (typeof this._o.onBeforeRender === 'function') {
+              html = this._o.onBeforeRender.call(this, html) || html;
             }
 
             this.el.innerHTML = html;
