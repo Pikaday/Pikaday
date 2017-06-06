@@ -1169,6 +1169,10 @@
 
         isVisible: function()
         {
+            if(this.el.offsetParent === null) {
+              return false;
+            }
+            
             return this._v;
         },
 
