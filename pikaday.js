@@ -345,8 +345,12 @@
 
     renderWeek = function (d, m, y) {
         // Lifted from http://javascript.about.com/library/blweekyear.htm, lightly modified.
-        var onejan = new Date(y, 0, 1),
-            weekNum = Math.ceil((((new Date(y, m, d) - onejan) / 86400000) + onejan.getDay()+1)/7);
+        var onejan = new Date(y, 0, 1);
+        var d = new Date(y, m, d);
+        d.setHours(0,0,0);
+        d.setDate(d.getDate()+4-(d.getDay()||7));
+
+        var weekNum = Math.ceil((((d - onejan) / 8.64e7)+1)/7);
         return '<td class="pika-week">' + weekNum + '</td>';
     },
 
