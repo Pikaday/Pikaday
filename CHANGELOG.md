@@ -2,7 +2,7 @@
 
 ## 1.7.0 - TBA
 
-- Add keyboard input option
+- Add keyboard input option, see #610
 
 ## 1.6.1 - 2017-06-06
 
