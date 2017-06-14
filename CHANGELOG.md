@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.6.1 - 2017-06-06
+
+- Fix memory leak, fixes #630
+
 ## 1.6.0 - 2017-05-31
 
 - Add custom parsers, see #613
