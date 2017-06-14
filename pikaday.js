@@ -1217,17 +1217,21 @@
          */
         destroy: function()
         {
+            var opts = this._o;
+
             this.hide();
             removeEvent(this.el, 'mousedown', this._onMouseDown, true);
             removeEvent(this.el, 'touchend', this._onMouseDown, true);
             removeEvent(this.el, 'change', this._onChange);
-            removeEvent(document, 'keydown', this._onKeyChange);
-            if (this._o.field) {
-                removeEvent(this._o.field, 'change', this._onInputChange);
-                if (this._o.bound) {
-                    removeEvent(this._o.trigger, 'click', this._onInputClick);
-                    removeEvent(this._o.trigger, 'focus', this._onInputFocus);
-                    removeEvent(this._o.trigger, 'blur', this._onInputBlur);
+            if (opts.keyboardInput) {
+                removeEvent(document, 'keydown', this._onKeyChange);
+            }
+            if (opts.field) {
+                removeEvent(opts.field, 'change', this._onInputChange);
+                if (opts.bound) {
+                    removeEvent(opts.trigger, 'click', this._onInputClick);
+                    removeEvent(opts.trigger, 'focus', this._onInputFocus);
+                    removeEvent(opts.trigger, 'blur', this._onInputBlur);
                 }
             }
             if (this.el.parentNode) {
@@ -1238,5 +1242,4 @@
     };
 
     return Pikaday;
-
 }));
