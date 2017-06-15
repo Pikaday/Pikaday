@@ -89,7 +89,7 @@ You should return a string from it.
 
 Be careful, though. If the formatted string that you return cannot be correctly parsed by the `Date.parse` method (or by `moment` if it is available), then you must provide your own `parse` function in the config. This function will be passed the formatted string and the format:
 
-`toString(dateString, format = 'YYYY-MM-DD')`
+`parse(dateString, format = 'YYYY-MM-DD')`
 
 ```javascript
 var picker = new Pikaday({
