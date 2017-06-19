@@ -1018,6 +1018,14 @@
             this.draw();
         },
 
+        getStartRange: function() {
+            return this._o.startRange;
+        }
+
+        getEndRange: function() {
+            return this._o.endRange;
+        }
+
         setStartRange: function(value)
         {
             this._o.startRange = value;
