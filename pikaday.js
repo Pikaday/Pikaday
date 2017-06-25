@@ -1089,7 +1089,8 @@
             var opts   = this._o,
                 now    = new Date(),
                 days   = getDaysInMonth(year, month),
-                before = new Date(year, month, 1).getDay(),
+                first  = new Date(year, month, 1).getDay(),
+                before = first,
                 data   = [],
                 row    = [];
             setToStartOfDay(now);
@@ -1165,7 +1166,7 @@
 
                 if (++r === 7) {
                     if (opts.showWeekNumber) {
-                        row.unshift(renderWeek(i - before, month, year));
+                        row.unshift(renderWeek(i - first, month, year));
                     }
                     data.push(renderRow(row, opts.isRTL, opts.pickWholeWeek, isWeekSelected));
                     row = [];
