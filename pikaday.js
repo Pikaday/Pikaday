@@ -746,7 +746,23 @@
             if (!isDate(this._d)) {
                 return '';
             }
-            if (this._o.toString) {
+            /**
+             * 很奇怪的是，由于toString是原型链顶端object所拥有的一个function，
+             * 在ie8下，如果对一个对象赋予一个同名为toString的属性，当调用这个toString时，
+             * ie8会去寻找原型链顶端的object.toString来调用，而不是改对象本身的toString。
+             * 所以ie8下，这里不能使用this._o.toString来判断改对象是否拥有toString方法，
+             * 这也导致了ie8下，无法使用自定义的toString方法。
+             * 
+             * Strange is, when you define a toString property of your own object,
+             * the toString property of your own can not be called in IE8.
+             * On the contrary, IE8 will look for the toString up towards the
+             * prototype chain until it finds the __proto__.toString.
+             * Which means your can not use your own toString function in IE8,
+             * so don't define it, just use moment format under IE8.
+             * 
+             * @author J.Soon <serdeemail@gmail.com>
+             */
+            if (this._o.toString && this._o.hasOwnProperty('toString') !== false) {
               return this._o.toString(this._d, format);
             }
             if (hasMoment) {
