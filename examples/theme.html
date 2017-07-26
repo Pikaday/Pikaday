@@ -7,6 +7,7 @@
     <meta name="author" content="Stuart McFarlane">
     <link rel="stylesheet" href="../css/pikaday.css">
     <link rel="stylesheet" href="../css/theme.css">
+    <link rel="stylesheet" href="../css/triangle.css">
     <link rel="stylesheet" href="../css/site.css">
 </head>
 <body>
@@ -21,6 +22,8 @@
     No theme <input type="text" id="datepicker">
     <br>
     Custom theme <input type="text" id="datepicker-theme">
+    <br>
+    Dropdowns w/ triangles <input type="text" id="datepicker-triangle">
 
     <h2>What is this?</h2>
 
@@ -28,8 +31,6 @@
 
     <p class="small">Copyright © 2014 <a href="http://dbushell.com/">David Bushell</a> | BSD &amp; MIT license | Example by <a href="https://github.com/rikkert">Ramiro Rikkert</a></p>
 
-
-    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
     <script src="../pikaday.js"></script>
     <script>
 
@@ -43,6 +44,12 @@
     {
         field: document.getElementById('datepicker-theme'),
         theme: 'dark-theme'
+    });
+    
+    var pickerTriangle = new Pikaday(
+    {
+        field: document.getElementById('datepicker-triangle'),
+        theme: 'triangle-theme'
     });
 
     </script>

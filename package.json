@@ -1,6 +1,6 @@
 {
   "name": "pikaday",
-  "version": "1.3.8-gyg",
+  "version": "1.6.1-gyg",
   "description": "A refreshing JavaScript Datepicker — lightweight, no dependencies, modular CSS",
   "keywords": [
     "datepicker",
@@ -8,17 +8,8 @@
     "date"
   ],
   "homepage": "http://dbushell.github.io/Pikaday/",
-  "bugs": "https://github.com/getyourguide/Pikaday/issues",
-  "licenses": [
-    {
-      "type": "BSD",
-      "url": "http://opensource.org/licenses/BSD-3-Clause"
-    },
-    {
-      "type": "MIT",
-      "url": "http://opensource.org/licenses/MIT"
-    }
-  ],
+  "bugs": "https://github.com/dbushell/Pikaday/issues",
+  "license": "(0BSD OR MIT)",
   "main": "pikaday.js",
   "repository": {
     "type": "git",
@@ -29,7 +20,9 @@
   },
   "devDependencies": {
     "mocha": "~1.18.2",
-    "expect.js": "^0.3.1"
+    "expect.js": "^0.3.1",
+    "testling": "^1.7",
+    "jshint": "^2.9"
   },
   "testling": {
     "harness": "mocha",
@@ -37,9 +30,14 @@
     "browsers": [
       "ie/7..latest",
       "chrome/latest",
-      "firefox/3.6", "firefox/latest",
+      "firefox/3.6",
+      "firefox/latest",
       "safari/latest",
       "opera/latest"
     ]
+  },
+  "scripts": {
+    "test": "testling",
+    "lint": "jshint *.js plugins/*.js tests/*.js"
   }
 }

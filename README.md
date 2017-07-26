@@ -1,5 +1,10 @@
-Pikaday (GetYourGuide fork)
+Pikaday
 ========
+
+[![NPM version][npm-image]][npm-url]
+[![License][license-image]][license-url]
+[![Downloads][downloads-image]][downloads-url]
+
 
 ### A refreshing JavaScript Datepicker
 
@@ -14,6 +19,9 @@ Pikaday (GetYourGuide fork)
 **Production ready?** Since version 1.0.0 Pikaday is stable and used in production. If you do however find bugs or have feature requests please submit them to the [GitHub issue tracker][issues].
 Also see the [changelog](CHANGELOG.md)
 
+## Installation
+
+    npm install pikaday
 
 ## Usage
 
@@ -50,7 +58,10 @@ var picker = new Pikaday({
 field.parentNode.insertBefore(picker.el, field.nextSibling);
 ```
 
-For advanced formatting load [Moment.js][moment] prior to Pikaday:
+### Formatting
+
+By default, dates are formatted and parsed using standard JavaScript Date object.
+If [Moment.js][moment] is available in scope, it will be used to format and parse input values. You can pass an additional `format` option to the configuration which will be passed to the `moment` constructor.
 See the [moment.js example][] for a full version.
 
 ```html
@@ -69,23 +80,39 @@ See the [moment.js example][] for a full version.
 </script>
 ```
 
-### isAvailable (GYG modification)
-```html
-<input type="text" id="datepicker" value="17 Sep 2014">
+For more advanced and flexible formatting you can pass your own `toString` function to the configuration which will be used to format the date object.
+This function has the following signature:
 
-<script src="pikaday.js"></script>
-<script>
-    var picker = new Pikaday({
-        field: document.getElementById('datepicker'),
-        isAvailable: function(date) {
-            var xmas = Date.parse('2014-12-25');
-            date.setHours(0,0,0,0);
-            return date === xmas;
-        }
-    });
-</script>
+`toString(date, format = 'YYYY-MM-DD')`
+
+You should return a string from it.
+
+Be careful, though. If the formatted string that you return cannot be correctly parsed by the `Date.parse` method (or by `moment` if it is available), then you must provide your own `parse` function in the config. This function will be passed the formatted string and the format:
+
+`toString(dateString, format = 'YYYY-MM-DD')`
+
+```javascript
+var picker = new Pikaday({
+    field: document.getElementById('datepicker'),
+    format: 'D/M/YYYY',
+    toString(date, format) {
+        // you should do formatting based on the passed format,
+        // but we will just return 'D/M/YYYY' for simplicity
+        const day = date.getDate();
+        const month = date.getMonth() + 1;
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+    },
+    parse(dateString, format) {
+        // dateString is the result of `toString` method
+        const parts = dateString.split('/');
+        const day = parseInt(parts[0], 10);
+        const month = parseInt(parts[1] - 1, 10);
+        const year = parseInt(parts[1], 10);
+        return new Date(year, month, day);
+    }
+});
 ```
-
 
 ### Configuration
 
@@ -95,10 +122,14 @@ Pikaday has many useful options:
 * `field` bind the datepicker to a form field
 * `trigger` use a different element to trigger opening the datepicker, see [trigger example][] (default to `field`)
 * `bound` automatically show/hide the datepicker on `field` focus (default `true` if `field` is set)
+* `ariaLabel` data-attribute on the input field with an aria assistance tekst (only applied when `bound` is set)
 * `position` preferred position of the datepicker relative to the form field, e.g.: `top right`, `bottom right` **Note:** automatic adjustment may occur to avoid datepicker from being displayed outside the viewport, see [positions example][] (default to 'bottom left')
 * `reposition` can be set to false to not reposition datepicker within the viewport, forcing it to take the configured `position` (default: true)
 * `container` DOM node to render calendar into, see [container example][] (default: undefined)
 * `format` the default output format for `.toString()` and `field` value (requires [Moment.js][moment] for custom formatting)
+* `formatStrict` the default flag for moment's strict date parsing (requires [Moment.js][moment] for custom formatting)
+* `toString(date, format)` function which will be used for custom formatting. This function will take precedence over `moment`.
+* `parse(dateString, format)` function which will be used for parsing input string and getting a date object from it. This function will take precedence over `moment`.
 * `defaultDate` the initial date to view when first opened
 * `setDefaultDate` make the `defaultDate` the initial selected value
 * `firstDay` first day of the week (0: Sunday, 1: Monday, etc)
@@ -108,19 +139,23 @@ Pikaday has many useful options:
 * `disableDayFn` callback function that gets passed a Date object for each day in view. Should return true to disable selection of that day.
 * `yearRange` number of years either side (e.g. `10`) or array of upper/lower range (e.g. `[1900,2015]`)
 * `showWeekNumber` show the ISO week number at the head of the row (default `false`)
+* `pickWholeWeek` select a whole week instead of a day (default `false`)
 * `isRTL` reverse the calendar for right-to-left languages
 * `i18n` language defaults for month and weekday names (see internationalization below)
 * `yearSuffix` additional text to append to the year in the title
 * `showMonthAfterYear` render the month after year in the title (default `false`)
+* `showDaysInNextAndPreviousMonths` render days of the calendar grid that fall in the next or previous months (default: false)
+* `enableSelectionDaysInNextAndPreviousMonths` allows user to select date that is in the next or previous months (default: false)
 * `numberOfMonths` number of visible calendars
 * `mainCalendar` when `numberOfMonths` is used, this will help you to choose where the main calendar will be (default `left`, can be set to `right`). Only used for the first display or when a selected date is not already visible
+* `events` array of dates that you would like to differentiate from regular days (e.g. `['Sat Jun 28 2017', 'Sun Jun 29 2017', 'Tue Jul 01 2017',]`)
 * `theme` define a classname that can be used as a hook for styling different themes, see [theme example][] (default `null`)
+* `blurFieldOnSelect` defines if the field is blurred when a date is selected (default `true`)
 * `onSelect` callback function for when a date is selected
 * `onOpen` callback function for when the picker becomes visible
 * `onClose` callback function for when the picker is hidden
 * `onDraw` callback function for when the picker draws a new month
-* `isAvailable` a function, which must return a boolean determining availability. The date object in context is passed as an argument. (default: `true`)
-* `showAvailability` enable showing available dates on calendar, removes "Disabled" attribute from unavailable dates' buttons and adds a class to the datepicker container. (default to `false`)
+* `keyboardInput` enable keyboard input support (default `true`)
 
 ## jQuery Plugin
 
@@ -190,7 +225,10 @@ var picker = new Pikaday({ field: document.getElementById('datepicker') });
 
 `picker.toString('YYYY-MM-DD')`
 
-Returns the selected date in a string format. If [Moment.js][moment] exists (recommended) then Pikaday can return any format that Moment understands, otherwise you're stuck with JavaScript's default.
+Returns the selected date in a string format. If [Moment.js][moment] exists (recommended) then Pikaday can return any format that Moment understands.
+You can also provide your own `toString` function and do the formatting yourself. Read more in the [formatting](#formatting) section.
+
+If neither `moment` object exists nor `toString` function is provided, JavaScript's default [`.toDateString()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toDateString) method will be used.
 
 `picker.getDate()`
 
@@ -349,3 +387,12 @@ Copyright © 2014 David Bushell | BSD & MIT license
   [positions example]: http://dbushell.github.com/Pikaday/examples/positions.html "Pikaday using different position options"
   [container example]: http://dbushell.github.com/Pikaday/examples/container.html "Pikaday using custom calendar container"
   [theme example]: http://dbushell.github.com/Pikaday/examples/theme.html         "Pikaday using multiple themes"
+
+
+
+[npm-image]: https://img.shields.io/npm/v/pikaday.svg?style=flat-square
+[npm-url]: https://npmjs.org/package/pikaday
+[license-image]: https://img.shields.io/:license-mit-blue.svg?style=flat-square
+[license-url]: LICENSE.md
+[downloads-image]: http://img.shields.io/npm/dm/pikaday.svg?style=flat-square
+[downloads-url]: https://npmjs.org/package/pikaday
