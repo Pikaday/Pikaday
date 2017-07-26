@@ -353,7 +353,7 @@
         return '<td data-day="' + opts.day + '" class="' + arr.join(' ') + '" aria-selected="' + ariaSelected + '">' +
                  '<button class="pika-button pika-day" type="button" ' +
                     'data-pika-year="' + opts.year + '" data-pika-month="' + opts.month + '" data-pika-day="' + opts.day + '">' +
-                        opts.day
+                        opts.day +
                  '</button>' +
                '</td>';
     },
@@ -1156,8 +1156,8 @@
 						(opts.maxDate && day > opts.maxDate) ||
 						(opts.disableWeekends && isWeekend(day)) ||
 						(opts.disableDayFn && opts.disableDayFn(day)),
-                    isNotAvailable = typeof opts.isNotAvailable === 'function' ? opts.isNotAvailable(moment(day).format('YYYY-MM-DD')) : false,
-                    isDeal = typeof opts.isDeal === 'function' ? opts.isDeal(moment(day).format('YYYY-MM-DD')) : false;
+                    isNotAvailable = typeof opts.isNotAvailable === 'function' ? opts.isNotAvailable(day) : false,
+                    isDeal = typeof opts.isDeal === 'function' ? opts.isDeal(day) : false;
 
                 if (isEmpty) {
                     if (i < before) {
