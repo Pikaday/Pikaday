@@ -341,9 +341,9 @@
         if (opts.isEndRange) {
             arr.push('is-endrange');
         }
-        return '<td data-day="' + opts.day + '" class="' + arr.join(' ') + '" aria-selected="' + ariaSelected + '">' +
+        return '<td data-day="' + opts.day + '" data-day-in-week="' + opts.dayInWeek + '" class="' + arr.join(' ') + '" aria-selected="' + ariaSelected + '">' +
                  '<button class="pika-button pika-day" type="button" ' +
-                    'data-pika-year="' + opts.year + '" data-pika-month="' + opts.month + '" data-pika-day="' + opts.day + '">' +
+                    'data-pika-year="' + opts.year + '" data-pika-month="' + opts.month + '" data-pika-day="' + opts.day + '" data-pika-day-in-week="' + opts.dayInWeek + '">' +
                         opts.day +
                  '</button>' +
                '</td>';
@@ -1119,6 +1119,7 @@
                     hasEvent = opts.events.indexOf(day.toDateString()) !== -1 ? true : false,
                     isEmpty = i < before || i >= (days + before),
                     dayNumber = 1 + (i - before),
+                    dayInWeekNumber = day.getDay(),
                     monthNumber = month,
                     yearNumber = year,
                     isStartRange = opts.startRange && compareDates(opts.startRange, day),
@@ -1143,6 +1144,7 @@
 
                 var dayConfig = {
                         day: dayNumber,
+                        dayInWeek: dayInWeekNumber,
                         month: monthNumber,
                         year: yearNumber,
                         hasEvent: hasEvent,
