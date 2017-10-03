@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
     <title>Pikaday - ranges example</title>
     <meta name="author" content="Maxime Thirouin">
-    <link rel="stylesheet" href="../css/pikaday.css">
+    <link rel="stylesheet" href="../css/datepicker.css">
     <link rel="stylesheet" href="../css/site.css">
 </head>
 <body>
@@ -28,10 +28,10 @@
     <p class="small">Copyright © 2013 <a href="http://dbushell.com/">David Bushell</a> | BSD &amp; MIT license | Example by <a href="https://github.com/MoOx">MoOx</a></p>
 
 
-    <script src="../pikaday.js"></script>
+    <script src="../eva-datepicker.js"></script>
     <script>
 
-    var picker2months = new Pikaday(
+    var picker2months = new Datepicker(
     {
         numberOfMonths: 2,
         field: document.getElementById('datepicker-2months'),
@@ -41,7 +41,7 @@
         yearRange: [2000, 2020]
     });
 
-    var picker3monthsRight = new Pikaday(
+    var picker3monthsRight = new Datepicker(
     {
         numberOfMonths: 3,
         mainCalendar: 'right',

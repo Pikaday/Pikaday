@@ -1,0 +1,168 @@
+.eva-3-datepicker .datepicker-container {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+.eva-3-datepicker .datepicker-container:before, .eva-3-datepicker .datepicker-container:after {
+  content: " ";
+  display: table;
+}
+.eva-3-datepicker .datepicker-container:after {
+  clear: both;
+}
+.eva-3-datepicker .datepicker-container.is-hidden {
+  display: none;
+}
+.eva-3-datepicker .datepicker-container.is-bound {
+  position: absolute;
+}
+.eva-3-datepicker .datepicker-header {
+  padding: 10px 40px;
+  width: 100%;
+  border-bottom: 1px solid #EEE;
+  font-size: 16px;
+  letter-spacing: 0;
+  box-sizing: border-box;
+}
+.eva-3-datepicker .datepicker-header .datepicker-next, .eva-3-datepicker .datepicker-header .datepicker-prev {
+  position: absolute;
+  cursor: pointer;
+  color: #444;
+}
+.eva-3-datepicker .datepicker-header .datepicker-next:hover, .eva-3-datepicker .datepicker-header .datepicker-next:focus, .eva-3-datepicker .datepicker-header .datepicker-prev:hover, .eva-3-datepicker .datepicker-header .datepicker-prev:focus {
+  color: #AAA;
+}
+.eva-3-datepicker .datepicker-header .datepicker-prev {
+  left: 15px;
+  margin-top: 5px;
+}
+.eva-3-datepicker .datepicker-header .datepicker-next {
+  right: 15px;
+  margin-top: 5px;
+}
+.eva-3-datepicker .datepicker-header .-month, .eva-3-datepicker .datepicker-header .-year {
+  display: block;
+  text-align: center;
+}
+.eva-3-datepicker .datepicker-header .-month {
+  font-size: 20px;
+  color: #444;
+}
+.eva-3-datepicker .datepicker-header .-year {
+  font-size: 10px;
+  color: #AAA;
+}
+.eva-3-datepicker .datepicker-body .-week {
+  border-bottom: 1px solid transparent;
+  white-space: nowrap;
+}
+.eva-3-datepicker .datepicker-body .-day, .eva-3-datepicker .datepicker-body .-date {
+  text-align: center;
+  float: left;
+  vertical-align: middle;
+  min-width: 38px;
+  border: 1px solid transparent;
+}
+.eva-3-datepicker .datepicker-body .-day {
+  color: #AAA;
+  text-transform: uppercase;
+  font-size: 11px;
+  line-height: 2;
+}
+.eva-3-datepicker .datepicker-body .-date {
+  color: #888;
+  cursor: pointer;
+  line-height: 34px;
+  transition: background-color .4s ease,box-shadow .4s ease;
+  border-top: 1px solid #F5F5F5;
+  border-left: 1px solid transparent;
+  border-right: 1px solid transparent;
+  border-bottom: 1px solid transparent;
+}
+.eva-3-datepicker .datepicker-body .-date:hover, .eva-3-datepicker .datepicker-body .-date:focus {
+  border: 1px solid #2D72E1;
+}
+.eva-3-datepicker .datepicker-body .-today {
+  color: #2D72E1;
+  position: relative;
+}
+.eva-3-datepicker .datepicker-body .-today .-label {
+  font-size: 9px;
+  color: #888;
+  position: absolute;
+  bottom: 0;
+  line-height: 9px;
+  text-align: center;
+  left: 0;
+  right: 0;
+}
+.eva-3-datepicker .datepicker-body .-range {
+  background: #5C8FE0;
+  border: 1px solid #5C8FE0;
+  color: #FFF;
+}
+.eva-3-datepicker .datepicker-body .-range .-label {
+  color: #CCC;
+}
+.eva-3-datepicker .datepicker-body .-selected, .eva-3-datepicker .datepicker-body .-start, .eva-3-datepicker .datepicker-body .-end {
+  background: #2D72E1;
+  border: 1px solid #2D72E1;
+  color: #FFF;
+  position: relative;
+}
+.eva-3-datepicker .datepicker-body .-selected .-label, .eva-3-datepicker .datepicker-body .-start .-label, .eva-3-datepicker .datepicker-body .-end .-label {
+  color: #CCC;
+}
+.eva-3-datepicker .datepicker-body .-start::after, .eva-3-datepicker .datepicker-body .-end::after {
+  content: '';
+  position: absolute;
+  border: 5px solid #2D72E1;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  margin-top: -6px;
+  top: 50%;
+  z-index: 1;
+  pointer-events: none;
+}
+.eva-3-datepicker .datepicker-body .-start::after {
+  border-right: 10px solid transparent;
+  left: 100%;
+}
+.eva-3-datepicker .datepicker-body .-end::after {
+  border-left: 10px solid transparent;
+  right: 100%;
+}
+.eva-3-datepicker .datepicker-body .-disabled {
+  color: #DDD;
+  background: #F5F5F5;
+  border: 1px solid #F5F5F5;
+  cursor: not-allowed;
+}
+.eva-3-datepicker .datepicker-body .-disabled .-label {
+  color: #DDD;
+}
+.eva-3-datepicker .datepicker-body .-out {
+  color: transparent;
+  border: 1px solid transparent;
+  background: transparent;
+  pointer-events: none;
+  cursor: auto;
+}
+.eva-3-datepicker .datepicker-body .-out .-label {
+  color: transparent;
+  background: transparent;
+}
+.eva-3-datepicker .datepicker-body .-out::after, .eva-3-datepicker .datepicker-body .-out::before {
+  border: transparent;
+}
+.eva-3-datepicker.-double {
+  max-width: 324px;
+  display: inline-block;
+}
+.eva-3-datepicker.-double.-left {
+  padding-right: 7.5px;
+}
+.eva-3-datepicker.-double.-right {
+  padding-left: 7.5px;
+}
