@@ -862,14 +862,12 @@
         adjustDate: function(sign, days) {
 
             var day = this.getDate() || new Date();
-            var difference = parseInt(days)*24*60*60*1000;
-
-            var newDay;
+            var newDay = new Date(day);
 
             if (sign === 'add') {
-                newDay = new Date(day.valueOf() + difference);
+                newDay.setDate(newDay.getDate() + days);
             } else if (sign === 'subtract') {
-                newDay = new Date(day.valueOf() - difference);
+                newDay.setDate(newDay.getDate() + -Math.abs(days));
             }
 
             this.setDate(newDay);
