@@ -536,6 +536,10 @@
                     case 40:
                         self.adjustDate('add', 7);
                         break;
+                    case 8:
+                    case 46:
+                        self.setDate(null);
+                        break;
                 }
             }
         };
