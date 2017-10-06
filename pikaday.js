@@ -830,6 +830,14 @@
         },
 
         /**
+         * clear and reset the date
+         */
+        clear: function()
+        {
+            this.setDate(null);
+        }
+
+        /**
          * change view to a specific date
          */
         gotoDate: function(date)
