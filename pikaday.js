@@ -1032,7 +1032,7 @@
 
         adjustPosition: function()
         {
-            var field, pEl, width, height, viewportWidth, viewportHeight, scrollTop, left, top, clientRect;
+            var field, pEl, fieldWidth, fieldHeight, width, height, viewportWidth, viewportHeight, scrollTop, left, top, clientRect;
 
             if (this._o.container) return;
 
@@ -1040,6 +1040,8 @@
 
             field = this._o.trigger;
             pEl = field;
+            fieldWidth = (typeof field.getBBox === 'function') ? field.getBBox().width : field.offsetWidth
+            fieldHeight = (typeof field.getBBox === 'function') ? field.getBBox().height : field.offsetHeight
             width = this.el.offsetWidth;
             height = this.el.offsetHeight;
             viewportWidth = window.innerWidth || document.documentElement.clientWidth;
@@ -1063,18 +1065,18 @@
             if ((this._o.reposition && left + width > viewportWidth) ||
                 (
                     this._o.position.indexOf('right') > -1 &&
-                    left - width + field.offsetWidth > 0
+                    left - width + fieldWidth > 0
                 )
             ) {
-                left = left - width + field.offsetWidth;
+                left = left - width + fieldWidth;
             }
             if ((this._o.reposition && top + height > viewportHeight + scrollTop) ||
                 (
                     this._o.position.indexOf('top') > -1 &&
-                    top - height - field.offsetHeight > 0
+                    top - height - field.fieldHeight > 0
                 )
             ) {
-                top = top - height - field.offsetHeight;
+                top = top - height - fieldHeight;
             }
 
             this.el.style.left = left + 'px';
