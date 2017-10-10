@@ -1,62 +1,99 @@
-Pikaday
-========
-
-[![NPM version][npm-image]][npm-url]
-[![License][license-image]][license-url]
+# eva-datepicker is here!
+### based on Pikaday
 [![Downloads][downloads-image]][downloads-url]
 
+### An agnostic JS Datepicker
 
-### A refreshing JavaScript Datepicker
-
-* Lightweight (less than 5kb minified and gzipped)
+* Lightweight (less than 5kb minified and gzipped!)
 * No dependencies (but plays well with [Moment.js][moment])
-* Modular CSS classes for easy styling
+* Use Searchbox-Datepicker styles (by @maxstranich)
 
-[**Try Pikaday Demo →**][Pikaday]
+[**Try Demo →**][datepicker-demo]
 
-![Pikaday Screenshot][screenshot]
+![eva-datepicker Screenshot][screenshot]
 
-**Production ready?** Since version 1.0.0 Pikaday is stable and used in production. If you do however find bugs or have feature requests please submit them to the [GitHub issue tracker][issues].
-Also see the [changelog](CHANGELOG.md)
+**Listo para Production?** Desde la versión 1.0.0 Pikaday (la librería en la que nos basamos) es estable y usada en producción. Obviamente que si encontras un error o una mejora lo podrías sumar a los issues de este proyecto [GitHub issue tracker][issues].
 
-## Installation
 
-    npm install pikaday
+## Instalación
+Para utilizar este componente es necesario tener en nuestro proyecto EVA 3, y los siguiente componentes que serán requiridos para el correcto funcionamiento del datepicker.
+Los componentes necesarios son:
+- Tooltip
+- Colours
+- Text
+- Shadow
+- Input
 
-## Usage
+Luego se deberá descargar desde este repositorio el JS eva-datepicker.js (o eva-datepicker.min.js)
 
-**Pikaday** can be bound to an input field:
+
+
+## USO
+
+El **Datepicker** se podría aplicar sobre cualquier elemento ya que se especifica en que contenedor se va a dibujar el datepicker y se especifica en el campo donde el valor será colocado.
+En nuestro ejemplo usaremos un **eva-3-input** el cual estaré dentro de un **eva-3-tooltip** que será el contenedor del datepicker.
+Dentro de la clase **tooltip-content** colocaremos nuestra clase **eva-3-datepicker** y dentro de esta un **div** que funcinará de contenedor para el dibujado del datepicker
+
 
 ```html
-<input type="text" id="datepicker">
+<!--Import the eva-datepicker js-->
+<script src="path_to/eva-datepicker.js"></script>
+
+    <!--Tooltip Structure-->
+    <div class="eva-3-tooltip -bottom -right -white -not-hover">
+      <!--Input with icon-right-->
+      <div class="eva-3-input -sm -icon-right">
+        <!--input container-->
+        <div class="input-container">
+          <!--input itself-->
+          <input id="datepicker" class="input-tag"/>
+          <i class="input-icon eva-3-icon-calendar"></i>
+          <!--Tooltip container-->
+          <span style="min-width: 310px;" class="tooltip-container">
+            <i class="tooltip-marker"></i>
+            <!--tooltip-content-->
+            <span class="tooltip-content">
+              <!--Eva-datepicker container-->
+              <div class="eva-3-datepicker -bottom-left ">
+                <!--Div id=container-->
+                <div id="container"></div>
+              </div>
+            </span>
+          </span>
+        </div>
+      </div>
+    </div>
 ```
 
-Add the JavaScript to the end of your document:
+Agregar este JavaScript al final del documento:
 
 ```html
-<script src="pikaday.js"></script>
+<script src="eva-datepicker.js"></script>
 <script>
-    var picker = new Pikaday({ field: document.getElementById('datepicker') });
+    var picker = new Datepicker({
+    /*Field where value will be set*/
+    field: document.getElementById('datepicker'),
+    /*firstDay: indicate when starts the week (1 is Monday)*/
+    firstDay: 1,
+    /*Min date and ax date*/
+    minDate: new Date(),
+    maxDate: new Date(2020, 12, 31),
+    yearRange: [2017, 2020],
+    /*Container where the datepicker will be draw*/
+    container: document.getElementById('container')
+  });
 </script>
 ```
 
-If you're using **jQuery** make sure to pass only the first element:
+Si usas **jQuery** Asegurate de pasarle solo el primer elemento:
 
 ```javascript
-var picker = new Pikaday({ field: $('#datepicker')[0] });
+var picker = new Datepicker({ field: $('#datepicker')[0]});
 ```
 
-If the Pikaday instance is not bound to a field you can append the element anywhere:
+### Hasta aquí fue documentado el nuevo eva-datepicker
+#### A continuación podrán seguir leyendo la documentación original óómuy útil de Pickaday
 
-```javascript
-var field = document.getElementById('datepicker');
-var picker = new Pikaday({
-    onSelect: function(date) {
-        field.value = picker.toString();
-    }
-});
-field.parentNode.insertBefore(picker.el, field.nextSibling);
-```
 
 ### Formatting
 
@@ -362,7 +399,7 @@ Copyright © 2014 David Bushell | BSD & MIT license
   [Pikaday]:     http://dbushell.github.com/Pikaday/                              "Pikaday"
   [moment]:      http://momentjs.com/                                             "moment.js"
   [browserify]:  http://browserify.org/                                           "browserify"
-  [screenshot]:  https://raw.github.com/dbushell/Pikaday/gh-pages/screenshot.png  "Screenshot"
+  [screenshot]:  https://lh4.googleusercontent.com/6SyE-Cf59vClbjhtHKQE18pVIOyqS6HZM1If2RLrdeYQCGNejnNSPXB57UFPzn558IDPq6el57BjV8M=w1440-h803  "Screenshot"
   [issues]:      https://github.com/dbushell/Pikaday/issues                       "Issue tracker"
   [gem]:         https://rubygems.org/gems/pikaday-gem                            "RoR gem"
   [mdn_date]:    https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Date  "Date"
@@ -396,3 +433,4 @@ Copyright © 2014 David Bushell | BSD & MIT license
 [license-url]: LICENSE.md
 [downloads-image]: http://img.shields.io/npm/dm/pikaday.svg?style=flat-square
 [downloads-url]: https://npmjs.org/package/pikaday
+[datepicker-demo]: https://backoffice.despegar.com/eva/#/dist/3.0.0/datepicker/demo
