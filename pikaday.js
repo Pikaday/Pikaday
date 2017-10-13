@@ -1067,6 +1067,10 @@
                 )
             ) {
                 left = left - width + field.offsetWidth;
+                // FIXME when a label is left from element
+                if (left < 0) {
+                    left = width - (field.offsetWidth - left);
+                }
             }
             if ((this._o.reposition && top + height > viewportHeight + scrollTop) ||
                 (
