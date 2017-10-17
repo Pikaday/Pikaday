@@ -639,8 +639,10 @@
             }
             addEvent(opts.field, 'change', self._onInputChange);
 
-            if (!opts.defaultDate) {
-                if (hasMoment && opts.field.value) {
+            if (!opts.defaultDate && opts.field.value) {
+                if (opts.parse) {
+                    opts.defaultDate = opts.parse(opts.field.value, opts.format);
+                } else if (hasMoment) {
                     opts.defaultDate = moment(opts.field.value, opts.format).toDate();
                 } else {
                     opts.defaultDate = new Date(Date.parse(opts.field.value));
