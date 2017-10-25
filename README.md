@@ -43,7 +43,6 @@ Add the JavaScript to the end of your document:
 Add the CSS to your document:
 ```html
 <link rel="stylesheet" href="pikaday.css">
-<link rel="stylesheet" href="site.css">
 ```
 
 If you're using **jQuery** make sure to pass only the first element:
