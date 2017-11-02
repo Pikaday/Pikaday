@@ -26,6 +26,12 @@ $pd-day-selected-bg: #33aaff !default;
 $pd-day-selected-shadow: #178fe5 !default;
 $pd-day-disabled-color: #999 !default;
 $pd-week-color: #999 !default;
+$pd-inrange-color: #666 !default;
+$pd-inrange-bg: #D5E9F7 !default;
+$pd-startrange-color: #fff !default;
+$pd-startrange-bg: #6CB31D !default;
+$pd-endrange-color: #fff !default;
+$pd-endrange-bg: #33aaff !default;
 
 // Font
 $pd-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !default;
@@ -208,7 +214,7 @@ $pd-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !default;
     }
 
     .is-disabled &,
-    .is-outside-current-month & {        
+    .is-outside-current-month & {
         color: $pd-day-disabled-color;
         opacity: .3;
     }
@@ -237,19 +243,20 @@ $pd-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !default;
 }
 
 .is-inrange .pika-button {
-    background: #D5E9F7;
+    color: $pd-inrange-color;
+    background: $pd-inrange-bg;
 }
 
 .is-startrange .pika-button {
-    color: #fff;
-    background: #6CB31D;
+    color: $pd-startrange-color;
+    background: $pd-startrange-bg;
     box-shadow: none;
     border-radius: 3px;
 }
 
 .is-endrange .pika-button {
-    color: #fff;
-    background: #33aaff;
+    color: $pd-endrange-color;
+    background: $pd-endrange-bg;
     box-shadow: none;
     border-radius: 3px;
 }
