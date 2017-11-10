@@ -540,6 +540,18 @@
             }
         };
 
+        self._parseFieldValue = function()
+        {
+            if (opts.parse) {
+                return opts.parse(opts.field.value, opts.format);
+            } else if (hasMoment) {
+                var date = moment(opts.field.value, opts.format, opts.formatStrict);
+                return (date && date.isValid()) ? date.toDate() : null;
+            } else {
+                return new Date(Date.parse(opts.field.value));
+            }
+        };
+
         self._onInputChange = function(e)
         {
             var date;
@@ -547,15 +559,7 @@
             if (e.firedBy === self) {
                 return;
             }
-            if (opts.parse) {
-                date = opts.parse(opts.field.value, opts.format);
-            } else if (hasMoment) {
-                date = moment(opts.field.value, opts.format, opts.formatStrict);
-                date = (date && date.isValid()) ? date.toDate() : null;
-            }
-            else {
-                date = new Date(Date.parse(opts.field.value));
-            }
+            date = self._parseFieldValue();
             if (isDate(date)) {
               self.setDate(date);
             }
@@ -640,11 +644,7 @@
             addEvent(opts.field, 'change', self._onInputChange);
 
             if (!opts.defaultDate) {
-                if (hasMoment && opts.field.value) {
-                    opts.defaultDate = moment(opts.field.value, opts.format).toDate();
-                } else {
-                    opts.defaultDate = new Date(Date.parse(opts.field.value));
-                }
+                opts.defaultDate = self._parseFieldValue();
                 opts.setDefaultDate = true;
             }
         }
