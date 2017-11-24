@@ -39,7 +39,7 @@
 
     document = window.document,
 
-    sto = window.setTimeout,
+    sto = window.setTimeout.bind(window),
 
     addEvent = function(el, e, callback, capture)
     {
