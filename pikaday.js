@@ -46,7 +46,7 @@
         } else {
             return window.setTimeout;
         }
-    },
+    }(),
 
     addEvent = function(el, e, callback, capture)
     {
