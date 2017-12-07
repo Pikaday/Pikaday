@@ -157,6 +157,17 @@ Pikaday has many useful options:
 * `onDraw` callback function for when the picker draws a new month
 * `keyboardInput` enable keyboard input support (default `true`)
 
+### Styling
+
+If the `reposition` configuration-option is enabled (default), Pikaday will apply CSS-classes to the datepicker according to how it is positioned:
+
+* `top-aligned`
+* `left-aligned`
+* `right-aligned`
+* `bottom-aligned`
+
+Note that the DOM element at any time will typically have 2 CSS-classes (eg. `top-aligned right-aligned` etc).
+
 ## jQuery Plugin
 
 The normal version of Pikaday does not require jQuery, however there is a jQuery plugin if that floats your boat (see `plugins/pikaday.jquery.js` in the repository). This version requires jQuery, naturally, and can be used like other plugins:
