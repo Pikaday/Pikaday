@@ -1,4 +1,4 @@
-var Pikaday = require('../'),
+var Pikaday = require('../')(),
     expect = require('expect.js');
 
 describe('Pikaday public method', function ()
