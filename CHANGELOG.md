@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.7.0 - TBA
+## 1.7.0 - 2017-12-12
 
 - Add keyboard input option, see #610
 
