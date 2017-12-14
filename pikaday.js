@@ -653,7 +653,7 @@
 
             if (opts.todayDate) {
                 if (hasMoment) {
-                    opts.todayDate = moment(opts.todayDate.value, opts.format).toDate();
+                    opts.todayDate = moment(opts.todayDate, opts.format).toDate();
                 } else {
                     opts.todayDate = new Date(Date.parse(opts.todayDate));
                 }
