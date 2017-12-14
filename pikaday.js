@@ -209,6 +209,9 @@
         // make the `defaultDate` the initial selected value
         setDefaultDate: false,
 
+        // make now the `todayDate` or use default, string must match format eg: '2017-12-31'
+        todayDate: new Date(),
+
         // first day of week (0: Sunday, 1: Monday etc)
         firstDay: 0,
 
@@ -646,6 +649,14 @@
                     opts.defaultDate = new Date(Date.parse(opts.field.value));
                 }
                 opts.setDefaultDate = true;
+            }
+
+            if (opts.todayDate) {
+                if (hasMoment) {
+                    opts.todayDate = moment(opts.todayDate.value, opts.format).toDate();
+                } else {
+                    opts.todayDate = new Date(Date.parse(opts.todayDate));
+                }
             }
         }
 
@@ -1087,7 +1098,7 @@
         render: function(year, month, randId)
         {
             var opts   = this._o,
-                now    = new Date(),
+                now    = opts.todayDate,
                 days   = getDaysInMonth(year, month),
                 before = new Date(year, month, 1).getDay(),
                 data   = [],
