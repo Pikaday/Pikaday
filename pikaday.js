@@ -341,6 +341,16 @@
         if (opts.isEndRange) {
             arr.push('is-endrange');
         }
+        if (opts.customClasses) {
+            var classes = opts.customClasses.split(' ');
+            var classPattern = /^-?[_a-zA-Z]+[_a-zA-Z0-9-]*$/;
+            for (var i = 0; i < classes.length; ++i) {
+                var c = classes[i].trim();
+                if (classPattern.test(c)) {
+                    arr.push(c);
+                }
+            }
+        }
         return '<td data-day="' + opts.day + '" class="' + arr.join(' ') + '" aria-selected="' + ariaSelected + '">' +
                  '<button class="pika-button pika-day" type="button" ' +
                     'data-pika-year="' + opts.year + '" data-pika-month="' + opts.month + '" data-pika-day="' + opts.day + '">' +
@@ -703,6 +713,8 @@
             opts.disableWeekends = !!opts.disableWeekends;
 
             opts.disableDayFn = (typeof opts.disableDayFn) === 'function' ? opts.disableDayFn : null;
+
+            opts.customClassesFn = (typeof opts.customClassesFn) === 'function' ? opts.customClassesFn : null;
 
             var nom = parseInt(opts.numberOfMonths, 10) || 1;
             opts.numberOfMonths = nom > 4 ? 4 : nom;
@@ -1136,7 +1148,8 @@
                     isDisabled = (opts.minDate && day < opts.minDate) ||
                                  (opts.maxDate && day > opts.maxDate) ||
                                  (opts.disableWeekends && isWeekend(day)) ||
-                                 (opts.disableDayFn && opts.disableDayFn(day));
+                                 (opts.disableDayFn && opts.disableDayFn(day)),
+                    customClasses = (opts.customClassesFn ? opts.customClassesFn(day) : null);
 
                 if (isEmpty) {
                     if (i < before) {
@@ -1158,6 +1171,7 @@
                         isSelected: isSelected,
                         isToday: isToday,
                         isDisabled: isDisabled,
+                        customClasses: customClasses,
                         isEmpty: isEmpty,
                         isStartRange: isStartRange,
                         isEndRange: isEndRange,
