@@ -452,7 +452,7 @@
         var self = this,
             opts = self.config(options);
 
-        self._onMouseDown = function(e)
+        self._onMouseUp = function(e)
         {
             if (!self._v) {
                 return;
@@ -621,12 +621,12 @@
         self.el = document.createElement('div');
         self.el.className = 'pika-single' + (opts.isRTL ? ' is-rtl' : '') + (opts.theme ? ' ' + opts.theme : '');
 
-        addEvent(self.el, 'mousedown', self._onMouseDown, true);
-        addEvent(self.el, 'touchend', self._onMouseDown, true);
+        addEvent(self.el, 'mouseup', self._onMouseUp, true);
+        addEvent(self.el, 'touchend', self._onMouseUp, true);
         addEvent(self.el, 'change', self._onChange);
 
         if (opts.keyboardInput) {
-            addEvent(document, 'keydown', self._onKeyChange);
+            addEvent(document, 'keyup', self._onKeyChange);
         }
 
         if (opts.field) {
@@ -1232,11 +1232,11 @@
             var opts = this._o;
 
             this.hide();
-            removeEvent(this.el, 'mousedown', this._onMouseDown, true);
-            removeEvent(this.el, 'touchend', this._onMouseDown, true);
+            removeEvent(this.el, 'mouseup', this._onMouseUp, true);
+            removeEvent(this.el, 'touchend', this._onMouseUp, true);
             removeEvent(this.el, 'change', this._onChange);
             if (opts.keyboardInput) {
-                removeEvent(document, 'keydown', this._onKeyChange);
+                removeEvent(document, 'keyup', this._onKeyChange);
             }
             if (opts.field) {
                 removeEvent(opts.field, 'change', this._onInputChange);
