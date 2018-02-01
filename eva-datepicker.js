@@ -183,8 +183,124 @@
     },
 
     /**
-  * defaults and localisation
+  * defaults and localization
   */
+
+    // internationalization
+    i18n = {
+        es: {
+            previousMonth: 'Mes anterior',
+            nextMonth: 'Mes siguiente',
+            months: [
+                'Enero',
+                'Febrero',
+                'Marzo',
+                'Abril',
+                'Mayo',
+                'Junio',
+                'Julio',
+                'Agosto',
+                'Septiembre',
+                'Octubre',
+                'Noviembre',
+                'Diciembre'
+            ],
+            weekdays: [
+                'Domingo',
+                'Lunes',
+                'Martes',
+                'Miercoles',
+                'Jueves',
+                'Viernes',
+                'Sabado'
+            ],
+            weekdaysShort: [
+                'Dom',
+                'Lun',
+                'Mar',
+                'Mie',
+                'Jue',
+                'Vie',
+                'Sab'
+            ],
+            today: 'HOY'
+        },
+        en: {
+            previousMonth: 'Last month',
+            nextMonth: 'Next month',
+            months: [
+                'January',
+                'February',
+                'March',
+                'April',
+                'May',
+                'June',
+                'July',
+                'August',
+                'September',
+                'October',
+                'November',
+                'December'
+            ],
+            weekdays: [
+                'Sunday',
+                'Monday',
+                'Tuesday',
+                'Wednesday',
+                'Thursday',
+                'Friday',
+                'Saturday'
+            ],
+            weekdaysShort: [
+                'Sun',
+                'Mon',
+                'Tue',
+                'Wen',
+                'Thu',
+                'Fri',
+                'Sat'
+            ],
+            today: 'TODAY'
+        },
+        pt: {
+            previousMonth: 'Mês anterior',
+            nextMonth: 'Próximo mês',
+            months: [
+                'Janeiro',
+                'Fevereiro',
+                'Março',
+                'Abril',
+                'Maio',
+                'Junho',
+                'Julio',
+                'Agosto',
+                'Setembro',
+                'Outubro',
+                'Novembro',
+                'Dezembro'
+            ],
+            weekdays: [
+                'Domingo',
+                'Segunda-feira',
+                'Terça-feira',
+                'Quarta-feira',
+                'Quinta-feira',
+                'Sexta-feira',
+                'Sábado'
+            ],
+            weekdaysShort: [
+                'Dom',
+                'Seg',
+                'Ter',
+                'Qua',
+                'Qui',
+                'Sex',
+                'Sab'
+            ],
+            today: 'HOJE'
+        }
+    },
+
     defaults = {
 
       // bind the picker to a form field
@@ -275,44 +391,6 @@
       // Blur field when date is selected
       blurFieldOnSelect: true,
 
-      // internationalization
-      i18n: {
-        previousMonth: 'Mes anterior',
-        nextMonth: 'Mes siguiente',
-        months: [
-          'Enero',
-          'Febrero',
-          'Marzo',
-          'Abril',
-          'Mayo',
-          'Junio',
-          'Julio',
-          'Agosto',
-          'Septiembre',
-          'Octubre',
-          'Noviembre',
-          'Diciembre'
-        ],
-        weekdays: [
-          'Domingo',
-          'Lunes',
-          'Martes',
-          'Miercoles',
-          'Jueves',
-          'Viernes',
-          'Sabado'
-        ],
-        weekdaysShort: [
-          'Dom',
-          'Lun',
-          'Mar',
-          'Mie',
-          'Jue',
-          'Vie',
-          'Sab'
-        ]
-      },
-
       // Theme Classname
       theme: null,
 
@@ -380,7 +458,7 @@
         arr.push('-end');
       }
       return '<td data-day="' + opts.day + '" aria-selected="' + ariaSelected + '">' + '<div class="-date ' + arr.join(' ') + '" type="button" ' + 'data-pika-year="' + opts.year + '" data-pika-month="' + opts.month + '" data-pika-day="' + opts.day + '">' + opts.day + (opts.isToday
-        ? '<span class="-label">HOY</span>'
+        ? '<span class="-label">' + opts.today + '</span>'
         : '') + '</div>' + '</td>';
     },
 
@@ -724,6 +802,12 @@
   * configure functionality
   */
     config: function(options) {
+      if(options.language){
+          defaults.i18n = i18n[options.language];
+      }else{
+          defaults.i18n = i18n.es;
+      }
+
       if (!this._o) {
         this._o = extend({}, defaults, true);
       }
@@ -1196,13 +1280,14 @@
           hasEvent: hasEvent,
           isSelected: isSelected,
           isToday: isToday,
+          today: opts.i18n.today,
           isDisabled: isDisabled,
           isEmpty: isEmpty,
           isStartRange: isStartRange,
           isEndRange: isEndRange,
           isInRange: isInRange,
           showDaysInNextAndPreviousMonths: opts.showDaysInNextAndPreviousMonths,
-          enableSelectionDaysInNextAndPreviousMonths: opts.enableSelectionDaysInNextAndPreviousMonths
+          enableSelectionDaysInNextAndPreviousMonths: opts.enableSelectionDaysInNextAndPreviousMonths,
         };
 
         if (opts.pickWholeWeek && isSelected) {
