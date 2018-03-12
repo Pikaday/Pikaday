@@ -287,7 +287,10 @@
         onDraw: null,
 
         // Enable keyboard input
-        keyboardInput: true
+        keyboardInput: true,
+
+        // Enable show picker on field value was changed
+        showPickerOnFieldChange: true
     },
 
 
@@ -559,7 +562,7 @@
             if (isDate(date)) {
               self.setDate(date);
             }
-            if (!self._v) {
+            if (!self._v && opts.showPickerOnFieldChange) {
                 self.show();
             }
         };
