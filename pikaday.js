@@ -341,6 +341,10 @@
         if (opts.isEndRange) {
             arr.push('is-endrange');
         }
+        if (typeof opts.customClassName === 'string') {
+        	arr.push(opts.customClassName);
+				}
+
         return '<td data-day="' + opts.day + '" class="' + arr.join(' ') + '" aria-selected="' + ariaSelected + '">' +
                  '<button class="pika-button pika-day" type="button" ' +
                     'data-pika-year="' + opts.year + '" data-pika-month="' + opts.month + '" data-pika-day="' + opts.day + '">' +
@@ -733,6 +737,9 @@
                     opts.yearRange = 100;
                 }
             }
+
+            // day class name
+						opts.dayClassNameFn = options.dayClassNameFn;
 
             return opts;
         },
@@ -1136,7 +1143,8 @@
                     isDisabled = (opts.minDate && day < opts.minDate) ||
                                  (opts.maxDate && day > opts.maxDate) ||
                                  (opts.disableWeekends && isWeekend(day)) ||
-                                 (opts.disableDayFn && opts.disableDayFn(day));
+                                 (opts.disableDayFn && opts.disableDayFn(day)),
+										customClassName = typeof opts.dayClassNameFn === 'function' ? opts.dayClassNameFn(day) : null;
 
                 if (isEmpty) {
                     if (i < before) {
@@ -1163,7 +1171,8 @@
                         isEndRange: isEndRange,
                         isInRange: isInRange,
                         showDaysInNextAndPreviousMonths: opts.showDaysInNextAndPreviousMonths,
-                        enableSelectionDaysInNextAndPreviousMonths: opts.enableSelectionDaysInNextAndPreviousMonths
+                        enableSelectionDaysInNextAndPreviousMonths: opts.enableSelectionDaysInNextAndPreviousMonths,
+												customClassName: customClassName
                     };
 
                 if (opts.pickWholeWeek && isSelected) {
