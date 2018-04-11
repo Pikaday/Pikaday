@@ -1,7 +1,7 @@
 /*!
  * Pikaday
  *
- * Copyright © 2014 David Bushell | BSD & MIT license | https://github.com/dbushell/Pikaday
+ * Copyright 2014 David Bushell | BSD & MIT license | https://github.com/dbushell/Pikaday
  */
 
 (function (root, factory)
