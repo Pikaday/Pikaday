@@ -15,9 +15,6 @@
     "type": "git",
     "url": "https://github.com/dbushell/Pikaday.git"
   },
-  "optionalDependencies": {
-    "moment": "2.x"
-  },
   "devDependencies": {
     "mocha": "~1.18.2",
     "expect.js": "^0.3.1",
