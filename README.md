@@ -135,6 +135,7 @@ Pikaday has many useful options:
 * `firstDay` first day of the week (0: Sunday, 1: Monday, etc)
 * `minDate` the minimum/earliest date that can be selected (this should be a native Date object - e.g. `new Date()` or `moment().toDate()`)
 * `maxDate` the maximum/latest date that can be selected (this should be a native Date object - e.g. `new Date()` or `moment().toDate()`)
+* `yearOrderMinMax` the sorted order of the years displayed in the dropdown, defaults to true
 * `disableWeekends` disallow selection of Saturdays or Sundays
 * `disableDayFn` callback function that gets passed a Date object for each day in view. Should return true to disable selection of that day.
 * `yearRange` number of years either side (e.g. `10`) or array of upper/lower range (e.g. `[1900,2015]`)
