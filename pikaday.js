@@ -815,13 +815,14 @@
             this._d = new Date(date.getTime());
             setToStartOfDay(this._d);
             this.gotoDate(this._d);
+            
+            if (!preventOnSelect && typeof this._o.onSelect === 'function') {
+                this._o.onSelect.call(this, this.getDate());
+            }
 
             if (this._o.field) {
                 this._o.field.value = this.toString();
                 fireEvent(this._o.field, 'change', { firedBy: this });
-            }
-            if (!preventOnSelect && typeof this._o.onSelect === 'function') {
-                this._o.onSelect.call(this, this.getDate());
             }
         },
 
