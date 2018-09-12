@@ -82,7 +82,6 @@ $pd-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !default;
         margin: 0;
         left: 0;
         top: 5px;
-        filter: alpha(opacity=0);
         opacity: 0;
     }
 }
@@ -208,7 +207,7 @@ $pd-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !default;
     }
 
     .is-disabled &,
-    .is-outside-current-month & {        
+    .is-outside-current-month & {
         color: $pd-day-disabled-color;
         opacity: .3;
     }
