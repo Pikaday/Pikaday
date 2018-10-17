@@ -16,10 +16,9 @@
     "url": "https://github.com/Pikaday/Pikaday.git"
   },
   "devDependencies": {
-    "mocha": "~1.18.2",
     "expect.js": "^0.3.1",
-    "testling": "^1.7",
-    "jshint": "^2.9"
+    "jshint": "^2.9.6",
+    "mocha": "^5.2.0"
   },
   "testling": {
     "harness": "mocha",
