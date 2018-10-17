@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.8.0 - 2018-10-17
+
+- Remove testling because service is not running atm
+- Move to github organisation Pikaday/Pikaday
+- Add CSS-classes indicating position
+- Remove the Moment.js optional dependency
+- Add aria label text configuration
+
 ## 1.7.0 - 2017-12-12
 
 - Add keyboard input option, see #610
