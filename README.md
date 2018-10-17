@@ -363,7 +363,7 @@ Also [@stas][stas] has a fork [stas/Pikaday][stas Pika], but is now quite old
 
 ## Authors
 
-* David Bushell [http://dbushell.com][Bushell] [@dbushell][Bushell Twitter]
+* David Bushell [https://dbushell.com][Bushell] [@dbushell][Bushell Twitter]
 * Ramiro Rikkert [GitHub][Rikkert] [@RamRik][Rikkert Twitter]
 
 Thanks to [@shoogledesigns][shoogledesigns] for the name.
@@ -373,31 +373,31 @@ Copyright © 2014 David Bushell | BSD & MIT license
   [Pikaday]:     http://dbushell.github.com/Pikaday/                              "Pikaday"
   [moment]:      http://momentjs.com/                                             "moment.js"
   [browserify]:  http://browserify.org/                                           "browserify"
-  [screenshot]:  https://raw.github.com/dbushell/Pikaday/gh-pages/screenshot.png  "Screenshot"
-  [issues]:      https://github.com/dbushell/Pikaday/issues                       "Issue tracker"
+  [screenshot]:  https://raw.github.com/Pikaday/Pikaday/gh-pages/screenshot.png  "Screenshot"
+  [issues]:      https://github.com/Pikaday/Pikaday/issues                       "Issue tracker"
   [gem]:         https://rubygems.org/gems/pikaday-gem                            "RoR gem"
   [mdn_date]:    https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Date  "Date"
-  [Bushell]:     http://dbushell.com/                                             "dbushell.com"
+  [Bushell]:     https://dbushell.com/                                             "dbushell.com"
   [Bushell Twitter]: https://twitter.com/dbushell                                 "@dbushell"
   [Rikkert]:     https://github.com/rikkert                                       "Rikkert GitHub"
   [Rikkert Twitter]: https://twitter.com/ramrik                                   "@ramrik"
   [shoogledesigns]:  https://twitter.com/shoogledesigns/status/255209384261586944 "@shoogledesigns"
-  [issue1]:      https://github.com/dbushell/Pikaday/issues/1                     "Issue 1"
-  [issue18]:     https://github.com/dbushell/Pikaday/issues/18                    "Issue 18"
+  [issue1]:      https://github.com/Pikaday/Pikaday/issues/1                     "Issue 1"
+  [issue18]:     https://github.com/Pikaday/Pikaday/issues/18                    "Issue 18"
   [stas]:        https://github.com/stas                                          "@stas"
   [stas Pika]:   https://github.com/stas/Pikaday                                  "Pikaday"
   [owenmead]:    https://github.com/owenmead                                      "@owenmead"
   [owen Pika]:   https://github.com/owenmead/Pikaday                              "Pikaday"
   [xeeali]:      https://github.com/xeeali                                        "@xeeali"
   [xeeali Pika]: https://github.com/xeeali/Pikaday                                "Pikaday"
-  [moment.js example]: http://dbushell.github.com/Pikaday/examples/moment.html    "Pikaday w/ moment.js"
-  [jQuery example]: http://dbushell.github.com/Pikaday/examples/jquery.html       "Pikaday w/ jQuery"
-  [AMD example]: http://dbushell.github.com/Pikaday/examples/amd.html             "Pikaday w/ AMD"
-  [jQuery AMD example]: http://dbushell.github.com/Pikaday/examples/jquery-amd.html "Pikaday w/ jQuery + AMD"
-  [trigger example]: http://dbushell.github.com/Pikaday/examples/trigger.html     "Pikaday using custom trigger"
-  [positions example]: http://dbushell.github.com/Pikaday/examples/positions.html "Pikaday using different position options"
-  [container example]: http://dbushell.github.com/Pikaday/examples/container.html "Pikaday using custom calendar container"
-  [theme example]: http://dbushell.github.com/Pikaday/examples/theme.html         "Pikaday using multiple themes"
+  [moment.js example]: https://pikaday.com/examples/moment.html    "Pikaday w/ moment.js"
+  [jQuery example]: https://pikaday.com/examples/jquery.html       "Pikaday w/ jQuery"
+  [AMD example]: https://pikaday.com/examples/amd.html             "Pikaday w/ AMD"
+  [jQuery AMD example]: https://pikaday.com/examples/jquery-amd.html "Pikaday w/ jQuery + AMD"
+  [trigger example]: https://pikaday.com/examples/trigger.html     "Pikaday using custom trigger"
+  [positions example]: https://pikaday.com/examples/positions.html "Pikaday using different position options"
+  [container example]: https://pikaday.com/examples/container.html "Pikaday using custom calendar container"
+  [theme example]: https://pikaday.com/examples/theme.html         "Pikaday using multiple themes"
 
 
 
