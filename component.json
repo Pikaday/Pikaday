@@ -12,6 +12,6 @@
   "scripts": ["pikaday.js"],
   "styles":  ["css/pikaday.css"],
   "dependencies": {},
-  "demo": "http://dbushell.github.io/Pikaday/",
+  "demo": "https://pikaday.com",
   "license": "MIT"
 }

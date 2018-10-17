@@ -1,6 +1,6 @@
 /*!
  * Pikaday
- * Copyright © 2014 David Bushell | BSD & MIT license | http://dbushell.com/
+ * Copyright © 2014 David Bushell | BSD & MIT license | https://dbushell.com/
  */
 
 // Variables
@@ -208,7 +208,7 @@ $pd-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !default;
     }
 
     .is-disabled &,
-    .is-outside-current-month & {        
+    .is-outside-current-month & {
         color: $pd-day-disabled-color;
         opacity: .3;
     }
