@@ -32,6 +32,19 @@ Or link directly to the CDN:
 <script src="https://cdn.jsdelivr.net/npm/pikaday@1.8.0/pikaday.js"></script>
 ```
 
+## Styles
+You will also need to include Pikaday CSS file. This step depends on how Pikaday was installed. Either import from NPM:
+
+```css
+@import './node_modules/pikaday/css/pikaday.css';
+```
+
+Or link to the CDN:
+
+```html
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday@1.8.0/css/pikaday.css">
+```
+
 ## Usage
 
 **Pikaday** can be bound to an input field:
