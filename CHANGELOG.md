@@ -44,7 +44,7 @@
 - Fix touch device support, see #374
 - Add possibility to reset the max and min date to the date picker
 
-## 1.3.3 - 2015-02-17
+## 1.3.3 - 2015-06-26
 
 - Add theme class support, see #260
 - Fix on iOS, see #101, #121
