@@ -14,7 +14,9 @@
   "ignore": [
     "**/.*",
     "node_modules",
-    "components"
+    "components",
+    "examples",
+    "tests"
   ],
   "license" : [
     "0BSD",
