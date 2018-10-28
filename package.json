@@ -1,25 +1,24 @@
 {
   "name": "pikaday",
-  "version": "1.6.1",
+  "version": "1.8.0",
   "description": "A refreshing JavaScript Datepicker — lightweight, no dependencies, modular CSS",
   "keywords": [
     "datepicker",
     "calendar",
     "date"
   ],
-  "homepage": "http://dbushell.github.io/Pikaday/",
-  "bugs": "https://github.com/dbushell/Pikaday/issues",
+  "homepage": "https://pikaday.com",
+  "bugs": "https://github.com/Pikaday/Pikaday/issues",
   "license": "(0BSD OR MIT)",
   "main": "pikaday.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dbushell/Pikaday.git"
+    "url": "https://github.com/Pikaday/Pikaday.git"
   },
   "devDependencies": {
-    "mocha": "~1.18.2",
     "expect.js": "^0.3.1",
-    "testling": "^1.7",
-    "jshint": "^2.9"
+    "jshint": "^2.9.6",
+    "mocha": "^5.2.0"
   },
   "testling": {
     "harness": "mocha",
