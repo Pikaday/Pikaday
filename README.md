@@ -29,7 +29,7 @@ npm install pikaday
 Or link directly to the CDN:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/pikaday@1.8.0/pikaday.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
 ```
 
 ## Styles
@@ -42,7 +42,7 @@ You will also need to include Pikaday CSS file. This step depends on how Pikaday
 Or link to the CDN:
 
 ```html
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday@1.8.0/css/pikaday.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
 ```
 
 ## Usage
