@@ -20,8 +20,17 @@ Pikaday
 Also see the [changelog](CHANGELOG.md)
 
 ## Installation
+You can install Pikaday as an NPM package:
 
-    npm install pikaday
+```shell
+npm install pikaday
+```
+
+Or link directly to the CDN:
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/pikaday@1.8.0/pikaday.js"></script>
+```
 
 ## Usage
 
