@@ -1,6 +1,4 @@
 node_modules
-.c9revisions
-.c9
 examples
 tests
 .editorconfig
@@ -8,5 +6,6 @@ tests
 .jshintrc
 .npmignore
 bower.json
-CHANGELOG.md
+component.json
+CNAME
 index.html
