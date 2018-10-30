@@ -556,9 +556,10 @@
             else {
                 date = new Date(Date.parse(opts.field.value));
             }
-            if (isDate(date)) {
-              self.setDate(date);
-            }
+            
+            // Avoid type invalid date format like 3112222015
+            self.setDate(isDate(date) ? date : null);
+            
             if (!self._v) {
                 self.show();
             }
