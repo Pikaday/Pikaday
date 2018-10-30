@@ -556,9 +556,9 @@
             else {
                 date = new Date(Date.parse(opts.field.value));
             }
-            if (isDate(date)) {
-              self.setDate(date);
-            }
+
+            self.setDate(date);
+
             if (!self._v) {
                 self.show();
             }
