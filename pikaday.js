@@ -255,6 +255,9 @@
         // how many months are visible
         numberOfMonths: 1,
 
+        // option to show a button panel, with one button to set the date to current date, and another button to hide the panel
+        showButtonPanel: false,
+
         // when numberOfMonths is used, this will help you to choose where the main calendar will be (default `left`, can be set to `right`)
         // only used for the first display or when a selected date is not visible
         mainCalendar: 'left',
@@ -271,7 +274,9 @@
             nextMonth     : 'Next Month',
             months        : ['January','February','March','April','May','June','July','August','September','October','November','December'],
             weekdays      : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
-            weekdaysShort : ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+            weekdaysShort : ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
+            today         : 'Today',
+            done          : 'Done'
         },
 
         // Theme Classname
@@ -480,6 +485,19 @@
                 }
                 else if (hasClass(target, 'pika-next')) {
                     self.nextMonth();
+                }
+                else if (hasClass(target, 'pika-button-now')) {
+                    self.setToToday();
+                }
+                else if (hasClass(target, 'pika-button-done')) {
+                    if (opts.bound) {
+                        sto(function() {
+                            self.hide();
+                            if (opts.field) {
+                                opts.field.blur();
+                            }
+                        }, 100);
+                    }
                 }
             }
             if (!hasClass(target, 'pika-select')) {
@@ -692,6 +710,8 @@
 
             opts.isRTL = !!opts.isRTL;
 
+            opts.showButtonPanel = !!opts.showButtonPanel;
+
             opts.field = (opts.field && opts.field.nodeName) ? opts.field : null;
 
             opts.theme = (typeof opts.theme) === 'string' && opts.theme ? opts.theme : null;
@@ -823,6 +843,10 @@
             if (!preventOnSelect && typeof this._o.onSelect === 'function') {
                 this._o.onSelect.call(this, this.getDate());
             }
+        },
+
+        setToToday: function(){
+            this.setDate(new Date());
         },
 
         /**
@@ -1008,6 +1032,10 @@
 
             for (var c = 0; c < opts.numberOfMonths; c++) {
                 html += '<div class="pika-lendar">' + renderTitle(this, c, this.calendars[c].year, this.calendars[c].month, this.calendars[0].year, randId) + this.render(this.calendars[c].year, this.calendars[c].month, randId) + '</div>';
+            }
+
+            if (opts.showButtonPanel){
+                html += '<div class="pika-button-container"><hr/><button type="button" class="pika-button-now">' + opts.i18n.today + '</button><button type="button" class="pika-button-done">' + opts.i18n.done + '</button></div>';
             }
 
             this.el.innerHTML = html;

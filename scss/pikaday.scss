@@ -260,3 +260,15 @@ $pd-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !default;
     box-shadow: none;
     border-radius: 3px;
 }
+
+.pika-button-container button {
+    margin: 0 8px 8px 8px;
+}
+
+.pika-button-now{
+    float:left;
+}
+
+.pika-button-done{
+    float:right;
+}

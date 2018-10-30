@@ -237,3 +237,14 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     cursor: help;
 }
 
+.pika-button-container button {
+    margin: 0 8px 8px 8px;
+}
+
+.pika-button-now{
+    float:left;
+}
+
+.pika-button-done{
+    float:right;
+}
