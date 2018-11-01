@@ -835,7 +835,7 @@
         clear: function()
         {
             this.setDate(null);
-        }
+        },
 
         /**
          * change view to a specific date
