@@ -536,6 +536,10 @@
                     case 40:
                         self.adjustDate('add', 7);
                         break;
+                    case 8:
+                    case 46:
+                        self.setDate(null);
+                        break;
                 }
             }
         };
@@ -824,6 +828,14 @@
                 this._o.onSelect.call(this, this.getDate());
             }
         },
+
+        /**
+         * clear and reset the date
+         */
+        clear: function()
+        {
+            this.setDate(null);
+        }
 
         /**
          * change view to a specific date

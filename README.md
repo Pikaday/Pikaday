@@ -279,6 +279,12 @@ Returns a [Moment.js][moment] object for the selected date (Moment must be loade
 
 Set the current selection with a [Moment.js][moment] object (see `setDate` for details).
 
+### Clear and reset date
+
+`picker.clear()`
+
+Will clear and reset the input where picker is bound to.
+
 ### Change current view
 
 `picker.gotoDate(new Date(2014, 1))`
