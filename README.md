@@ -212,7 +212,7 @@ $('.datepicker').eq(0).pikaday('show').pikaday('gotoYear', 2042);
 
 ## AMD support
 
-If you use a modular script loader than Pikaday is not bound to the global object and will fit nicely in your build process. You can require Pikaday just like any other module.
+If you use a modular script loader, Pikaday is not bound to the global object and will fit nicely in your build process. You can require Pikaday just like any other module.
 See the [AMD example][] for a full version.
 
 ```javascript
