@@ -153,7 +153,7 @@ Pikaday has many useful options:
 * `toString(date, format)` function which will be used for custom formatting. This function will take precedence over `moment`.
 * `parse(dateString, format)` function which will be used for parsing input string and getting a date object from it. This function will take precedence over `moment`.
 * `defaultDate` the initial date to view when first opened
-* `setDefaultDate` make the `defaultDate` the initial selected value
+* `setDefaultDate` Boolean (true/false). make the `defaultDate` the initial selected value
 * `firstDay` first day of the week (0: Sunday, 1: Monday, etc)
 * `minDate` the minimum/earliest date that can be selected (this should be a native Date object - e.g. `new Date()` or `moment().toDate()`)
 * `maxDate` the maximum/latest date that can be selected (this should be a native Date object - e.g. `new Date()` or `moment().toDate()`)
