@@ -127,4 +127,11 @@ describe('Pikaday public method', function ()
             expect(pikaday._o.minDate).to.eql(expected);
         });
     });
+
+    describe('#render()', function() {
+        it('starts with the correct week number according to ISO8601', function() {
+            var pikaday = new Pikaday({showWeekNumber: true});
+            expect(pikaday.render(2016, 0)).to.contain('<td class="pika-week">53</td>')
+        });
+    });
 });

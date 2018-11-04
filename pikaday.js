@@ -349,11 +349,40 @@
                '</td>';
     },
 
+    isoWeek = function(date) {
+        // Ensure we're at the start of the day.
+        date.setHours(0, 0, 0, 0);
+
+        // Thursday in current week decides the year because January 4th
+        // is always in the first week according to ISO8601.
+
+        var yearDay        = date.getDate()
+          , weekDay        = date.getDay()
+          , dayInFirstWeek = 4 // January 4th
+          , dayShift       = dayInFirstWeek - 1 // counting starts at 0
+          , daysPerWeek    = 7
+          , prevWeekDay    = function(day) { return (day + daysPerWeek - 1) % daysPerWeek; }
+        ;
+
+        // Adjust to Thursday in week 1 and count number of weeks from date to week 1.
+
+        date.setDate(yearDay + dayShift - prevWeekDay(weekDay));
+
+        var jan4th      = new Date(date.getFullYear(), 0, dayInFirstWeek)
+          , msPerDay    = 24 * 60 * 60 * 1000
+          , daysBetween = (date.getTime() - jan4th.getTime()) / msPerDay
+          , weekNum     = 1 + Math.round((daysBetween - dayShift + prevWeekDay(jan4th.getDay())) / daysPerWeek)
+        ;
+
+        return weekNum;
+    },
+
     renderWeek = function (d, m, y) {
-        // Lifted from http://javascript.about.com/library/blweekyear.htm, lightly modified.
-        var onejan = new Date(y, 0, 1),
-            weekNum = Math.ceil((((new Date(y, m, d) - onejan) / 86400000) + onejan.getDay()+1)/7);
-        return '<td class="pika-week">' + weekNum + '</td>';
+        var date = new Date(y, m, d)
+          , week = hasMoment ? moment(date).isoWeek() : isoWeek(date)
+        ;
+
+        return '<td class="pika-week">' + week + '</td>';
     },
 
     renderRow = function(days, isRTL, pickWholeWeek, isRowSelected)
