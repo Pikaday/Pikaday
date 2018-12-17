@@ -212,6 +212,9 @@
         // first day of week (0: Sunday, 1: Monday etc)
         firstDay: 0,
 
+        // minimum number of days in the week that gets week number one
+        firstWeekOfYearMinDays: 4,
+
         // the default flag for moment's strict date parsing
         formatStrict: false,
 
@@ -349,7 +352,7 @@
                '</td>';
     },
 
-    isoWeek = function(date) {
+    isoWeek = function(date, firstWeekOfYearMinDays) {
         // Ensure we're at the start of the day.
         date.setHours(0, 0, 0, 0);
 
@@ -358,7 +361,7 @@
 
         var yearDay        = date.getDate()
           , weekDay        = date.getDay()
-          , dayInFirstWeek = 4 // January 4th
+          , dayInFirstWeek = firstWeekOfYearMinDays // January 4th
           , dayShift       = dayInFirstWeek - 1 // counting starts at 0
           , daysPerWeek    = 7
           , prevWeekDay    = function(day) { return (day + daysPerWeek - 1) % daysPerWeek; }
@@ -377,9 +380,9 @@
         return weekNum;
     },
 
-    renderWeek = function (d, m, y) {
+    renderWeek = function (d, m, y, firstWeekOfYearMinDays) {
         var date = new Date(y, m, d)
-          , week = hasMoment ? moment(date).isoWeek() : isoWeek(date)
+          , week = hasMoment ? moment(date).isoWeek() : isoWeek(date, firstWeekOfYearMinDays)
         ;
 
         return '<td class="pika-week">' + week + '</td>';
@@ -1213,7 +1216,7 @@
 
                 if (++r === 7) {
                     if (opts.showWeekNumber) {
-                        row.unshift(renderWeek(i - before, month, year));
+                        row.unshift(renderWeek(i - before, month, year, opts.firstWeekOfYearMinDays));
                     }
                     data.push(renderRow(row, opts.isRTL, opts.pickWholeWeek, isWeekSelected));
                     row = [];
