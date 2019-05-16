@@ -737,7 +737,7 @@
 
             opts.disableDayFn = (typeof opts.disableDayFn) === 'function' ? opts.disableDayFn : null;
 
-            opts.onPaginate = (typeof opts.onPaginate) === 'function' ? opts.onPaginate : null
+            opts.onPaginate = (typeof opts.onPaginate) === 'function' ? opts.onPaginate : null;
 
             var nom = parseInt(opts.numberOfMonths, 10) || 1;
             opts.numberOfMonths = nom > 4 ? 4 : nom;
@@ -951,7 +951,7 @@
             this.adjustCalendars();
 
             if (typeof this._o.onPaginate === 'function') {
-                this._o.onPaginate('next', this.calendars[0].month)
+                this._o.onPaginate('next', this.calendars[0].month);
             }
         },
 
@@ -961,7 +961,7 @@
             this.adjustCalendars();
 
             if (typeof this._o.onPaginate === 'function') {
-                this._o.onPaginate('prev', this.calendars[0].month)
+                this._o.onPaginate('prev', this.calendars[0].month);
             }
         },
 
