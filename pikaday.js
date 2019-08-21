@@ -1161,6 +1161,7 @@
 						(opts.disableDayFn && opts.disableDayFn(day)),
                     isNotAvailable = typeof opts.isNotAvailable === 'function' ? opts.isNotAvailable(day) : false,
                     isDeal = typeof opts.isDeal === 'function' ? opts.isDeal(day) : false;
+                    isCheapest = typeof opts.isCheapest === 'function' ? opts.isCheapest(day) : false;
 
                 if (isEmpty) {
                     if (i < before) {
@@ -1189,7 +1190,8 @@
 					showDaysInNextAndPreviousMonths: opts.showDaysInNextAndPreviousMonths,
 					enableSelectionDaysInNextAndPreviousMonths: opts.enableSelectionDaysInNextAndPreviousMonths,
 					isNotAvailable: isNotAvailable,
-					isDeal: isDeal
+					isDeal: isDeal,
+                    isCheapest: isCheapest
 				};
 
                 if (opts.pickWholeWeek && isSelected) {
