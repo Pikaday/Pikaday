@@ -350,7 +350,7 @@
         if (opts.isDeal) {
             arr.push('is-deal');
         }
-        if (opts.cheapest) {
+        if (opts.isCheapest) {
             arr.push('is-cheapest');
         }
         return '<td data-day="' + opts.day + '" class="' + arr.join(' ') + '" aria-selected="' + ariaSelected + '">' +
