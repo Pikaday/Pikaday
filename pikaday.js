@@ -1160,7 +1160,7 @@
 						(opts.disableWeekends && isWeekend(day)) ||
 						(opts.disableDayFn && opts.disableDayFn(day)),
                     isNotAvailable = typeof opts.isNotAvailable === 'function' ? opts.isNotAvailable(day) : false,
-                    isDeal = typeof opts.isDeal === 'function' ? opts.isDeal(day) : false;
+                    isDeal = typeof opts.isDeal === 'function' ? opts.isDeal(day) : false,
                     isCheapest = typeof opts.isCheapest === 'function' ? opts.isCheapest(day) : false;
 
                 if (isEmpty) {
