@@ -350,6 +350,9 @@
         if (opts.isDeal) {
             arr.push('is-deal');
         }
+        if (opts.isCheapest) {
+            arr.push('is-cheapest');
+        }
         return '<td data-day="' + opts.day + '" class="' + arr.join(' ') + '" aria-selected="' + ariaSelected + '">' +
                  '<button class="pika-button pika-day" type="button" ' +
                     'data-pika-year="' + opts.year + '" data-pika-month="' + opts.month + '" data-pika-day="' + opts.day + '">' +
@@ -1158,6 +1161,7 @@
 						(opts.disableDayFn && opts.disableDayFn(day)),
                     isNotAvailable = typeof opts.isNotAvailable === 'function' ? opts.isNotAvailable(day) : false,
                     isDeal = typeof opts.isDeal === 'function' ? opts.isDeal(day) : false;
+                    isCheapest = typeof opts.isCheapest === 'function' ? opts.isCheapest(day) : false;
 
                 if (isEmpty) {
                     if (i < before) {
@@ -1186,7 +1190,8 @@
 					showDaysInNextAndPreviousMonths: opts.showDaysInNextAndPreviousMonths,
 					enableSelectionDaysInNextAndPreviousMonths: opts.enableSelectionDaysInNextAndPreviousMonths,
 					isNotAvailable: isNotAvailable,
-					isDeal: isDeal
+					isDeal: isDeal,
+                    isCheapest: isCheapest
 				};
 
                 if (opts.pickWholeWeek && isSelected) {
