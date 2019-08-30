@@ -11,6 +11,9 @@
   "bugs": "https://github.com/dbushell/Pikaday/issues",
   "license": "(0BSD OR MIT)",
   "main": "pikaday.js",
+  "publishConfig": {
+    "registry": "https://nexus.gygadmin.com/repository/npm-private"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/getyourguide/Pikaday.git"
