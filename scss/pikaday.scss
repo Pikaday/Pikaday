@@ -32,6 +32,8 @@ $pd-startrange-color: #fff !default;
 $pd-startrange-bg: #6CB31D !default;
 $pd-endrange-color: #fff !default;
 $pd-endrange-bg: #33aaff !default;
+$pd-event-color: #fff !default;
+$pd-event-bg: #33aaff !default;
 
 // Font
 $pd-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !default;
@@ -190,6 +192,11 @@ $pd-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !default;
     line-height: 15px;
     text-align: right;
     background: $pd-day-bg;
+    
+    .has-event & {
+        color: $pd-event-color;
+        background: $pd-event-bg;
+    }
 
     .is-today & {
         color: $pd-day-today-color;
