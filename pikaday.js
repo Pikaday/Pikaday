@@ -183,7 +183,7 @@
         // automatically show/hide the picker on `field` focus (default `true` if `field` is set)
         bound: undefined,
 
-        // data-attribute on the input field with an aria assistance tekst (only applied when `bound` is set)
+        // data-attribute on the input field with an aria assistance text (only applied when `bound` is set)
         ariaLabel: 'Use the arrow keys to pick a date',
 
         // position of the datepicker, relative to the field (default to bottom & left)
