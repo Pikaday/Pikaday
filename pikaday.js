@@ -377,7 +377,7 @@
         return weekNum;
     },
 
-    renderWeek = function (d, m, y) {
+    renderWeek = function (d, m, y, firstWeekOfYearMinDays) {
         var date = new Date(y, m, d),
             week = hasMoment ? moment(date).isoWeek() : isoWeek(date, firstWeekOfYearMinDays);
 
