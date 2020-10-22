@@ -1,0 +1,11 @@
+node_modules
+examples
+tests
+.editorconfig
+.gitattributes
+.jshintrc
+.npmignore
+bower.json
+component.json
+CNAME
+index.html

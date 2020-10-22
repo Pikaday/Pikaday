@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+    <title>Pikaday alignment CSS-classes example</title>
+    <meta name="author" content="Maxime Thirouin">
+    <link rel="stylesheet" href="../css/pikaday.css">
+    <link rel="stylesheet" href="../css/site.css">
+</head>
+<body>
+    <a href="https://github.com/Pikaday/Pikaday"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+
+    <h1>Pikaday alignment CSS-classes example</h1>
+
+    <p class="large">A refreshing JavaScript Datepicker — lightweight, no dependencies, modular CSS.</p>
+
+    <label for="datepicker">Dates:</label>
+
+    <input type="text" id="datepicker-topleft"     value=".left-aligned & .top-aligned"     style="display: block; margin: 20px; position: absolute;">
+    <input type="text" id="datepicker-topright"    value=".right-aligned & .bottom-aligned" style="display: block; margin: 20px; position: absolute; right: 20px;">
+    <input type="text" id="datepicker-bottomleft"  value=".left-aligned & .top-aligned"     style="display: block; margin: 20px; position: fixed; bottom: 150px;">
+    <input type="text" id="datepicker-bottomright" value=".right-aligned & .top-aligned"    style="display: block; margin: 20px; position: fixed; bottom: 150px; right: 20px">
+
+    <h2 style="margin-top: calc( 100vh - 275px )">What is this?</h2>
+
+    <p>Since version 1.0 Pikaday is a stable and battle tested date-picker. Feel free to use it however you like but please report any bugs or feature requests to the <a href="https://github.com/Pikaday/Pikaday/issues">GitHub issue tracker</a>, thanks!</p>
+
+    <p class="small">Copyright © 2014 <a href="https://dbushell.com/">David Bushell</a> | BSD &amp; MIT license | Example by <a href="https://github.com/rubenswieringa">Ruben Swieringa</a></p>
+
+
+    <script src="../pikaday.js"></script>
+    <script>
+        new Pikaday({ field: document.getElementById( 'datepicker-topleft' )});
+        new Pikaday({ field: document.getElementById( 'datepicker-topright' )});
+        new Pikaday({ field: document.getElementById( 'datepicker-bottomleft' )});
+        new Pikaday({ field: document.getElementById( 'datepicker-bottomright' )});
+    </script>
+
+    <style>
+
+        input[type=text] {
+          width: 166px;
+          border: 1px solid #ccc;
+          box-shadow: 0px 3px 7px 0 rgba(0,0,0,0.15);
+        }
+
+        .pika-single.top-aligned {
+          transform: translateY( -22px );
+        }
+
+        .pika-single.bottom-aligned {
+          transform: translateY( 22px );
+        }
+
+        .pika-single:before,
+        .pika-single:after {
+          content: '';
+          display: block;
+          position: absolute;
+          border-color: transparent;
+          border-style: solid;
+          border-width: 18px 22px;
+          width: 0;
+          height: 0;
+          animation-duration: 1200ms;
+          animation-direction: alternate;
+          animation-iteration-count: infinite;
+          animation-timing-function: ease-in-out;
+        }
+
+        .pika-single:after {
+          border-width: 16px 19px;
+          margin: 0 1px;
+        }
+
+        .pika-single.top-aligned:before,
+        .pika-single.top-aligned:after {
+          top: 100%;
+          border-bottom: none;
+          animation-name: pulsate-top-border;
+        }
+
+        .pika-single.top-aligned:before {
+          border-top-color: inherit;
+        }
+
+        .pika-single.top-aligned:after {
+          border-top-color: white;
+        }
+
+        .pika-single.bottom-aligned:before,
+        .pika-single.bottom-aligned:after {
+          bottom: 100%;
+          border-top: none;
+          animation-name: pulsate-bottom-border;
+        }
+
+        .pika-single.bottom-aligned:before {
+          border-bottom-color: inherit;
+        }
+
+        .pika-single.bottom-aligned:after {
+          border-bottom-color: white;
+        }
+
+        .pika-single.left-aligned:before,
+        .pika-single.left-aligned:after {
+          border-left: none;
+          left: 18px;
+        }
+
+        .pika-single.right-aligned:before,
+        .pika-single.right-aligned:after {
+          border-right: none;
+          right: 18px;
+        }
+
+        @keyframes pulsate-top-border    { to { border-top-color: #e33; }}
+        @keyframes pulsate-bottom-border { to { border-bottom-color: #e33; }}
+
+    </style>
+</body>
+</html>

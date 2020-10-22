@@ -1,6 +1,6 @@
 /*!
  * Pikaday
- * Copyright © 2014 David Bushell | BSD & MIT license | http://dbushell.com/
+ * Copyright © 2014 David Bushell | BSD & MIT license | https://dbushell.com/
  */
 
 // Variables
@@ -26,10 +26,16 @@ $pd-day-selected-bg: #33aaff !default;
 $pd-day-selected-shadow: #178fe5 !default;
 $pd-day-disabled-color: #999 !default;
 $pd-week-color: #999 !default;
-$pd-z-index: 9999 !default;
+$pd-inrange-color: #666 !default;
+$pd-inrange-bg: #D5E9F7 !default;
+$pd-startrange-color: #fff !default;
+$pd-startrange-bg: #6CB31D !default;
+$pd-endrange-color: #fff !default;
+$pd-endrange-bg: #33aaff !default;
 
-// Font
+$pd-z-index: 9999 !default;
 $pd-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$pd-border-radius: 3px !default;
 
 
 .pika-single {
@@ -55,8 +61,6 @@ $pd-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !default;
 // clear child float (pika-lendar), using the famous micro clearfix hack
 // http://nicolasgallagher.com/micro-clearfix-hack/
 .pika-single {
-    *zoom: 1;
-
     &:before,
     &:after {
         content: " ";
@@ -83,14 +87,12 @@ $pd-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !default;
         margin: 0;
         left: 0;
         top: 5px;
-        filter: alpha(opacity=0);
         opacity: 0;
     }
 }
 
 .pika-label {
     display: inline-block;
-    *display: inline;
     position: relative;
     z-index: $pd-z-index;
     overflow: hidden;
@@ -121,8 +123,6 @@ $pd-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !default;
     background-repeat: no-repeat;
     background-size: 75% 75%;
     opacity: .5;
-    *position: absolute;
-    *top: 0;
 
     &:hover {
         opacity: 1;
@@ -138,19 +138,16 @@ $pd-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !default;
 .is-rtl .pika-next {
     float: left;
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAeCAYAAAAsEj5rAAAAUklEQVR42u3VMQoAIBADQf8Pgj+OD9hG2CtONJB2ymQkKe0HbwAP0xucDiQWARITIDEBEnMgMQ8S8+AqBIl6kKgHiXqQqAeJepBo/z38J/U0uAHlaBkBl9I4GwAAAABJRU5ErkJggg==');
-    *left: 0;
 }
 
 .pika-next,
 .is-rtl .pika-prev {
     float: right;
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAeCAYAAAAsEj5rAAAAU0lEQVR42u3VOwoAMAgE0dwfAnNjU26bYkBCFGwfiL9VVWoO+BJ4Gf3gtsEKKoFBNTCoCAYVwaAiGNQGMUHMkjGbgjk2mIONuXo0nC8XnCf1JXgArVIZAQh5TKYAAAAASUVORK5CYII=');
-    *right: 0;
 }
 
 .pika-select {
     display: inline-block;
-    *display: inline;
 }
 
 .pika-table {
@@ -194,6 +191,7 @@ $pd-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !default;
     line-height: 15px;
     text-align: right;
     background: $pd-day-bg;
+    height: initial;
 
     .is-today & {
         color: $pd-day-today-color;
@@ -205,22 +203,30 @@ $pd-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !default;
         font-weight: bold;
         background: $pd-day-selected-bg;
         box-shadow: inset 0 1px 3px $pd-day-selected-shadow;
-        border-radius: 3px;
+        border-radius: $pd-border-radius;
     }
 
     .is-disabled &,
     .is-outside-current-month & {
-        pointer-events: none;
-        cursor: default;
         color: $pd-day-disabled-color;
         opacity: .3;
+    }
+
+    .is-disabled & {
+        pointer-events: none;
+        cursor: default;
     }
 
     &:hover {
         color: $pd-day-hover-color;
         background: $pd-day-hover-bg;
         box-shadow: none;
-        border-radius: 3px;
+        border-radius: $pd-border-radius;
+    }
+
+    .is-selection-disabled {
+        pointer-events: none;
+        cursor: default;
     }
 }
 
@@ -230,19 +236,20 @@ $pd-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !default;
 }
 
 .is-inrange .pika-button {
-    background: #D5E9F7;
+    color: $pd-inrange-color;
+    background: $pd-inrange-bg;
 }
 
 .is-startrange .pika-button {
-    color: #fff;
-    background: #6CB31D;
+    color: $pd-startrange-color;
+    background: $pd-startrange-bg;
     box-shadow: none;
-    border-radius: 3px;
+    border-radius: $pd-border-radius;
 }
 
 .is-endrange .pika-button {
-    color: #fff;
-    background: #33aaff;
+    color: $pd-endrange-color;
+    background: $pd-endrange-bg;
     box-shadow: none;
-    border-radius: 3px;
+    border-radius: $pd-border-radius;
 }

@@ -1,5 +1,31 @@
 # Changelog
 
+## 1.8.0 - 2018-10-17
+
+- Remove testling because service is not running atm
+- Move to github organisation Pikaday/Pikaday
+- Add CSS-classes indicating position
+- Remove the Moment.js optional dependency
+- Add aria label text configuration
+
+## 1.7.0 - 2017-12-12
+
+- Add keyboard input option, see #610
+
+## 1.6.1 - 2017-06-06
+
+- Fix memory leak, fixes #630
+
+## 1.6.0 - 2017-05-31
+
+- Add custom parsers, see #613
+- Re-introduce correct null behavor, fixes #654
+- Pick a whole week, see #516
+- Added `events` option: dates that you would like to differentiate from regular days, see #152
+- Fix the (re)position issue, see #643, #642
+- Configure if field is blurred when date is selected, see #631
+- Prevent error when no field is bound, fixes #611
+
 ## 1.5.1 - 2016-10-28
 
 - Only set attribute if field is bound, see #567
@@ -18,7 +44,7 @@
 - Fix touch device support, see #374
 - Add possibility to reset the max and min date to the date picker
 
-## 1.3.3 - 2015-02-17
+## 1.3.3 - 2015-06-26
 
 - Add theme class support, see #260
 - Fix on iOS, see #101, #121
