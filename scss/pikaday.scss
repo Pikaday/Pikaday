@@ -35,12 +35,13 @@ $pd-endrange-bg: #33aaff !default;
 $pd-event-color: #fff !default;
 $pd-event-bg: #33aaff !default;
 
-// Font
+$pd-z-index: 9999 !default;
 $pd-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$pd-border-radius: 3px !default;
 
 
 .pika-single {
-    z-index: 9999;
+    z-index: $pd-z-index;
     display: block;
     position: relative;
     color: $pd-text-color;
@@ -84,7 +85,7 @@ $pd-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !default;
     select {
         cursor: pointer;
         position: absolute;
-        z-index: 9998;
+        z-index: $pd-z-index - 1;
         margin: 0;
         left: 0;
         top: 5px;
@@ -95,7 +96,7 @@ $pd-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !default;
 .pika-label {
     display: inline-block;
     position: relative;
-    z-index: 9999;
+    z-index: $pd-z-index;
     overflow: hidden;
     margin: 0;
     padding: 5px 3px;
@@ -192,7 +193,8 @@ $pd-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !default;
     line-height: 15px;
     text-align: right;
     background: $pd-day-bg;
-    
+    height: initial;
+
     .has-event & {
         color: $pd-event-color;
         background: $pd-event-bg;
@@ -208,7 +210,7 @@ $pd-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !default;
         font-weight: bold;
         background: $pd-day-selected-bg;
         box-shadow: inset 0 1px 3px $pd-day-selected-shadow;
-        border-radius: 3px;
+        border-radius: $pd-border-radius;
     }
 
     .is-disabled &,
@@ -226,7 +228,7 @@ $pd-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !default;
         color: $pd-day-hover-color;
         background: $pd-day-hover-bg;
         box-shadow: none;
-        border-radius: 3px;
+        border-radius: $pd-border-radius;
     }
 
     .is-selection-disabled {
@@ -249,12 +251,12 @@ $pd-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !default;
     color: $pd-startrange-color;
     background: $pd-startrange-bg;
     box-shadow: none;
-    border-radius: 3px;
+    border-radius: $pd-border-radius;
 }
 
 .is-endrange .pika-button {
     color: $pd-endrange-color;
     background: $pd-endrange-bg;
     box-shadow: none;
-    border-radius: 3px;
+    border-radius: $pd-border-radius;
 }
