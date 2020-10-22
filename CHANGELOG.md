@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.8.1 - 2020-10-22
+## 1.8.2 - 2020-10-22
 
 - Properly parse date string, fixes #735 #755 #688
 - Cleaner packages, see #542 #580
