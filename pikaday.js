@@ -183,7 +183,7 @@
         // automatically show/hide the picker on `field` focus (default `true` if `field` is set)
         bound: undefined,
 
-        // data-attribute on the input field with an aria assistance tekst (only applied when `bound` is set)
+        // data-attribute on the input field with an aria assistance text (only applied when `bound` is set)
         ariaLabel: 'Use the arrow keys to pick a date',
 
         // position of the datepicker, relative to the field (default to bottom & left)
@@ -213,6 +213,7 @@
         firstDay: 0,
 
         // minimum number of days in the week that gets week number one
+        // default ISO 8601, week 01 is the week with the first Thursday (4)
         firstWeekOfYearMinDays: 4,
 
         // the default flag for moment's strict date parsing
@@ -358,32 +359,27 @@
 
         // Thursday in current week decides the year because January 4th
         // is always in the first week according to ISO8601.
-
-        var yearDay        = date.getDate()
-          , weekDay        = date.getDay()
-          , dayInFirstWeek = firstWeekOfYearMinDays // January 4th
-          , dayShift       = dayInFirstWeek - 1 // counting starts at 0
-          , daysPerWeek    = 7
-          , prevWeekDay    = function(day) { return (day + daysPerWeek - 1) % daysPerWeek; }
-        ;
+        var yearDay        = date.getDate(),
+            weekDay        = date.getDay(),
+            dayInFirstWeek = firstWeekOfYearMinDays,
+            dayShift       = dayInFirstWeek - 1, // counting starts at 0
+            daysPerWeek    = 7,
+            prevWeekDay    = function(day) { return (day + daysPerWeek - 1) % daysPerWeek; };
 
         // Adjust to Thursday in week 1 and count number of weeks from date to week 1.
-
         date.setDate(yearDay + dayShift - prevWeekDay(weekDay));
 
-        var jan4th      = new Date(date.getFullYear(), 0, dayInFirstWeek)
-          , msPerDay    = 24 * 60 * 60 * 1000
-          , daysBetween = (date.getTime() - jan4th.getTime()) / msPerDay
-          , weekNum     = 1 + Math.round((daysBetween - dayShift + prevWeekDay(jan4th.getDay())) / daysPerWeek)
-        ;
+        var jan4th      = new Date(date.getFullYear(), 0, dayInFirstWeek),
+            msPerDay    = 24 * 60 * 60 * 1000,
+            daysBetween = (date.getTime() - jan4th.getTime()) / msPerDay,
+            weekNum     = 1 + Math.round((daysBetween - dayShift + prevWeekDay(jan4th.getDay())) / daysPerWeek);
 
         return weekNum;
     },
 
-    renderWeek = function (d, m, y, firstWeekOfYearMinDays) {
-        var date = new Date(y, m, d)
-          , week = hasMoment ? moment(date).isoWeek() : isoWeek(date, firstWeekOfYearMinDays)
-        ;
+    renderWeek = function (d, m, y) {
+        var date = new Date(y, m, d),
+            week = hasMoment ? moment(date).isoWeek() : isoWeek(date, firstWeekOfYearMinDays);
 
         return '<td class="pika-week">' + week + '</td>';
     },
@@ -1255,9 +1251,12 @@
                 if (this._o.bound) {
                     removeEvent(document, 'click', this._onClick);
                 }
-                this.el.style.position = 'static'; // reset
-                this.el.style.left = 'auto';
-                this.el.style.top = 'auto';
+
+                if (!this._o.container) {
+                    this.el.style.position = 'static'; // reset
+                    this.el.style.left = 'auto';
+                    this.el.style.top = 'auto';
+                }
                 addClass(this.el, 'is-hidden');
                 this._v = false;
                 if (v !== undefined && typeof this._o.onClose === 'function') {
