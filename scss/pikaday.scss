@@ -32,6 +32,7 @@ $pd-startrange-color: #fff !default;
 $pd-startrange-bg: #6CB31D !default;
 $pd-endrange-color: #fff !default;
 $pd-endrange-bg: #33aaff !default;
+$pd-border-radius: 3px !default;
 
 // Font
 $pd-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !default;
@@ -201,7 +202,7 @@ $pd-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !default;
         font-weight: bold;
         background: $pd-day-selected-bg;
         box-shadow: inset 0 1px 3px $pd-day-selected-shadow;
-        border-radius: 3px;
+        border-radius: $pd-border-radius;
     }
 
     .is-disabled &,
@@ -219,7 +220,7 @@ $pd-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !default;
         color: $pd-day-hover-color;
         background: $pd-day-hover-bg;
         box-shadow: none;
-        border-radius: 3px;
+        border-radius: $pd-border-radius;
     }
 
     .is-selection-disabled {
@@ -242,12 +243,12 @@ $pd-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !default;
     color: $pd-startrange-color;
     background: $pd-startrange-bg;
     box-shadow: none;
-    border-radius: 3px;
+    border-radius: $pd-border-radius;
 }
 
 .is-endrange .pika-button {
     color: $pd-endrange-color;
     background: $pd-endrange-bg;
     box-shadow: none;
-    border-radius: 3px;
+    border-radius: $pd-border-radius;
 }
