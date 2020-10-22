@@ -191,6 +191,7 @@ $pd-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !default;
     line-height: 15px;
     text-align: right;
     background: $pd-day-bg;
+    height: initial;
 
     .is-today & {
         color: $pd-day-today-color;
