@@ -320,7 +320,7 @@
                 }
 
             } else {
-                return '<td class="is-empty"></td>';
+                return '<td class="is-empty" aria-hidden="true"></td>';
             }
         }
         if (opts.isDisabled) {
@@ -403,7 +403,7 @@
         for (i = 0; i < 7; i++) {
             arr.push('<th scope="col"><abbr title="' + renderDayName(opts, i) + '">' + renderDayName(opts, i, true) + '</abbr></th>');
         }
-        return '<thead><tr>' + (opts.isRTL ? arr.reverse() : arr).join('') + '</tr></thead>';
+        return '<thead aria-hidden="true"><tr>' + (opts.isRTL ? arr.reverse() : arr).join('') + '</tr></thead>';
     },
 
     renderTitle = function(instance, c, year, month, refYear, randId)
@@ -412,7 +412,7 @@
             opts = instance._o,
             isMinYear = year === opts.minYear,
             isMaxYear = year === opts.maxYear,
-            html = '<div id="' + randId + '" class="pika-title" role="heading" aria-live="assertive">',
+            html = '<div id="' + randId + '" class="pika-title" role="heading">',
             monthHtml,
             yearHtml,
             prev = true,
@@ -457,10 +457,10 @@
         }
 
         if (c === 0) {
-            html += '<button class="pika-prev' + (prev ? '' : ' is-disabled') + '" type="button">' + opts.i18n.previousMonth + '</button>';
+            html += '<button class="pika-prev' + (prev ? '' : ' is-disabled') + '" type="button" aria-labelledby="' + randId + '">' + opts.i18n.previousMonth + '</button>';
         }
         if (c === (instance._o.numberOfMonths - 1) ) {
-            html += '<button class="pika-next' + (next ? '' : ' is-disabled') + '" type="button">' + opts.i18n.nextMonth + '</button>';
+            html += '<button class="pika-next' + (next ? '' : ' is-disabled') + '" type="button" aria-labelledby="' + randId + '">' + opts.i18n.nextMonth + '</button>';
         }
 
         return html += '</div>';
@@ -468,7 +468,7 @@
 
     renderTable = function(opts, data, randId)
     {
-        return '<table cellpadding="0" cellspacing="0" class="pika-table" role="grid" aria-labelledby="' + randId + '">' + renderHead(opts) + renderBody(data) + '</table>';
+        return '<table cellpadding="0" cellspacing="0" class="pika-table" role="presentation">' + renderHead(opts) + renderBody(data) + '</table>';
     },
 
 
@@ -542,6 +542,11 @@
         {
             e = e || window.event;
 
+            function stopEvent() {
+              self.el.querySelector(".is-selected > .pika-button").focus()
+              self.focusInside = true;
+            }
+
             if (self.isVisible()) {
 
                 switch(e.keyCode){
@@ -553,15 +558,19 @@
                         break;
                     case 37:
                         self.adjustDate('subtract', 1);
+                        stopEvent()
                         break;
                     case 38:
                         self.adjustDate('subtract', 7);
+                        stopEvent()
                         break;
                     case 39:
                         self.adjustDate('add', 1);
+                        stopEvent()
                         break;
                     case 40:
                         self.adjustDate('add', 7);
+                        stopEvent()
                         break;
                     case 8:
                     case 46:
@@ -613,6 +622,12 @@
         {
             // IE allows pika div to gain focus; catch blur the input field
             var pEl = document.activeElement;
+
+            if (self.focusInside) {
+              // prevent focus out on input blur
+              // we had to do a forced blur so the buttons will be focused
+              return
+            }
             do {
                 if (hasClass(pEl, 'pika-single')) {
                     return;
@@ -1045,6 +1060,7 @@
 
             for (var c = 0; c < opts.numberOfMonths; c++) {
                 randId = 'pika-title-' + Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 2);
+
                 html += '<div class="pika-lendar">' + renderTitle(this, c, this.calendars[c].year, this.calendars[c].month, this.calendars[0].year, randId) + this.render(this.calendars[c].year, this.calendars[c].month, randId) + '</div>';
             }
 
@@ -1066,6 +1082,42 @@
                 // let the screen reader user know to use arrow keys
                 opts.field.setAttribute('aria-label', opts.ariaLabel);
             }
+
+            var autofocus = this.el.querySelector('td.is-selected > .pika-button');
+            if (!autofocus) {
+              autofocus = this.el.querySelector('td.is-startrange > .pika-button');
+            }
+            if (!autofocus) {
+              autofocus = this.el.querySelector('td.is-today > .pika-button');
+            }
+            if (!autofocus) {
+              autofocus = this.el.querySelector('td:not(.is-disabled) > .pika-button');
+            }
+            if (!autofocus) {
+              autofocus = this.el.querySelector('.pika-button');
+            }
+
+            if (autofocus) {
+              autofocus.setAttribute('tabindex', '0');
+              self.focusInside = true;
+              this.focusPicker()
+            }
+        },
+
+        focusPicker: function () {
+          var self = this;
+          var opts = this._options;
+
+          if (!this.focusInside) {
+            return;
+          }
+
+          try {
+            self.el.querySelector('.pika-button[tabindex="0"]').focus();
+          } catch (e) {}
+
+
+          this.focusInside = false;
         },
 
         adjustPosition: function()
@@ -1118,7 +1170,7 @@
                 top = top - height - field.offsetHeight;
                 bottomAligned = false;
             }
-            
+
             if (left < 0) {
                 left = 0;
             }
