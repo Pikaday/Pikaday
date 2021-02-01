@@ -345,10 +345,10 @@
         if (opts.isEndRange) {
             arr.push('is-endrange');
         }
-        return '<td data-day="' + opts.day + '" class="' + arr.join(' ') + '" aria-selected="' + ariaSelected + '">' +
+        return '<td data-day="' + opts.day + '" class="' + arr.join(' ') + '">' +
                  '<button class="pika-button pika-day" type="button" ' +
-                    'data-pika-year="' + opts.year + '" data-pika-month="' + opts.month + '" data-pika-day="' + opts.day + '">' +
-                        opts.day +
+                    'data-pika-year="' + opts.year + '" data-pika-month="' + opts.month + '" data-pika-day="' + opts.day +
+                    '" aria-selected="' + ariaSelected + '">' + opts.day +
                  '</button>' +
                '</td>';
     },
@@ -457,10 +457,10 @@
         }
 
         if (c === 0) {
-            html += '<button class="pika-prev' + (prev ? '' : ' is-disabled') + '" type="button" aria-labelledby="' + randId + '">' + opts.i18n.previousMonth + '</button>';
+            html += '<button class="pika-prev' + (prev ? '' : ' is-disabled') + '" type="button" aria-labelledby="'+ randId +'"> Previous Month </button>';
         }
         if (c === (instance._o.numberOfMonths - 1) ) {
-            html += '<button class="pika-next' + (next ? '' : ' is-disabled') + '" type="button" aria-labelledby="' + randId + '">' + opts.i18n.nextMonth + '</button>';
+            html += '<button class="pika-next' + (next ? '' : ' is-disabled') + '" type="button" aria-labelledby="'+ randId +'"> Next Month</button>';
         }
 
         return html += '</div>';
@@ -543,6 +543,8 @@
             e = e || window.event;
 
             function stopEvent() {
+              e.preventDefault();
+              e.stopPropagation();
               self.el.querySelector(".is-selected > .pika-button").focus()
               self.focusInside = true;
             }
@@ -557,20 +559,20 @@
                         }
                         break;
                     case 37:
-                        self.adjustDate('subtract', 1);
                         stopEvent()
+                        self.adjustDate('subtract', 1);
                         break;
                     case 38:
-                        self.adjustDate('subtract', 7);
                         stopEvent()
+                        self.adjustDate('subtract', 7);
                         break;
                     case 39:
-                        self.adjustDate('add', 1);
                         stopEvent()
+                        self.adjustDate('add', 1);
                         break;
                     case 40:
-                        self.adjustDate('add', 7);
                         stopEvent()
+                        self.adjustDate('add', 7);
                         break;
                     case 8:
                     case 46:
@@ -1099,6 +1101,7 @@
 
             if (autofocus) {
               autofocus.setAttribute('tabindex', '0');
+
               self.focusInside = true;
               this.focusPicker()
             }
