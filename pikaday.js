@@ -457,10 +457,10 @@
         }
 
         if (c === 0) {
-            html += '<button class="pika-prev' + (prev ? '' : ' is-disabled') + '" type="button" aria-labelledby="'+ randId +'"> Previous Month </button>';
+            html += '<button class="pika-prev' + (prev ? '' : ' is-disabled') + '" type="button"> Previous Month </button>';
         }
         if (c === (instance._o.numberOfMonths - 1) ) {
-            html += '<button class="pika-next' + (next ? '' : ' is-disabled') + '" type="button" aria-labelledby="'+ randId +'"> Next Month</button>';
+            html += '<button class="pika-next' + (next ? '' : ' is-disabled') + '" type="button"> Next Month</button>';
         }
 
         return html += '</div>';
@@ -543,10 +543,10 @@
             e = e || window.event;
 
             function stopEvent() {
+              self.hasKey = true;
+              self.focusInside = true;
               e.preventDefault();
               e.stopPropagation();
-              self.el.querySelector(".is-selected > .pika-button").focus()
-              self.focusInside = true;
             }
 
             if (self.isVisible()) {
@@ -617,6 +617,9 @@
 
         self._onInputClick = function()
         {
+            if (self.touched) {
+              self._options.trigger.focus(); // because iOS wouldn't do
+            }
             self.show();
         };
 
@@ -624,6 +627,10 @@
         {
             // IE allows pika div to gain focus; catch blur the input field
             var pEl = document.activeElement;
+
+            if (self.hasKey) {
+              return
+            }
 
             if (self.focusInside) {
               // prevent focus out on input blur
@@ -672,6 +679,19 @@
 
         self.el = document.createElement('div');
         self.el.className = 'pika-single' + (opts.isRTL ? ' is-rtl' : '') + (opts.theme ? ' ' + opts.theme : '');
+
+        self.speakEl = document.createElement('div');
+				self.speakEl.setAttribute('role', 'status');
+				self.speakEl.setAttribute('aria-live', 'assertive');
+				self.speakEl.setAttribute('aria-atomic', 'true');
+        self.speakEl.setAttribute(
+          'id',
+          'boke-no-boke'
+        );
+				self.speakEl.setAttribute(
+					'style',
+					'position: absolute; left: -9999px; opacity: 0;'
+				);
 
         addEvent(self.el, 'mousedown', self._onMouseDown, true);
         addEvent(self.el, 'touchend', self._onMouseDown, true);
@@ -864,6 +884,8 @@
             setToStartOfDay(this._d);
             this.gotoDate(this._d);
 
+            this.setField()
+
             if (this._o.field) {
                 this._o.field.value = this.toString();
                 fireEvent(this._o.field, 'change', { firedBy: this });
@@ -871,8 +893,24 @@
             if (!preventOnSelect && typeof this._o.onSelect === 'function') {
                 this._o.onSelect.call(this, this.getDate());
             }
+
+            if (this._d) {
+                  this.speak(this.getLabel());
+            }
         },
 
+        setField: function () {
+          var value = this._d;
+          var field = this._o.field;
+          if (field && value !== field.value) {
+            field.value = value;
+            fireEvent(field, 'change', { firedBy: this });
+            fireEvent(field, 'input', { firedBy: this });
+            return true;
+          } else {
+            return false;
+          }
+        },
         /**
          * clear and reset the date
          */
@@ -1061,7 +1099,8 @@
             }
 
             for (var c = 0; c < opts.numberOfMonths; c++) {
-                randId = 'pika-title-' + Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 2);
+                randId = 'pika-title-' +
+                  Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 2);
 
                 html += '<div class="pika-lendar">' + renderTitle(this, c, this.calendars[c].year, this.calendars[c].month, this.calendars[0].year, randId) + this.render(this.calendars[c].year, this.calendars[c].month, randId) + '</div>';
             }
@@ -1103,7 +1142,7 @@
               autofocus.setAttribute('tabindex', '0');
 
               self.focusInside = true;
-              this.focusPicker()
+              this.focusPicker();
             }
         },
 
@@ -1293,6 +1332,7 @@
 
         show: function()
         {
+            document.body.appendChild(this.speakEl);
             if (!this.isVisible()) {
                 this._v = true;
                 this.draw();
@@ -1304,7 +1344,30 @@
                 if (typeof this._o.onOpen === 'function') {
                     this._o.onOpen.call(this);
                 }
+
+                if (this._o.field && this._o.field != this._o.trigger) {
+                  this.speak(this.getLabel());
+                }
             }
+        },
+
+        getLabel: function () {
+    			var label = '',
+    				opts = this._o;
+    			if (opts.field && opts.field.id) {
+    				label = document.querySelector('label[for="' + opts.field.id + '"]');
+    				label = label ? label.textContent || label.innerText : '';
+    			}
+    			if (!label && opts.trigger) {
+    				label = opts.trigger.textContent || opts.trigger.innerText;
+    			}
+    			label += ' (' + opts.i18n.help + ')';
+    			return label;
+    		},
+
+        speak: function (html) {
+          this.speak.innerHTML = '';
+          this.speakEl.innerHTML = html;
         },
 
         hide: function()
