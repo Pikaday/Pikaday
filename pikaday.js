@@ -547,21 +547,28 @@
                 switch(e.keyCode){
                     case 13:
                     case 27:
-                        if (opts.field) {
+                        if (opts.field && opts.trigger) {
+                            opts.field.focus();
+                        } else if (opts.field) {
                             opts.field.blur();
                         }
+                        self.hide();
                         break;
                     case 37:
                         self.adjustDate('subtract', 1);
+                        e.preventDefault();
                         break;
                     case 38:
                         self.adjustDate('subtract', 7);
+                        e.preventDefault();
                         break;
                     case 39:
                         self.adjustDate('add', 1);
+                        e.preventDefault();
                         break;
                     case 40:
                         self.adjustDate('add', 7);
+                        e.preventDefault();
                         break;
                     case 8:
                     case 46:
@@ -593,9 +600,6 @@
             date = self._parseFieldValue();
             if (isDate(date)) {
               self.setDate(date);
-            }
-            if (!self._v) {
-                self.show();
             }
         };
 
@@ -1118,7 +1122,7 @@
                 top = top - height - field.offsetHeight;
                 bottomAligned = false;
             }
-            
+
             if (left < 0) {
                 left = 0;
             }
