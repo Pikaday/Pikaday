@@ -574,6 +574,11 @@
                     case 46:
                         self.setDate(null);
                         break;
+                    case 9:
+                      if(opts.trigger) {
+                        self.hide();
+                      }
+                      break;
                 }
             }
         };
