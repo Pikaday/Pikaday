@@ -653,6 +653,7 @@
             }
             do {
                 if (hasClass(pEl, 'pika-single') || pEl === opts.trigger) {
+                    e.preventDefault();
                     return;
                 }
             }
