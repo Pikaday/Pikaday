@@ -284,6 +284,12 @@
         // events array
         events: [],
 
+        // disabled days array
+        disabledDays: [],
+
+        // enabled days array
+        enabledDays: [],
+
         // callback function
         onSelect: null,
         onOpen: null,
@@ -1118,7 +1124,7 @@
                 top = top - height - field.offsetHeight;
                 bottomAligned = false;
             }
-            
+
             if (left < 0) {
                 left = 0;
             }
@@ -1182,7 +1188,9 @@
                     isDisabled = (opts.minDate && day < opts.minDate) ||
                                  (opts.maxDate && day > opts.maxDate) ||
                                  (opts.disableWeekends && isWeekend(day)) ||
-                                 (opts.disableDayFn && opts.disableDayFn(day));
+                                 (opts.disableDayFn && opts.disableDayFn(day) ||
+                                 (opts.disabledDays.indexOf(day.toDateString()) !== -1 ? true : false) ||
+                                 (opts.enabledDays.length > 0 && (opts.enabledDays.indexOf(day.toDateString()) !== -1 ? false : true)));
 
                 if (isEmpty) {
                     if (i < before) {
