@@ -951,7 +951,7 @@
             this.adjustCalendars();
 
             if (typeof this._o.onPaginate === 'function') {
-                this._o.onPaginate('next', this.calendars[0].month);
+                this._o.onPaginate('next', this.calendars[0].month, this.calendars[0].year);
             }
         },
 
@@ -961,7 +961,7 @@
             this.adjustCalendars();
 
             if (typeof this._o.onPaginate === 'function') {
-                this._o.onPaginate('prev', this.calendars[0].month);
+                this._o.onPaginate('prev', this.calendars[0].month, this.calendars[0].year);
             }
         },
 
