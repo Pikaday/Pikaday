@@ -177,7 +177,7 @@ Pikaday has many useful options:
 * `onOpen` callback function for when the picker becomes visible
 * `onClose` callback function for when the picker is hidden
 * `onDraw` callback function for when the picker draws a new month
-* `onPaginate` callback function for the `prevMonth` and `nextMonth` methods, also fired when the pagination clicked  
+* `onPaginate` callback function for the `prevMonth` and `nextMonth` methods, also fired when the pagination is clicked  
 * `keyboardInput` enable keyboard input support (default `true`)
 * `disabledDays` array of dates that you would like to disable (e.g. `['Sat Jun 28 2017', 'Sun Jun 29 2017', 'Tue Jul 01 2017',]`)
 * `enabledDays` array of dates that you would like to be enabled, the rest of the days will be disabled (e.g. `['Sat Jun 28 2017', 'Sun Jun 29 2017', 'Tue Jul 01 2017',]`)
