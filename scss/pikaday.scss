@@ -177,7 +177,13 @@ $pd-border-radius: 3px !default;
         cursor: help;
     }
 }
-
+.pika-button:hover,
+.pika-row.pick-whole-week:hover .pika-button {
+    color: $pd-day-hover-color;
+    background: $pd-day-hover-bg;
+    box-shadow: none;
+    border-radius: $pd-border-radius;
+}
 .pika-button {
     cursor: pointer;
     display: block;
@@ -224,12 +230,7 @@ $pd-border-radius: 3px !default;
         cursor: default;
     }
 
-    &:hover {
-        color: $pd-day-hover-color;
-        background: $pd-day-hover-bg;
-        box-shadow: none;
-        border-radius: $pd-border-radius;
-    }
+
 
     .is-selection-disabled {
         pointer-events: none;
