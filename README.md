@@ -159,6 +159,7 @@ Pikaday has many useful options:
 * `maxDate` the maximum/latest date that can be selected (this should be a native Date object - e.g. `new Date()` or `moment().toDate()`)
 * `disableWeekends` disallow selection of Saturdays or Sundays
 * `disableDayFn` callback function that gets passed a Date object for each day in view. Should return true to disable selection of that day.
+* `selectDayFn` callback function that gets passed a Date object for each day in view. Should return true to select that day.
 * `yearRange` number of years either side (e.g. `10`) or array of upper/lower range (e.g. `[1900,2015]`)
 * `showWeekNumber` show the ISO week number at the head of the row (default `false`)
 * `pickWholeWeek` select a whole week instead of a day (default `false`)
