@@ -1044,7 +1044,7 @@
             }
 
             for (var c = 0; c < opts.numberOfMonths; c++) {
-                randId = 'pika-title-' + Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 2);
+                randId = 'pika-title-' + Math.random().toString(36).replace(/[^a-z]+/g, '').slice(0, 2);
                 html += '<div class="pika-lendar">' + renderTitle(this, c, this.calendars[c].year, this.calendars[c].month, this.calendars[0].year, randId) + this.render(this.calendars[c].year, this.calendars[c].month, randId) + '</div>';
             }
 
@@ -1118,7 +1118,7 @@
                 top = top - height - field.offsetHeight;
                 bottomAligned = false;
             }
-            
+
             if (left < 0) {
                 left = 0;
             }
