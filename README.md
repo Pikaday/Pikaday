@@ -177,6 +177,7 @@ Pikaday has many useful options:
 * `onOpen` callback function for when the picker becomes visible
 * `onClose` callback function for when the picker is hidden
 * `onDraw` callback function for when the picker draws a new month
+* `onPaginate` callback function for the `prevMonth` and `nextMonth` methods, also fired when the pagination clicked.  
 * `keyboardInput` enable keyboard input support (default `true`)
 
 ### Styling
