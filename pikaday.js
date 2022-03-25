@@ -898,17 +898,41 @@
             this.adjustCalendars();
         },
 
+        dayIsDisabled: function(date)
+        {
+
+            var config = this.config(),
+                disabled = false;
+
+            if (config.disableDayFn) {
+                disabled = config.disableDayFn(date);
+            }
+            if (config.disableWeekends) {
+                disabled = disabled || (date.getDay() < 1 || 5 < date.getDay());
+            }
+
+            return disabled;
+        },
+
         adjustDate: function(sign, days) {
 
             var day = this.getDate() || new Date();
-            var difference = parseInt(days)*24*60*60*1000;
+            var difference = parseInt(days) * 24 * 60 * 60 * 1000;
 
             var newDay;
 
-            if (sign === 'add') {
-                newDay = new Date(day.valueOf() + difference);
-            } else if (sign === 'subtract') {
-                newDay = new Date(day.valueOf() - difference);
+            // preventing an infinite loop if all days are disabled
+            for (var i = this.config().numberOfMonths * 31 + 31; i >= 0; i--) {
+                if (sign === 'add') {
+                    newDay = new Date(day.valueOf() + difference);
+                } else if (sign === 'subtract') {
+                    newDay = new Date(day.valueOf() - difference);
+                }
+
+                day = newDay;
+                if (!this.dayIsDisabled(newDay)) {
+                    break;
+                }
             }
 
             this.setDate(newDay);
