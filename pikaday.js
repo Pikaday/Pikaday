@@ -108,15 +108,23 @@
         return [31, isLeapYear(year) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][month];
     },
 
-    setToStartOfDay = function(date)
+    setToStartOfDay = function(date, hour)
     {
-        if (isDate(date)) date.setHours(0,0,0,0);
+        if (isDate(date)) {
+            if (hour === undefined) hour = 0;
+            var dateArr = date.toISOString().split('T')[0].split('-');
+            return new Date(dateArr[0], dateArr[1]-1, dateArr[2], hour, 0, 0, 0);
+        }
+        return date;
     },
 
     compareDates = function(a,b)
     {
-        // weak date comparison (use setToStartOfDay(date) to ensure correct result)
-        return a.getTime() === b.getTime();
+        if (a) a = setToStartOfDay(a);
+        if (b) b = setToStartOfDay(b);
+        a = isDate(a) ? a.getTime() : undefined;
+        b = isDate(b) ? b.getTime() : undefined;
+        return a === b;
     },
 
     extend = function(to, from, overwrite)
@@ -844,7 +852,7 @@
             }
 
             this._d = new Date(date.getTime());
-            setToStartOfDay(this._d);
+            this._d = setToStartOfDay(this._d, 1);
             this.gotoDate(this._d);
 
             if (this._o.field) {
@@ -970,7 +978,7 @@
         setMinDate: function(value)
         {
             if(value instanceof Date) {
-                setToStartOfDay(value);
+                value = setToStartOfDay(value);
                 this._o.minDate = value;
                 this._o.minYear  = value.getFullYear();
                 this._o.minMonth = value.getMonth();
@@ -990,7 +998,7 @@
         setMaxDate: function(value)
         {
             if(value instanceof Date) {
-                setToStartOfDay(value);
+                value = setToStartOfDay(value);
                 this._o.maxDate = value;
                 this._o.maxYear = value.getFullYear();
                 this._o.maxMonth = value.getMonth();
@@ -1147,7 +1155,7 @@
                 before = new Date(year, month, 1).getDay(),
                 data   = [],
                 row    = [];
-            setToStartOfDay(now);
+            now = setToStartOfDay(now);
             if (opts.firstDay > 0) {
                 before -= opts.firstDay;
                 if (before < 0) {
