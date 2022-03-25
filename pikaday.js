@@ -547,8 +547,10 @@
                 switch(e.keyCode){
                     case 13:
                     case 27:
-                        if (opts.field) {
-                            opts.field.blur();
+                        if (opts.field && opts.trigger) {
+                          opts.field.focus();
+                        } else if(opts.field){
+                          opts.field.blur();
                         }
                         break;
                     case 37:
