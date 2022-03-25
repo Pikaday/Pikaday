@@ -652,10 +652,36 @@
                 self.hide();
             }
         };
+        
+        self._triggerMouseEvent = function(e, callback) {
+            var el = e.target,
+                enabled = !hasClass(el, 'is-disabled') && hasClass(el, 'pika-button') && 
+                    !hasClass(el, 'is-empty') && !hasClass(el.parentNode, 'is-disabled'),
+                year = enabled && el.getAttribute('data-pika-year'), 
+                month = enabled && el.getAttribute('data-pika-month'), 
+                day = enabled && el.getAttribute('data-pika-day'),
+                date = year && month && day && new Date(year, month, day) || undefined;
+            
+            if (typeof callback === 'function') {
+                callback.call(self, el, date);
+            }
+        };
+
+        self._onMouseEnter = function(e)
+        {
+            self._triggerMouseEvent(e, opts.onMouseEnter);
+        };
+        
+        self._onMouseLeave = function(e)
+        {
+            self._triggerMouseEvent(e, opts.onMouseLeave);
+        };
 
         self.el = document.createElement('div');
         self.el.className = 'pika-single' + (opts.isRTL ? ' is-rtl' : '') + (opts.theme ? ' ' + opts.theme : '');
 
+        addEvent(self.el, 'mouseenter', self._onMouseEnter, true);
+        addEvent(self.el, 'mouseleave', self._onMouseLeave, true);
         addEvent(self.el, 'mousedown', self._onMouseDown, true);
         addEvent(self.el, 'touchend', self._onMouseDown, true);
         addEvent(self.el, 'change', self._onChange);
@@ -1281,6 +1307,8 @@
             var opts = this._o;
 
             this.hide();
+            removeEvent(this.el, 'mouseenter', this._onMouseEnter, true);
+            removeEvent(this.el, 'mouseleave', this._onMouseLeave, true);
             removeEvent(this.el, 'mousedown', this._onMouseDown, true);
             removeEvent(this.el, 'touchend', this._onMouseDown, true);
             removeEvent(this.el, 'change', this._onChange);
