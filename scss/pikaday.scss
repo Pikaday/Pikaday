@@ -148,6 +148,14 @@ $pd-border-radius: 3px !default;
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAeCAYAAAAsEj5rAAAAU0lEQVR42u3VOwoAMAgE0dwfAnNjU26bYkBCFGwfiL9VVWoO+BJ4Gf3gtsEKKoFBNTCoCAYVwaAiGNQGMUHMkjGbgjk2mIONuXo0nC8XnCf1JXgArVIZAQh5TKYAAAAASUVORK5CYII=');
 }
 
+.pika-gotoTodayWrap{
+    text-align: center;
+    margin-bottom: 8px;
+}
+.pika-gotoToday{
+    cursor: pointer;
+    font-size:small;
+}
 .pika-select {
     display: inline-block;
 }

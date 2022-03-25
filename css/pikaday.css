@@ -113,6 +113,14 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     opacity: .2;
 }
 
+.pika-gotoTodayWrap{
+    text-align: center;
+    margin-bottom: 8px;
+}
+.pika-gotoToday{
+    cursor: pointer;
+    font-size:small;
+}
 .pika-select {
     display: inline-block;
 }

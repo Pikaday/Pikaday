@@ -471,7 +471,9 @@
         return '<table cellpadding="0" cellspacing="0" class="pika-table" role="grid" aria-labelledby="' + randId + '">' + renderHead(opts) + renderBody(data) + '</table>';
     },
 
-
+    renderTodayLink=function(){
+        return '<div class="pika-gotoTodayWrap"><a class="pika-gotoToday">Today</a></div>';
+    },
     /**
      * Pikaday constructor
      */
@@ -508,6 +510,9 @@
                 }
                 else if (hasClass(target, 'pika-next')) {
                     self.nextMonth();
+                }
+                else if (hasClass(target, 'pika-gotoToday')) {
+                    self.gotoToday();
                 }
             }
             if (!hasClass(target, 'pika-select')) {
@@ -1047,6 +1052,8 @@
                 randId = 'pika-title-' + Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 2);
                 html += '<div class="pika-lendar">' + renderTitle(this, c, this.calendars[c].year, this.calendars[c].month, this.calendars[0].year, randId) + this.render(this.calendars[c].year, this.calendars[c].month, randId) + '</div>';
             }
+            
+            html+=renderTodayLink();
 
             this.el.innerHTML = html;
 
