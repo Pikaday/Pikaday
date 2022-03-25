@@ -1100,6 +1100,14 @@
             }
 
             // default position is bottom & left
+            if ((this._o.reposition && left + (field.offsetWidth / 2) + (width / 2) > viewportWidth) ||
+                (
+                    this._o.position.indexOf('center') > -1 &&
+                    left - (width / 2) + (field.offsetWidth / 2) > 0
+                )
+            ) {
+                left = left - (width / 2) + (field.offsetWidth / 2);
+            }
             if ((this._o.reposition && left + width > viewportWidth) ||
                 (
                     this._o.position.indexOf('right') > -1 &&
