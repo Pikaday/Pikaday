@@ -39,7 +39,14 @@
 
     document = window.document,
 
-    sto = window.setTimeout,
+    sto = function()
+    {
+        if (Function.prototype.bind) {
+            return window.setTimeout.bind(window);
+        } else {
+            return window.setTimeout;
+        }
+    }(),
 
     addEvent = function(el, e, callback, capture)
     {
