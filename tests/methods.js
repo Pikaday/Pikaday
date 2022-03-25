@@ -126,6 +126,49 @@ describe('Pikaday public method', function ()
             pikaday.setMinDate(date);
             expect(pikaday._o.minDate).to.eql(expected);
         });
+        it('should set minYear when setting minDate)', function () {
+            var date = new Date(2015, 1, 17, 22, 10, 5),
+                expected = 2015,
+                pikaday = new Pikaday();
+
+            pikaday.setMinDate(date);
+            expect(pikaday._o.minYear).to.eql(expected);
+        });
+        it('should set minMonth when setting minDate)', function () {
+            var date = new Date(2015, 1, 17, 22, 10, 5),
+                expected = 1,
+                pikaday = new Pikaday();
+
+            pikaday.setMinDate(date);
+            expect(pikaday._o.minMonth).to.eql(expected);
+        });
+    });
+
+    describe('#setMaxDate()', function () {
+        it('should flatten date to midnight ignoring time portion (consistent with maxDate option in ctor)', function () {
+            var date = new Date(2015, 1, 17, 22, 10, 5),
+                expected = new Date(2015, 1, 17, 0, 0, 0),
+                pikaday = new Pikaday();
+
+            pikaday.setMaxDate(date);
+            expect(pikaday._o.maxDate).to.eql(expected);
+        });
+        it('should set maxYear when setting maxDate)', function () {
+            var date = new Date(2015, 1, 17, 22, 10, 5),
+                expected = 2015,
+                pikaday = new Pikaday();
+
+            pikaday.setMaxDate(date);
+            expect(pikaday._o.maxYear).to.eql(expected);
+        });
+        it('should set maxMonth when setting maxDate)', function () {
+            var date = new Date(2015, 1, 17, 22, 10, 5),
+                expected = 1,
+                pikaday = new Pikaday();
+
+            pikaday.setMaxDate(date);
+            expect(pikaday._o.maxMonth).to.eql(expected);
+        });
     });
 
     describe('#render()', function() {
