@@ -152,7 +152,7 @@
             ev = document.createEvent('HTMLEvents');
             ev.initEvent(eventName, true, false);
             ev = extend(ev, data);
-            el.dispatchEvent(ev);
+            try { el.dispatchEvent(ev); } catch (e) {}
         } else if (document.createEventObject) {
             ev = document.createEventObject();
             ev = extend(ev, data);
