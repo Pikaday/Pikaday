@@ -760,9 +760,6 @@
                 opts.yearRange[1] = parseInt(opts.yearRange[1], 10) || fallback;
             } else {
                 opts.yearRange = Math.abs(parseInt(opts.yearRange, 10)) || defaults.yearRange;
-                if (opts.yearRange > 100) {
-                    opts.yearRange = 100;
-                }
             }
 
             return opts;
