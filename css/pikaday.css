@@ -123,6 +123,9 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     border-spacing: 0;
     border: 0;
 }
+.is-rtl .pika-table {
+    text-align: right;
+}
 
 .pika-table th,
 .pika-table td {
@@ -156,7 +159,8 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     height: initial;
 }
 
-.pika-week {
+.pika-table .pika-week {
+    min-width: 2em;
     font-size: 11px;
     color: #999;
 }
