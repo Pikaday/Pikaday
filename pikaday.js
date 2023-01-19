@@ -648,7 +648,7 @@
                 }
             }
             while ((pEl = pEl.parentNode));
-            if (self._v && target !== opts.trigger && pEl !== opts.trigger) {
+            if (self._v && target !== opts.trigger && pEl !== null && pEl !== opts.trigger) {
                 self.hide();
             }
         };
