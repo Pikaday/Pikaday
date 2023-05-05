@@ -186,6 +186,9 @@
         // data-attribute on the input field with an aria assistance text (only applied when `bound` is set)
         ariaLabel: 'Use the arrow keys to pick a date',
 
+        // data-attribute on the title which specifies the `heading` level the title acts as (no sensible default can be guessed)
+        ariaLevel: undefined,
+
         // position of the datepicker, relative to the field (default to bottom & left)
         // ('bottom' & 'left' keywords are not used, 'top' & 'right' are modifier on the bottom/left position)
         position: 'bottom left',
@@ -412,7 +415,9 @@
             opts = instance._o,
             isMinYear = year === opts.minYear,
             isMaxYear = year === opts.maxYear,
-            html = '<div id="' + randId + '" class="pika-title" role="heading" aria-live="polite">',
+            level = parseInt(opts.ariaLevel, 10),
+            ariaLevel = (level ? (' aria-level= ' + level) : ''),
+            html = '<div id="' + randId + '" class="pika-title" role="heading"' + ariaLevel + ' aria-live="polite">',
             monthHtml,
             yearHtml,
             prev = true,
