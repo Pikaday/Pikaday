@@ -799,7 +799,8 @@
          */
         setMoment: function(date, preventOnSelect)
         {
-            if (hasMoment && moment.isMoment(date)) {
+            const isMoment = moment.isMoment || moment.default.isMoment
+            if (hasMoment && isMoment(date)) {
                 this.setDate(date.toDate(), preventOnSelect);
             }
         },
