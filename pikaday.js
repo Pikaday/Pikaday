@@ -547,26 +547,38 @@
                 switch(e.keyCode){
                     case 13:
                     case 27:
-                        if (opts.field) {
+                        if (opts.field && opts.trigger) {
+                            opts.field.focus();
+                        } else if (opts.field) {
                             opts.field.blur();
                         }
+                        self.hide();
                         break;
                     case 37:
                         self.adjustDate('subtract', 1);
+                        e.preventDefault();
                         break;
                     case 38:
                         self.adjustDate('subtract', 7);
+                        e.preventDefault();
                         break;
                     case 39:
                         self.adjustDate('add', 1);
+                        e.preventDefault();
                         break;
                     case 40:
                         self.adjustDate('add', 7);
+                        e.preventDefault();
                         break;
                     case 8:
                     case 46:
                         self.setDate(null);
                         break;
+                    case 9:
+                      if(opts.trigger) {
+                        self.hide();
+                      }
+                      break;
                 }
             }
         };
@@ -593,9 +605,6 @@
             date = self._parseFieldValue();
             if (isDate(date)) {
               self.setDate(date);
-            }
-            if (!self._v) {
-                self.show();
             }
         };
 
@@ -644,6 +653,7 @@
             }
             do {
                 if (hasClass(pEl, 'pika-single') || pEl === opts.trigger) {
+                    e.preventDefault();
                     return;
                 }
             }
@@ -820,7 +830,7 @@
             if (!date) {
                 this._d = null;
 
-                if (this._o.field) {
+                if (this._o.field && !!this._o.field.value) {
                     this._o.field.value = '';
                     fireEvent(this._o.field, 'change', { firedBy: this });
                 }
@@ -848,8 +858,10 @@
             this.gotoDate(this._d);
 
             if (this._o.field) {
-                this._o.field.value = this.toString();
-                fireEvent(this._o.field, 'change', { firedBy: this });
+                if(this._o.field.value != this.toString()) {
+                  this._o.field.value = this.toString();
+                  fireEvent(this._o.field, 'change', { firedBy: this });
+                }
             }
             if (!preventOnSelect && typeof this._o.onSelect === 'function') {
                 this._o.onSelect.call(this, this.getDate());
@@ -1118,7 +1130,7 @@
                 top = top - height - field.offsetHeight;
                 bottomAligned = false;
             }
-            
+
             if (left < 0) {
                 left = 0;
             }
