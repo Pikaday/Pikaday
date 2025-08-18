@@ -408,11 +408,12 @@
 
     renderTitle = function(instance, c, year, month, refYear, randId)
     {
+        var currentDate = instance.toString('L');        
         var i, j, arr,
             opts = instance._o,
             isMinYear = year === opts.minYear,
             isMaxYear = year === opts.maxYear,
-            html = '<div id="' + randId + '" class="pika-title" role="heading" aria-live="polite">',
+            html = '<div id="' + randId + '" aria-label="' + currentDate + '" class="pika-title" role="heading" aria-live="polite">',
             monthHtml,
             yearHtml,
             prev = true,
