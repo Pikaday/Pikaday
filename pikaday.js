@@ -289,6 +289,7 @@
         onOpen: null,
         onClose: null,
         onDraw: null,
+        onPaginate: null,
 
         // Enable keyboard input
         keyboardInput: true
@@ -735,6 +736,8 @@
 
             opts.disableDayFn = (typeof opts.disableDayFn) === 'function' ? opts.disableDayFn : null;
 
+            opts.onPaginate = (typeof opts.onPaginate) === 'function' ? opts.onPaginate : null;
+
             var nom = parseInt(opts.numberOfMonths, 10) || 1;
             opts.numberOfMonths = nom > 4 ? 4 : nom;
 
@@ -945,12 +948,20 @@
         {
             this.calendars[0].month++;
             this.adjustCalendars();
+
+            if (typeof this._o.onPaginate === 'function') {
+                this._o.onPaginate('next', this.calendars[0].month, this.calendars[0].year);
+            }
         },
 
         prevMonth: function()
         {
             this.calendars[0].month--;
             this.adjustCalendars();
+
+            if (typeof this._o.onPaginate === 'function') {
+                this._o.onPaginate('prev', this.calendars[0].month, this.calendars[0].year);
+            }
         },
 
         /**
