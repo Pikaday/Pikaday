@@ -12,7 +12,9 @@
     if (typeof exports === 'object') {
         // CommonJS module
         // Load moment.js as an optional dependency
-        try { moment = require('moment'); } catch (e) {}
+        try { moment = require('moment'); } catch (e) {
+            try { moment = require('dayjs'); } catch (e) {}
+        }
         module.exports = factory(moment);
     } else if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
@@ -20,11 +22,13 @@
         {
             // Load moment.js as an optional dependency
             var id = 'moment';
-            try { moment = req(id); } catch (e) {}
+            try { moment = req(id); } catch (e) {
+                try { moment = req('dayjs'); } catch (e) {}
+            }
             return factory(moment);
         });
     } else {
-        root.Pikaday = factory(root.moment);
+        root.Pikaday = factory(root.moment || root.dayjs);
     }
 }(this, function (moment)
 {
@@ -799,7 +803,8 @@
          */
         setMoment: function(date, preventOnSelect)
         {
-            if (hasMoment && moment.isMoment(date)) {
+            const isFunc = moment.hasOwnProperty('isDayjs') ? 'isDayjs' : 'isMoment';
+            if (hasMoment && moment[isFunc](date)) {
                 this.setDate(date.toDate(), preventOnSelect);
             }
         },
@@ -1118,7 +1123,7 @@
                 top = top - height - field.offsetHeight;
                 bottomAligned = false;
             }
-            
+
             if (left < 0) {
                 left = 0;
             }
