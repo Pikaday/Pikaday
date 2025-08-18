@@ -223,6 +223,8 @@
         minDate: null,
         // the maximum/latest date that can be selected
         maxDate: null,
+        // the year selector sorted with minimum/earliest year at the top
+        yearOrder: 'ascending',
 
         // number of years either side, or array of upper/lower range
         yearRange: 10,
@@ -435,11 +437,20 @@
             j = 1 + year + opts.yearRange;
         }
 
-        for (arr = []; i < j && i <= opts.maxYear; i++) {
-            if (i >= opts.minYear) {
-                arr.push('<option value="' + i + '"' + (i === year ? ' selected="selected"': '') + '>' + (i) + '</option>');
+        if (opts.yearOrder === 'ascending') {
+            for (arr = []; i < j && i <= opts.maxYear; i++) {
+                if (i >= opts.minYear) {
+                    arr.push(renderOption(i, year));
+                }
+            }
+        } else {
+            for (arr = []; j > i && j >= opts.minYear; j--) {
+                if (j <= opts.maxYear) {
+                    arr.push(renderOption(j, year));
+                }
             }
         }
+
         yearHtml = '<div class="pika-label">' + year + opts.yearSuffix + '<select class="pika-select pika-select-year" tabindex="-1">' + arr.join('') + '</select></div>';
 
         if (opts.showMonthAfterYear) {
@@ -464,6 +475,11 @@
         }
 
         return html += '</div>';
+    },
+    
+    renderOption = function(value, year)
+    {
+        return '<option value="' + value + '"' + (value === year ? ' selected="selected"': '') + '>' + (value) + '</option>';
     },
 
     renderTable = function(opts, data, randId)
