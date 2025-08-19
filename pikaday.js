@@ -471,6 +471,18 @@
         return '<table cellpadding="0" cellspacing="0" class="pika-table" role="grid" aria-labelledby="' + randId + '">' + renderHead(opts) + renderBody(data) + '</table>';
     },
 
+    isBigMove = function(pointA, pointB) {
+      if (!pointA || !pointB) return false;
+      return Math.abs(pointA.x - pointB.x) > 10 || Math.abs(pointA.y - pointB.y) > 10;
+    },
+
+    getTouchXY = function(touch) {
+      if (!touch) return;
+      return {
+        x: touch.clientX,
+        y: touch.clientY
+      };
+    },
 
     /**
      * Pikaday constructor
@@ -478,10 +490,20 @@
     Pikaday = function(options)
     {
         var self = this,
+            startPoint,
+            isTouching = false,
             opts = self.config(options);
 
         self._onMouseDown = function(e)
         {
+            // Windows Phone will fire mousedown even
+            // when you're still holding the finger
+            // (i.e, when `touchend` not fired yet),
+            // so we need this isTouching flag to prevent
+            // it from happening
+            if (isTouching) {
+                return;
+            }
             if (!self._v) {
                 return;
             }
@@ -653,11 +675,38 @@
             }
         };
 
+        self._onTouchStart = function(e) {
+            isTouching = true;
+            if (e.touches.length > 1) return;
+            startPoint = getTouchXY(e.touches[0]);
+        };
+        self._onTouchEnd = function(e) {
+            isTouching = false;
+            if (e.changedTouches.length <= 1 &&
+                !isBigMove(getTouchXY(e.changedTouches[0]), startPoint)) {
+                self._onMouseDown(e);
+                if (e.preventDefault) {
+                    e.preventDefault();
+                }
+                // on some devices, mousedown will fire even when the touchend
+                // is prevented default. Let's set isTouching to true,
+                // so mousedown will not fire twice.
+                isTouching = true;
+            }
+            startPoint = null;
+        };
+        self._onTouchCancel = function() {
+            isTouching = false;
+            startPoint = null;
+        };
+
         self.el = document.createElement('div');
         self.el.className = 'pika-single' + (opts.isRTL ? ' is-rtl' : '') + (opts.theme ? ' ' + opts.theme : '');
 
+        addEvent(self.el, 'touchstart', self._onTouchStart, true);
+        addEvent(self.el, 'touchcancel', self._onTouchCancel, true);
+        addEvent(self.el, 'touchend', self._onTouchEnd, true);
         addEvent(self.el, 'mousedown', self._onMouseDown, true);
-        addEvent(self.el, 'touchend', self._onMouseDown, true);
         addEvent(self.el, 'change', self._onChange);
 
         if (opts.keyboardInput) {
@@ -1281,8 +1330,10 @@
             var opts = this._o;
 
             this.hide();
+            removeEvent(this.el, 'touchstart', this._onTouchStart, true);
+            removeEvent(this.el, 'touchcancel', this._onTouchCancel, true);
+            removeEvent(this.el, 'touchend', this._onTouchEnd, true);
             removeEvent(this.el, 'mousedown', this._onMouseDown, true);
-            removeEvent(this.el, 'touchend', this._onMouseDown, true);
             removeEvent(this.el, 'change', this._onChange);
             if (opts.keyboardInput) {
                 removeEvent(document, 'keydown', this._onKeyChange);
@@ -1304,3 +1355,4 @@
 
     return Pikaday;
 }));
+
