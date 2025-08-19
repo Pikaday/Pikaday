@@ -503,10 +503,10 @@
                         }, 100);
                     }
                 }
-                else if (hasClass(target, 'pika-prev')) {
+                else if (hasClass(target, 'pika-prev') && !hasClass(target, 'is-disabled')) {
                     self.prevMonth();
                 }
-                else if (hasClass(target, 'pika-next')) {
+                else if (hasClass(target, 'pika-next') && !hasClass(target, 'is-disabled')) {
                     self.nextMonth();
                 }
             }
