@@ -4,16 +4,19 @@
  * Copyright © 2014 David Bushell | BSD & MIT license | https://github.com/Pikaday/Pikaday
  */
 
-(function (root, factory)
+(function (factory)
 {
     'use strict';
+
+    var root = (typeof self == 'object' && self.self === self && self) ||
+            (typeof global == 'object' && global.global === global && global);
 
     var moment;
     if (typeof exports === 'object') {
         // CommonJS module
         // Load moment.js as an optional dependency
         try { moment = require('moment'); } catch (e) {}
-        module.exports = factory(moment);
+        module.exports = factory(root, moment);
     } else if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
         define(function (req)
@@ -21,12 +24,12 @@
             // Load moment.js as an optional dependency
             var id = 'moment';
             try { moment = req(id); } catch (e) {}
-            return factory(moment);
+            return factory(root, moment);
         });
     } else {
-        root.Pikaday = factory(root.moment);
+        root.Pikaday = factory(root, root.moment);
     }
-}(this, function (moment)
+}(function (window, moment)
 {
     'use strict';
 
