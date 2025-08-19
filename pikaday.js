@@ -601,6 +601,16 @@
 
         self._onInputFocus = function()
         {
+            var date;
+            if(hasMoment) {
+                date = moment(opts.field.value,opts.format);
+                date = (date && date.isValid()) ? date.toDate() : null;
+            } else {
+                date = new Date(Date.parse(opts.field.value));
+            }
+            if(isDate(date)) {
+                self.setDate(date);
+            }
             self.show();
         };
 
