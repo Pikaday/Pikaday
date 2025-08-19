@@ -594,18 +594,20 @@
             if (isDate(date)) {
               self.setDate(date);
             }
-            if (!self._v) {
+            if (!self._v && !this.readOnly) {
                 self.show();
             }
         };
 
         self._onInputFocus = function()
         {
+			if(!this.readOnly)
             self.show();
         };
 
         self._onInputClick = function()
         {
+			if(!this.readOnly)
             self.show();
         };
 
